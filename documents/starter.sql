@@ -1,12 +1,14 @@
 -- drop database if exists whatisourdbname;
 drop table if exists users_skills;
 drop table if exists users_causes;
+drop table if exists opps_causes;
 drop table if exists opportunities_causes;
 
 drop table if exists links;
 drop table if exists roles;
 drop table if exists responses;
 
+drop table if exists opps;
 drop table if exists opportunities;
 
 drop table if exists users;
@@ -28,10 +30,10 @@ CREATE TABLE users (
   location_country text,
   bio text,
   -- below for individuals only
-  first_name text default null,
-  last_name text default null, 
+  first_name text,
+  last_name text, 
   -- below for organizations only
-  organization text default null,
+  organization text
 );
 
 CREATE TABLE opportunities (
@@ -127,13 +129,13 @@ CREATE TABLE responses (
 -- @@@@@@@@@@@ END CREATE TABLE, START INSERT INTO @@@@@@@@@@@
 
 INSERT into users 
-(username, user_type, location_city, location_state, firstName, lastName, organization, link) 
+(username, user_type, location_city, location_state, first_name, last_name, organization) 
 VALUES
-('bobsmith', 'individual', 'Baltimore', 'MD', 'Bob', 'Smith', null, null), 
-('suesmith', 'individual', 'Waldorf', 'MD', 'Sue', 'Smith', null, null), 
-('capfoodbank', 'organization', 'Washington', 'DC', null, null, 'Capital Food Bank', 'www.cfb.org'),
-('some', 'organization', 'Washington', 'DC', null, null, 'So Others May Eat (SOME)', 'www.some.org'),
-('joejoe', 'individual', 'Altoona', 'PA', 'Joe', 'Josephson', null, null);
+('bobsmith', 'individual', 'Baltimore', 'MD', 'Bob', 'Smith', null), 
+('suesmith', 'individual', 'Waldorf', 'MD', 'Sue', 'Smith', null), 
+('capfoodbank', 'organization', 'Washington', 'DC', null, null, 'Capital Food Bank'),
+('some', 'organization', 'Washington', 'DC', null, null, 'So Others May Eat (SOME)'),
+('joejoe', 'individual', 'Altoona', 'PA', 'Joe', 'Josephson', null);
 
 
 INSERT into opportunities 
