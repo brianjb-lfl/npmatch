@@ -1,12 +1,13 @@
 -- drop database if exists whatisourdbname;
 drop table if exists users_skills;
 drop table if exists users_causes;
-drop table if exists opps_causes;
+drop table if exists opportunities_causes;
 
+drop table if exists links;
 drop table if exists roles;
 drop table if exists responses;
 
-drop table if exists opps;
+drop table if exists opportunities;
 
 drop table if exists users;
 
@@ -16,28 +17,28 @@ drop table if exists skills;
 
 CREATE TABLE users (
   id serial primary key,
-  timestampCreated timestamp default current_timestamp,
+  timestamp_created timestamp default current_timestamp,
   username text,
   passwd text,
   -- type: individual, organization
-  userType text default 'individual',
+  user_type text default 'individual',
   location_city text,
   location_state text,
   -- default "USA"
   location_country text,
+  bio text,
   -- below for individuals only
-  firstName text default null,
-  lastName text default null, 
+  first_name text default null,
+  last_name text default null, 
   -- below for organizations only
   organization text default null,
-  link text default null
 );
 
-CREATE TABLE opps (
+CREATE TABLE opportunities (
   id serial primary key,
-  timestampCreated timestamp default current_timestamp,
+  timestamp_created timestamp default current_timestamp,
   -- type: goods, services, financial
-  oppType text default 'services',
+  opportunity_type text default 'services',
   -- offer: true if offer to provide, false if a need
   offer boolean default 'false',
   title text not null,
@@ -66,14 +67,14 @@ CREATE TABLE users_causes (
   id serial primary key,
   id_user integer references users on delete cascade,
   id_cause integer references causes on delete cascade,
-  timestampCreated timestamp default current_timestamp
+  timestamp_created timestamp default current_timestamp
 );
 
-CREATE TABLE opps_causes (
+CREATE TABLE opportunities_causes (
   id serial primary key,
-  id_opp integer references opps on delete cascade,
+  id_opp integer references opportunities on delete cascade,
   id_cause integer references causes on delete cascade,
-  timestampCreated timestamp default current_timestamp
+  timestamp_created timestamp default current_timestamp
 );
 
 -- @@@@@@@@@@@ SKILLS @@@@@@@@@@@
@@ -87,10 +88,18 @@ CREATE TABLE users_skills (
   id serial primary key,
   id_user integer references users on delete cascade,
   id_skill integer references skills on delete cascade,
-  timestampCreated timestamp default current_timestamp
+  timestamp_created timestamp default current_timestamp
 );
 
 -- @@@@@@@@@@@ ROLES & RESPONSES @@@@@@@@@@@
+
+CREATE TABLE links (
+  id serial primary key,
+  id_user integer references users on delete cascade,
+  link_type text,
+  link_url text,
+  timestamp_created timestamp default current_timestamp
+);
 
 CREATE TABLE roles (
   id serial primary key,
@@ -101,24 +110,24 @@ CREATE TABLE roles (
   -- capabilities: admin, following (limit admin to editing posts)
   -- look up format for array
   capabilities text,
-  timestampCreated timestamp default current_timestamp
+  timestamp_created timestamp default current_timestamp
 );
 
 CREATE TABLE responses (
   id serial primary key,
   id_user integer references users on delete cascade,
-  id_opp integer references opps on delete cascade,
+  id_opp integer references opportunities on delete cascade,
   -- status pending, accepted, completed, deleted, denied
-  respStatus text default 'pending',
-  -- timestampStatusChange = most recent status change
-  timestampStatusChange timestamp,
-  timestampCreated timestamp default current_timestamp
+  response_status text default 'pending',
+  -- timestamp_status_change = most recent status change
+  timestamp_status_change timestamp,
+  timestamp_created timestamp default current_timestamp
 );
 
 -- @@@@@@@@@@@ END CREATE TABLE, START INSERT INTO @@@@@@@@@@@
 
 INSERT into users 
-(username, userType, location_city, location_state, firstName, lastName, organization, link) 
+(username, user_type, location_city, location_state, firstName, lastName, organization, link) 
 VALUES
 ('bobsmith', 'individual', 'Baltimore', 'MD', 'Bob', 'Smith', null, null), 
 ('suesmith', 'individual', 'Waldorf', 'MD', 'Sue', 'Smith', null, null), 
@@ -127,8 +136,8 @@ VALUES
 ('joejoe', 'individual', 'Altoona', 'PA', 'Joe', 'Josephson', null, null);
 
 
-INSERT into opps 
-(oppType, offer, title, narrative, timestamp_start, timestamp_end, location_city, location_state, id_user, link) 
+INSERT into opportunities 
+(opportunity_type, offer, title, narrative, timestamp_start, timestamp_end, location_city, location_state, id_user, link) 
 VALUES
 ('goods', 'false', 'need baked goods', 'We need baked goods for a charity event.', '2018-02-14 18:30:00', '2018-02-14 20:30:00', 'Plano', 'TX', 3, null), 
 ('services', 'false', 'volunteers needed!', 'Reading to children after school, ongoing basis.', '2018-03-01 15:00:00', 'infinity', 'Athens', 'GA', 4, null), 
@@ -151,7 +160,7 @@ INSERT into users_causes
 VALUES
 (1,2),(1,3),(2,4),(3,5),(3,7),(3,10),(4,9),(1,6);
 
-INSERT into opps_causes
+INSERT into opportunities_causes
 (id_opp, id_cause)
 VALUES
 (1,2),(1,3),(2,1),(2,5),(2,9),(3,1),(3,5),(3,9),(4,1),(4,5),(4,8);
@@ -166,7 +175,12 @@ INSERT into roles
 VALUES
 (3,1,'admin'),(5,3,'following'),(2, 4, 'following');
 
+INSERT into links
+(id_user, link_type, link_url)
+VALUES
+(1,null,'https://www.google.com'),(3,'homepage','http://bradgarner.com'),(4, 'financial', 'https://paypal.com');
+
 INSERT into responses
-(id_user, id_opp, respStatus, timestampStatusChange)
+(id_user, id_opp, response_status, timestamp_status_change)
 VALUES
 (5,4,'pending',null),(1,3,'pending',null),(2, 2, 'accepted', '2017-12-05 11:45:03');
