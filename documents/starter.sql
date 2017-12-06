@@ -1,14 +1,12 @@
 -- drop database if exists whatisourdbname;
 drop table if exists users_skills;
 drop table if exists users_causes;
-drop table if exists opps_causes;
 drop table if exists opportunities_causes;
 
 drop table if exists links;
 drop table if exists roles;
 drop table if exists responses;
 
-drop table if exists opps;
 drop table if exists opportunities;
 
 drop table if exists users;
