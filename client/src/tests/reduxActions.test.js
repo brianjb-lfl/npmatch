@@ -1,4 +1,4 @@
-import * as actions from './reduxActions';
+import * as actions from '../actions/reduxActions';
 
 describe('actions', () => {
   it('should create an action that loads a user', () => {
