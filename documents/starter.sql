@@ -1,24 +1,22 @@
 -- drop database if exists whatisourdbname;
-drop table if exists users_skills;
-drop table if exists users_causes;
-drop table if exists opportunities_causes;
 
-drop table if exists links;
-drop table if exists roles;
-drop table if exists responses;
+DROP TABLE IF EXISTS users_skills CASCADE;
+DROP TABLE IF EXISTS users_causes CASCADE;
+DROP TABLE IF EXISTS opportunities_causes CASCADE;
+DROP TABLE IF EXISTS links CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS responses CASCADE;
+DROP TABLE IF EXISTS opportunities CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS causes CASCADE;
+DROP TABLE IF EXISTS skills CASCADE;
 
-drop table if exists opportunities;
-
-drop table if exists users;
-
-drop table if exists causes;
-drop table if exists skills;
 -- CREATE DATABASE whatisourdbname;
 
 CREATE TABLE users (
   id serial primary key,
   timestamp_created timestamp default current_timestamp,
-  username text,
+  username text UNIQUE,
   passwd text,
   -- type: individual, organization
   user_type text default 'individual',
