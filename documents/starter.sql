@@ -1,20 +1,17 @@
 -- drop database if exists whatisourdbname;
-drop table if exists users_skills;
-drop table if exists users_causes;
-drop table if exists opps_causes;
-drop table if exists opportunities_causes;
+DROP TABLE IF EXISTS users_skills CASCADE;
+DROP TABLE IF EXISTS users_causes CASCADE;
+DROP TABLE IF EXISTS opps_causes CASCADE;
+DROP TABLE IF EXISTS opportunities_causes CASCADE;
+DROP TABLE IF EXISTS links CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS responses CASCADE;
+DROP TABLE IF EXISTS opps CASCADE;
+DROP TABLE IF EXISTS opportunities CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS causes CASCADE;
+DROP TABLE IF EXISTS skills CASCADE;
 
-drop table if exists links;
-drop table if exists roles;
-drop table if exists responses;
-
-drop table if exists opps;
-drop table if exists opportunities;
-
-drop table if exists users;
-
-drop table if exists causes;
-drop table if exists skills;
 -- CREATE DATABASE whatisourdbname;
 
 CREATE TABLE users (
