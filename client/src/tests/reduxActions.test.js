@@ -1,4 +1,4 @@
-import * as actions from '../actions/reduxActions';
+import * as actions from '../actions/users';
 
 describe('actions', () => {
   it('should create an action that loads a simple user', () => {
@@ -234,7 +234,7 @@ describe('actions', () => {
               locationState: 'CO',
               locationCountry: 'USA',
               link: 'http://www.buzzme.org/2018',
-              causes: ['hunger', 'peace'],          
+              causes: ['hunger', 'peace'], 
             },
             {
               id: 3,
@@ -275,6 +275,7 @@ describe('actions', () => {
     expect(result.userList.length).toBe(2)
     expect(result.userList[0].id).toBe(1)
   });
+
   it('should load a single opportunity', () => {
     const opportunity = {
       id: 1,
@@ -309,6 +310,11 @@ describe('actions', () => {
     };
     const result = actions.loadOpportunity(opportunity);
     expect(result).toEqual(expectedAction);
+    // how to test data types
+    expect(result).toBeDefined();
+    expect(result).toBeTruthy();
+    expect(result.id).toEqual(1);
+    expect(result.id).toBeGreaterThanOrEqual(1);
     
   });
     
