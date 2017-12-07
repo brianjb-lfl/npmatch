@@ -31,4 +31,25 @@ describe('Detailed Organization Preview component display functionality', () => 
       <p>We melt brains, one tweet at a time.</p>
     ])).toEqual(true);
   });
+  it('Should receive the correct props causes, skills sought, upcoming projects', () => {
+    const fetchRequest = {
+      causes: ["Human rights", "Homeless"],
+      skillsSought: ["Front-end web development", "Cooking"],
+      upcomingProjects: ["Homeless Shelter Website Production", "Sunday cook-off for the needy"]
+    };
+    const fetchedCauses = fetchRequest.causes.join(', ');
+    console.log(fetchedCauses);
+    const fetchedSkillsSought = fetchRequest.skillsSought.join(', ');
+    console.log(fetchedSkillsSought);
+    const fetchedUpcomingProjects = fetchRequest.upcomingProjects.join(', ');
+    console.log(fetchedUpcomingProjects);
+    const wrapper = shallow(<DetailedOrganizationPreview 
+      causes={fetchedCauses}
+      skillsSought={fetchedSkillsSought}
+      upcomingProjects={fetchedUpcomingProjects}
+    />);
+    expect(wrapper.prop('causes')).toEqual('Human rights, Homeless');
+    expect(wrapper.prop('skillsSought')).toEqual('Front-end web development, Cooking');
+    expect(wrapper.prop('upcomingProjects')).toEqual('Homeless Shelter Website Production, Sunday cook-off for the needy');
+  })
 });

@@ -54,6 +54,8 @@ const potentialStates = {
       opportunities: [
         {
           id: '',
+          userId: '',
+          organization: '',
           opportunityType: '',
           offer: '',
           title: '',
