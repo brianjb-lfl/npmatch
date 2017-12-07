@@ -18,5 +18,17 @@ describe('Detailed Organization Preview component display functionality', () => 
       <h3>Facebook</h3>,
       <p>We melt brains, one notification at a time.</p>
     ])).toEqual(true);
-  })
-})
+  });
+  it('Should display a different logo, name, a description with different props', () => {
+    const wrapper = shallow(<DetailedOrganizationPreview 
+      logo="https://pbs.twimg.com/profile_images/875087697177567232/Qfy0kRIP_400x400.jpg"
+      name="Twitter"
+      description="We melt brains, one tweet at a time."
+    />);
+    expect(wrapper.containsAllMatchingElements([
+      <img src="https://pbs.twimg.com/profile_images/875087697177567232/Qfy0kRIP_400x400.jpg"></img>,
+      <h3>Twitter</h3>,
+      <p>We melt brains, one tweet at a time.</p>
+    ])).toEqual(true);
+  });
+});
