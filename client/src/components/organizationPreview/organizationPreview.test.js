@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 
 import OrganizationPreview from './OrganizationPreview';
 
-describe('Organization Preview component functionality', () => {
+describe('Organization Preview component display functionality', () => {
   it('Smoke test - component should render', () => {
     shallow(<OrganizationPreview />);
-  })
+  });
   it('Should display the logo, name, and description', () => {
     const wrapper = shallow(<OrganizationPreview logo="https://www.facebook.com/images/fb_icon_325x325.png" name="Facebook" description="We melt brains, one notification at a time."/>);
     expect(wrapper.containsAllMatchingElements([
