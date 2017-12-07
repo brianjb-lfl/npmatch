@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import DetailedOrganizationPreview from './DetailedOrganizationPreview';
 
 describe('Detailed Organization Preview component display functionality', () => {
-  it('Smome test - component should render', () => {
+  it('Smoke test - component should render', () => {
     shallow(<DetailedOrganizationPreview />);
   });
   it('Should use the props for logo, name, and description', () => {
@@ -48,8 +48,8 @@ describe('Detailed Organization Preview component display functionality', () => 
       skillsSought={fetchedSkillsSought}
       upcomingProjects={fetchedUpcomingProjects}
     />);
-    expect(wrapper.prop('causes')).toEqual('Human rights, Homeless');
-    expect(wrapper.prop('skillsSought')).toEqual('Front-end web development, Cooking');
-    expect(wrapper.prop('upcomingProjects')).toEqual('Homeless Shelter Website Production, Sunday cook-off for the needy');
+    expect(wrapper.instance().props.causes).toEqual('Human rights, Homeless');
+    expect(wrapper.instance().props.skillsSought).toEqual('Front-end web development, Cooking');
+    expect(wrapper.instance().props.upcomingProjects).toEqual('Homeless Shelter Website Production, Sunday cook-off for the needy');
   })
 });
