@@ -1,7 +1,5 @@
-import * as actions from '../actions/users'
-import * as state from './potentialStates'
-
-const initialState = state.potentialStates.user;
+import * as actions from '../actions/user'
+import {user as initialState} from './potentialStates'
 
 export const reducer = (state = initialState, action) => {
 // console.log('action',action);
