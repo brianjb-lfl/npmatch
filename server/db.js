@@ -1,9 +1,17 @@
 'use strict';
 
-require('dotenv').load();
+//require('dotenv').load();
+// const path = require('path');
+// const dotEnvPath = path.resolve('../.env');
+// require('dotenv').config({path: dotEnvPath});
 
-const { DATABASE_URL, TEST_DATABASE_URL } = require('./config');
+const { PORT, CLIENT_ORIGIN, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 let dbMode = process.env.DB_MODE;
+console.log('db.js');
+console.log(dbMode);
+console.log(DATABASE_URL);
+console.log(TEST_DATABASE_URL);
+
 
 const dbConfigs = {
   dev: {
@@ -22,5 +30,6 @@ const dbConfigs = {
 };
 
 const dbCfg = dbConfigs[dbMode];
+console.log(dbCfg);
 
 module.exports = require('knex')(dbCfg);

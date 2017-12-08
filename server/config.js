@@ -8,7 +8,9 @@ const PORT = process.env.PORT;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 function setDbMode(mode='dev') {
+  console.log('setting env mode ', process.env.DB_MODE);
   process.env.DB_MODE = mode;
+  console.log('done setting mode ', process.env.DB_MODE);
 }
 
 module.exports = { DATABASE_URL, TEST_DATABASE_URL, 

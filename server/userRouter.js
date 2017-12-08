@@ -29,12 +29,4 @@ userRouter.get('/list', (req, res) => {
 
 });
 
-
-
-
-
-
-
-
-
 module.exports = { userRouter };

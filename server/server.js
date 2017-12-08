@@ -2,10 +2,16 @@
 
 const express = require('express');
 const cors = require('cors');
-const { PORT, CLIENT_ORIGIN } = require('./config');
+const { PORT, CLIENT_ORIGIN, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 const { userRouter } = require('./userRouter');
 
 const app = express();
+
+console.log('server');
+console.log(PORT);
+console.log(CLIENT_ORIGIN);
+console.log(DATABASE_URL);
+console.log(TEST_DATABASE_URL);
 
 app.use(
   cors({
@@ -33,3 +39,5 @@ function runServer(port = PORT) {
 if (require.main === module) {
   runServer();
 }
+
+module.exports = { app };
