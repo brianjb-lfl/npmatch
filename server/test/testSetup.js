@@ -6,7 +6,7 @@ let testSetup = {};
 
 testSetup.addUserTable = function() {
   return knex.schema.dropTableIfExists('users')
-    .then( () => knex.schema.createTableIfNotExists('users', function(table) {
+    .then( () => knex.schema.createTable('users', function(table) {
       table.increments('id').primary();
       table.text('username').unique();
       table.text('password');
@@ -19,6 +19,15 @@ testSetup.addUserTable = function() {
       table.text('first_name');
       table.text('last_name');
       table.text('organization');
+    }));
+};
+
+testSetup.addLinksTable = function() {
+  return knex.schema.dropTableIfExists('links')
+    .then( () => knex.schema.createTable('links', function(table) {
+      table.increments('id').primary();
+      table.integer('id_user');
+      table.foreign('id_user').references('users.id');
     }));
 };
 

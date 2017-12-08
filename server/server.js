@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 
 app.use('*', (req, res) => {
   return res.status(404).json({message: 'Not Found'});

@@ -55,6 +55,20 @@ describe('user', function() {
     });
   });
 
+  // ***** GET INDIVIDUAL USER - DETAIL
+  describe('api/user/:id GET user details', function() {
+    
+  
+  
+    // base user info
+    // array of links - links, id_user = id
+    // array of causes - users_causes - id_user = id, id_cause = causes id
+    // array of skills - users_skills - id_user = id,  id_skill = skills id 
+    // array of responses - responses, id_user = id, id_opp = opportunities id, id_user = orgs id
+    // array of adminOf - roles - id_user_receiving = id, id_user_adding = id of org where capabilities = admin
+    // array of followingroles - id_user_receiving = id, id_user_adding = id of org where capabilities = admin
+  });
+
   // ***** POST USER
   describe('api/user POST new user', function() {
 
@@ -82,5 +96,6 @@ describe('user', function() {
         });
     });
   });
+
 });
 
