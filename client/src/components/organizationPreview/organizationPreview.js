@@ -6,9 +6,9 @@ export default class OrganizationPreview extends Component {
   render() {
     return (
       <div>
-        <img src={this.props.logo}></img>
-        <h3>{this.props.name}</h3>
-        <p>{this.props.description}</p>
+        <img className='logo' src={this.props.logo}></img>
+        <h3 className='name'>{this.props.name}</h3>
+        <p className='description'>{this.props.description}</p>
       </div>
     )
   }

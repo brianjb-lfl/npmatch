@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-export default class ContributorPreview extends Component {
+export default class DetailedContributorPreview extends Component {
 
   render() {
     return (
@@ -9,6 +9,9 @@ export default class ContributorPreview extends Component {
         <img className='logo' src={this.props.logo}></img>
         <h3 className='name'>{this.props.name}</h3>
         <p className='description'>{this.props.description}</p>
+        <p className='causes'>{this.props.causes}</p>
+        <p className='skills'>{this.props.skills}</p>
+        <p className='availability'>{this.props.availability}</p>
       </div>
     )
   }

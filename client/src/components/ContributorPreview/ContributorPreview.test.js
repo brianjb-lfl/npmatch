@@ -23,4 +23,13 @@ describe('Contributor Preview component display functionality', () => {
       <p>I am a genius.</p>
     ])).toEqual(true);
   });
-})
+  it('Should display the correct information for each prop', () => {
+    const wrapper = shallow(<ContributorPreview 
+      logo="http://i0.kym-cdn.com/photos/images/original/000/692/145/49c.png"
+      name="Ben Malin"
+      description="I am a front-end developer."
+    />);
+    expect(wrapper.find('.name').text()).toEqual('Ben Malin');
+    expect(wrapper.find('.description').text()).toEqual('I am a front-end developer.');
+  });
+});

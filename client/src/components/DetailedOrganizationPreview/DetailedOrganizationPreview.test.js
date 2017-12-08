@@ -31,27 +31,19 @@ describe('Detailed Organization Preview component display functionality', () => 
       <p>We melt brains, one tweet at a time.</p>
     ])).toEqual(true);
   });
-  it('Should receive the correct props causes, skills sought, upcoming projects', () => {
-    const fetchRequest = {
-      causes: ["Human rights", "Homelessness"],
-      skillsSought: ["Front-end web development", "Cooking"],
-      upcomingProjects: ["Homeless Shelter Website Production", "Sunday cook-off for the needy"]
-    };
-    const fetchedCauses = fetchRequest.causes.join(', ');
-    // console.log(fetchedCauses);
-    const fetchedSkillsSought = fetchRequest.skillsSought.join(', ');
-    // console.log(fetchedSkillsSought);
-    const fetchedUpcomingProjects = fetchRequest.upcomingProjects.join(', ');
-    // console.log(fetchedUpcomingProjects);
+  it('Should display the correct information for each prop', () => {
     const wrapper = shallow(<DetailedOrganizationPreview 
-      causes={fetchedCauses}
-      skillsSought={fetchedSkillsSought}
-      upcomingProjects={fetchedUpcomingProjects}
+      logo="https://pbs.twimg.com/profile_images/875087697177567232/Qfy0kRIP_400x400.jpg"
+      name="Twitter"
+      description="We melt brains, one tweet at a time."
+      causes='Human rights, Homelessness'
+      skillsSought='Web development, Cooking'
+      upcomingProjects='Homeless Shelter Website Production, Sunday cook-off for the needy' 
     />);
-    console.log(wrapper.html());
-    expect(wrapper.prop('causes')).toEqual('Human rights, Homelessness');
-    expect(wrapper.prop('skillsSought')).toEqual('Front-end web development, Cooking');
-    expect(wrapper.prop('upcomingProjects')).toEqual('Homeless Shelter Website Production, Sunday cook-off for the needy');
+    expect(wrapper.find('.name').text()).toEqual('Twitter');
+    expect(wrapper.find('.description').text()).toEqual('We melt brains, one tweet at a time.');
+    expect(wrapper.find('.causes').text()).toEqual('Human rights, Homelessness');
+    expect(wrapper.find('.skillsSought').text()).toEqual('Web development, Cooking');
+    expect(wrapper.find('.upcomingProjects').text()).toEqual('Homeless Shelter Website Production, Sunday cook-off for the needy');
   });
-
 });
