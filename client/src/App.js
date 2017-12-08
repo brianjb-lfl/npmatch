@@ -21,6 +21,10 @@ class App extends Component {
 }
 
 export const mapStateToProps = state => ({
-  users: state.users
+  user: state.users,
+  userViewed: state.userViewed,
+  usersList: state.usersList,
+  opportunity: state.opportunity,
+  opportunitiesList: state.opportunitiesList,
 })
 export default connect(mapStateToProps)(App);

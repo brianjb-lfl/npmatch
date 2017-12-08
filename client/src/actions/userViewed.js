@@ -3,7 +3,7 @@ import { REACT_APP_BASE_URL } from '../config'
 import {SubmissionError} from 'redux-form';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
-// this would be used when creating, editing, or viewing YOUR OWN profile
+// this would be used when creating, editing, or viewing a profile
 export const LOAD_USER = 'LOAD_USER';
 export const loadUser = user => ({
   type: LOAD_USER,

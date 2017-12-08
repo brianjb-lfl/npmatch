@@ -1,8 +1,9 @@
-import * as actions from '../actions/user'
+import * as actions from '../actions/userViewed'
 import {user as initialState} from './potentialStates'
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
-// this would be used when creating, editing, or viewing YOUR OWN profile
+// this would be used when viewing someone else's profile
+
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_USER) {

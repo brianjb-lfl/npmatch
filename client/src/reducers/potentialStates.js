@@ -1,5 +1,15 @@
 'use strict';
 
+/*  This file is a fully populated outline of the Redux state, used as the guideline for all actions and reducers.
+    
+    user: only one; this is the user that is logged in
+    userViewed: same as user, but used for viewing someone else's profile
+    usersList: multiple users of any type; same format as user, but slimmed down
+
+    opportunity: only one: this is a singluar opportunity that is in focus
+    opportunitiesList: multiple opportunities of any type; same format as opportunity, but slimmed down
+*/
+
 export const user = {
   id: '',
   firstName: '',
