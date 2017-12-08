@@ -4,6 +4,7 @@ import { reducer as userViewed } from './userViewed'
 import { reducer as usersList } from './usersList'
 import { reducer as opportunity } from './opportunity'
 import { reducer as opportunitiesList } from './opportunitiesList'
+import { reducer as display } from './display'
 import { reducer as form } from 'redux-form';
 
 
@@ -13,5 +14,6 @@ export default combineReducers({
   usersList,
   opportunity,
   opportunitiesList,
+  display,
   form
 });

@@ -142,3 +142,7 @@ export const opportunitiesList = [
     causes: [''],     // SQL join   
   }
 ];
+
+export const display = {
+  view: 'landing'
+};
