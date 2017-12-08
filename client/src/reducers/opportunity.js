@@ -1,8 +1,11 @@
 import * as actions from '../actions/opportunity'
 import {opportunity as initialState} from './potentialStates'
 
+// this is all detail for 1 opportunity; we should only need one at a time;
+// this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
+
 export const reducer = (state = initialState, action) => {
-// console.log('action',action);
+
   if (action.type === actions.LOAD_OPPORTUNITY) {
     return Object.assign({}, state, {
       id: action.id,

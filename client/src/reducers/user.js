@@ -1,8 +1,11 @@
 import * as actions from '../actions/user'
 import {user as initialState} from './potentialStates'
 
+// this is all detail for 1 user (individual OR organization); we should only need one at a time;
+// this would be used when creating, editing, or viewing a profile
+
 export const reducer = (state = initialState, action) => {
-// console.log('action',action);
+
   if (action.type === actions.LOAD_USER) {
     return Object.assign({}, state, {
       id: action.id,
@@ -14,7 +17,7 @@ export const reducer = (state = initialState, action) => {
       locationCity: action.locationCity,
       locationState: action.locationState,
       locationCountry: action.locationCountry,
-      bio: action.bio, // do we need this?
+      bio: action.bio,
       links: action.links, // array of objects
       causes: action.causes,
       skills: action.skills,
