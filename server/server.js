@@ -2,7 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
-const { PORT, CLIENT_ORIGIN, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
+const { PORT, CLIENT_ORIGIN } = require('./config');
 const { userRouter } = require('./userRouter');
 
 const app = express();
