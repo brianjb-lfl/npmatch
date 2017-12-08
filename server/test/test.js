@@ -46,9 +46,9 @@ describe('user', function() {
             .get('/api/user/list')
             .then(function(res) {
               let userNames = testData.userSeeds.map( item => item.username );
-              expect(res.length).to.equal(2);
-              expect(userNames).to.include(res[0].username);
-              expect(userNames).to.include(res[1].username);
+              expect(res.body.length).to.equal(2);
+              expect(userNames).to.include(res.body[0].username);
+              expect(userNames).to.include(res.body[1].username);
             });
         });
     });
