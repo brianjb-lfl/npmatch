@@ -38,8 +38,10 @@ describe('user', function() {
 
   // ***** GET USER LIST
   describe('api/user/list GET user list', function() {
+
     it('should return a list of existing users', function() {
       return testData.seedUserTable()
+
         .then( () => {
           return chai.request(app)
             .get('/api/user/list')
@@ -55,27 +57,22 @@ describe('user', function() {
 
   // ***** POST USER
   describe('api/user POST new user', function() {
+
     it('should add user to users table as type individual', function() {
       const testUser = testData.testIndividual;
 
       return chai.request(app)
         .post('/api/user')
-        .send(
-          {
-
-          })
+        .send(testUser)
         .then(function(res) {
-          console.log('----- post res -----');
-          console.log(res);
           expect(res.body.length).to.equal(1);
           expect(res.body[0].username).to.equal(testData.testIndividual.username);
         })
+
         .then( () => {
           return chai.request(app)
             .get('/api/user/list')
             .then(function(res) {
-              console.log('----- get res -----');
-              console.log(res);
               expect(res.body.length).to.equal(1);
               expect(res.body[0].user_type).to.equal('individual');
               expect(res.body[0].first_name).to.equal(testData.testIndividual.first_name);

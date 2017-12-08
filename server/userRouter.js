@@ -12,7 +12,7 @@ userRouter.get('/testify/', (req, res) => {
   res.status(200).json({message: 'Good to go'});
 });
 
-// api/user/list
+// GET api/user/list
 userRouter.get('/list', (req, res) => {
   const knex = require('./db');
   return knex
@@ -22,11 +22,25 @@ userRouter.get('/list', (req, res) => {
     .orderBy('username')
     .debug(false)
     .then( results => {
-      knex.destroy();
-      console.log('database connection closed');
       res.json(results);
-    });
+    })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    });    
+});
 
+// POST api/user
+userRouter.post('/', jsonParser, (req, res) => {
+  const knex = require('./db');
+  return knex('users')
+    .insert(req.body)
+    .returning(['id', 'username'])
+    .then( results => {
+      res.status(201).json(results);
+    })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    });
 });
 
 module.exports = { userRouter };
