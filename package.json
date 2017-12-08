@@ -4,13 +4,14 @@
   "version": "0.1.0",
   "description": "npmatch",
   "license": "MIT",
-  "main": "/server/index.js",
+  "main": "/server/server.js",
   "private": true,
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "knex": "^0.13.0",
     "morgan": "^1.8.2",
     "passport": "^0.4.0",
@@ -19,7 +20,7 @@
     "pg": "^7.3.0"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon ./server/server.js",
     "test": "mocha --colors --watch  test/setup.test.js */*.test.js",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha test/setup.test.js */*.test.js",
     "heroku": "node index.js",

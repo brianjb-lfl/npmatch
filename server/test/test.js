@@ -1,16 +1,16 @@
 'use strict';
 
-const { setDbMode } = require('./config');
+const { setDbMode } = require('../config');
 // set .env DB_MODE to test to point knex instances to test db
 setDbMode('test');
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { work } = require('./work');
+const { userRouter } = require('../userRouter');
 const { testSetup } = require('./testSetup');
 const { testData } = require('./testData');
 const expect = chai.expect;
-const knex = require('./db');
+const knex = require('../db');
 
 chai.use(chaiHttp);
 

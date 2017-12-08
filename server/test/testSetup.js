@@ -1,6 +1,6 @@
 'use strict';
 
-const knex = require('./db');
+const knex = require('../db');
 
 let testSetup = {};
 
