@@ -36,9 +36,8 @@ describe('user', function() {
 
   });
 
-
-  // ***** SELECT USERS
-  describe('api/user/list GET', function() {
+  // ***** GET USER LIST
+  describe('api/user/list GET user list', function() {
     it('should return a list of existing users', function() {
       return testData.seedUserTable()
         .then( () => {
@@ -54,46 +53,37 @@ describe('user', function() {
     });
   });
 
-
-  // describe('select users', function() {
-  //   it('should return existing users', function() {
-  //     return testData.seedUserTable()
-  //       .then( () => {
-  //         return work.getUsers()
-  //           .then(function(res) {
-  //             let userNames = testData.userSeeds.map( item => item.username );
-  //             expect(res.length).to.equal(2);
-  //             expect(userNames).to.include(res[0].username);
-  //             expect(userNames).to.include(res[1].username);
-  //           });
-  //       });
-  //   });
-  // });
-
-
-
   // ***** POST USER
-  // describe('add user', function() {
-  //   it('should add user to users table as type individual', function() {
-  //     return work.addIndivUser(testData.testIndividual)
-  //       .then( res => {
-  //         console.log('insert response ...');
-  //         console.log(res);
-  //         expect(res.length).to.equal(1);
-  //         expect(res[0].username).to.equal(testData.testIndividual.username);
-  //         return work.getUsers()
-  //           .then( res => {
-  //             console.log('get response ...');
-  //             console.log(res);
-  //             expect(res.length).to.equal(1);
-  //             expect(res[0].user_type).to.equal('individual');
-  //             expect(res[0].first_name).to.equal(testData.testIndividual.first_name);
-  //             expect(res[0].last_name).to.equal(testData.testIndividual.last_name);
-  //             expect(res[0].organization).to.equal('');
-  //           });
-  //       });
-  //   });
-  // });
+  describe('api/user POST new user', function() {
+    it('should add user to users table as type individual', function() {
+      const testUser = testData.testIndividual;
 
+      return chai.request(app)
+        .post('/api/user')
+        .send(
+          {
+
+          })
+        .then(function(res) {
+          console.log('----- post res -----');
+          console.log(res);
+          expect(res.body.length).to.equal(1);
+          expect(res.body[0].username).to.equal(testData.testIndividual.username);
+        })
+        .then( () => {
+          return chai.request(app)
+            .get('/api/user/list')
+            .then(function(res) {
+              console.log('----- get res -----');
+              console.log(res);
+              expect(res.body.length).to.equal(1);
+              expect(res.body[0].user_type).to.equal('individual');
+              expect(res.body[0].first_name).to.equal(testData.testIndividual.first_name);
+              expect(res.body[0].last_name).to.equal(testData.testIndividual.last_name);
+              expect(res.body[0].organization).to.equal('');
+            });
+        });
+    });
+  });
 });
 
