@@ -23,13 +23,25 @@ testData.userSeeds = [
   }
 ];
 
-testData.testUser = {
+testData.testIndividual = {
   username: 'cheElHombre',
   password: 'mypassword',
   location_city: 'miami',
   location_state: 'fl',
   first_name: 'carlos',
-  last_name: 'caracas'
+  last_name: 'caracas',
+  organization: ''
+};
+
+testData.testOrganization = {
+  username: 'dragonflyOne',
+  password: 'mypassword',
+  user_type: 'organization',
+  location_city: 'tallahassee',
+  location_state: 'fl',
+  first_name: '',
+  last_name: '',
+  organization: 'Deer Lane Day Care'
 };
 
 testData.seedUserTable = function() {

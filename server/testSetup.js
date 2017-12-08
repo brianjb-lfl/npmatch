@@ -10,10 +10,11 @@ testSetup.addUserTable = function() {
       table.increments('id').primary();
       table.text('username').unique();
       table.text('password');
-      table.text('user_type', 'individual');
+      table.timestamp('timestamp_created').defaultTo(knex.fn.now());
+      table.text('user_type').defaultTo('individual');
       table.text('location_city');
       table.text('location_state');
-      table.text('location_country', "USA");
+      table.text('location_country').defaultTo('USA');
       table.text('bio');
       table.text('first_name');
       table.text('last_name');

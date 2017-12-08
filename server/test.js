@@ -26,10 +26,7 @@ describe('work', function() {
   });
 
   beforeEach(function() {
-    return (testSetup.addUserTable())
-      .then( () => {
-        return testData.seedUserTable();
-      });
+    return (testSetup.addUserTable());
   });
 
   afterEach(function() {
@@ -38,33 +35,43 @@ describe('work', function() {
 
 
   // ***** SELECT USERS
-  describe('select users', function() {
-    it('should return existing users', function() {
-      return work.getUsers()
-        .then(function(res) {
-          let userNames = testData.userSeeds.map( item => item.username );
-          expect(res.length).to.equal(2);
-          expect(userNames).to.include(res[0].username);
-          expect(userNames).to.include(res[1].username);
-        });
-    });
-  });
-
-  // ***** POST USER
-  // describe('add user', function() {
-  //   it('should add user to users table', function() {
-  //     return chai.request(work)
-  //       .addUser()
-  //       .then(function (res) {         // expect res.rowCount = 1
-  //         expect(res.command).to.equal('INSERT');
-  //         expect(res.rowCount).to.equal(1);
+  // describe('select users', function() {
+  //   it('should return existing users', function() {
+  //     return testData.seedUserTable()
+  //       .then( () => {
   //         return work.getUsers()
-  //           .then(function (res) {
-
+  //           .then(function(res) {
+  //             let userNames = testData.userSeeds.map( item => item.username );
+  //             expect(res.length).to.equal(2);
+  //             expect(userNames).to.include(res[0].username);
+  //             expect(userNames).to.include(res[1].username);
   //           });
   //       });
   //   });
   // });
+
+  // ***** POST USER
+  describe('add user', function() {
+    it('should add user to users table as type individual', function() {
+      return work.addIndivUser(testData.testIndividual)
+        .then( res => {
+          console.log('insert response ...');
+          console.log(res);
+          expect(res.length).to.equal(1);
+          expect(res[0].username).to.equal(testData.testIndividual.username);
+          return work.getUsers()
+            .then( res => {
+              console.log('get response ...');
+              console.log(res);
+              expect(res.length).to.equal(1);
+              expect(res[0].user_type).to.equal('individual');
+              expect(res[0].first_name).to.equal(testData.testIndividual.first_name);
+              expect(res[0].last_name).to.equal(testData.testIndividual.last_name);
+              expect(res[0].organization).to.equal('');
+            });
+        });
+    });
+  });
 
 });
 

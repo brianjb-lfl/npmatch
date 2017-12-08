@@ -7,39 +7,43 @@ let work = {};
 work.getUsers = function() {
   const knex = require('./db');
   return knex
-    .select('username', 'location_city', 'location_state')
+    .select('username', 'location_city', 'location_state', 
+      'first_name', 'last_name', 'user_type', 'organization')
     .from ('users')
     .orderBy('username')
     .debug(false)
-    .then(results => {
+    .then( res => {
       knex.destroy();
       console.log('database connection closed');
-      return Promise.resolve(results);
+      return Promise.resolve(res);
     });
 };
 
-// work.addUser = function() {
-//   const knex = require('./db');
-//   return knex('users')
-//     .insert({
-//       username: 'sevencounties', 
-//       user_type: 'organization',
-//       location_city: 'Louisville',
-//       location_state: 'KY',
-//       organization: 'Seven Counties Shelter',
-//     })
-//     .then ( res => {
-//       console.log('--- post res ---');
-//       console.log(res);
-//       return knex.select()
-//         .from('users');
-//     })
-//     .then( res => {
-//       console.log('--- select res ---');
-//       console.log(res);
-//       closeDbConn();
-//     });
-// };
+work.addIndivUser = function(user) {
+  const knex = require('./db');
+  return knex('users')
+    .insert({
+      username: user.username,
+      password: user.password, 
+      first_name: user.first_name,
+      last_name: user.last_name,
+      location_city: user.location_city,
+      location_state: user.location_state,
+      organization: user.organization,
+    })
+    .then ( res => {
+      console.log('--- post res ---');
+      console.log(res);
+      return knex.select()
+        .from('users')
+        .where('username', '=', user.username);
+    })
+    .then( res => {
+      console.log('--- select res ---');
+      console.log(res);
+      return Promise.resolve(res);
+    });
+};
 
 // work.updateUser = function() {
 //   knex('users')
