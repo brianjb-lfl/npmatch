@@ -5,9 +5,17 @@ import {display as initialState} from './potentialStates'
 // if we add lists, each one should have an action and reducer; each one can populate 1 key, like "main" does
 
 export const reducer = (state = initialState, action) => {
+  
   if (action.type === actions.CHANGE_DISPLAY) {
     return Object.assign({}, state, {
       view: action.view
+    });
+  }
+
+  else if (action.type === actions.TOGGLE_MODAL) {
+    return Object.assign({}, state, {
+      modal: !state.modal,
+      modalMessage: action.message
     });
   }
 

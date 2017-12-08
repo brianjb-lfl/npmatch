@@ -10,3 +10,5 @@ export const loadOpportunitiesList = (array) => ({
   type: LOAD_OPPORTUNITIES_LIST,
   main: array
 })
+
+// @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@

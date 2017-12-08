@@ -20,4 +20,10 @@ describe('reducer - display', () => {
     expect(state.view).toBe(newView);
   });
 
+  it('Should show or hide the modal', () => {
+    const newView = 'login';
+    const state = reducer(initialState, {type: actions.CHANGE_DISPLAY, view: newView});
+    expect(state.view).toBe(newView);
+  });
+
 });

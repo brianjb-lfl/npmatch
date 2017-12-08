@@ -24,3 +24,6 @@ export const loadUser = user => ({
   adminOf: user.adminOf, // array of objects
   following: user.following, // array of objects
 });
+
+// @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
+
