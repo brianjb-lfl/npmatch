@@ -1,6 +1,6 @@
 import * as actions from '../actions/opportunity';
 
-describe('actions', () => {
+describe('actions - single opportunity', () => {
 
   it('should load a single opportunity', () => {
     const opportunity = {
@@ -40,7 +40,6 @@ describe('actions', () => {
     };
     const result = actions.loadOpportunity(opportunity);
     expect(result).toEqual(expectedAction);
-    // how to test data types
     expect(result).toBeDefined();
     expect(result).toBeTruthy();
     expect(result.id).toEqual(1);

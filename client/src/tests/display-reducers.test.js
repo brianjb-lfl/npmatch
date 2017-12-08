@@ -2,7 +2,7 @@ import { reducer } from '../reducers/display';
 import * as actions from '../actions/display';
 import { display as initialState } from '../reducers/potentialStates';
 
-describe('reducer', () => {
+describe('reducer - display', () => {
   
   it('Should return the initial state when nothing is passed in', () => {
     const state = reducer(undefined, {type: '__UNKNOWN'});
@@ -14,8 +14,10 @@ describe('reducer', () => {
     expect(state).toBe(initialState);
   });
 
-  it('Should load adisplay into state', () => {
-        
+  it('Should load a display into state', () => {
+    const newView = 'login';
+    const state = reducer(initialState, {type: actions.CHANGE_DISPLAY, view: newView});
+    expect(state.view).toBe(newView);
   });
 
 });

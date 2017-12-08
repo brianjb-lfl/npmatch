@@ -1,8 +1,8 @@
-import { reducer } from '../reducers/user';
-import * as actions from '../actions/user';
+import { reducer } from '../reducers/userViewed';
+import * as actions from '../actions/userViewed';
 import {user as initialState} from '../reducers/potentialStates';
 
-describe('reducer - single user', () => {
+describe('reducer - user viewed', () => {
   
   it('Should return the initial state when nothing is passed in', () => {
     const state = reducer(undefined, {type: '__UNKNOWN'});

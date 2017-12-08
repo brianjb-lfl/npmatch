@@ -124,24 +124,26 @@ export const opportunity = {
     ],
 };
 
-export const opportunitiesList = [
-  {
-    id: '',
-    userId: '',
-    organization: '', // SQL join (in case of individuals, list individual's full name here)
-    opportunityType: '',
-    offer: '',
-    title: '',
-    narrative: '',
-    timestampStart: '',
-    timestampEnd: '',
-    locationCity: '',
-    locationState: '',
-    locationCountry: '',
-    link: '',
-    causes: [''],     // SQL join   
-  }
-];
+export const opportunitiesList = {
+  main: [
+    {
+      id: '',
+      userId: '',
+      organization: '', // SQL join (in case of individuals, list individual's full name here)
+      opportunityType: '',
+      offer: '',
+      title: '',
+      narrative: '',
+      timestampStart: '',
+      timestampEnd: '',
+      locationCity: '',
+      locationState: '',
+      locationCountry: '',
+      link: '',
+      causes: [''],     // SQL join   
+    }
+  ]
+};
 
 export const display = {
   view: 'landing'

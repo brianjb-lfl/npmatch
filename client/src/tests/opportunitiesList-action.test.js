@@ -1,6 +1,6 @@
 import * as actions from '../actions/opportunitiesList';
 
-describe('actions', () => {
+describe('actions - opportunities list', () => {
 
   it('should load an array of opportunities', () => {
     const arrayOfOpportunities = [

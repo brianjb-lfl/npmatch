@@ -2,7 +2,7 @@ import { reducer } from '../reducers/usersList';
 import * as actions from '../actions/usersList';
 import { usersList as initialState } from '../reducers/potentialStates';
 
-describe('reducer', () => {
+describe('reducer - list of users', () => {
   
   it('Should return the initial state when nothing is passed in', () => {
     const state = reducer(undefined, {type: '__UNKNOWN'});

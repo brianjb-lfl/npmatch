@@ -5,7 +5,6 @@ import {opportunitiesList as initialState} from './potentialStates'
 // if we add lists, each one should have an action and reducer; each one can populate 1 key, like "main" does
 
 export const reducer = (state = initialState, action) => {
-
   if (action.type === actions.LOAD_OPPORTUNITIES_LIST) {
     return Object.assign({}, state, {
       main: action.main

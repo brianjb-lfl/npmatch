@@ -1,6 +1,6 @@
 import * as actions from '../actions/usersList';
 
-describe('actions', () => {
+describe('actions - list of users', () => {
 
   it('should load an array of users', () => {
     const arrayOfUsers = [

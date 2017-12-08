@@ -9,21 +9,20 @@ export const reducer = (state = initialState, action) => {
   if (action.type === actions.LOAD_OPPORTUNITY) {
     return Object.assign({}, state, {
       id: action.id,
-      firstName: action.firstName,
-      lastName: action.lastName,
-      username: action.username,
-      userType: action.userType,
+      userId: action.userId,
       organization: action.organization,
+      opportunityType: action.opportunityType,
+      offer: action.offer,
+      title: action.title,
+      narrative: action.narrative,
+      timestampStart: action.timestampStart,
+      timestampEnd: action.timestampEnd,
       locationCity: action.locationCity,
       locationState: action.locationState,
       locationCountry: action.locationCountry,
-      bio: action.bio, // do we need this?
-      links: action.links, // array of objects
+      link: action.link,
       causes: action.causes,
-      skills: action.skills,
-      responses: action.responses,
-      adminOf: action.adminOf, // array of objects
-      following: action.following, // array of objects);
+      responses: action.responses
     });
   }
 

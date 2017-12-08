@@ -1,6 +1,6 @@
 import * as actions from '../actions/display';
 
-describe('actions', () => {
+describe('actions - display', () => {
 
   it('should change the display in state', () => {
     const display = 'landing';
@@ -8,7 +8,7 @@ describe('actions', () => {
       type: actions.CHANGE_DISPLAY,
       view: display
     }
-    const result = actions.loadDisplay(display);
+    const result = actions.changeDisplay(display);
     expect(result).toEqual(expectedDisplay)
   });
 

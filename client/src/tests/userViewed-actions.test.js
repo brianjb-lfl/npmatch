@@ -1,6 +1,6 @@
-import * as actions from '../actions/user';
+import * as actions from '../actions/userViewed';
 
-describe('actions - single user', () => {
+describe('actions - user viewed', () => {
 
   it('should create an action that loads a minimal user', () => {
     const user = {
