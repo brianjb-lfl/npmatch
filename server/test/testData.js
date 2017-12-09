@@ -30,6 +30,18 @@ testData.userSeeds = [
     organization: ''
   },
   {
+    username: 'packerfan75',
+    password: 'packerfanspw',
+    user_type: 'individual',
+    location_city: 'two rivers',
+    location_state: 'wi',
+    location_country: 'USA',
+    bio: 'parent of rescue shitzus, fan of pack',
+    first_name: 'dodie',
+    last_name: 'davis',
+    organization: ''
+  },
+  {
     username: 'theshelter',
     password: 'shelterprezpw',
     user_type: 'organization',
@@ -40,6 +52,30 @@ testData.userSeeds = [
     first_name: '',
     last_name: '',
     organization: 'The Shelter on 52nd'
+  },
+  {
+    username: 'stmarysareamission',
+    password: 'stmampassword',
+    user_type: 'organization',
+    location_city: 'high point',
+    location_state: 'nc',
+    location_country: 'USA',
+    bio: 'the blessed, paying it forward',
+    first_name: '',
+    last_name: '',
+    organization: 'St Marys Area Mission'
+  },
+  {
+    username: 'hopeonwheels',
+    password: 'howspassword',
+    user_type: 'organization',
+    location_city: 'miami',
+    location_state: 'fl',
+    location_country: 'USA',
+    bio: 'meeting the needs wherever they are',
+    first_name: '',
+    last_name: '',
+    organization: 'Hope on Wheels LLC'
   }
 ];
 
@@ -50,7 +86,7 @@ testData.testIndividual = {
   location_city: 'topeka',
   location_state: 'ks',
   location_country: 'USA',
-  bio: 'solving your problems in my arena',
+  bio: 'i speak legal',
   first_name: 'grady',
   last_name: 'goodlove',
   organization: ''
@@ -68,6 +104,28 @@ testData.testOrganization = {
   last_name: '',
   organization: 'Deer Lake Child Care'
 };
+
+testData.testUserLinks = [
+  {
+    link_type: 'homepage',
+    link_url: 'http://www.abc.com'
+  },
+  {
+    link_type: 'resume',
+    link_url: 'http://www.ezresumes.com/abc'
+  }
+]
+
+testData.testOrgLinks = [
+  {
+    link_type: 'homepage',
+    link_url: 'http://www.home.com'
+  },
+  {
+    link_type: 'news',
+    link_url: 'http://www.thetimes.com/abc'
+  }
+]
 
 testData.seedUserTable = function() {
   return knex('users')
