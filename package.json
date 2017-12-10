@@ -25,7 +25,7 @@
   "scripts": {
     "start": "nodemon ./server/server.js",
     "test": "mocha --colors --watch  test/setup.test.js */*.test.js",
-    "coverage": "nyc mocha --colors  server/test/test.js" ,
+    "coverage": "nyc mocha --colors  server/test/test.js",
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha test/setup.test.js */*.test.js",
     "heroku": "node index.js",

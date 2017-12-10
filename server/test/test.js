@@ -13,6 +13,7 @@ const chaiHttp = require('chai-http');
 const { app } = require('../server');
 const { testSetup } = require('./testSetup');
 const { testData } = require('./testData');
+const { testF } = require('./testHelpers');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -41,24 +42,43 @@ describe('user', function() {
   });
 
   // ***** GET USER LIST
-  describe('api/users/list GET user list', function() {
-    it('should return a list of existing users', function() {
-      return chai.request(app)
-        .get('/api/users/list')
-        .then(function(res) {
-          let userNames = testData.userSeeds.map( item => item.username );
-          expect(res.body.length).to.equal(testData.userSeeds.length);
-          for(let uCtr = 0; uCtr < testData.userSeeds.length; uCtr++) {
-            expect(userNames).to.include(res.body[uCtr].username);
-          }
-          //expect(res.body[0].username).to.equal('kaisersolze');   // failing test
-        });
-    });
-  });
+  // describe('api/users/list GET user list', function() {
+  //   it('should return a list of existing users', function() {
+  //     return chai.request(app)
+  //       .get('/api/users/list')
+  //       .then(function(res) {
+  //         let userNames = testData.userSeeds.map( item => item.username );
+  //         expect(res.body.length).to.equal(testData.userSeeds.length);
+  //         for(let uCtr = 0; uCtr < testData.userSeeds.length; uCtr++) {
+  //           expect(userNames).to.include(res.body[uCtr].username);
+  //         }
+  //         //expect(res.body[0].username).to.equal('kaisersolze');   // failing test
+  //       });
+  //   });
+  // });
 
   // ***** GET INDIVIDUAL USER - DETAIL
-  // describe('api/user/:id GET user details', function() {
-    
+  describe('api/user/:id GET user details', function() {
+    it('should return the users profile info, links, causes, and skills', function() {
+      let focusUser = {};
+      return testF.getFocusUser()
+        .then ( results => {
+          focusUser = results;
+          return chai.request(app)
+            .get(`api/users/${focusUser.id}`)
+        })
+        .then( res => {
+          expect(res.body.length).to.equal(1);
+          expect(res.body.username).to.equal(focusUser.username);
+          expect(res.body.links.length).to.equal(testData.testUserLinks.length);
+          const expUserLinksArr = testData.testUserLinks.map( item => item.link_url);
+          for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
+            expect(expUserLinksArr).to.include(res.body.links[lCtr].link_url);
+          }
+        })
+    })
+  });
+
   
   
   //   // base user info
@@ -68,7 +88,7 @@ describe('user', function() {
   //   // array of responses - responses, id_user = id, id_opp = opportunities id, id_user = orgs id
   //   // array of adminOf - roles - id_user_receiving = id, id_user_adding = id of org where capabilities = admin
   //   // array of followingroles - id_user_receiving = id, id_user_adding = id of org where capabilities = admin
-  // });
+
 
   // ***** POST USER
   // describe('api/users POST new user', function() {

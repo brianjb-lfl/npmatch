@@ -41,13 +41,19 @@ testSetup.seedLinksTable = function( usrID, orgID ) {
   let linksArr = [];
   // add individual link seeds
   testData.testUserLinks.map( item => {
-    item.id_user = usrID;
-    linksArr.push(item);
+    linksArr.push({
+      link_type: item.link_type,
+      link_url: item.link_url,
+      id_user: usrID
+    });
   });
   // add org link seeds
   testData.testOrgLinks.map( item => {
-    item.id_user = orgID;
-    linksArr.push(item);
+    linksArr.push({
+      link_type: item.link_type,
+      link_url: item.link_url,
+      id_user: orgID
+    });
   })
   // insert array of link objects into links table
   return knex('links')
@@ -60,21 +66,21 @@ testSetup.buildFullDB = function() {
   let focusUserID;
   let focusOrgID;
   return (testSetup.addUserTable())
-  .then( () => {
-    return (testData.seedUserTable())
-  })
-  .then( () => {
-    // select individual and org for focus
-    return (testSetup.setTestParams());
-  })
-  .then( results => {
-    focusUserID = results.focus_user_id;
-    focusOrgID = results.focus_org_id;
-    return (testSetup.addLinksTable());
-  })
-  .then( () => {
-    return (testSetup.seedLinksTable(focusUserID, focusOrgID));
-  })
+    .then( () => {
+      return (testData.seedUserTable())
+    })
+    .then( () => {
+      // select individual and org for focus
+      return (testSetup.setTestParams());
+    })
+    .then( results => {
+      focusUserID = results.focus_user_id;
+      focusOrgID = results.focus_org_id;
+      return (testSetup.addLinksTable());
+    })
+    .then( () => {
+      return (testSetup.seedLinksTable(focusUserID, focusOrgID));
+    })
 };
 
 testSetup.tearDownDB = function() {
@@ -90,28 +96,27 @@ testSetup.addTestParamsTable = function() {
   return knex.schema.createTable('test_params', function(table) {
     table.increments('id').primary();
     table.integer('focus_user_id');
+    table.text('focus_user_username');
     table.integer('focus_org_id');
+    table.text('focus_org_username');
   });
 };
 
 testSetup.setTestParams = function() {
   console.log('running setTestParams');
-  let focusUserId;
-  let focusOrgId;
+  const userArr = [];
+  const orgArr = [];
   return knex('users')
-    .select('id', 'user_type')
+    .select('id', 'user_type', 'username')
     .orderBy('user_type')
     .then( results => {
       // create arrays of users and orgs
-      const userArr = [];
-      const orgArr = [];
       results.map( item => item.user_type === 'individual' ? 
-        userArr.push(item.id) : orgArr.push(item.id));
+        userArr.push({id: item.id, username: item.username}) : 
+        orgArr.push({id: item.id, username: item.username}));
       // randomly select one user and one org for testing focus
       const usrIdx = Math.floor(Math.random()*userArr.length);
       const orgIdx = Math.floor(Math.random()*orgArr.length);
-      focusUserId = userArr[usrIdx];
-      focusOrgId = orgArr[orgIdx];
       // test_param table is not broken down and rebuilt
       // it should only ever have one row of data
       // clear old data and insert new
@@ -120,10 +125,13 @@ testSetup.setTestParams = function() {
         .then( () => {
           const tpObj = {}
           return knex('test_params')
-            .returning(['focus_user_id', 'focus_org_id'])
+            .returning(['focus_user_id', 'focus_user_username', 
+              'focus_org_id', 'focus_org_username'])
             .insert({
-              focus_user_id: focusUserId,
-              focus_org_id: focusOrgId
+              focus_user_id: userArr[usrIdx].id,
+              focus_user_username: userArr[usrIdx].username,
+              focus_org_id: orgArr[orgIdx].id,
+              focus_org_username: orgArr[orgIdx].username,
             })
         })
     })
