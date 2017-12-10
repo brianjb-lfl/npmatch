@@ -33,11 +33,13 @@ userRouter.get('/list', (req, res) => {
 userRouter.get('/:id', (req, res) => {
   let usrObj = {}
   const knex = require('./db');
+  // get user base info
   return knex('users')
     .select()
     .where({id: req.params.id})
     .then( results => {
       usrObj = ({...results[0]});
+      // get user links
       return knex('links')
         .select('id', 'link_type', 'link_url')
         .where({id_user: usrObj.id})
@@ -46,6 +48,7 @@ userRouter.get('/:id', (req, res) => {
       results.forEach( item => {
         usrObj.links = results;
       })
+      // get user causes
       return knex('users_causes')
         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
         .select('causes.id', 'causes.cause')

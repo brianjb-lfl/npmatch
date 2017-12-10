@@ -141,6 +141,20 @@ testData.testUserCauses = [
   {cause: 'pediatric-aids'}
 ]
 
+testData.skillSeeds = [
+  {skill: 'clerical'},
+  {skill: 'first aid'},
+  {skill: 'leadership'},
+  {skill: 'cooking'},
+  {skill: 'fund-raising'},
+  {skill: 'handyman'}
+]
+
+testData.testUserSkills = [
+  {skill: 'clerical'},
+  {skill: 'cooking'}
+]
+
 testData.seedUsersTable = function() {
   return knex('users')
     .insert(testData.userSeeds);
@@ -149,6 +163,11 @@ testData.seedUsersTable = function() {
 testData.seedCausesTable = function() {
   return knex('causes')
     .insert(testData.causeSeeds);
+}
+
+testData.seedSkillsTable = function() {
+  return knex('skills')
+    .insert(testData.skillSeeds);
 }
 
 module.exports = { testData };

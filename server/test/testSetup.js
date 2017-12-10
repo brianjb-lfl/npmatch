@@ -96,6 +96,43 @@ testSetup.seedUsersCausesTable = function(usrID) {
   });
 };
 
+testSetup.addSkillsTable = function() {
+  console.log('running addSkillsTable');
+  return knex.schema.createTable('skills', function(table) {
+    table.increments('id').primary();
+    table.text('skill');
+  });
+};
+
+testSetup.addUsersSkillsTable = function() {
+  console.log('running addUsersSkillsTable');
+  return knex.schema.createTable('users_skills', function(table) {
+    table.increments('id').primary();
+    table.integer('id_user');
+    table.foreign('id_user').references('users.id');
+    table.integer('id_skill');
+    table.foreign('id_skill').references('skills.id');
+    table.timestamp('timestamp_created').defaultTo(knex.fn.now());
+  });
+};
+
+testSetup.seedUsersSkillsTable = function(usrID) {
+  console.log('running seedUsersSkills');
+  testData.testUserSkills.map( item => {
+    return knex('skills')
+      .select('id')
+      .where({skill: item.skill})
+      .then( result => {
+        return knex('users_skills')
+          .insert({
+            id_user: usrID,
+            id_skill: result[0].id
+          })
+      })
+  });
+};
+
+// ***** BUILD DB *****
 testSetup.buildFullDB = function() {
   console.log('running buildFullDB');
   // focus user and org will have links to other tables for tests of foreign key linked data
@@ -129,9 +166,22 @@ testSetup.buildFullDB = function() {
     .then( () => {
       return (testSetup.seedUsersCausesTable(focusUserID));
     })
+    .then( () => {
+      return (testSetup.addSkillsTable());
+    })
+    .then( () => {
+      return (testData.seedSkillsTable());
+    })
+    .then( () => {
+      return (testSetup.addUsersSkillsTable());
+    })
+    .then( () => {
+      return (testSetup.seedUsersSkillsTable(focusUserID));
+    })
 
 };
 
+// ***** TEAR DOWN DB *****
 testSetup.tearDownDB = function() {
   console.log('running tearDownDB');
   return knex.schema.dropTableIfExists('links')
@@ -139,7 +189,13 @@ testSetup.tearDownDB = function() {
       return knex.schema.dropTableIfExists('users_causes')
     })
     .then( () => {
+      return knex.schema.dropTableIfExists('users_skills')
+    })
+    .then( () => {
       return knex.schema.dropTableIfExists('causes');
+    })
+    .then( () => {
+      return knex.schema.dropTableIfExists('skills');
     })
     .then( () => {
       return knex.schema.dropTableIfExists('users')

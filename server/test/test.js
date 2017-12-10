@@ -83,14 +83,18 @@ describe('user', function() {
           for(let cCtr = 0; cCtr < res.body.causes.length; cCtr++) {
             expect(expUserCausesArr).to.include(res.body.causes[cCtr].cause);
           }
+          // test user skills
+          expect(res.body.skills.length).to.equal(testData.testUserSkills.length);
+          const expUserSkillsArr = testData.testUserSkills.map( item => item.skill);
+          for(let sCtr = 0; sCtr < res.body.skills.length; sCtr++) {
+            expect(expUserSkillsArr).to.include(res.body.skills[sCtr].skill);
+          }
         })
     })
   });
 
   
   
-  //   // base user info
-  //   // array of causes - users_causes - id_user = id, id_cause = causes id
   //   // array of skills - users_skills - id_user = id,  id_skill = skills id 
   //   // array of responses - responses, id_user = id, id_opp = opportunities id, id_user = orgs id
   //   // array of adminOf - roles - id_user_receiving = id, id_user_adding = id of org where capabilities = admin
