@@ -29,6 +29,27 @@ userRouter.get('/list', (req, res) => {
     });    
 });
 
+// GET api/user/:id
+userRouter.get('/:id', (req, res) => {
+  let usrObj = {}
+  const knex = require('./db');
+  return knex('users')
+    .select()
+    .where({id: req.params.id})
+    .then( results => {
+      usrObj = ({...results[0]});
+      return knex('links')
+        .select('id', 'link_type', 'link_url')
+        .where({id_user: usrObj.id})
+    })
+    .then( results => {
+      results.forEach( item => {
+        console.log(item[anonymous]);
+      })
+    })
+
+})
+
 // POST api/user
 userRouter.post('/', jsonParser, (req, res) => {
   const knex = require('./db');

@@ -58,14 +58,14 @@ describe('user', function() {
   // });
 
   // ***** GET INDIVIDUAL USER - DETAIL
-  describe('api/user/:id GET user details', function() {
+  describe('api/users/:id GET user details', function() {
     it('should return the users profile info, links, causes, and skills', function() {
       let focusUser = {};
       return testF.getFocusUser()
         .then ( results => {
           focusUser = results;
           return chai.request(app)
-            .get(`api/users/${focusUser.id}`)
+            .get(`/api/users/${focusUser.focus_user_id}`)
         })
         .then( res => {
           expect(res.body.length).to.equal(1);

@@ -74,8 +74,8 @@ testSetup.buildFullDB = function() {
       return (testSetup.setTestParams());
     })
     .then( results => {
-      focusUserID = results.focus_user_id;
-      focusOrgID = results.focus_org_id;
+      focusUserID = results[0].focus_user_id;
+      focusOrgID = results[0].focus_org_id;
       return (testSetup.addLinksTable());
     })
     .then( () => {
