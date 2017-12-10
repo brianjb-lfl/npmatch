@@ -45,9 +45,7 @@ userRouter.get('/:id', (req, res) => {
         .where({id_user: usrObj.id})
     })
     .then( results => {
-      results.forEach( item => {
-        usrObj.links = results;
-      })
+      usrObj.links = results;
       // get user causes
       return knex('users_causes')
         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
@@ -55,9 +53,17 @@ userRouter.get('/:id', (req, res) => {
         .where({id_user: usrObj.id})
     })
     .then( results => {
-      console.log(results);
       usrObj.causes = results;
-      console.log(usrObj);
+      // get user skills
+      return knex('users_skills')
+        .join('skills', 'users_skills.id_skill', '=', 'skills.id')
+        .select('skills.id', 'skills.skill')
+        .where({id_user: usrObj.id})
+    })
+    .then( results => {
+      //console.log(results);
+      usrObj.skills = results;
+      //console.log(usrObj);
       res.json(usrObj);
     })
     .catch( err => {
