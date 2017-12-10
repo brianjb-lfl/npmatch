@@ -12,7 +12,7 @@ userRouter.get('/testify/', (req, res) => {
   res.status(200).json({message: 'Good to go'});
 });
 
-// GET api/user/list
+// GET api/users/list
 userRouter.get('/list', (req, res) => {
   const knex = require('./db');
   return knex
@@ -29,7 +29,7 @@ userRouter.get('/list', (req, res) => {
     });    
 });
 
-// GET api/user/:id
+// GET api/users/:id
 userRouter.get('/:id', (req, res) => {
   let usrObj = {}
   const knex = require('./db');
@@ -44,13 +44,16 @@ userRouter.get('/:id', (req, res) => {
     })
     .then( results => {
       results.forEach( item => {
-        console.log(item[anonymous]);
+        usrObj.links = results;
       })
+      res.json(usrObj);
     })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    })
+});
 
-})
-
-// POST api/user
+// POST api/users
 userRouter.post('/', jsonParser, (req, res) => {
   const knex = require('./db');
   return knex('users')

@@ -68,7 +68,7 @@ describe('user', function() {
             .get(`/api/users/${focusUser.focus_user_id}`)
         })
         .then( res => {
-          expect(res.body.length).to.equal(1);
+          console.log(res.body);
           expect(res.body.username).to.equal(focusUser.username);
           expect(res.body.links.length).to.equal(testData.testUserLinks.length);
           const expUserLinksArr = testData.testUserLinks.map( item => item.link_url);
