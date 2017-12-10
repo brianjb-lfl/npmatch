@@ -13,12 +13,12 @@ orgRouter.get('/testify/', (req, res) => {
 });
 
 // GET api/users/list
-userRouter.get('/list', (req, res) => {
+orgRouter.get('/list', (req, res) => {
   const knex = require('./db');
   return knex
-    .select('username', 'location_city', 'location_state', 
-      'first_name', 'last_name', 'user_type', 'organization')
+    .select('username', 'location_city', 'location_state', 'user_type', 'organization')
     .from ('users')
+    .where({user_type: 'organization'})
     .orderBy('username')
     .debug(false)
     .then( results => {
@@ -30,7 +30,7 @@ userRouter.get('/list', (req, res) => {
 });
 
 // GET api/users/:id
-// userRouter.get('/:id', (req, res) => {
+// orgRouter.get('/:id', (req, res) => {
 //   let usrObj = {}
 //   const knex = require('./db');
 //   // get user base info
@@ -70,7 +70,7 @@ userRouter.get('/list', (req, res) => {
 // });
 
 // POST api/users
-// userRouter.post('/', jsonParser, (req, res) => {
+// orgRouter.post('/', jsonParser, (req, res) => {
 //   const knex = require('./db');
 //   return knex('users')
 //     .insert(req.body)
