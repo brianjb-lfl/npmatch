@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { userRouter } = require('./userRouter');
+const { orgRouter } = require('./orgRouter');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(
 );
 
 app.use('/api/users', userRouter);
+app.use('/api/orgs', orgRouter);
 
 app.use('*', (req, res) => {
   return res.status(404).json({message: 'Not Found'});

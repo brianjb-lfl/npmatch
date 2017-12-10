@@ -19,6 +19,7 @@ userRouter.get('/list', (req, res) => {
     .select('username', 'location_city', 'location_state', 
       'first_name', 'last_name', 'user_type', 'organization')
     .from ('users')
+    .where({user_type: 'individual'})
     .orderBy('username')
     .debug(false)
     .then( results => {
@@ -61,9 +62,7 @@ userRouter.get('/:id', (req, res) => {
         .where({id_user: usrObj.id})
     })
     .then( results => {
-      //console.log(results);
       usrObj.skills = results;
-      //console.log(usrObj);
       res.json(usrObj);
     })
     .catch( err => {

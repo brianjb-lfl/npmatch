@@ -57,7 +57,7 @@ describe('user', function() {
     });
   });
 
-  // ***** GET INDIVIDUAL USER - DETAIL
+  // // ***** GET INDIVIDUAL USER - DETAIL
   describe('api/users/:id GET user details', function() {
     it('should return the users profile info, links, causes, and skills', function() {
       let focusUser = {};
@@ -108,14 +108,20 @@ describe('user', function() {
           expect(res.body.length).to.equal(1);
           expect(res.body[0].username).to.equal(testData.testIndividual.username);
           return chai.request(app)
-            .get('/api/users/res.body[0].id')
+            .get(`/api/users/${res.body[0].id}`)
             .then(function(res) {
-              expect(res.body.length).to.equal(1);
-              expect(res.body[0].user_type).to.equal('individual');
-              expect(res.body[0].first_name).to.equal(testData.testIndividual.first_name);
-              expect(res.body[0].last_name).to.equal(testData.testIndividual.last_name);
-              expect(res.body[0].organization).to.equal('');
+              expect(res.body.username).to.equal(testData.testIndividual.username);
+              expect(res.body.user_type).to.equal('individual');
+              expect(res.body.first_name).to.equal(testData.testIndividual.first_name);
+              // expect(res.body.first_name).to.equal('notyouraveragefirstname');    // failing test
+              expect(res.body.last_name).to.equal(testData.testIndividual.last_name);
+              expect(res.body.organization).to.equal('');
             });
+        })
+        .catch(err => {
+          if(err instanceof chai.AssertionError) {
+            throw err;
+          }
         });
     });
   });
