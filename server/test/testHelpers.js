@@ -14,7 +14,9 @@ testF.getFocusUser = function() {
     .then( results => {
       usrObj = testData.userSeeds.filter( item => item.username === results[0].focus_user_username)[0];
       usrObj = Object.assign( {}, usrObj, ...results, {
-        links: [...testData.testUserLinks]});
+        links: [...testData.testUserLinks],
+        causes: [...testData.testUserCauses]
+      });
       return(usrObj);
     })
 };

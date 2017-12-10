@@ -127,9 +127,28 @@ testData.testOrgLinks = [
   }
 ]
 
-testData.seedUserTable = function() {
+testData.causeSeeds = [
+  {cause: 'environment'},
+  {cause: 'homelessness'},
+  {cause: 'teen-pregnancy'},
+  {cause: 'malnutrition'},
+  {cause: 'pediatric-aids'},
+  {cause: 'adult-literacy'}
+]
+
+testData.testUserCauses = [
+  {cause: 'homelessness'},
+  {cause: 'pediatric-aids'}
+]
+
+testData.seedUsersTable = function() {
   return knex('users')
     .insert(testData.userSeeds);
 };
+
+testData.seedCausesTable = function() {
+  return knex('causes')
+    .insert(testData.causeSeeds);
+}
 
 module.exports = { testData };

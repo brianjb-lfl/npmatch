@@ -5,7 +5,7 @@ const { testData } = require('./testData');
 
 let testSetup = {};
 
-testSetup.addUserTable = function() {
+testSetup.addUsersTable = function() {
   console.log('running add user table');
   return knex.schema.createTable('users', function(table) {
     table.increments('id').primary();
@@ -60,14 +60,50 @@ testSetup.seedLinksTable = function( usrID, orgID ) {
     .insert(linksArr)
 };
 
+testSetup.addCausesTable = function() {
+  console.log('running addCausesTable');
+  return knex.schema.createTable('causes', function(table) {
+    table.increments('id').primary();
+    table.text('cause');
+  });
+};
+
+testSetup.addUsersCausesTable = function() {
+  console.log('running addUsersCausesTable');
+  return knex.schema.createTable('users_causes', function(table) {
+    table.increments('id').primary();
+    table.integer('id_user');
+    table.foreign('id_user').references('users.id');
+    table.integer('id_cause');
+    table.foreign('id_cause').references('causes.id');
+    table.timestamp('timestamp_created').defaultTo(knex.fn.now());
+  });
+};
+
+testSetup.seedUsersCausesTable = function(usrID) {
+  console.log('running seedUsersCauses');
+  testData.testUserCauses.map( item => {
+    return knex('causes')
+      .select('id')
+      .where({cause: item.cause})
+      .then( result => {
+        return knex('users_causes')
+          .insert({
+            id_user: usrID,
+            id_cause: result[0].id
+          })
+      })
+  });
+};
+
 testSetup.buildFullDB = function() {
   console.log('running buildFullDB');
   // focus user and org will have links to other tables for tests of foreign key linked data
   let focusUserID;
   let focusOrgID;
-  return (testSetup.addUserTable())
+  return (testSetup.addUsersTable())
     .then( () => {
-      return (testData.seedUserTable())
+      return (testData.seedUsersTable());
     })
     .then( () => {
       // select individual and org for focus
@@ -81,11 +117,30 @@ testSetup.buildFullDB = function() {
     .then( () => {
       return (testSetup.seedLinksTable(focusUserID, focusOrgID));
     })
+    .then( () => {
+      return (testSetup.addCausesTable());
+    })
+    .then( () => {
+      return (testData.seedCausesTable());
+    })
+    .then( () => {
+      return (testSetup.addUsersCausesTable());
+    })
+    .then( () => {
+      return (testSetup.seedUsersCausesTable(focusUserID));
+    })
+
 };
 
 testSetup.tearDownDB = function() {
   console.log('running tearDownDB');
   return knex.schema.dropTableIfExists('links')
+    .then( () => {
+      return knex.schema.dropTableIfExists('users_causes')
+    })
+    .then( () => {
+      return knex.schema.dropTableIfExists('causes');
+    })
     .then( () => {
       return knex.schema.dropTableIfExists('users')
     });

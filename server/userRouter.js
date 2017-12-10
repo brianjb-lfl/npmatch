@@ -46,6 +46,15 @@ userRouter.get('/:id', (req, res) => {
       results.forEach( item => {
         usrObj.links = results;
       })
+      return knex('users_causes')
+        .join('causes', 'users_causes.id_cause', '=', 'causes.id')
+        .select('causes.id', 'causes.cause')
+        .where({id_user: usrObj.id})
+    })
+    .then( results => {
+      console.log(results);
+      usrObj.causes = results;
+      console.log(usrObj);
       res.json(usrObj);
     })
     .catch( err => {

@@ -69,11 +69,19 @@ describe('user', function() {
         })
         .then( res => {
           console.log(res.body);
+          // test general user info
           expect(res.body.username).to.equal(focusUser.username);
+          // test user links
           expect(res.body.links.length).to.equal(testData.testUserLinks.length);
           const expUserLinksArr = testData.testUserLinks.map( item => item.link_url);
           for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
             expect(expUserLinksArr).to.include(res.body.links[lCtr].link_url);
+          }
+          // test user causes
+          expect(res.body.causes.length).to.equal(testData.testUserCauses.length);
+          const expUserCausesArr = testData.testUserCauses.map( item => item.cause);
+          for(let cCtr = 0; cCtr < res.body.causes.length; cCtr++) {
+            expect(expUserCausesArr).to.include(res.body.causes[cCtr].cause);
           }
         })
     })
@@ -82,7 +90,6 @@ describe('user', function() {
   
   
   //   // base user info
-  //   // array of links - links, id_user = id
   //   // array of causes - users_causes - id_user = id, id_cause = causes id
   //   // array of skills - users_skills - id_user = id,  id_skill = skills id 
   //   // array of responses - responses, id_user = id, id_opp = opportunities id, id_user = orgs id
