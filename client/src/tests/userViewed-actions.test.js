@@ -2,7 +2,7 @@ import * as actions from '../actions/userViewed';
 
 describe('actions - user viewed', () => {
 
-  it('should create an action that loads a minimal user', () => {
+  it('should create an action to load a minimal user', () => {
     const user = {
       firstName: 'Bob',
       lastName: 'Jones'
@@ -29,7 +29,7 @@ describe('actions - user viewed', () => {
     expect(actions.loadUser(user)).toEqual(expectedAction)
   });
 
-  it('should create an action that loads a simple user', () => {
+  it('should create an action to load a simple user', () => {
     const user = {
       id: 7,
       firstName: 'Bob',
@@ -70,7 +70,7 @@ describe('actions - user viewed', () => {
     expect(actions.loadUser(user)).toEqual(expectedAction)
   });
 
-  it('should create an action that loads a user with nested arrays', () => {
+  it('should create an action to load a user with nested arrays', () => {
     const user = {
       id: 8,
       firstName: 'Bob',

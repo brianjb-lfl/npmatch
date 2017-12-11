@@ -2,7 +2,7 @@ import * as actions from '../actions/display';
 
 describe('actions - display', () => {
 
-  it('should change the display in state', () => {
+  it('should create an action to change the display', () => {
     const display = 'landing';
     const expectedDisplay = {
       type: actions.CHANGE_DISPLAY,

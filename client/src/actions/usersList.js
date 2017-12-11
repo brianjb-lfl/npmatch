@@ -39,7 +39,7 @@ export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
   const url = `${REACT_APP_BASE_URL}/api/users/list`;
   const headers = {
     'content-type': 'application/json',
-    "Authorization": `Bearer ${authToken}`, 
+    // "Authorization": `Bearer ${authToken}`, 
   }; 
 
   const init = { 
@@ -48,14 +48,14 @@ export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
     body: JSON.stringify(searchCriteria)
   };
   return fetch(url, init)    
-  .then(res=>{
-    console.log(res.json())
-    return res.json();
-  })
-  .then(res=>{
-    dispatch(loadUsersList(res))
-  })
-  .catch(error => {
-    dispatch(actionsDisplay.toggleModal(error));
-   })
+    .then(res=>{
+      // console.log(res.json())
+      return res.json();
+    })
+    .then(res=>{
+      return dispatch(loadUsersList(res));
+    })
+    .catch(error => {
+      return dispatch(actionsDisplay.toggleModal(error));
+    })
 }

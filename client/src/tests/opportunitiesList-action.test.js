@@ -2,7 +2,7 @@ import * as actions from '../actions/opportunitiesList';
 
 describe('actions - opportunities list', () => {
 
-  it('should load an array of opportunities', () => {
+  it('should create an action: array of opportunities', () => {
     const arrayOfOpportunities = [
       {
         id: 1,

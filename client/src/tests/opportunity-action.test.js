@@ -2,7 +2,7 @@ import * as actions from '../actions/opportunity';
 
 describe('actions - single opportunity', () => {
 
-  it('should load a single opportunity', () => {
+  it('should create a single opportunity action', () => {
     const opportunity = {
       id: 1,
       userId: 2,
