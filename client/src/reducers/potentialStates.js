@@ -146,5 +146,12 @@ export const opportunitiesList = {
 };
 
 export const display = {
-  view: 'landing'
+  view: 'landing',
+  modal: false,
+  modalMessage: ''
 };
+
+export const general = {
+  causes: [],
+  skills: []
+}

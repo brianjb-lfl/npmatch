@@ -191,7 +191,7 @@ describe('actions - single user', () => {
     return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
-        console.log('expectedActions',expectedActions)
+        // console.log('expectedActions',expectedActions)
         expect(expectedActions.length).toBe(3);
         expect.assertions(2);  // number of callback functions
         expect(expectedActions).toContainEqual(
