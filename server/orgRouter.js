@@ -29,45 +29,44 @@ orgRouter.get('/list', (req, res) => {
     });    
 });
 
-// GET api/users/:id
-// orgRouter.get('/:id', (req, res) => {
-//   let usrObj = {}
-//   const knex = require('./db');
-//   // get user base info
-//   return knex('users')
-//     .select()
-//     .where({id: req.params.id})
-//     .then( results => {
-//       usrObj = ({...results[0]});
-//       // get user links
-//       return knex('links')
-//         .select('id', 'link_type', 'link_url')
-//         .where({id_user: usrObj.id})
-//     })
-//     .then( results => {
-//       usrObj.links = results;
-//       // get user causes
-//       return knex('users_causes')
-//         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
-//         .select('causes.id', 'causes.cause')
-//         .where({id_user: usrObj.id})
-//     })
-//     .then( results => {
-//       usrObj.causes = results;
-//       // get user skills
-//       return knex('users_skills')
-//         .join('skills', 'users_skills.id_skill', '=', 'skills.id')
-//         .select('skills.id', 'skills.skill')
-//         .where({id_user: usrObj.id})
-//     })
-//     .then( results => {
-//       usrObj.skills = results;
-//       res.json(usrObj);
-//     })
-//     .catch( err => {
-//       res.status(500).json({message: 'Internal server error'});
-//     })
-// });
+// GET api/orgs/:id
+orgRouter.get('/:id', (req, res) => {
+  let orgObj = {}
+  const knex = require('./db');
+  // get org base info
+  return knex('users')
+    .select()
+    .where({id: req.params.id})
+    .then( results => {
+      orgObj = ({...results[0]});
+      // get org links
+      return knex('links')
+        .select('id', 'link_type', 'link_url')
+        .where({id_user: orgObj.id})
+    })
+    .then( results => {
+      orgObj.links = results;
+      // get org causes
+      return knex('users_causes')
+        .join('causes', 'users_causes.id_cause', '=', 'causes.id')
+        .select('causes.id', 'causes.cause')
+        .where({id_user: orgObj.id})
+    })
+    .then( results => {
+      orgObj.causes = results;
+      // get org opportunities
+      return knex('opportunities')
+        .select('opportunity_type', 'title', 'narrative')
+        .where({id_user: orgObj.id})
+    })
+    .then( results => {
+      orgObj.opps = results;
+      res.json(orgObj);
+    })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    })
+});
 
 // POST api/users
 // orgRouter.post('/', jsonParser, (req, res) => {

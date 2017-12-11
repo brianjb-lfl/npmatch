@@ -6,7 +6,7 @@ const { testData } = require('./testData');
 let testSetup = {};
 
 testSetup.addUsersTable = function() {
-  console.log('running add user table');
+  // console.log('running add user table');
   return knex.schema.createTable('users', function(table) {
     table.increments('id').primary();
     table.text('username').unique();
@@ -24,7 +24,7 @@ testSetup.addUsersTable = function() {
 };
 
 testSetup.addLinksTable = function() {
-  console.log('running addLinksTable');
+  // console.log('running addLinksTable');
   return knex.schema.createTable('links', function(table) {
     table.increments('id').primary();
     table.integer('id_user');
@@ -36,7 +36,7 @@ testSetup.addLinksTable = function() {
 };
 
 testSetup.seedLinksTable = function( usrID, orgID ) {
-  console.log('running seedLinksTable');
+  // console.log('running seedLinksTable');
   // create array for link objects that will be imported
   let linksArr = [];
   // add individual link seeds
@@ -61,7 +61,7 @@ testSetup.seedLinksTable = function( usrID, orgID ) {
 };
 
 testSetup.addOppsTable = function() {
-  console.log('running addOppsTable');
+  // console.log('running addOppsTable');
   return knex.schema.createTable('opportunities', function(table) {
     table.increments('id').primary();
     table.timestamp('timestamp_created').defaultTo(knex.fn.now());
@@ -81,17 +81,19 @@ testSetup.addOppsTable = function() {
 }
 
 testSetup.seedOppsTable = function(orgID) {
-  console.log('running seedOppsTable');
-  let tempCausesArr = testData.oppSeeds.slice();
-  tempCausesArr.map( item => {
-    item = Object.assign( {}, item, {id_user: orgID})
+  // console.log('running seedOppsTable');
+  let tempOppsArr = [];
+  let tempObj = {};
+  testData.orgOppSeeds.map( item => {
+    tempObj = Object.assign( {}, item, {id_user: orgID});
+    tempOppsArr.push(tempObj);
   });
   return knex('opportunities')
-    .insert(tempCausesArr);
+    .insert(tempOppsArr);
 };
 
 testSetup.addCausesTable = function() {
-  console.log('running addCausesTable');
+  // console.log('running addCausesTable');
   return knex.schema.createTable('causes', function(table) {
     table.increments('id').primary();
     table.text('cause');
@@ -99,7 +101,7 @@ testSetup.addCausesTable = function() {
 };
 
 testSetup.addUsersCausesTable = function() {
-  console.log('running addUsersCausesTable');
+  //console.log('running addUsersCausesTable');
   return knex.schema.createTable('users_causes', function(table) {
     table.increments('id').primary();
     table.integer('id_user');
@@ -111,7 +113,7 @@ testSetup.addUsersCausesTable = function() {
 };
 
 testSetup.seedUsersCausesTable = function(usrID) {
-  console.log('running seedUsersCauses');
+  // console.log('running seedUsersCauses');
   testData.testUserCauses.map( item => {
     return knex('causes')
       .select('id')
@@ -127,7 +129,7 @@ testSetup.seedUsersCausesTable = function(usrID) {
 };
 
 testSetup.seedOrgCausesTable = function(orgID) {
-  console.log('running seedOrgCauses');
+  // console.log('running seedOrgCauses');
   testData.testOrgCauses.map( item => {
     return knex('causes')
       .select('id')
@@ -143,7 +145,7 @@ testSetup.seedOrgCausesTable = function(orgID) {
 };
 
 testSetup.addSkillsTable = function() {
-  console.log('running addSkillsTable');
+  // console.log('running addSkillsTable');
   return knex.schema.createTable('skills', function(table) {
     table.increments('id').primary();
     table.text('skill');
@@ -151,7 +153,7 @@ testSetup.addSkillsTable = function() {
 };
 
 testSetup.addUsersSkillsTable = function() {
-  console.log('running addUsersSkillsTable');
+  // console.log('running addUsersSkillsTable');
   return knex.schema.createTable('users_skills', function(table) {
     table.increments('id').primary();
     table.integer('id_user');
@@ -163,7 +165,7 @@ testSetup.addUsersSkillsTable = function() {
 };
 
 testSetup.seedUsersSkillsTable = function(usrID) {
-  console.log('running seedUsersSkills');
+  // console.log('running seedUsersSkills');
   return testData.testUserSkills.map( item => {
     return knex('skills')
       .select('id')
@@ -180,7 +182,7 @@ testSetup.seedUsersSkillsTable = function(usrID) {
 
 // ***** BUILD DB *****
 testSetup.buildFullDB = function() {
-  console.log('running buildFullDB');
+  // console.log('running buildFullDB');
   // focus user and org will have links to other tables for tests of foreign key linked data
   let focusUserID;
   let focusOrgID;
@@ -217,7 +219,7 @@ testSetup.buildFullDB = function() {
 
 // ***** TEAR DOWN DB *****
 testSetup.tearDownDB = function() {
-  console.log('running tearDownDB');
+  // console.log('running tearDownDB');
   return knex('links')
     .del()
     .then( () => {
@@ -247,7 +249,7 @@ testSetup.tearDownDB = function() {
 };
 
 testSetup.addTestParamsTable = function() {
-  console.log('running addTestParamsTable');
+  // console.log('running addTestParamsTable');
   return knex.schema.createTable('test_params', function(table) {
     table.increments('id').primary();
     table.integer('focus_user_id');
@@ -258,7 +260,7 @@ testSetup.addTestParamsTable = function() {
 };
 
 testSetup.setTestParams = function() {
-  console.log('running setTestParams');
+  // console.log('running setTestParams');
   const userArr = [];
   const orgArr = [];
   return knex('users')

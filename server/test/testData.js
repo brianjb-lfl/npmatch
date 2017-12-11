@@ -105,7 +105,7 @@ testData.testOrganization = {
   organization: 'Deer Lake Child Care'
 };
 
-testData.oppSeeds = [
+testData.orgOppSeeds = [
   {
     opportunity_type: 'goods',
     offer: false,
