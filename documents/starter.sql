@@ -29,7 +29,8 @@ CREATE TABLE users (
   first_name text,
   last_name text, 
   -- below for organizations only
-  organization text
+  organization text,
+  logo text
 );
 
 CREATE TABLE opportunities (
