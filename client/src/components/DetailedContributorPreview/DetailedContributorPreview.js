@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-export default class DetailedContributorPreview extends Component {
+export class DetailedContributorPreview extends Component {
 
   render() {
     return (
@@ -16,3 +16,5 @@ export default class DetailedContributorPreview extends Component {
     )
   }
 }
+
+export default connect()(DetailedContributorPreview)

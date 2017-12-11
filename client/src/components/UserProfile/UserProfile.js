@@ -5,7 +5,7 @@ import TopNavBar from '../TopNavBar/TopNavBar';
 import OpportunityPreview from '../OpportunityPreview/OpportunityPreview';
 import BottomNavBar from '../BottomNavBar/BottomNavBar';
 
-export default class UserProfile extends Component {
+export class UserProfile extends Component {
 
   render() {
     return (
@@ -14,7 +14,7 @@ export default class UserProfile extends Component {
         <div>
           <img src={this.props.logo}></img>
           <h3>{this.props.name}</h3>
-          <h4>{this.props.locationCity}, {this.props.locationState}</h4>
+          <h4>{this.props.locationCity} {this.props.locationState}</h4>
           <p>{this.props.description}</p>
         </div>
         <OpportunityPreview />
@@ -30,3 +30,9 @@ export default class UserProfile extends Component {
     );
   }
 }
+
+export const mapStateToProps = state => ({
+  userViewed: state.userViewed,
+  display: state.display
+})
+export default connect(mapStateToProps)(UserProfile);

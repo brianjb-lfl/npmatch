@@ -32,7 +32,7 @@ userRouter.get('/list', (req, res) => {
 
 // GET api/users/:id
 userRouter.get('/:id', (req, res) => {
-  let usrObj = {}
+  let usrObj = {};
   const knex = require('./db');
   // get user base info
   return knex('users')
@@ -40,6 +40,7 @@ userRouter.get('/:id', (req, res) => {
     .where({id: req.params.id})
     .then( results => {
       usrObj = ({...results[0]});
+      delete usrObj['passwd'];
       // get user links
       return knex('links')
         .select('id', 'link_type', 'link_url')

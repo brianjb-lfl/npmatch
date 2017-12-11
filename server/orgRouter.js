@@ -39,6 +39,7 @@ orgRouter.get('/:id', (req, res) => {
     .where({id: req.params.id})
     .then( results => {
       orgObj = ({...results[0]});
+      delete orgObj['passwd'];
       // get org links
       return knex('links')
         .select('id', 'link_type', 'link_url')

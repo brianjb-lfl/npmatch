@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './BottomNavBar.css'
 
@@ -9,16 +10,20 @@ export default class BottomNavBar extends Component {
     return (
       <div>
         <ul className='bottomNav'>
-          <li className='leftBottomButton'>
-            <a href={this.props.leftLink} alt={this.props.leftAltText}>
-              {this.props.leftLabel}
-            </a>
-          </li>
-          <li className='rightBottomButton'>
-            <a href={this.props.rightLink} alt={this.props.rightAltText}>
-              {this.props.rightLabel}
-            </a>
-          </li>
+          <Link to='/organizations'>
+            <li className='leftBottomButton'>
+              <button>
+                {this.props.leftLabel}
+              </button>
+            </li>
+          </Link>
+          <Link to='/contributors'>
+            <li className='rightBottomButton'>
+              <button>
+                {this.props.rightLabel}
+              </button>
+            </li>
+          </Link>
         </ul>
       </div>
     )
