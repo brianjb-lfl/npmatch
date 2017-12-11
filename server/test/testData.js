@@ -7,7 +7,7 @@ let testData = {};
 testData.userSeeds = [
   {
     username: 'swimmer85',
-    password: 'swimmer85spassword',
+    passwd: 'swimmer85spassword',
     user_type: 'individual',
     location_city: 'losangeles',
     location_state: 'ca',
@@ -19,7 +19,7 @@ testData.userSeeds = [
   },
   {
     username: 'darkoverlord',
-    password: 'darkospassword',
+    passwd: 'darkospassword',
     user_type: 'individual',
     location_city: 'fayetteville',
     location_state: 'ar',
@@ -31,7 +31,7 @@ testData.userSeeds = [
   },
   {
     username: 'packerfan75',
-    password: 'packerfanspw',
+    passwd: 'packerfanspw',
     user_type: 'individual',
     location_city: 'two rivers',
     location_state: 'wi',
@@ -43,7 +43,7 @@ testData.userSeeds = [
   },
   {
     username: 'theshelter',
-    password: 'shelterprezpw',
+    passwd: 'shelterprezpw',
     user_type: 'organization',
     location_city: 'atlanta',
     location_state: 'ga',
@@ -55,7 +55,7 @@ testData.userSeeds = [
   },
   {
     username: 'stmarysareamission',
-    password: 'stmampassword',
+    passwd: 'stmampassword',
     user_type: 'organization',
     location_city: 'high point',
     location_state: 'nc',
@@ -67,7 +67,7 @@ testData.userSeeds = [
   },
   {
     username: 'hopeonwheels',
-    password: 'howspassword',
+    passwd: 'howspassword',
     user_type: 'organization',
     location_city: 'miami',
     location_state: 'fl',
@@ -81,7 +81,7 @@ testData.userSeeds = [
 
 testData.testIndividual = {
   username: 'attorneyinks',
-  password: 'attorneyspassword',
+  passwd: 'attorneyspassword',
   user_type: 'individual',
   location_city: 'topeka',
   location_state: 'ks',
@@ -94,7 +94,7 @@ testData.testIndividual = {
 
 testData.testOrganization = {
   username: 'dragonfly11',
-  password: 'dragonflyspassword',
+  passwd: 'dragonflyspassword',
   user_type: 'organization',
   location_city: 'wildwood',
   location_state: 'fl',
@@ -104,6 +104,33 @@ testData.testOrganization = {
   last_name: '',
   organization: 'Deer Lake Child Care'
 };
+
+testData.oppSeeds = [
+  {
+    opportunity_type: 'goods',
+    offer: false,
+    title: 'kitchen staples needed',
+    narrative: 'we have a perpetual need for kitchen staples for meals on wheels program',
+    location_city: 'jacksonville',
+    location_state: 'fl',
+  },
+  {
+    opportunity_type: 'services',
+    offer: false,
+    title: 'kitchen help needed',
+    narrative: 'food prep needed for meals on wheels - we can train, no experience needed',
+    location_city: 'jacksonville',
+    location_state: 'fl',
+  },
+  {
+    opportunity_type: 'financial',
+    offer: false,
+    title: 'funding for storage facility',
+    narrative: 'funding needed to build climate controlled storage facility - every little bit helps!',
+    location_city: 'lake city',
+    location_state: 'fl',
+  }
+]
 
 testData.testUserLinks = [
   {
@@ -139,6 +166,12 @@ testData.causeSeeds = [
 testData.testUserCauses = [
   {cause: 'homelessness'},
   {cause: 'pediatric-aids'}
+]
+
+testData.testOrgCauses = [
+  {cause: 'homelessness'},
+  {cause: 'teen-pregnancy'},
+  {cause: 'malnutrition'}
 ]
 
 testData.skillSeeds = [

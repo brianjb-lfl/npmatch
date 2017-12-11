@@ -67,31 +67,28 @@ testSetup.addOppsTable = function() {
     table.timestamp('timestamp_created').defaultTo(knex.fn.now());
     table.text('opportunity_type');
     table.boolean('offer').defaultTo(false);
-    table.text('title')
+    table.text('title').notNullable();
+    table.text('narrative').notNullable();
+    table.timestamp('timestamp_start');
+    table.timestamp('timestamp_end');
+    table.text('location_city');
+    table.text('location_state');
+    table.text('location_country').defaultTo('USA');
+    table.integer('id_user');
+    table.foreign('id_user').references('users.id');
+    table.text('link');
   })
 }
 
-// CREATE TABLE opportunities (
-//   id serial primary key,
-//   timestamp_created timestamp default current_timestamp,
-//   -- type: goods, services, financial
-//   opportunity_type text default 'services',
-//   -- offer: true if offer to provide, false if a need
-//   offer boolean default 'false',
-//   title text not null,
-//   -- do we want description and identification of need combined?
-//   narrative text not null,
-//   timestamp_start timestamp,
-//   timestamp_end timestamp,
-//   location_city text,
-//   location_state text,
-//   --default "USA"
-//   location_country text,
-//   -- the user below is the "owner" of this opportunity
-//   id_user integer references users on delete cascade,
-//   -- link = url for the event (do not populate [on front] if the same as the user's url)
-//   link text default null
-// );
+testSetup.seedOppsTable = function(orgID) {
+  console.log('running seedOppsTable');
+  let tempCausesArr = testData.oppSeeds.slice();
+  tempCausesArr.map( item => {
+    item = Object.assign( {}, item, {id_user: orgID})
+  });
+  return knex('opportunities')
+    .insert(tempCausesArr);
+};
 
 testSetup.addCausesTable = function() {
   console.log('running addCausesTable');
@@ -123,6 +120,22 @@ testSetup.seedUsersCausesTable = function(usrID) {
         return knex('users_causes')
           .insert({
             id_user: usrID,
+            id_cause: result[0].id
+          })
+      })
+  });
+};
+
+testSetup.seedOrgCausesTable = function(orgID) {
+  console.log('running seedOrgCauses');
+  testData.testOrgCauses.map( item => {
+    return knex('causes')
+      .select('id')
+      .where({cause: item.cause})
+      .then( result => {
+        return knex('users_causes')
+          .insert({
+            id_user: orgID,
             id_cause: result[0].id
           })
       })
@@ -171,10 +184,7 @@ testSetup.buildFullDB = function() {
   // focus user and org will have links to other tables for tests of foreign key linked data
   let focusUserID;
   let focusOrgID;
-  return (testSetup.addUsersTable())
-    .then( () => {
-      return (testData.seedUsersTable());
-    })
+  return (testData.seedUsersTable())
     .then( () => {
       // select individual and org for focus
       return (testSetup.setTestParams());
@@ -182,31 +192,22 @@ testSetup.buildFullDB = function() {
     .then( results => {
       focusUserID = results[0].focus_user_id;
       focusOrgID = results[0].focus_org_id;
-      return (testSetup.addLinksTable());
+      return(testSetup.seedOppsTable(focusOrgID));
     })
     .then( () => {
       return (testSetup.seedLinksTable(focusUserID, focusOrgID));
     })
     .then( () => {
-      return (testSetup.addCausesTable());
-    })
-    .then( () => {
       return (testData.seedCausesTable());
-    })
-    .then( () => {
-      return (testSetup.addUsersCausesTable());
     })
     .then( () => {
       return (testSetup.seedUsersCausesTable(focusUserID));
     })
     .then( () => {
-      return (testSetup.addSkillsTable());
+      return (testSetup.seedOrgCausesTable(focusOrgID));
     })
     .then( () => {
       return (testData.seedSkillsTable());
-    })
-    .then( () => {
-      return (testSetup.addUsersSkillsTable());
     })
     .then( () => {
       return (testSetup.seedUsersSkillsTable(focusUserID));
@@ -217,21 +218,31 @@ testSetup.buildFullDB = function() {
 // ***** TEAR DOWN DB *****
 testSetup.tearDownDB = function() {
   console.log('running tearDownDB');
-  return knex.schema.dropTableIfExists('links')
+  return knex('links')
+    .del()
     .then( () => {
-      return knex.schema.dropTableIfExists('users_causes')
+      return knex('users_causes')
+        .del()
     })
     .then( () => {
-      return knex.schema.dropTableIfExists('users_skills')
+      return knex('users_skills')
+        .del()
     })
     .then( () => {
-      return knex.schema.dropTableIfExists('causes');
+      return knex('causes')
+        .del()
     })
     .then( () => {
-      return knex.schema.dropTableIfExists('skills');
+      return knex('skills')
+        .del()
     })
     .then( () => {
-      return knex.schema.dropTableIfExists('users')
+      return knex('opportunities')
+        .del()
+    })
+    .then( () => {
+      return knex('users')
+        .del()
     });
 };
 

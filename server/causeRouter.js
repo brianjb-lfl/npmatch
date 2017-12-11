@@ -29,4 +29,7 @@ causeRouter.get('/list', (req, res) => {
     });    
 });
 
+// GET api/causes/oppslist
+
+
 module.exports = { causeRouter };
