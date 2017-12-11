@@ -18,7 +18,14 @@ export default class UserProfile extends Component {
           <p>{this.props.description}</p>
         </div>
         <OpportunityPreview />
-        <BottomNavBar />
+        <BottomNavBar
+          leftLink='https://localhost:3000/organizations'
+          leftAltText='View Organizations Button'
+          leftLabel='Organizations'
+          leftLink='https://localhost:3000/contributors'
+          leftAltText='View Contributors Button'
+          leftLabel='Contributors'
+        />
       </div>
     );
   }
