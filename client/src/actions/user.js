@@ -10,27 +10,27 @@ export const LOAD_USER = 'LOAD_USER';
 export const loadUser = user => ({
   type: LOAD_USER,
   id: user.id,
-  firstName: user.firstName,
-  lastName: user.lastName,
+  firstName: user.first_name,
+  lastName: user.last_name,
   username: user.username,
-  userType: user.userType,
+  userType: user.user_type,
   organization: user.organization,
-  locationCity: user.locationCity,
-  locationState: user.locationState,
-  locationCountry: user.locationCountry,
+  locationCity: user.location_city,
+  locationState: user.location_state,
+  locationCountry: user.location_country,
   bio: user.bio,
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
   responses: user.responses, // array of objects
-  adminOf: user.adminOf, // array of objects
+  adminOf: user.admin_of, // array of objects
   following: user.following, // array of objects
 });
 
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, authToken, type = 'users', stateLocation = 'user') => dispatch => {
+export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'user') => dispatch => {
   // type options = 'users' and 'orgs'
   // state location options = 'user' and 'viewed'
 
