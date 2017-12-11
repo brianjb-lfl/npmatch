@@ -1,4 +1,15 @@
-import * as actions from '../actions/opportunity';
+import * as actionsOpp from '../actions/opportunity';
+import * as actionsDisplay from '../actions/display';
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const middlewares = [ thunk ];
+const mockStore = configureStore(middlewares);
+// console.log('mockStore1',mockStore());
+
+// Initialize mockstore with empty state
+const initialState = {}
+const store = mockStore(initialState)
 
 describe('actions - single opportunity', () => {
 
@@ -21,7 +32,7 @@ describe('actions - single opportunity', () => {
       responses: [],
     };
     const expectedAction = {
-      type: actions.LOAD_OPPORTUNITY,
+      type: actionsOpp.LOAD_OPPORTUNITY,
       id: 1,
       userId: 2,
       organization: 'ABC Group',
@@ -38,13 +49,45 @@ describe('actions - single opportunity', () => {
       causes: ['elderly', 'community'],  
       responses: [],
     };
-    const result = actions.loadOpportunity(opportunity);
+    const result = actionsOpp.loadOpportunity(opportunity);
     expect(result).toEqual(expectedAction);
     expect(result).toBeDefined();
     expect(result).toBeTruthy();
     expect(result.id).toEqual(1);
     expect(result.id).toBeGreaterThanOrEqual(1);
     
+  });
+
+  it('should call actions to fetch opportunity from server', () => {
+    
+    const oppId = 5; // doesn't matter for testing
+    const expectedResponse = {id: oppId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOpp.fetchOpp(oppId, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(3);
+        expect.assertions(2);  // number of callback functions
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsOpp.LOAD_OPPORTUNITY, id: oppId }
+        );
+      })
   });
 
 })
