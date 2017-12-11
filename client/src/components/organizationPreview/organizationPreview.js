@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 export class OrganizationPreview extends Component {
   handleClick(id) {
@@ -11,9 +10,6 @@ export class OrganizationPreview extends Component {
       'orgs',
       'userViewed'
     ))
-      .then(() => {
-        this.props.history.push(`/${id}`)
-      })
   }
 
   render() {
@@ -27,11 +23,4 @@ export class OrganizationPreview extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  userViewed: state.userViewed,
-  usersList: state.usersList,
-  opportunity: state.opportunity,
-  opportunitiesList: state.opportunitiesList,
-  display: state.display
-})
-export default connect(mapStateToProps)(OrganizationPreview);
+export default connect()(OrganizationPreview);
