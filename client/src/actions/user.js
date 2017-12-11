@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
+import  * as actionsUserViewed from './userViewed';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when creating, editing, or viewing YOUR OWN profile
@@ -29,28 +30,10 @@ export const loadUser = user => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, type, authToken) => dispatch => {
-  /* searchCriteria should be an object with following props.
-    values are priority, 1 being soonest for MVP
-    {
-      firstName         3 
-      lastName          3 
-      username          3 
-      userType        1
-      organization      3 
-      locationCity      3
-      locationState     3
-      locationCountry   3
-      bio                 9
-      links               9
-      causes           2
-      skills:          2
-      responses           4
-      adminOf             4
-      following           4
-    }
-  */
-  
+export const fetchUser = (userId, authToken, type = 'users', stateLocation = 'user') => dispatch => {
+  // type options = 'users' and 'orgs'
+  // state location options = 'user' and 'viewed'
+
   dispatch(actionsDisplay.changeDisplay('loading'));
   
     const url = `${REACT_APP_BASE_URL}/api/${type}/${userId}`;
@@ -69,9 +52,13 @@ export const fetchUser = (userId, type, authToken) => dispatch => {
     })
     .then(res=>{
       console.log('response from single user fetch',res)
-      dispatch(loadUser(res));
-      return dispatch(actionsDisplay.changeDisplay('loading'));
-      
+      if (stateLocation === 'viewed') {
+        dispatch(actionsUserViewed.loadUserViewed(res));   
+        return dispatch(actionsDisplay.changeDisplay('loading'));
+      } else {
+        dispatch(loadUser(res));
+        return dispatch(actionsDisplay.changeDisplay('loading'));        
+      }
     })
     .catch(error => {
       console.log('error',error);

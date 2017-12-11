@@ -28,25 +28,6 @@ export const loadOpportunity = action => ({
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOpp = (oppId, type, authToken) => dispatch => {
-  /* searchCriteria should be an object with following props.
-    values are priority, 1 being soonest for MVP
-    {
-      userId                    6 
-      organization              6
-      opportunityType  1
-      offer               2
-      title            1
-      narrative                 4
-      timestampStart      2
-      timestampEnd        2
-      locationCity            3
-      locationState           3
-      locationCountry         3
-      link:                     4
-      causes           1
-      responses                 5
-    }
-  */
   
   dispatch(actionsDisplay.changeDisplay('loading'));
   

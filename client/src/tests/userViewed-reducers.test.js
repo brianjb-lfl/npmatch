@@ -33,7 +33,7 @@ describe('reducer - user viewed', () => {
       adminOf: undefined,
       following: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -57,7 +57,7 @@ describe('reducer - user viewed', () => {
       adminOf: undefined,
       following: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -102,7 +102,7 @@ describe('reducer - user viewed', () => {
         }
       ]
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });

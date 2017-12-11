@@ -87,38 +87,34 @@ describe('actions - opportunities list', () => {
 
   it('should call actions to fetch opportunities list from server', () => {
     
-        const mockResponse = (status, statusText, response) => {
-          return new window.Response(response, {
-            status: status,
-            statusText: statusText,
-            headers: {
-              'Content-type': 'application/json'
-            }
-          });
-        };
-    
-        const expectedResponse = {}; // this will be the response of the mock call
-        const searchCriteria = {}; // doesn't matter for testing
-        const authToken = '';
-    
-        // cannot find docs on window.fetch. Does this intercept fetch in "this" window?
-        // i.e. when actions.fetchUsersList is called, does this intercept, because it is in the same "window"? 
-        window.fetch = jest.fn().mockImplementation(() =>
-          Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
-    
-        // console.log('store',store);
-          
-        return store.dispatch(actionsOppsList.fetchOppsList(searchCriteria, authToken))
-          .then(() => {
-            const expectedActions = store.getActions();
-            console.log('expectedActions',expectedActions)
-            expect(expectedActions.length).toBe(3);
-            expect.assertions(2);  // number of callback functions
-            expect(expectedActions).toContainEqual(
-              {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-              {type: actionsOppsList.LOAD_OPPS_LIST, main: {} }
-            );
-          })
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
       });
+    };
+    
+    const expectedResponse = {}; // this will be the response of the mock call
+    const searchCriteria = {}; // doesn't matter for testing
+    const authToken = '';
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOppsList.fetchOppsList(searchCriteria, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(3);
+        expect.assertions(2);  // number of callback functions
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsOppsList.LOAD_OPPS_LIST, main: {} }
+        );
+      })
+  });
 
 })

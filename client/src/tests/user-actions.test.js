@@ -171,6 +171,7 @@ describe('actions - single user', () => {
     
     const userId = 5; // doesn't matter for testing
     const type = 'users' // other option is 'orgs'
+    const stateLocation = 'user' // other option is 'orgs'
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
 
@@ -187,7 +188,7 @@ describe('actions - single user', () => {
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
               
-    return store.dispatch(actionsUser.fetchUser(userId, type, authToken))
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
         console.log('expectedActions',expectedActions)
