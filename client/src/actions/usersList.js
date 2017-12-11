@@ -49,13 +49,16 @@ export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
   };
   return fetch(url, init)    
     .then(res=>{
-      // console.log(res.json())
       return res.json();
     })
     .then(res=>{
-      return dispatch(loadUsersList(res));
+      console.log('response from fetch',res)
+      dispatch(loadUsersList(res));
+      return dispatch(actionsDisplay.changeDisplay('loading'));
+      
     })
     .catch(error => {
+      console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

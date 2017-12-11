@@ -1,4 +1,14 @@
-import * as actions from '../actions/userViewed';
+import * as actionsUserViewed from '../actions/userViewed';
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const middlewares = [ thunk ];
+const mockStore = configureStore(middlewares);
+// console.log('mockStore1',mockStore());
+
+// Initialize mockstore with empty state
+const initialState = {}
+const store = mockStore(initialState)
 
 describe('actions - user viewed', () => {
 
@@ -8,7 +18,7 @@ describe('actions - user viewed', () => {
       lastName: 'Jones'
     };
     const expectedAction = {
-      type: actions.LOAD_USER,
+      type: actionsUserViewed.LOAD_USER,
       id: undefined,
       firstName: 'Bob',
       lastName: 'Jones',
@@ -26,7 +36,7 @@ describe('actions - user viewed', () => {
       adminOf:  undefined,
       following: undefined,
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUserViewed.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a simple user', () => {
@@ -67,7 +77,7 @@ describe('actions - user viewed', () => {
       adminOf: [],
       following: [],
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUserViewed.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a user with nested arrays', () => {
@@ -112,7 +122,7 @@ describe('actions - user viewed', () => {
       ],
     };
     const expectedAction = {
-      type: actions.LOAD_USER,
+      type: actionsUserViewed.LOAD_USER,
       id: 8,
       id: 8,
       firstName: 'Bob',
@@ -153,7 +163,7 @@ describe('actions - user viewed', () => {
         }
       ],
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUserViewed.loadUser(user)).toEqual(expectedAction)
   });
 
 })
