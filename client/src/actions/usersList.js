@@ -12,7 +12,9 @@ export const loadUsersList = (array) => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
+export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => dispatch => {
+  // type options = 'users' and 'orgs'
+
   /* searchCriteria should be an object with following props.
     values are priority, 1 being soonest for MVP
     {
@@ -36,7 +38,7 @@ export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
 
-  const url = `${REACT_APP_BASE_URL}/api/users/list`;
+  const url = `${REACT_APP_BASE_URL}/api/${type}/list`;
   const headers = {
     'content-type': 'application/json',
     // "Authorization": `Bearer ${authToken}`, 
@@ -45,17 +47,20 @@ export const fetchUsersList = (searchCriteria, authToken) => dispatch => {
   const init = { 
     method: 'GET',
     headers,
-    body: JSON.stringify(searchCriteria)
+    // body: JSON.stringify(searchCriteria)
   };
   return fetch(url, init)    
     .then(res=>{
-      // console.log(res.json())
       return res.json();
     })
     .then(res=>{
-      return dispatch(loadUsersList(res));
+      console.log('response from fetch',res)
+      dispatch(loadUsersList(res));
+      return dispatch(actionsDisplay.changeDisplay('loading'));
+      
     })
     .catch(error => {
+      console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

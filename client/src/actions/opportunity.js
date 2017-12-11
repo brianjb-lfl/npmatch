@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import {SubmissionError} from 'redux-form';
+import  * as actionsDisplay from './display';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -26,4 +27,32 @@ export const loadOpportunity = action => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-
+export const fetchOpp = (oppId, type, authToken) => dispatch => {
+  
+  dispatch(actionsDisplay.changeDisplay('loading'));
+  
+    const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
+    const headers = {
+      'content-type': 'application/json',
+      // "Authorization": `Bearer ${authToken}`, 
+    }; 
+  
+    const init = { 
+      method: 'GET',
+      headers,
+    };
+    return fetch(url, init)   
+    .then(res=>{
+      return res.json();
+    })
+    .then(res=>{
+      console.log('response from single opportunity fetch',res)
+      dispatch(loadOpportunity(res));
+      return dispatch(actionsDisplay.changeDisplay('loading'));
+      
+    })
+    .catch(error => {
+      console.log('error',error);
+      return dispatch(actionsDisplay.toggleModal(error));
+    })
+}

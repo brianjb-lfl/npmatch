@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import TopNavBar from '../TopNavBar/TopNavBar';
-import OpportunityPreview from '../OpportunityPreview/OpportunityPreview';
 import BottomNavBar from '../BottomNavBar/BottomNavBar';
+import OrganizationPreview from '../OrganizationPreview/OrganizationPreview';
+import ContributorPreview from '../ContributorPreview/ContributorPreview';
 
-export class UserProfile extends Component {
+
+export class HomePage extends Component {
+
 
   render() {
+    console.log(this.props);
+    let previews = this.props.usersList.map((user, key) => (
+          <OrganizationPreview user={user} key={key} />
+        )
+      );
+
     return (
       <div>
         <TopNavBar />
-        <div>
-          <img src={this.props.logo}></img>
-          <h3>{this.props.name}</h3>
-          <h4>{this.props.locationCity}, {this.props.locationState}</h4>
-          <p>{this.props.description}</p>
-        </div>
-        <OpportunityPreview />
+        {previews}
         <BottomNavBar
           leftLink='https://localhost:3000/organizations'
           leftAltText='View Organizations Button'
@@ -27,12 +30,16 @@ export class UserProfile extends Component {
           rightLabel='Contributors'
         />
       </div>
-    );
+    )
   }
 }
 
 export const mapStateToProps = state => ({
+  user: state.user,
   userViewed: state.userViewed,
-  display: state.display
+  usersList: state.usersList.main,
+  opportunity: state.opportunity,
+  opportunitiesList: state.opportunitiesList,
+  display: state.display,
 })
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps)(HomePage);

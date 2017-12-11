@@ -2,20 +2,36 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
+import * as actionsUsersList from './actions/usersList';
 
-class App extends Component {
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import HomePage from './components/HomePage/HomePage';
+import LandingPage from './components/LandingPage/LandingPage';
+import UserProfile from './components/UserProfile/UserProfile';
+import ExplorePage from './components/ExplorePage/ExplorePage';
+
+export class App extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(actionsUsersList.fetchUsersList({}, this.props.user.authToken));
+  }
+
   render() {
-    console.log('App',this.props.users);
+    console.log('App', this.props.users);
+    let renderPage;
+    if (this.props.login === 'true') {
+      renderPage = HomePage;
+    }
+    else renderPage = HomePage;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <div>
+          <Route exact path="/" component={renderPage} />
+          <Route path="/:id" component={UserProfile} />
+          <Route path="/organizations" component={ExplorePage} />
+          <Route path="/contributors" component={ExplorePage} />
+        </div>
+      </Router>
     );
   }
 }

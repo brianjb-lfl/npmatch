@@ -1,4 +1,15 @@
-import * as actions from '../actions/user';
+import * as actionsUser from '../actions/user';
+import * as actionsDisplay from '../actions/display';
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const middlewares = [ thunk ];
+const mockStore = configureStore(middlewares);
+// console.log('mockStore1',mockStore());
+
+// Initialize mockstore with empty state
+const initialState = {}
+const store = mockStore(initialState)
 
 describe('actions - single user', () => {
 
@@ -8,7 +19,7 @@ describe('actions - single user', () => {
       lastName: 'Jones'
     };
     const expectedAction = {
-      type: actions.LOAD_USER,
+      type: actionsUser.LOAD_USER,
       id: undefined,
       firstName: 'Bob',
       lastName: 'Jones',
@@ -26,7 +37,7 @@ describe('actions - single user', () => {
       adminOf:  undefined,
       following: undefined,
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a simple user', () => {
@@ -67,7 +78,7 @@ describe('actions - single user', () => {
       adminOf: [],
       following: [],
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a user with nested arrays', () => {
@@ -112,7 +123,7 @@ describe('actions - single user', () => {
       ],
     };
     const expectedAction = {
-      type: actions.LOAD_USER,
+      type: actionsUser.LOAD_USER,
       id: 8,
       id: 8,
       firstName: 'Bob',
@@ -153,7 +164,41 @@ describe('actions - single user', () => {
         }
       ],
     }
-    expect(actions.loadUser(user)).toEqual(expectedAction)
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
+  });
+
+  it('should call actions to fetch individual user from server', () => {
+    
+    const userId = 5; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'user' // other option is 'orgs'
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(3);
+        expect.assertions(2);  // number of callback functions
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
   });
 
 })

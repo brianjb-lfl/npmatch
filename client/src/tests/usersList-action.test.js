@@ -11,16 +11,6 @@ const mockStore = configureStore(middlewares);
 const initialState = {}
 const store = mockStore(initialState)
 
-const mockResponse = (status, statusText, response) => {
-  return new window.Response(response, {
-    status: status,
-    statusText: statusText,
-    headers: {
-      'Content-type': 'application/json'
-    }
-  });
-};
-
 describe('actions - list of users', () => {
 
   it('should create an action: array of users', () => {
@@ -108,10 +98,20 @@ describe('actions - list of users', () => {
     expect(result.main[0].id).toBe(1)
   });
 
-  it('should fetch user list from server', () => {
+  it('should call actions to fetch user list from server', () => {
 
-    const expectedResponse = {};
-    const searchCriteria = {};
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+
+    const expectedResponse = {}; // this will be the response of the mock call
+    const searchCriteria = {}; // doesn't matter for testing
     const authToken = '';
 
     // cannot find docs on window.fetch. Does this intercept fetch in "this" window?
@@ -125,15 +125,13 @@ describe('actions - list of users', () => {
       .then(() => {
         const expectedActions = store.getActions();
         console.log('expectedActions',expectedActions)
-        expect(expectedActions.length).toBe(2);
-        expect.assertions(2);  // 2 is the # of assertions before it ends; there are 2 dispatches in the function
+        expect(expectedActions.length).toBe(3);
+        expect.assertions(2);  // number of callback functions
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsUsersList.LOAD_USERS_LIST, main: {} }
         );
-
       })
   });
   
-
 })
