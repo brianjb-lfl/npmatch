@@ -1,0 +1,30 @@
+.bottomNav {
+  list-style-type: none;
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+  background-color: #318b54;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+
+.leftBottomButton, .rightBottomButton {
+  display: inline-block;
+  color: white;
+  margin: 5px 30px 4px 30px;
+  padding: 5px;
+  font-weight: 700;
+  border-bottom: 1px solid transparent;
+}
+
+.leftBottomButton a, .rightBottomButton a {
+  color: white;
+  text-decoration: none;
+}
+
+.leftBottomButton:hover, .rightBottomButton:hover {
+  border-bottom:1px solid #ffffff;
+  cursor: pointer;
+}

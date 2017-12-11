@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './components/HomePage/HomePage';
 import LandingPage from './components/LandingPage/LandingPage';
 import UserProfile from './components/UserProfile/UserProfile';
+import ExplorePage from './components/ExplorePage/ExplorePage';
 
 export class App extends Component {
   render() {
@@ -15,7 +16,7 @@ export class App extends Component {
     if (this.props.login === 'true') {
       renderPage = HomePage;
     }
-    else renderPage = LandingPage;
+    else renderPage = HomePage;
     return (
       <Router>
         <div>
@@ -31,6 +32,8 @@ export class App extends Component {
 
           <Route exact path="/" component={renderPage} />
           <Route path="/:id" component={UserProfile} />
+          <Route path="/organizations" component={ExplorePage} />
+          <Route path="/contributors" component={ExplorePage} />
         </div>
       </Router>
     );

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 
-export default class BottomNavBar extends Component {
+export default class TopNavBar extends Component {
 
   render() {
     return (
       <div>
-        <ul className='bottomNav'>
+        <ul className='topNav'>
           <li className='leftButton'>
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
           </li>

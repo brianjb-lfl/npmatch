@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 
 import TopNavBar from '../TopNavBar/TopNavBar';
 import BottomNavBar from '../BottomNavBar/BottomNavBar';
-import OrganizationPreview from '../OrganizationPreview/OrganizationPreview';
-import ContributorPreview from '../ContributorPreview/ContributorPreview';
+import DetailedOrganizationPreview from '../DetailedOrganizationPreview/DetailedOrganizationPreview';
+import DetailedContributorPreview from '../DetailedContributorPreview/DetailedContributorPreview';
 
 
-export default class HomePage extends Component {
+export default class ExplorePage extends Component {
 
   render() {
     let previews;
     if (this.props.userType === 'individual') {
       previews = this.props.opportunities.map((opp, key) => {
         return (
-          <OrganizationPreview />
+          <DetailedOrganizationPreview />
         )
       })
     }
-    else previews = <ContributorPreview />
+    else previews = <DetailedContributorPreview />
 
     return (
       <div>

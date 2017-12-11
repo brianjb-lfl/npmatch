@@ -22,9 +22,9 @@ export default class UserProfile extends Component {
           leftLink='https://localhost:3000/organizations'
           leftAltText='View Organizations Button'
           leftLabel='Organizations'
-          leftLink='https://localhost:3000/contributors'
-          leftAltText='View Contributors Button'
-          leftLabel='Contributors'
+          rightLink='https://localhost:3000/contributors'
+          rightAltText='View Contributors Button'
+          rightLabel='Contributors'
         />
       </div>
     );
