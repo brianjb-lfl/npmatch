@@ -60,6 +60,39 @@ testSetup.seedLinksTable = function( usrID, orgID ) {
     .insert(linksArr)
 };
 
+testSetup.addOppsTable = function() {
+  console.log('running addOppsTable');
+  return knex.schema.createTable('opportunities', function(table) {
+    table.increments('id').primary();
+    table.timestamp('timestamp_created').defaultTo(knex.fn.now());
+    table.text('opportunity_type');
+    table.boolean('offer').defaultTo(false);
+    table.text('title')
+  })
+}
+
+// CREATE TABLE opportunities (
+//   id serial primary key,
+//   timestamp_created timestamp default current_timestamp,
+//   -- type: goods, services, financial
+//   opportunity_type text default 'services',
+//   -- offer: true if offer to provide, false if a need
+//   offer boolean default 'false',
+//   title text not null,
+//   -- do we want description and identification of need combined?
+//   narrative text not null,
+//   timestamp_start timestamp,
+//   timestamp_end timestamp,
+//   location_city text,
+//   location_state text,
+//   --default "USA"
+//   location_country text,
+//   -- the user below is the "owner" of this opportunity
+//   id_user integer references users on delete cascade,
+//   -- link = url for the event (do not populate [on front] if the same as the user's url)
+//   link text default null
+// );
+
 testSetup.addCausesTable = function() {
   console.log('running addCausesTable');
   return knex.schema.createTable('causes', function(table) {
@@ -118,7 +151,7 @@ testSetup.addUsersSkillsTable = function() {
 
 testSetup.seedUsersSkillsTable = function(usrID) {
   console.log('running seedUsersSkills');
-  testData.testUserSkills.map( item => {
+  return testData.testUserSkills.map( item => {
     return knex('skills')
       .select('id')
       .where({skill: item.skill})

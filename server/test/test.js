@@ -42,22 +42,22 @@ describe('user', function() {
   });
 
   // ***** GET USER LIST
-  describe('api/users/list GET user list', function() {
-    it('should return a list of existing users', function() {
-      return chai.request(app)
-        .get('/api/users/list')
-        .then(function(res) {
-          let userNames = testData.userSeeds
-            .filter( item => item.user_type === 'individual')
-            .map( item => item.username );
-          expect(res.body.length).to.equal(userNames.length);
-          for(let uCtr = 0; uCtr < res.body.length; uCtr++) {
-            expect(userNames).to.include(res.body[uCtr].username);
-          }
-          //expect(res.body[0].username).to.equal('kaisersolze');    // failing test
-        });
-    });
-  });
+  // describe('api/users/list GET user list', function() {
+  //   it('should return a list of existing users', function() {
+  //     return chai.request(app)
+  //       .get('/api/users/list')
+  //       .then(function(res) {
+  //         let userNames = testData.userSeeds
+  //           .filter( item => item.user_type === 'individual')
+  //           .map( item => item.username );
+  //         expect(res.body.length).to.equal(userNames.length);
+  //         for(let uCtr = 0; uCtr < res.body.length; uCtr++) {
+  //           expect(userNames).to.include(res.body[uCtr].username);
+  //         }
+  //         //expect(res.body[0].username).to.equal('kaisersolze');    // failing test
+  //       });
+  //   });
+  // });
 
   // // ***** GET INDIVIDUAL USER - DETAIL
   // describe('api/users/:id GET user details', function() {
@@ -129,19 +129,36 @@ describe('user', function() {
   // });
 
   // ***** GET ORG LIST
-  describe('api/orgs/list GET org list', function() {
-    it('should return a list of existing orgs', function() {
+  // describe('api/orgs/list GET org list', function() {
+  //   it('should return a list of existing orgs', function() {
+  //     return chai.request(app)
+  //       .get('/api/orgs/list')
+  //       .then(function(res) {
+  //         let orgNames = testData.userSeeds
+  //           .filter(item => item.user_type === 'organization')
+  //           .map( item => item.username );
+  //         expect(res.body.length).to.equal(orgNames.length);
+  //         for(let oCtr = 0; oCtr < res.body.length; oCtr++) {
+  //           expect(orgNames).to.include(res.body[oCtr].username);
+  //         }
+  //         // expect(res.body[0].username).to.equal('fSociety');    // failing test
+  //       });
+  //   });
+  // });
+
+  // ***** GET CAUSE LIST
+  describe('api/causes/list GET cause list', function() {
+    it('should return a list of existing causes', function() {
       return chai.request(app)
-        .get('/api/orgs/list')
+        .get('/api/causes/list')
         .then(function(res) {
-          let orgNames = testData.userSeeds
-            .filter(item => item.user_type === 'organization')
-            .map( item => item.username );
-          expect(res.body.length).to.equal(orgNames.length);
-          for(let oCtr = 0; oCtr < res.body.length; oCtr++) {
-            expect(orgNames).to.include(res.body[oCtr].username);
+          console.log(res.body);
+          let causeStrings = testData.causeSeeds.map( item => item.cause );
+          expect(res.body.length).to.equal(causeStrings.length);
+          for(let cCtr = 0; cCtr < res.body.length; cCtr++) {
+            expect(causeStrings).to.include(res.body[cCtr].cause);
           }
-          // expect(res.body[0].username).to.equal('fSociety');    // failing test
+          // expect(res.body[0].cause).to.equal('cowboyfans');    // failing test
         });
     });
   });
