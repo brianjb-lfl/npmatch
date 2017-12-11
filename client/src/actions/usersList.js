@@ -47,7 +47,7 @@ export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => disp
   const init = { 
     method: 'GET',
     headers,
-    body: JSON.stringify(searchCriteria)
+    // body: JSON.stringify(searchCriteria)
   };
   return fetch(url, init)    
     .then(res=>{

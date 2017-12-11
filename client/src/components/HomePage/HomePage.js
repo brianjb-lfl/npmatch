@@ -7,18 +7,15 @@ import OrganizationPreview from '../OrganizationPreview/OrganizationPreview';
 import ContributorPreview from '../ContributorPreview/ContributorPreview';
 
 
-export default class HomePage extends Component {
+export class HomePage extends Component {
+
 
   render() {
-    let previews;
-    if (this.props.userType === 'individual') {
-      previews = this.props.opportunities.map((opp, key) => {
-        return (
-          <OrganizationPreview />
+    console.log(this.props);
+    let previews = this.props.usersList.map((user, key) => (
+          <OrganizationPreview user={user} key={key} />
         )
-      })
-    }
-    else previews = <ContributorPreview />
+      );
 
     return (
       <div>
@@ -36,3 +33,13 @@ export default class HomePage extends Component {
     )
   }
 }
+
+export const mapStateToProps = state => ({
+  user: state.user,
+  userViewed: state.userViewed,
+  usersList: state.usersList.main,
+  opportunity: state.opportunity,
+  opportunitiesList: state.opportunitiesList,
+  display: state.display,
+})
+export default connect(mapStateToProps)(HomePage);

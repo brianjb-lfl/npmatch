@@ -5,7 +5,7 @@ import TopNavBar from '../TopNavBar/TopNavBar';
 import OpportunityPreview from '../OpportunityPreview/OpportunityPreview';
 import BottomNavBar from '../BottomNavBar/BottomNavBar';
 
-export default class UserProfile extends Component {
+export class UserProfile extends Component {
 
   render() {
     return (
@@ -30,3 +30,9 @@ export default class UserProfile extends Component {
     );
   }
 }
+
+export const mapStateToProps = state => ({
+  userViewed: state.userViewed,
+  display: state.display
+})
+export default connect(mapStateToProps)(UserProfile);

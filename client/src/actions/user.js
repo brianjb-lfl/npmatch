@@ -32,7 +32,7 @@ export const loadUser = user => ({
 
 export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'user') => dispatch => {
   // type options = 'users' and 'orgs'
-  // state location options = 'user' and 'viewed'
+  // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -52,12 +52,12 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
     })
     .then(res=>{
       console.log('response from single user fetch',res)
-      if (stateLocation === 'viewed') {
+      if (stateLocation === 'userViewed') {
         dispatch(actionsUserViewed.loadUserViewed(res));   
-        return dispatch(actionsDisplay.changeDisplay('loading'));
+        return dispatch(actionsDisplay.changeDisplay('userProfile'));
       } else {
         dispatch(loadUser(res));
-        return dispatch(actionsDisplay.changeDisplay('loading'));        
+        return dispatch(actionsDisplay.changeDisplay('userProfile'));        
       }
     })
     .catch(error => {
