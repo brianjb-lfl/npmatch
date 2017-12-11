@@ -3,11 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 
-class App extends Component {
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import HomePage from './components/HomePage/HomePage';
+import LandingPage from './components/LandingPage/LandingPage';
+import UserProfile from './components/UserProfile/UserProfile';
+
+export class App extends Component {
   render() {
-    console.log('App',this.props.users);
+    console.log('App', this.props.users);
+    let renderPage;
+    if (this.props.login === 'true') {
+      renderPage = HomePage;
+    }
+    else renderPage = LandingPage;
     return (
-      <div className="App">
+      <Router>
+        <div>
+          {/* <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -15,7 +27,12 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-      </div>
+      </div> */}
+
+          <Route exact path="/" component={renderPage} />
+          <Route path="/:id" component={UserProfile} />
+        </div>
+      </Router>
     );
   }
 }
