@@ -10,20 +10,20 @@ export const LOAD_USER = 'LOAD_USER';
 export const loadUser = user => ({
   type: LOAD_USER,
   id: user.id,
-  firstName: user.first_name,
-  lastName: user.last_name,
+  firstName: user.firstName,
+  lastName: user.lastName,
   username: user.username,
-  userType: user.user_type,
+  userType: user.userType,
   organization: user.organization,
-  locationCity: user.location_city,
-  locationState: user.location_state,
-  locationCountry: user.location_country,
+  locationCity: user.locationCity,
+  locationState: user.locationState,
+  locationCountry: user.locationCountry,
   bio: user.bio,
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
   responses: user.responses, // array of objects
-  adminOf: user.admin_of, // array of objects
+  adminOf: user.adminOf, // array of objects
   following: user.following, // array of objects
 });
 
