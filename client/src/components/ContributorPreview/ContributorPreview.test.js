@@ -34,10 +34,10 @@ describe('Contributor Preview component display functionality', () => {
     expect(wrapper.find('h3').text()).toEqual('Stephen Hawking');
     expect(wrapper.find('p').text()).toEqual('I am a genius.');
   });
-  it.skip('Should dispatch an actions when the component is clicked', () => {
-    // const spy = jest.fn();
-    const wrapper = shallow(<ContributorPreview user={user} />);
+  it('Should dispatch an actions when the component is clicked', () => {
+    const spy = jest.fn();
+    const wrapper = shallow(<ContributorPreview user={user} dispatch={spy} />);
     expect(wrapper.find('div').simulate('click'));
-    expect(wrapper.handleClick).toHaveBeCalled();
+    expect(spy.mock.calls.length).toEqual(1);
   })
 });
