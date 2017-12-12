@@ -19,6 +19,7 @@ export const loadUser = user => ({
   locationState: user.locationState,
   locationCountry: user.locationCountry,
   bio: user.bio,
+  logo: user.logo,
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,

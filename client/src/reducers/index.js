@@ -20,4 +20,4 @@ export const reducer = combineReducers({
 });
 
 // for testing
-module.exports = {reducer, user, userViewed, usersList, opportunity, opportunitiesList, display, general, form}
+export { user, userViewed, usersList, opportunity, opportunitiesList, display, general, form}

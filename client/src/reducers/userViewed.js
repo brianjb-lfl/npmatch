@@ -18,6 +18,7 @@ export const reducer = (state = initialState, action) => {
       locationState: action.locationState,
       locationCountry: action.locationCountry,
       bio: action.bio,
+      logo: action.logo,
       links: action.links, // array of objects
       causes: action.causes,
       skills: action.skills,
