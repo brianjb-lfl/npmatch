@@ -175,8 +175,8 @@ testSetup.seedUsersSkillsTable = function(usrID) {
           .insert({
             id_user: usrID,
             id_skill: result[0].id
-          })
-      })
+          });
+      });
   });
 };
 
@@ -213,7 +213,7 @@ testSetup.buildFullDB = function() {
     })
     .then( () => {
       return (testSetup.seedUsersSkillsTable(focusUserID));
-    })
+    });
 
 };
 
@@ -224,27 +224,27 @@ testSetup.tearDownDB = function() {
     .del()
     .then( () => {
       return knex('users_causes')
-        .del()
+        .del();
     })
     .then( () => {
       return knex('users_skills')
-        .del()
+        .del();
     })
     .then( () => {
       return knex('causes')
-        .del()
+        .del();
     })
     .then( () => {
       return knex('skills')
-        .del()
+        .del();
     })
     .then( () => {
       return knex('opportunities')
-        .del()
+        .del();
     })
     .then( () => {
       return knex('users')
-        .del()
+        .del();
     });
 };
 

@@ -43,6 +43,10 @@ describe('cause', function() {
 
   // ***** INITIALIZE
   describe('api/admin/initialize GET list', function() {
+    it('should switch dbMode to dev', function() {
+      console.log('add your config test');
+    });
+    
     it('should return a list of existing causes, skills and opportunities', function() {
       return chai.request(app)
         .get('/api/admin/initialize')
