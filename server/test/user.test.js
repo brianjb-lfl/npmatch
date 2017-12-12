@@ -100,9 +100,46 @@ describe('user', function() {
   // ***** POST USER
   describe('api/users POST new user', function() {
 
-    it('should add user to users table as type individual', function() {
-      const testUser = testData.testIndividual;
+    it('should reject user with missing username', function() {
+      let testUser = Object.assign( {}, testData.testIndividual);
+      delete testUser['username'];
+      return chai.request(app)
+        .post('/api/users')
+        .send(testUser)
+        .then( () => 
+          expect.fail(null, null, 'Request should fail')
+        )
+        .catch( err => {
+          if(err instanceof chai.AssertionError) {
+            throw err;
+          }
+          const res = err.response;
+          expect(res).to.have.status(422);
+          expect(res.body.reason).to.equal('ValidationError');
+        });
+    });
 
+    it('should reject user with missing passwd', function() {
+      let testUser = Object.assign( {}, testData.testIndividual);
+      delete testUser['passwd'];
+      return chai.request(app)
+        .post('/api/users')
+        .send(testUser)
+        .then( () => 
+          expect.fail(null, null, 'Request should fail')
+        )
+        .catch( err => {
+          if(err instanceof chai.AssertionError) {
+            throw err;
+          }
+          const res = err.response;
+          expect(res).to.have.status(422);
+          expect(res.body.reason).to.equal('ValidationError');
+        });
+    });
+
+    it('should add user to users table as type individual', function() {
+      let testUser = Object.assign( {}, testData.testIndividual);
       return chai.request(app)
         .post('/api/users')
         .send(testUser)
@@ -120,12 +157,33 @@ describe('user', function() {
               expect(res.body.organization).to.equal('');
             });
         })
-        .catch(err => {
+        .catch( err => {
           if(err instanceof chai.AssertionError) {
             throw err;
           }
+          console.log(err.response);
         });
     });
+
+    it('should reject a duplicate username', function() {
+      let testUser = Object.assign( {}, testData.testIndividual);
+      return chai.request(app)
+        .post('/api/users')
+        .send(testUser)
+        .then( () =>
+          expect.fail(null, null, 'Request should fail')
+        )
+        .catch( err => {
+          if (err instanceof chai.AssertionError) {
+            throw err;
+          }
+          const res = err.response;
+          expect(res).to.have.status(422);
+          expect(res.body.reason).to.equal('ValidationError');
+          expect(res.body.message).to.equal('Username already taken');
+        });
+    });
+
   });
 
 });
