@@ -201,6 +201,38 @@ describe('actions - single user', () => {
       })
   });
 
+  it('should call actions to fetch individual user from server and load as user in state (argument default option)', () => {
+    
+    const userId = 8; // doesn't matter for testing
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(3);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
+          {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
+  });
+
   it('should call actions to fetch individual user from server and load as userViewed in state', () => {
     
     const userId = 6; // doesn't matter for testing
