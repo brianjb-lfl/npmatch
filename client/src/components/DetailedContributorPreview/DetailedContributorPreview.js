@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actionsUser from '../../actions/user';
 
 export class DetailedContributorPreview extends Component {
   handleClick(id) {

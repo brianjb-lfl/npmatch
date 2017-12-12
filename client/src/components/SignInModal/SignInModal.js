@@ -6,6 +6,6 @@ export class SignInModal extends Component {
   render() {
     return (
       <div>Hello world</div>
-    )
+    );
   };
 };

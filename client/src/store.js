@@ -10,4 +10,4 @@ export const store = createStore (reducer, applyMiddleware(thunk));
 // console.log('thunk',typeof thunk);
 
 // for testing
-module.exports = {store, reducer, createStore, applyMiddleware, thunk};
+export { reducer, createStore, applyMiddleware, thunk};

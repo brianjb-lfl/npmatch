@@ -9,7 +9,7 @@ export class UserProfile extends Component {
 
   render() {
     let opportunityPreviews = this.props.opportunities.map((opp, key) => (
-      <OrganizationPreview opportunity={opp} key={key} />
+      <OpportunityPreview opportunity={opp} key={key} />
     )
     );
 
