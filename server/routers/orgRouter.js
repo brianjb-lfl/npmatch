@@ -14,7 +14,7 @@ orgRouter.get('/testify/', (req, res) => {
 
 // GET api/users/list
 orgRouter.get('/list', (req, res) => {
-  const knex = require('./db');
+  const knex = require('../db');
   return knex
     .select('id', 'username', 'location_city', 'location_state', 'user_type', 'organization')
     .from ('users')
@@ -32,7 +32,7 @@ orgRouter.get('/list', (req, res) => {
 // GET api/orgs/:id
 orgRouter.get('/:id', (req, res) => {
   let orgObj = {};
-  const knex = require('./db');
+  const knex = require('../db');
   // get org base info
   return knex('users')
     .select()
@@ -71,7 +71,7 @@ orgRouter.get('/:id', (req, res) => {
 
 // POST api/users
 // orgRouter.post('/', jsonParser, (req, res) => {
-//   const knex = require('./db');
+//   const knex = require('../db');
 //   return knex('users')
 //     .insert(req.body)
 //     .returning(['id', 'username'])

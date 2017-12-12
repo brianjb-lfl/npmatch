@@ -14,7 +14,7 @@ userRouter.get('/testify/', (req, res) => {
 
 // GET api/users/list
 userRouter.get('/list', (req, res) => {
-  const knex = require('./db');
+  const knex = require('../db');
   return knex
     .select('id', 'username', 'location_city as locationCity', 'location_state as locationState', 
       'first_name', 'last_name', 'user_type')
@@ -33,7 +33,7 @@ userRouter.get('/list', (req, res) => {
 // GET api/users/:id
 userRouter.get('/:id', (req, res) => {
   let usrObj = {};
-  const knex = require('./db');
+  const knex = require('../db');
   // get user base info
   return knex('users')
     .select()
@@ -73,7 +73,7 @@ userRouter.get('/:id', (req, res) => {
 
 // POST api/users
 userRouter.post('/', jsonParser, (req, res) => {
-  const knex = require('./db');
+  const knex = require('../db');
   return knex('users')
     .insert(req.body)
     .returning(['id', 'username'])

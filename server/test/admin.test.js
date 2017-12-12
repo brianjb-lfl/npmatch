@@ -18,10 +18,10 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('cause', function() {
+describe('admin', function() {
 
   before(function() {
-    return (testSetup.buildFullDB())
+    return (testSetup.buildFullDB());
   });
 
   after(function() {
@@ -41,17 +41,21 @@ describe('cause', function() {
 
   });
 
+  // ***** CONFIG
+  describe('config.js switch db mode', function() {
+    it('should switch dbMode to "dev"', function() {
+      setDbMode();
+      expect(process.env.DB_MODE).to.equal('dev');
+      setDbMode('test');
+    });
+  });
+  
   // ***** INITIALIZE
   describe('api/admin/initialize GET list', function() {
-    it('should switch dbMode to dev', function() {
-      console.log('add your config test');
-    });
-    
     it('should return a list of existing causes, skills and opportunities', function() {
       return chai.request(app)
         .get('/api/admin/initialize')
         .then(function(res) {
-          console.log(res.body);
           // check causes
           let causeStrings = testData.causeSeeds.map( item => item.cause );
           expect(res.body.causes.length).to.equal(causeStrings.length);
@@ -73,7 +77,7 @@ describe('cause', function() {
             expect(tempSeedUser.length).to.equal(1);    // tests username = seed username
             expect(usrObj.userType).to.equal(tempSeedUser[0].user_type);
             expect(usrObj.locationCity).to.equal(tempSeedUser[0].location_city);
-          })
+          });
         });
     });
   });

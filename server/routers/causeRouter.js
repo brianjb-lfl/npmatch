@@ -14,7 +14,7 @@ causeRouter.get('/testify/', (req, res) => {
 
 // GET api/causes/list
 causeRouter.get('/list', (req, res) => {
-  const knex = require('./db');
+  const knex = require('../db');
   return knex
     .select('cause')
     .from ('causes')

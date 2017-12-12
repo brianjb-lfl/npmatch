@@ -18,7 +18,7 @@ adminRouter.get('/initialize', (req, res) => {
   let causeArr = [];
   let skillArr = [];
   let userArr = [];
-  const knex = require('./db');
+  const knex = require('../db');
   return knex
     .select('cause')
     .from ('causes')
@@ -30,7 +30,7 @@ adminRouter.get('/initialize', (req, res) => {
         .select('skill')
         .from('skills')
         .orderBy('skill')
-        .debug(false)
+        .debug(false);
     })
     .then( results => {
       skillArr = results.map( item => item.skill);
@@ -47,7 +47,7 @@ adminRouter.get('/initialize', (req, res) => {
         .orderBy('organization')
         .orderBy('lastName')
         .orderBy('firstName')
-        .debug(false)
+        .debug(false);
     })
     .then( results => {
       userArr = results.map( item => item);

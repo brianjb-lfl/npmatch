@@ -3,10 +3,10 @@
 const express = require('express');
 const cors = require('cors');
 const { PORT, CLIENT_ORIGIN } = require('./config');
-const { userRouter } = require('./userRouter');
-const { orgRouter } = require('./orgRouter');
-const { causeRouter } = require('./causeRouter');
-const { adminRouter } = require('./adminRouter');
+const { userRouter } = require('./routers/userRouter');
+const { orgRouter } = require('./routers/orgRouter');
+const { causeRouter } = require('./routers/causeRouter');
+const { adminRouter } = require('./routers/adminRouter');
 
 const app = express();
 
