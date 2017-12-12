@@ -6,6 +6,7 @@ import {usersList as initialState} from './potentialStates'
 
 export const reducer = (state = initialState, action) => {
   if (action.type === actions.LOAD_USERS_LIST) {
+    console.log('load users list reducer')
     return Object.assign({}, state, {
       main: action.main
     });

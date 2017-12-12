@@ -21,9 +21,11 @@ describe('reducer - display', () => {
   });
 
   it('Should show or hide the modal', () => {
-    const newView = 'login';
-    const state = reducer(initialState, {type: actions.CHANGE_DISPLAY, view: newView});
-    expect(state.view).toBe(newView);
+    const modalMessage = 'test message';
+    const state = reducer(initialState, {type: actions.TOGGLE_MODAL, message: modalMessage});
+    expect(state.modalMessage).toBe(modalMessage);
+    expect(state.modal).toBe(!initialState.modal);
+    
   });
 
 });

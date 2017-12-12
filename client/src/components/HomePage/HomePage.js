@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import TopNavBar from '../TopNavBar/TopNavBar';
 import BottomNavBar from '../BottomNavBar/BottomNavBar';
@@ -8,12 +9,11 @@ import ContributorPreview from '../ContributorPreview/ContributorPreview';
 
 
 export class HomePage extends Component {
-
-
   render() {
-    console.log(this.props);
     let previews = this.props.usersList.map((user, key) => (
-          <OrganizationPreview user={user} key={key} />
+      <Link to={`/profiles/${user.id}`}>
+        <OrganizationPreview user={user} key={key} />
+      </Link>
         )
       );
 
