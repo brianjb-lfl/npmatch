@@ -4,7 +4,7 @@ const express = require('express');
 const userRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-//const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 process.stdout.write('\x1Bc');
 
@@ -100,9 +100,14 @@ userRouter.post('/', jsonParser, (req, res) => {
       }
     })    // no dup, insert new user
     .then( () => {
+      return bcrypt.hash(inUsrObj.passwd, 10)
+    })
+    .then( result => {
+      inUsrObj.passwd = result;
+      console.log(inUsrObj);
       return knex('users')
         .insert(inUsrObj)
-        .returning(['id', 'username'])
+        .returning(['id', 'username', 'passwd'])
         .then( results => {
           res.status(201).json(results);
         });
