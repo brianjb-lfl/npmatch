@@ -17,6 +17,7 @@ export const loadUserViewed = user => ({
   locationCity: user.locationCity,
   locationState: user.locationState,
   locationCountry: user.locationCountry,
+  availability: user.availability,
   bio: user.bio,
   logo: user.logo,
   links: user.links, // array of objects

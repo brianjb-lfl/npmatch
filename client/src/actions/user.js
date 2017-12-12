@@ -18,6 +18,7 @@ export const loadUser = user => ({
   locationCity: user.locationCity,
   locationState: user.locationState,
   locationCountry: user.locationCountry,
+  availability: user.availability,
   bio: user.bio,
   logo: user.logo,
   links: user.links, // array of objects
@@ -58,7 +59,7 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
       } else {
         dispatch(loadUser(res));
       }
-      return dispatch(actionsDisplay.changeDisplay('userProfile'));      
+      return;      
     })
     .catch(error => {
       // console.log('error',error);

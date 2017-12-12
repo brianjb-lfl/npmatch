@@ -54,9 +54,7 @@ export const fetchOppsList = (searchCriteria, authToken) => dispatch => {
     })
     .then(res=>{
       console.log('response from opps list fetch',res)
-      dispatch(loadOpportunitiesList(res));
-      return dispatch(actionsDisplay.changeDisplay('loading'));
-      
+      return dispatch(loadOpportunitiesList(res));
     })
     .catch(error => {
       console.log('error',error);

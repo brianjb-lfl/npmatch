@@ -20,6 +20,7 @@ export const user = {
   locationCity: '',
   locationState: '',
   locationCountry: '',
+  availability: '',
   bio: '', 
   links: [              // SQL join
     {
@@ -63,6 +64,7 @@ export const usersList = {
       locationCity: '',
       locationState: '',
       locationCountry: '',
+      availability: '',      
       bio: '',
       links: [         // SQL join
         {
@@ -146,7 +148,7 @@ export const opportunitiesList = {
 };
 
 export const display = {
-  view: 'homePage',
+  view: 'homePage',    // options: 'homePage', 'explorePage', 
   modal: false,
   modalMessage: ''
 };

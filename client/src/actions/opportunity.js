@@ -47,9 +47,7 @@ export const fetchOpp = (oppId, type, authToken) => dispatch => {
     })
     .then(res=>{
       console.log('response from single opportunity fetch',res)
-      dispatch(loadOpportunity(res));
-      return dispatch(actionsDisplay.changeDisplay('loading'));
-      
+      return dispatch(loadOpportunity(res));      
     })
     .catch(error => {
       console.log('error',error);

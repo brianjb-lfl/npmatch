@@ -17,6 +17,7 @@ export const reducer = (state = initialState, action) => {
       locationCity: action.locationCity,
       locationState: action.locationState,
       locationCountry: action.locationCountry,
+      availability: action.availability,
       bio: action.bio,
       logo: action.logo,
       links: action.links, // array of objects
