@@ -54,13 +54,13 @@ export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => disp
       return res.json();
     })
     .then(res=>{
-      console.log('response from fetch',res)
+      // console.log('response from fetch',res)
       dispatch(loadUsersList(res));
       return dispatch(actionsDisplay.changeDisplay('loading'));
       
     })
     .catch(error => {
-      console.log('error',error);
+      // console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

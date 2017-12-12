@@ -8,9 +8,7 @@ import { reducer as display } from './display'
 import { reducer as general } from './general'
 import { reducer as form } from 'redux-form';
 
-console.log('user in index', user);
-
-export default combineReducers({
+export const reducer = combineReducers({
   user,
   userViewed,
   usersList,
@@ -21,4 +19,5 @@ export default combineReducers({
   form
 });
 
-module.exports = {user, userViewed, usersList, opportunity, opportunitiesList, display, general, form}
+// for testing
+module.exports = {reducer, user, userViewed, usersList, opportunity, opportunitiesList, display, general, form}

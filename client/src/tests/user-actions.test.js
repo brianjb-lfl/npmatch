@@ -60,7 +60,7 @@ describe('actions - single user', () => {
       following: [],
     };
     const expectedAction = {
-      type: 'LOAD_USER',
+      type: actionsUser.LOAD_USER,
       id: 7,
       firstName: 'Bob',
       lastName: 'Jones',
@@ -167,7 +167,7 @@ describe('actions - single user', () => {
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
-  it('should call actions to fetch individual user from server', () => {
+  it('should call actions to fetch individual user from server and load as user in state', () => {
     
     const userId = 5; // doesn't matter for testing
     const type = 'users' // other option is 'orgs'
@@ -191,12 +191,79 @@ describe('actions - single user', () => {
     return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
-        // console.log('expectedActions',expectedActions)
+        // console.log('expectedActions user',expectedActions)
         expect(expectedActions.length).toBe(3);
-        expect.assertions(2);  // number of callback functions
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
           {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
+  });
+
+  it('should call actions to fetch individual user from server and load as userViewed in state', () => {
+    
+    const userId = 6; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'userViewed' // other option is 'orgs'
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions userViewed',expectedActions)
+        expect(expectedActions.length).toBe(6); // 3 from before, 3 from this time
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
+          {type: actionsUser.LOAD_USER_VIEWED, id: userId }
+        );
+      })
+  });
+
+  it('should fail to call actions to fetch individual user from server and toggle modal', () => {
+    
+    const userId = 7; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'user' // other option is 'orgs'
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions fail user',expectedActions)
+        expect(expectedActions.length).toBe(8); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
         );
       })
   });

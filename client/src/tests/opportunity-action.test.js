@@ -80,7 +80,7 @@ describe('actions - single opportunity', () => {
     return store.dispatch(actionsOpp.fetchOpp(oppId, authToken))
       .then(() => {
         const expectedActions = store.getActions();
-        console.log('expectedActions',expectedActions)
+        // console.log('expectedActions',expectedActions)
         expect(expectedActions.length).toBe(3);
         expect.assertions(2);  // number of callback functions
         expect(expectedActions).toContainEqual(

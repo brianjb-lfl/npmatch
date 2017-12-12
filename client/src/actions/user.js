@@ -51,17 +51,16 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
       return res.json();
     })
     .then(res=>{
-      console.log('response from single user fetch',res)
+      // console.log('response from single user fetch',res)
       if (stateLocation === 'userViewed') {
         dispatch(actionsUserViewed.loadUserViewed(res));   
-        return dispatch(actionsDisplay.changeDisplay('userProfile'));
       } else {
         dispatch(loadUser(res));
-        return dispatch(actionsDisplay.changeDisplay('userProfile'));        
       }
+      return dispatch(actionsDisplay.changeDisplay('userProfile'));      
     })
     .catch(error => {
-      console.log('error',error);
+      // console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

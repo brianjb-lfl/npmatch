@@ -55,7 +55,7 @@ describe('actions - general', () => {
     return store.dispatch(actionsGeneral.fetchInitialize())
       .then(() => {
         const expectedActions = store.getActions();
-        console.log('expectedActions',expectedActions)
+        // console.log('expectedActions',expectedActions)
         expect(expectedActions.length).toBe(3);
         expect(expectedActions).toContainEqual(
           {type: actionsGeneral.LOAD_CAUSES, causes: []},
