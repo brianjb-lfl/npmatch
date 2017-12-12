@@ -31,19 +31,19 @@ orgRouter.get('/list', (req, res) => {
 
 // GET api/orgs/:id
 orgRouter.get('/:id', (req, res) => {
-  let orgObj = {}
+  let orgObj = {};
   const knex = require('./db');
   // get org base info
   return knex('users')
     .select()
     .where({id: req.params.id})
     .then( results => {
-      orgObj = ({...results[0]});
+      orgObj = (results[0]);
       delete orgObj['passwd'];
       // get org links
       return knex('links')
         .select('id', 'link_type', 'link_url')
-        .where({id_user: orgObj.id})
+        .where({id_user: orgObj.id});
     })
     .then( results => {
       orgObj.links = results;
@@ -51,14 +51,14 @@ orgRouter.get('/:id', (req, res) => {
       return knex('users_causes')
         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
         .select('causes.id', 'causes.cause')
-        .where({id_user: orgObj.id})
+        .where({id_user: orgObj.id});
     })
     .then( results => {
       orgObj.causes = results;
       // get org opportunities
       return knex('opportunities')
         .select('opportunity_type', 'title', 'narrative')
-        .where({id_user: orgObj.id})
+        .where({id_user: orgObj.id});
     })
     .then( results => {
       orgObj.opps = results;
@@ -66,7 +66,7 @@ orgRouter.get('/:id', (req, res) => {
     })
     .catch( err => {
       res.status(500).json({message: 'Internal server error'});
-    })
+    });
 });
 
 // POST api/users
