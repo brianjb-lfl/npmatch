@@ -28,8 +28,11 @@ export class App extends Component {
         <div>
           <Route exact path="/" component={renderPage} />
           <Route path="/:id" component={UserProfile} />
+          <Route path="/register" component={RegisterPage} />
           <Route path="/organizations" component={ExplorePage} />
           <Route path="/contributors" component={ExplorePage} />
+          <Route path="/inbox" component={InboxPage} />
+          <Route path="/settings" component={SettingsPage} />
         </div>
       </Router>
     );

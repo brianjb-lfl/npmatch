@@ -5,8 +5,18 @@ import { Link } from 'react-router-dom';
 import './BottomNavBar.css'
 
 export default class BottomNavBar extends Component {
-
   render() {
+    let homeButton;
+    if (this.props.view !== 'landingPage' || this.props.view !== 'homePage') {
+      <Link to='/'>
+        <li className='homeBottomButton'>
+          <button>
+            Home
+        </button>
+        </li>
+      </Link>
+    }
+
     return (
       <div>
         <ul className='bottomNav'>
