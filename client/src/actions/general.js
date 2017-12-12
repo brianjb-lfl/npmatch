@@ -47,13 +47,9 @@ export const fetchInitialize = () => dispatch => {
     .then(res => {
       return dispatch(loadCauses(res.causes));
     })
-<<<<<<< HEAD
     .then(res=>{
       return dispatch(actionsDisplay.changeDisplay('homePage'));
     })
-=======
-    .then(res => { return dispatch(actionsDisplay.changeDisplay('homePage')); })
->>>>>>> 6509bb0cd1988e073fb7756b6b182c45da33cfa8
     .catch(error => {
       console.log('error', error);
       return dispatch(actionsDisplay.toggleModal(error));
