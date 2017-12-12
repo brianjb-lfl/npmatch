@@ -166,3 +166,66 @@
         "cause": "social justice"
     }
 ]
+
+***** api/admin/initialize - GET
+
+{
+    "causes": [
+        "children",
+        "community",
+        "education",
+        "elderly",
+        "environment",
+        "health",
+        "homelessness",
+        "hunger",
+        "illiteracy",
+        "social justice"
+    ],
+    "skills": [
+        "administrative",
+        "clerical",
+        "construction",
+        "driving",
+        "legal services",
+        "listening",
+        "manual labor",
+        "meal preparation",
+        "medical services",
+        "tutoring",
+        "working with adults",
+        "working with animals",
+        "working with children",
+        "working with disabled",
+        "working with elderly"
+    ],
+    "users": [
+        {
+            "id": 3,
+            "username": "capfoodbank",
+            "locationCity": "Washington",
+            "locationState": "DC",
+            "firstName": null,
+            "lastName": null,
+            "userType": "organization"
+        },
+        {
+            "id": 4,
+            "username": "some",
+            "locationCity": "Washington",
+            "locationState": "DC",
+            "firstName": null,
+            "lastName": null,
+            "userType": "organization"
+        },
+        {
+            "id": 5,
+            "username": "joejoe",
+            "locationCity": "Altoona",
+            "locationState": "PA",
+            "firstName": "Joe",
+            "lastName": "Josephson",
+            "userType": "individual"
+        },
+      ]
+}

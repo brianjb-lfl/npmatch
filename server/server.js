@@ -6,6 +6,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { userRouter } = require('./userRouter');
 const { orgRouter } = require('./orgRouter');
 const { causeRouter } = require('./causeRouter');
+const { adminRouter } = require('./adminRouter');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
 app.use('/api/causes', causeRouter);
+app.use('/api/admin', adminRouter);
 
 app.use('*', (req, res) => {
   return res.status(404).json({message: 'Not Found'});

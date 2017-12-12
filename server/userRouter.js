@@ -16,7 +16,7 @@ userRouter.get('/testify/', (req, res) => {
 userRouter.get('/list', (req, res) => {
   const knex = require('./db');
   return knex
-    .select('id', 'username', 'location_city', 'location_state', 
+    .select('id', 'username', 'location_city as locationCity', 'location_state as locationState', 
       'first_name', 'last_name', 'user_type')
     .from ('users')
     .where({user_type: 'individual'})
