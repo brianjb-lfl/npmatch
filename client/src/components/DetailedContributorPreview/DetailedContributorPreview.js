@@ -7,21 +7,20 @@ export class DetailedContributorPreview extends Component {
     this.props.dispatch(actionsUser.fetchUser(
       id,
       this.props.user.authToken,
-      'orgs',
+      'users',
       'userViewed'
     ))
   }
 
-
   render() {
     return (
       <div onClick={() => this.handleClick(this.props.user.id)}>
-        <img className='logo' src={this.props.opportunity.logo}></img>
-        <h3 className='name'>{this.props.opportunity.name}</h3>
-        <p className='bio'>{this.props.opportunity.bio}</p>
-        <p className='causes'>{this.props.opportunity.causes}</p>
-        <p className='skills'>{this.props.opportunity.skills}</p>
-        <p className='availability'>{this.props.opportunity.availability}</p>
+        <img className='logo' src={this.props.user.logo}></img>
+        <h3 className='name'>{this.props.user.name}</h3>
+        <p className='bio'>{this.props.user.bio}</p>
+        <p className='causes'>{this.props.user.causes.join(', ')}</p>
+        <p className='skills'>{this.props.user.skills.join(', ')}</p>
+        <p className='availability'>{this.props.user.availability}</p>
       </div>
     )
   }

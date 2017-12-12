@@ -17,10 +17,10 @@ export class DetailedOrganizationPreview extends Component {
       <div onClick={() => this.handleClick(this.props.user.id)}>
         <img className='logo' src={this.props.user.logo}></img>
         <h3 className='name'>{this.props.user.name}</h3>
-        <p className='bio'>{this.props.user.description}</p>
-        <p className='causes'>{this.props.user.causes}</p>
-        <p className='skillsSought'>{this.props.user.skillsSought}</p>
-        <p className='upcomingProjects'>{this.props.user.upcomingProjects}</p>
+        <p className='bio'>{this.props.user.bio}</p>
+        <p className='causes'>{this.props.user.causes.join(', ')}</p>
+        <p className='skillsSought'>{this.props.user.skillsSought.join(', ')}</p>
+        <p className='upcomingProjects'>{this.props.user.upcomingProjects.join(', ')}</p>
       </div>
     )
   }

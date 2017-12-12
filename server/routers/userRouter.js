@@ -4,6 +4,7 @@ const express = require('express');
 const userRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+//const bcrypt = require('bcryptjs');
 
 process.stdout.write('\x1Bc');
 
@@ -74,13 +75,42 @@ userRouter.get('/:id', (req, res) => {
 // POST api/users
 userRouter.post('/', jsonParser, (req, res) => {
   const knex = require('../db');
+  const reqFields = ['username', 'passwd'];
+  const missingField = reqFields.filter( field => !(field in req.body));
+  // check for missing username or passwd
+  if(missingField.length > 0) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Error: username and passwd are required'
+    });
+  }
+  // check for dup username
+  let inUsrObj = Object.assign( {}, req.body);
   return knex('users')
-    .insert(req.body)
-    .returning(['id', 'username'])
+    .select()
+    .where({username: inUsrObj.username})
     .then( results => {
-      res.status(201).json(results);
+      if(results.length > 0) {
+        return Promise.reject({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'Username already taken',
+        });
+      }
+    })    // no dup, insert new user
+    .then( () => {
+      return knex('users')
+        .insert(inUsrObj)
+        .returning(['id', 'username'])
+        .then( results => {
+          res.status(201).json(results);
+        });
     })
     .catch( err => {
+      if(err.reason === 'ValidationError') {
+        return res.status(err.code).json(err);
+      }
       res.status(500).json({message: 'Internal server error'});
     });
 });

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import TopNavBar from '../TopNavBar/TopNavBar';
-import BottomNavBar from '../BottomNavBar/BottomNavBar';
 import OrganizationPreview from '../OrganizationPreview/OrganizationPreview';
 import ContributorPreview from '../ContributorPreview/ContributorPreview';
 
@@ -19,16 +17,7 @@ export class HomePage extends Component {
 
     return (
       <div>
-        <TopNavBar />
         {previews}
-        <BottomNavBar
-          leftLink='https://localhost:3000/organizations'
-          leftAltText='View Organizations Button'
-          leftLabel='Organizations'
-          rightLink='https://localhost:3000/contributors'
-          rightAltText='View Contributors Button'
-          rightLabel='Contributors'
-        />
       </div>
     )
   }

@@ -9,6 +9,8 @@ import HomePage from './components/HomePage/HomePage';
 import LandingPage from './components/LandingPage/LandingPage';
 import UserProfile from './components/UserProfile/UserProfile';
 import ExplorePage from './components/ExplorePage/ExplorePage';
+import TopNavBar from './components/TopNavBar/TopNavBar';
+import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 
 export class App extends Component {
 
@@ -33,6 +35,8 @@ export class App extends Component {
           <Route path="/contributors" component={ExplorePage} />
           {/* <Route path="/inbox" component={InboxPage} />
           <Route path="/settings" component={SettingsPage} /> */}
+          <TopNavBar />
+          <BottomNavBar />
         </div>
       </Router>
     );

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import TopNavBar from '../TopNavBar/TopNavBar';
-import BottomNavBar from '../BottomNavBar/BottomNavBar';
 import OrganizationPreview from '../OrganizationPreview/OrganizationPreview';
 
 export default class LandingPage extends Component {
@@ -18,9 +16,7 @@ export default class LandingPage extends Component {
 
     return (
       <div>
-        <TopNavBar />
         {previews}
-        <BottomNavBar />
       </div>
     )
   }
