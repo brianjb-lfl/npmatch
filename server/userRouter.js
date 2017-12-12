@@ -39,12 +39,12 @@ userRouter.get('/:id', (req, res) => {
     .select()
     .where({id: req.params.id})
     .then( results => {
-      usrObj = ({...results[0]});
+      usrObj = (results[0]);
       delete usrObj['passwd'];
       // get user links
       return knex('links')
         .select('id', 'link_type', 'link_url')
-        .where({id_user: usrObj.id})
+        .where({id_user: usrObj.id});
     })
     .then( results => {
       usrObj.links = results;
@@ -52,7 +52,7 @@ userRouter.get('/:id', (req, res) => {
       return knex('users_causes')
         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
         .select('causes.id', 'causes.cause')
-        .where({id_user: usrObj.id})
+        .where({id_user: usrObj.id});
     })
     .then( results => {
       usrObj.causes = results;
@@ -60,7 +60,7 @@ userRouter.get('/:id', (req, res) => {
       return knex('users_skills')
         .join('skills', 'users_skills.id_skill', '=', 'skills.id')
         .select('skills.id', 'skills.skill')
-        .where({id_user: usrObj.id})
+        .where({id_user: usrObj.id});
     })
     .then( results => {
       usrObj.skills = results;
@@ -68,7 +68,7 @@ userRouter.get('/:id', (req, res) => {
     })
     .catch( err => {
       res.status(500).json({message: 'Internal server error'});
-    })
+    });
 });
 
 // POST api/users
