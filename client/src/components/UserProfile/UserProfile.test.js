@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import UserProfile from './UserProfile';
+import {UserProfile} from './UserProfile';
+import {mapStateToProps} from './UserProfile';
 
 describe('Core display functionality of User Profile', () => {
   it('Smoke test - component should render', () => {
@@ -37,4 +38,10 @@ describe('Core display functionality of User Profile', () => {
       <p>We melt brains, one tweet at a time.</p>
     ])).toEqual(true);
   });
+  it('Should map state to props', () => {
+    const initialState = {display: {view: 'homePage'}};
+    const expectedProps = {display: 'homePage'};
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  })
 });

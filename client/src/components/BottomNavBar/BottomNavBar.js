@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 
 import './BottomNavBar.css'
 
-export default class BottomNavBar extends Component {
+export class BottomNavBar extends Component {
   render() {
+    let leftButton;
+    let leftLabel;
+    let rightButton;
+    let rightLabel;
     let homeButton;
-    if (this.props.view !== 'landingPage' || this.props.view !== 'homePage') {
-      <Link to='/'>
+    if (this.props.display !== 'landingPage' && this.props.display !== 'homePage') {
+      homeButton = <Link to='/'>
         <li className='homeBottomButton'>
           <button>
             Home
@@ -16,21 +20,36 @@ export default class BottomNavBar extends Component {
         </li>
       </Link>
     }
+    
+    if (this.props.display === 'landingPage') {
+      leftButton = '/signInPage'
+      leftLabel = 'Sign In'
+      rightButton = '/registerPage'
+      rightLabel = 'Sign Up'
+    }
+    else {
+      leftButton = '/organizations'
+      leftLabel = 'Organizations'
+      rightButton = '/contributors'
+      rightLabel = 'Contributors'
+    }
+
 
     return (
       <div>
         <ul className='bottomNav'>
-          <Link to='/organizations'>
+          {homeButton}
+          <Link to={leftButton}>
             <li className='leftBottomButton'>
               <button>
-                {this.props.leftLabel}
+                {leftLabel}
               </button>
             </li>
           </Link>
-          <Link to='/contributors'>
+          <Link to={rightButton}>
             <li className='rightBottomButton'>
               <button>
-                {this.props.rightLabel}
+                {rightLabel}
               </button>
             </li>
           </Link>
@@ -39,3 +58,8 @@ export default class BottomNavBar extends Component {
     )
   }
 }
+
+export const mapStateToProps = state => ({
+  display: state.display.view
+})
+export default connect(mapStateToProps)(BottomNavBar);

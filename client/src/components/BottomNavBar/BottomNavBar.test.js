@@ -1,35 +1,56 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Link } from 'react-router-dom';
 
-import BottomNavBar from './BottomNavBar';
+import {BottomNavBar} from './BottomNavBar';
+import {mapStateToProps} from './BottomNavBar';
 
 describe('Bottom Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {
     shallow(<BottomNavBar />);
   });
-  it('Should render an unordered list with two list items', () => {
-    const wrapper = shallow(<BottomNavBar />);
-    expect(wrapper.containsMatchingElement(
-      <ul>
-        <li><a></a></li>
-        <li><a></a></li>
-      </ul>
-    )).toEqual(true);
-  });
-  it('Should render the component with the correct links passed down as props', () => {
+  it('Should render the component with the correct links passed down as props on Landing Page', () => {
     const wrapper = shallow(<BottomNavBar 
-      leftLink='https://www.signin.project'
-      leftLabel='Sign In'
-      leftAltText='Sign In button'
-      rightLink='https://www.signup.project'
-      rightLabel='Sign Up'
-      rightAltText='Sign Up button'
+      display='landingPage'
     />);
-    expect(wrapper.find('.leftButton a').prop('href')).toEqual('https://www.signin.project');
-    expect(wrapper.find('.leftButton a').prop('alt')).toEqual('Sign In button');
-    expect(wrapper.find('.leftButton a').text()).toEqual('Sign In');
-    expect(wrapper.find('.rightButton a').prop('href')).toEqual('https://www.signup.project');
-    expect(wrapper.find('.rightButton a').prop('alt')).toEqual('Sign Up button');
-    expect(wrapper.find('.rightButton a').text()).toEqual('Sign Up');
+    expect(wrapper.find('.leftBottomButton button').text()).toEqual('Sign In');
+    expect(wrapper.find('.rightBottomButton button').text()).toEqual('Sign Up');
   });
+  it('Should render the component with the correct links passed down as props on other pages', () => {
+    const wrapper = shallow(<BottomNavBar 
+      display='explorePage'
+    />);
+    expect(wrapper.find('.leftBottomButton button').text()).toEqual('Organizations');
+    expect(wrapper.find('.rightBottomButton button').text()).toEqual('Contributors');
+  });
+  it('Should render the Home Button when the display is NOT landingPage or homePage', () => {
+    const wrapper = shallow(<BottomNavBar 
+      display='explorePage'
+    />);
+    expect(wrapper.find('.homeBottomButton').exists()).toEqual(true);
+  });
+  it('Should NOT render the Home Button when the display is homePage', () => {
+    const wrapper = shallow(<BottomNavBar 
+      display='homePage'
+    />);
+    expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
+  });
+  it('Should NOT render the Home Button when the display is landingPage', () => {
+    const wrapper = shallow(<BottomNavBar 
+      display='landingPage'
+    />);
+    expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
+  });
+  it('Should render the Home Button correctly', () => {
+    const wrapper = shallow(<BottomNavBar 
+      display='explorePage'
+    />);
+    expect(wrapper.find('.homeBottomButton button').text()).toEqual('Home');
+  });
+  it('Should map state to props', () => {
+    const initialState = {display: {view: 'homePage'}};
+    const expectedProps = {display: 'homePage'};
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  })
 });
