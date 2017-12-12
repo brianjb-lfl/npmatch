@@ -42,60 +42,60 @@ describe('organization', function() {
   });
 
   // ***** GET ORG LIST
-  describe('api/orgs/list GET org list', function() {
-    it('should return a list of existing orgs', function() {
-      return chai.request(app)
-        .get('/api/orgs/list')
-        .then(function(res) {
-          let orgNames = testData.userSeeds
-            .filter(item => item.user_type === 'organization')
-            .map( item => item.username );
-          expect(res.body.length).to.equal(orgNames.length);
-          for(let oCtr = 0; oCtr < res.body.length; oCtr++) {
-            expect(orgNames).to.include(res.body[oCtr].username);
-          }
-          // expect(res.body[0].username).to.equal('fSociety');    // failing test
-        });
-    });
-  });
+  // describe('api/orgs/list GET org list', function() {
+  //   it('should return a list of existing orgs', function() {
+  //     return chai.request(app)
+  //       .get('/api/orgs/list')
+  //       .then(function(res) {
+  //         let orgNames = testData.userSeeds
+  //           .filter(item => item.user_type === 'organization')
+  //           .map( item => item.username );
+  //         expect(res.body.length).to.equal(orgNames.length);
+  //         for(let oCtr = 0; oCtr < res.body.length; oCtr++) {
+  //           expect(orgNames).to.include(res.body[oCtr].username);
+  //         }
+  //         // expect(res.body[0].username).to.equal('fSociety');    // failing test
+  //       });
+  //   });
+  // });
 
   // ***** GET ORGANIZATION USER - DETAIL
-  describe('api/orgs/:id GET org details', function() {
-    it('should return the organizations profile info, links, causes, and opportunities', function() {
-      let focusOrg = {};
-      return testF.getFocusOrg()
-        .then ( results => {
-          focusOrg = results;
-          return chai.request(app)
-            .get(`/api/orgs/${focusOrg.focus_org_id}`)
-        })
-        .then( res => {
-          // test general org info
-          expect(res.body.username).to.equal(focusOrg.username);
-          // test org links
-          expect(res.body.links.length).to.equal(testData.testOrgLinks.length);
-          //expect(res.body.links.length).to.equal(99);   // failing test
-          const expOrgLinksArr = testData.testOrgLinks.map( item => item.link_url);
-          for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
-            expect(expOrgLinksArr).to.include(res.body.links[lCtr].link_url);
-          }
-          // test org causes
-          expect(res.body.causes.length).to.equal(testData.testOrgCauses.length);
-          // expect(res.body.causes.length).to.equal(98);    // failing test
-          const expOrgCausesArr = testData.testOrgCauses.map( item => item.cause);
-          for(let cCtr = 0; cCtr < res.body.causes.length; cCtr++) {
-            expect(expOrgCausesArr).to.include(res.body.causes[cCtr].cause);
-          }
-          // test org opportunities
-          expect(res.body.opps.length).to.equal(testData.orgOppSeeds.length);
-          // expect(res.body.skills.length).to.equal(97);    // failing test
-          const expOrgOppsArr = testData.orgOppSeeds.map( item => item.narrative);
-          for(let oCtr = 0; oCtr < res.body.opps.length; oCtr++) {
-            expect(expOrgOppsArr).to.include(res.body.opps[oCtr].narrative);
-          }
-        })
-    })
-  });
+  // describe('api/orgs/:id GET org details', function() {
+  //   it('should return the organizations profile info, links, causes, and opportunities', function() {
+  //     let focusOrg = {};
+  //     return testF.getFocusOrg()
+  //       .then ( results => {
+  //         focusOrg = results;
+  //         return chai.request(app)
+  //           .get(`/api/orgs/${focusOrg.focus_org_id}`)
+  //       })
+  //       .then( res => {
+  //         // test general org info
+  //         expect(res.body.username).to.equal(focusOrg.username);
+  //         // test org links
+  //         expect(res.body.links.length).to.equal(testData.testOrgLinks.length);
+  //         //expect(res.body.links.length).to.equal(99);   // failing test
+  //         const expOrgLinksArr = testData.testOrgLinks.map( item => item.link_url);
+  //         for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
+  //           expect(expOrgLinksArr).to.include(res.body.links[lCtr].link_url);
+  //         }
+  //         // test org causes
+  //         expect(res.body.causes.length).to.equal(testData.testOrgCauses.length);
+  //         // expect(res.body.causes.length).to.equal(98);    // failing test
+  //         const expOrgCausesArr = testData.testOrgCauses.map( item => item.cause);
+  //         for(let cCtr = 0; cCtr < res.body.causes.length; cCtr++) {
+  //           expect(expOrgCausesArr).to.include(res.body.causes[cCtr].cause);
+  //         }
+  //         // test org opportunities
+  //         expect(res.body.opps.length).to.equal(testData.orgOppSeeds.length);
+  //         // expect(res.body.skills.length).to.equal(97);    // failing test
+  //         const expOrgOppsArr = testData.orgOppSeeds.map( item => item.narrative);
+  //         for(let oCtr = 0; oCtr < res.body.opps.length; oCtr++) {
+  //           expect(expOrgOppsArr).to.include(res.body.opps[oCtr].narrative);
+  //         }
+  //       })
+  //   })
+  // });
 
 });
 
