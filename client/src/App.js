@@ -9,7 +9,7 @@ import HomePage from './components/HomePage/HomePage';
 import LandingPage from './components/LandingPage/LandingPage';
 import userProfile from './components/userProfile/userProfile';
 import ExplorePage from './components/ExplorePage/ExplorePage';
-import TopNavBar from './components/TopNavBar/TopNavBar';
+import TopNavBar from './components/top-nav-bar/top-nav-bar';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 
 export class App extends Component {
