@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as actionsUsersList from '../../actions/usersList';
+import * as actionsUsersList from '../../actions/users-list';
 import * as actionsDisplay from '../../actions/display';
 
 import './bottom-nav-bar.css'
