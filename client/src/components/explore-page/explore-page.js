@@ -28,9 +28,9 @@ export class ExplorePage extends Component {
     }
 
     return (
-      <div>
+      <main>
         {previews}
-      </div>
+      </main>
     )
   }
 }

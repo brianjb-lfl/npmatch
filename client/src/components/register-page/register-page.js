@@ -8,12 +8,12 @@ import * as userActions from '../../actions/user';
 export class RegisterPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.registerUser(input))
-    .then(() => this.props.history.push('/'))
+      .then(() => this.props.history.push('/'))
   }
 
   formBody;
-  
-  handleTypeChange(userType){
+
+  handleTypeChange(userType) {
     if (userType === 'individual') {
       this.formBody = <div>
         <Field className='firstNameInput' name='firstName' id='firstName'
@@ -39,36 +39,38 @@ export class RegisterPage extends Component {
   render() {
 
     return (
-      <form className='registerForm'
-        onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
-      >
-        <Field className='userTypeInput' name='userType' id='userTypeI'
-          component='input' type='radio' value='individual' onChange={(value)=>this.handleTypeChange(value)}
-        />
-        <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
-        <Field className='userTypeInput' name='userType' id='userTypeO'
-          component='input' type='radio' value='organization' onChange={(value)=>this.handleTypeChange(value)}
-        />
-        <label className='inputLabel' htmlFor={'userTypeI'}>Organization</label>
+      <main>
+        <form className='registerForm'
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
+        >
+          <Field className='userTypeInput' name='userType' id='userTypeI'
+            component='input' type='radio' value='individual' onChange={(value) => this.handleTypeChange(value)}
+          />
+          <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
+          <Field className='userTypeInput' name='userType' id='userTypeO'
+            component='input' type='radio' value='organization' onChange={(value) => this.handleTypeChange(value)}
+          />
+          <label className='inputLabel' htmlFor={'userTypeI'}>Organization</label>
 
-        {this.formBody}
+          {this.formBody}
 
-        <Field className='usernameInput' name='username' id='username'
-          component='input' type='text' placeholder='Email Address' required
-        />
-        <label className='inputLabel' htmlFor={'username'}>Username</label>
+          <Field className='usernameInput' name='username' id='username'
+            component='input' type='text' placeholder='Email Address' required
+          />
+          <label className='inputLabel' htmlFor={'username'}>Username</label>
 
-        <Field className='passwordInput' name='password' id='password'
-          component='input' type='password' placeholder='Password' required
-        />
-        <label className='inputLabel' htmlFor={'password'}>Password</label>
+          <Field className='passwordInput' name='password' id='password'
+            component='input' type='password' placeholder='Password' required
+          />
+          <label className='inputLabel' htmlFor={'password'}>Password</label>
 
-        <Field className='passwordInput' name='password2' id='password2'
-          component='input' type='password' placeholder='Confirm Password' required
-        />
-        <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
-        <button type='submit'>Sign Up</button>
-      </form>
+          <Field className='passwordInput' name='password2' id='password2'
+            component='input' type='password' placeholder='Confirm Password' required
+          />
+          <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
+          <button type='submit'>Sign Up</button>
+        </form>
+      </main>
     );
   }
 }

@@ -13,9 +13,9 @@ export class RootPage extends Component {
     else renderPage = <HomePage />
 
     return (
-      <div>
+      <main>
         {renderPage}
-      </div>
+      </main>
     )
   }
 }

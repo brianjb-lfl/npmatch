@@ -7,45 +7,10 @@ import * as actionsDisplay from '../../actions/display';
 import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
-  signIn() {
-    console.log(this.props);
-    this.props.dispatch(actionsDisplay.changeDisplay('login'))
-      .then(() => this.props.history.push('/login'))
-  }
-
-  signUp() {
-    this.props.dispatch(actionsDisplay.changeDisplay('register'))
-      .then(() => this.props.history.push('/register'))
-  }
-
-  exploreOrganizations() {
-    console.log('this is firing');
-    this.props.dispatch(actionsUsersList.fetchUsersList(
-      {},
-      this.props.user.authToken,
-      'orgs'
-    ))
-      .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations')))
-      .then(() => this.props.history.push('/organizations'))
-  }
-
-  exploreContributors() {
-    this.props.dispatch(actionsUsersList.fetchUsersList(
-      {},
-      this.props.user.authToken,
-      'users'
-    ))
-      // .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors')))
-      .then(() => {
-        console.log('HERE IS THE HISTORY', this.props.history)
-        return this.props.history.push('/contributors')
-      })
-  }
-
   leftOnClick() {
     if (this.props.display === 'landingPage') {
-      this.props.dispatch(actionsDisplay.changeDisplay('login'));
       this.props.history.push('/login');
+      this.props.dispatch(actionsDisplay.changeDisplay('login'));
     }
     else {
       this.props.dispatch(actionsUsersList.fetchUsersList(
@@ -59,7 +24,19 @@ export class BottomNavBar extends Component {
   }
 
   rightOnClick() {
-    
+    if (this.props.display === 'landingPage') {
+      this.props.history.push('/register');
+      this.props.dispatch(actionsDisplay.changeDisplay('register'));
+    }
+    else {
+      this.props.dispatch(actionsUsersList.fetchUsersList(
+        {},
+        this.props.user.authToken,
+        'users'
+      ));
+      this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors'));
+      this.props.history.push('/contributors');
+    }
   }
 
   render() {
@@ -71,7 +48,8 @@ export class BottomNavBar extends Component {
     let rightLabel;
     let rightOnClick;
     let homeButton;
-    if (this.props.display !== 'landingPage' && this.props.display !== 'homePage') {
+    console.log(this.props.match);
+    if (this.props.match.url !== '/') {
       homeButton = <Link to='/'>
         <li className='homeBottomButton'>
           <button>
@@ -120,6 +98,7 @@ export class BottomNavBar extends Component {
 }
 
 export const mapStateToProps = state => ({
+  user: state.user,
   display: state.display.view
 })
 export default connect(mapStateToProps)(BottomNavBar);

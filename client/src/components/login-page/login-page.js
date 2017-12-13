@@ -8,23 +8,26 @@ import * as userActions from '../../actions/user';
 export class LoginPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.login(input))
-    .then(() => this.props.history.push('/'))
+      .then(() => this.props.history.push('/'))
   }
 
   render() {
+    console.log('LOGIN PAGE', this.props.match)
     return (
-      <form className='loginForm'
-        onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
-      >
-        <Field className='usernameInput' name='username' id='username'
-          component='input' type='text' placeholder='Email Address' required
-        />
-        <Field className='passwordInput' name='password' id='password'
-          component='input' type='text' placeholder='Password' required
-        />
-        <button type='submit'>Sign Up</button>
-      </form>
-    );
+      <main>
+        <form className='loginForm'
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
+        >
+          <Field className='usernameInput' name='username' id='username'
+            component='input' type='text' placeholder='Email Address' required
+          />
+          <Field className='passwordInput' name='password' id='password'
+            component='input' type='text' placeholder='Password' required
+          />
+          <button type='submit'>Sign In</button>
+        </form>
+      </main>
+    )
   }
 }
 
