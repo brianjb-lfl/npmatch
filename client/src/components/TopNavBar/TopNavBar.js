@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './TopNavBar.css'
+import './topNavBar.css'
 
 
 export default class TopNavBar extends Component {

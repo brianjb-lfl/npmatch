@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TopNavBar from './TopNavBar';
+import TopNavBar from './topNavBar';
 
 describe('Top Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {

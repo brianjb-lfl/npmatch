@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import {UserProfile} from './UserProfile';
-import {mapStateToProps} from './UserProfile';
+import {UserProfile} from './userProfile';
+import {mapStateToProps} from './userProfile';
 
 describe('Core display functionality of User Profile', () => {
   it('Smoke test - component should render', () => {
