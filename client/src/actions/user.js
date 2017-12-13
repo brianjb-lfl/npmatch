@@ -75,7 +75,7 @@ export const login = (user) => dispatch => {
   const auth = `${user.username}:${user.password}`; // u & pw as string
   const headers = {
     "Authorization": "Basic " + btoa(auth), // base64 encryption
-    "x-requested-with": "xhr"
+    // "x-requested-with": "xhr"
   }; 
   const init = { 
     method: 'POST',
