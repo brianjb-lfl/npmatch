@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import * as actionsUsersList from '../../actions/usersList';
 import * as actionsDisplay from '../../actions/display';
 
-import './BottomNavBar.css'
+import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
   exploreOrganizations() {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import {HomePage} from './HomePage';
-import {mapStateToProps} from './HomePage';
+import {ExplorePage} from './explore-page';
+import {mapStateToProps} from './explore-page';
 
-describe('Home Page component display functionality', () => {
+describe('Explore Page component display functionality', () => {
   it('Smoke test - component should render', () => {
-    shallow(<HomePage />);
+    shallow(<ExplorePage />);
   });
   it('Should map state to props', () => {
     const initialState = {display: {view: 'homePage'}};

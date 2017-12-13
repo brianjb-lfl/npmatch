@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { DetailedOrganizationPreview } from './DetailedOrganizationPreview';
+import { DetailedOrganizationPreview } from './detailed-organization-preview';
 
 describe('Detailed Organization Preview component display functionality', () => {
   const user = {
