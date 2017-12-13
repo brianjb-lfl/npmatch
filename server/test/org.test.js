@@ -11,9 +11,9 @@ setDbMode('test');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app } = require('../server');
-const { testSetup } = require('./testSetup');
-const { testData } = require('./testData');
-const { testF } = require('./testHelpers');
+const { testSetup } = require('./test-setup');
+const { testData } = require('./test-data');
+const { testF } = require('./test-helpers');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -21,7 +21,7 @@ chai.use(chaiHttp);
 describe('organization', function() {
 
   before(function() {
-    return (testSetup.buildFullDB())
+    return (testSetup.buildFullDB());
   });
 
   after(function() {
@@ -67,7 +67,7 @@ describe('organization', function() {
         .then ( results => {
           focusOrg = results;
           return chai.request(app)
-            .get(`/api/orgs/${focusOrg.focus_org_id}`)
+            .get(`/api/orgs/${focusOrg.focus_org_id}`);
         })
         .then( res => {
           // test general org info
@@ -77,7 +77,7 @@ describe('organization', function() {
           //expect(res.body.links.length).to.equal(99);   // failing test
           const expOrgLinksArr = testData.testOrgLinks.map( item => item.link_url);
           for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
-            expect(expOrgLinksArr).to.include(res.body.links[lCtr].link_url);
+            expect(expOrgLinksArr).to.include(res.body.links[lCtr].linkUrl);
           }
           // test org causes
           expect(res.body.causes.length).to.equal(testData.testOrgCauses.length);

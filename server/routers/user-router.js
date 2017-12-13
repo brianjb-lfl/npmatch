@@ -78,7 +78,7 @@ userRouter.get('/:id', (req, res) => {
     });
 });
 
-// POST api/users
+// POST api/users/register
 userRouter.post('/register', jsonParser, (req, res) => {
   const knex = require('../db');
   const reqFields = ['username', 'password'];

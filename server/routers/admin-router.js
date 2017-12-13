@@ -36,7 +36,8 @@ adminRouter.get('/initialize', (req, res) => {
       skillArr = results.map( item => item.skill);
       return knex
         .select(
-          'id', 
+          'id',
+          'username', 
           'location_city as locationCity', 
           'location_state as locationState',
           'location_country as locationCountry', 
@@ -46,8 +47,8 @@ adminRouter.get('/initialize', (req, res) => {
         .from('users')
         .where({user_type: 'organization'})
         .orderBy('organization')
-        .orderBy('lastName')
-        .orderBy('firstName')
+        .orderBy('last_name')
+        .orderBy('first_name')
         .debug(false);
     })
     .then( results => {

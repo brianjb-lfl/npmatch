@@ -11,9 +11,9 @@ setDbMode('test');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app } = require('../server');
-const { testSetup } = require('./testSetup');
-const { testData } = require('./testData');
-const { testF } = require('./testHelpers');
+const { testSetup } = require('./test-setup');
+const { testData } = require('./test-data');
+const { testF } = require('./test-helpers');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -21,7 +21,7 @@ chai.use(chaiHttp);
 describe('user', function() {
 
   before(function() {
-    return (testSetup.buildFullDB())
+    return (testSetup.buildFullDB());
   });
 
   after(function() {
@@ -77,7 +77,7 @@ describe('user', function() {
           //expect(res.body.links.length).to.equal(99);   // failing test
           const expUserLinksArr = testData.testUserLinks.map( item => item.link_url);
           for(let lCtr = 0; lCtr < res.body.links.length; lCtr++) {
-            expect(expUserLinksArr).to.include(res.body.links[lCtr].link_url);
+            expect(expUserLinksArr).to.include(res.body.links[lCtr].linkUrl);
           }
           // test user causes
           expect(res.body.causes.length).to.equal(testData.testUserCauses.length);
@@ -104,7 +104,7 @@ describe('user', function() {
       let testUser = Object.assign( {}, testData.testIndividual);
       delete testUser['username'];
       return chai.request(app)
-        .post('/api/users')
+        .post('/api/users/register')
         .send(testUser)
         .then( () => 
           expect.fail(null, null, 'Request should fail')
@@ -121,9 +121,9 @@ describe('user', function() {
 
     it('should reject user with missing passwd', function() {
       let testUser = Object.assign( {}, testData.testIndividual);
-      delete testUser['passwd'];
+      delete testUser['password'];
       return chai.request(app)
-        .post('/api/users')
+        .post('/api/users/register')
         .send(testUser)
         .then( () => 
           expect.fail(null, null, 'Request should fail')
@@ -141,7 +141,7 @@ describe('user', function() {
     it('should add user to users table as type individual', function() {
       let testUser = Object.assign( {}, testData.testIndividual);
       return chai.request(app)
-        .post('/api/users')
+        .post('/api/users/register')
         .send(testUser)
         .then(function(res) {
           expect(res.body.length).to.equal(1);
@@ -161,14 +161,14 @@ describe('user', function() {
           if(err instanceof chai.AssertionError) {
             throw err;
           }
-          console.log(err.response);
+          //console.log(err.response);
         });
     });
 
     it('should reject a duplicate username', function() {
       let testUser = Object.assign( {}, testData.testIndividual);
       return chai.request(app)
-        .post('/api/users')
+        .post('/api/users/register')
         .send(testUser)
         .then( () =>
           expect.fail(null, null, 'Request should fail')

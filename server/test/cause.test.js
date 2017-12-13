@@ -11,9 +11,9 @@ setDbMode('test');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app } = require('../server');
-const { testSetup } = require('./testSetup');
-const { testData } = require('./testData');
-const { testF } = require('./testHelpers');
+const { testSetup } = require('./test-setup');
+const { testData } = require('./test-data');
+const { testF } = require('./test-helpers');
 const expect = chai.expect;
 
 chai.use(chaiHttp);

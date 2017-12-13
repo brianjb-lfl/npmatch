@@ -11,9 +11,9 @@ setDbMode('test');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app } = require('../server');
-const { testSetup } = require('./testSetup');
-const { testData } = require('./testData');
-const { testF } = require('./testHelpers');
+const { testSetup } = require('./test-setup');
+const { testData } = require('./test-data');
+const { testF } = require('./test-helpers');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -71,7 +71,8 @@ describe('admin', function() {
           }
           // expect(res.body[0]).to.equal('cat juggler extraordinaire');    // failing test
           // check users
-          expect(res.body.users.length).to.equal(testData.userSeeds.length);
+          expect(res.body.users.length)
+            .to.equal(testData.userSeeds.filter( item => item.user_type === 'organization').length);
           res.body.users.forEach( usrObj => {
             let tempSeedUser = testData.userSeeds.filter( item => item.username === usrObj.username);
             expect(tempSeedUser.length).to.equal(1);    // tests username = seed username

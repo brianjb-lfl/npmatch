@@ -1,7 +1,7 @@
 'use strict';
 
 const knex = require('../db');
-const { testData } = require('./testData');
+const { testData } = require('./test-data');
 
 let testSetup = {};
 

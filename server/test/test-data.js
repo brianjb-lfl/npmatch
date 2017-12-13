@@ -7,7 +7,7 @@ let testData = {};
 testData.userSeeds = [
   {
     username: 'swimmer85',
-    passwd: 'swimmer85spassword',
+    password: 'swimmer85spassword',
     user_type: 'individual',
     location_city: 'losangeles',
     location_state: 'ca',
@@ -19,7 +19,7 @@ testData.userSeeds = [
   },
   {
     username: 'darkoverlord',
-    passwd: 'darkospassword',
+    password: 'darkospassword',
     user_type: 'individual',
     location_city: 'fayetteville',
     location_state: 'ar',
@@ -31,7 +31,7 @@ testData.userSeeds = [
   },
   {
     username: 'packerfan75',
-    passwd: 'packerfanspw',
+    password: 'packerfanspw',
     user_type: 'individual',
     location_city: 'two rivers',
     location_state: 'wi',
@@ -43,7 +43,7 @@ testData.userSeeds = [
   },
   {
     username: 'theshelter',
-    passwd: 'shelterprezpw',
+    password: 'shelterprezpw',
     user_type: 'organization',
     location_city: 'atlanta',
     location_state: 'ga',
@@ -55,7 +55,7 @@ testData.userSeeds = [
   },
   {
     username: 'stmarysareamission',
-    passwd: 'stmampassword',
+    password: 'stmampassword',
     user_type: 'organization',
     location_city: 'high point',
     location_state: 'nc',
@@ -67,7 +67,7 @@ testData.userSeeds = [
   },
   {
     username: 'hopeonwheels',
-    passwd: 'howspassword',
+    password: 'howspassword',
     user_type: 'organization',
     location_city: 'miami',
     location_state: 'fl',
@@ -81,7 +81,7 @@ testData.userSeeds = [
 
 testData.testIndividual = {
   username: 'attorneyinks',
-  passwd: 'attorneyspassword',
+  password: 'attorneyspassword',
   user_type: 'individual',
   location_city: 'topeka',
   location_state: 'ks',
@@ -94,7 +94,7 @@ testData.testIndividual = {
 
 testData.testOrganization = {
   username: 'dragonfly11',
-  passwd: 'dragonflyspassword',
+  password: 'dragonflyspassword',
   user_type: 'organization',
   location_city: 'wildwood',
   location_state: 'fl',
