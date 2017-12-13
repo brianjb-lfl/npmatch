@@ -9,7 +9,7 @@ export default class LandingPage extends Component {
   render() {
     let previews = this.props.usersList.map((user, key) => (
       <Link to={`/profiles/${user.id}`}>
-        <OrganizationPreview user={user} key={key} />
+        <OrganizationPreview user={user} key={key} /> 
       </Link>
     )
     );
