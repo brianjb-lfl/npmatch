@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
 import * as userActions from '../../actions/user';
 
-export default class RegisterPage extends Component {
+export class RegisterPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.registerUser(input))
     .then(() => this.props.history.push('/'))
@@ -19,19 +19,19 @@ export default class RegisterPage extends Component {
         <Field className='firstNameInput' name='firstName' id='firstName'
           component='input' type='text' placeholder='First Name' required
         />
-        <label className='inputLabel' htmlFor={firstName}>FirstName</label>
+        <label className='inputLabel' htmlFor={'firstName'}>FirstName</label>
 
         <Field className='lastNameInput' name='lastName' id='lastName'
           component='input' type='text' placeholder='Last Name' required
         />
-        <label className='inputLabel' htmlFor={lastName}>Last Name</label>
+        <label className='inputLabel' htmlFor={'lastName'}>Last Name</label>
       </div>
     } else {
       this.formBody = <div>
         <Field className='organizationInput' name='organization' id='organization'
           component='input' type='text' placeholder='Organization Name' required
         />
-        <label className='inputLabel' htmlFor={organization}>Organization</label>
+        <label className='inputLabel' htmlFor={'organization'}>Organization</label>
       </div>
     }
   }
@@ -45,28 +45,28 @@ export default class RegisterPage extends Component {
         <Field className='userTypeInput' name='userType' id='userTypeI'
           component='input' type='radio' value='individual' onChange={(value)=>this.handleTypeChange(value)}
         />
-        <label className='inputLabel' htmlFor={userTypeI}>Individual</label>
+        <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
         <Field className='userTypeInput' name='userType' id='userTypeO'
           component='input' type='radio' value='organization' onChange={(value)=>this.handleTypeChange(value)}
         />
-        <label className='inputLabel' htmlFor={userTypeI}>Organization</label>
+        <label className='inputLabel' htmlFor={'userTypeI'}>Organization</label>
 
         {this.formBody}
 
         <Field className='usernameInput' name='username' id='username'
           component='input' type='text' placeholder='Email Address' required
         />
-        <label className='inputLabel' htmlFor={username}>Username</label>
+        <label className='inputLabel' htmlFor={'username'}>Username</label>
 
         <Field className='passwordInput' name='password' id='password'
           component='input' type='password' placeholder='Password' required
         />
-        <label className='inputLabel' htmlFor={password}>Password</label>
+        <label className='inputLabel' htmlFor={'password'}>Password</label>
 
         <Field className='passwordInput' name='password2' id='password2'
           component='input' type='password' placeholder='Confirm Password' required
         />
-        <label className='inputLabel' htmlFor={password2}>Confirm Password</label>
+        <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
         <button type='submit'>Sign Up</button>
       </form>
     );

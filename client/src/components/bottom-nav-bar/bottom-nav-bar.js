@@ -8,13 +8,14 @@ import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
   signIn() {
+    console.log(this.props);
     this.props.dispatch(actionsDisplay.changeDisplay('login'))
-    .then(() => this.props.history.push('/login'))
+      .then(() => this.props.history.push('/login'))
   }
 
   signUp() {
     this.props.dispatch(actionsDisplay.changeDisplay('register'))
-    .then(() => this.props.history.push('/register'))
+      .then(() => this.props.history.push('/register'))
   }
 
   exploreOrganizations() {
@@ -24,8 +25,8 @@ export class BottomNavBar extends Component {
       this.props.user.authToken,
       'orgs'
     ))
-    .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations')))
-    .then(() => this.props.history.push('/organizations'))
+      .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations')))
+      .then(() => this.props.history.push('/organizations'))
   }
 
   exploreContributors() {
@@ -34,14 +35,35 @@ export class BottomNavBar extends Component {
       this.props.user.authToken,
       'users'
     ))
-    // .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors')))
-    .then(() => {
-      console.log('HERE IS THE HISTORY', this.props.history)
-      return this.props.history.push('/contributors')})
+      // .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors')))
+      .then(() => {
+        console.log('HERE IS THE HISTORY', this.props.history)
+        return this.props.history.push('/contributors')
+      })
   }
 
-  
+  leftOnClick() {
+    if (this.props.display === 'landingPage') {
+      this.props.dispatch(actionsDisplay.changeDisplay('login'));
+      this.props.history.push('/login');
+    }
+    else {
+      this.props.dispatch(actionsUsersList.fetchUsersList(
+        {},
+        this.props.user.authToken,
+        'orgs'
+      ));
+      this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations'));
+      this.props.history.push('/organizations');
+    }
+  }
+
+  rightOnClick() {
+    
+  }
+
   render() {
+    console.log(this.props);
     let leftButton;
     let leftLabel;
     let leftOnClick;
@@ -81,12 +103,12 @@ export class BottomNavBar extends Component {
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          <li className='leftBottomButton' onClick={() => leftOnClick()}>
+          <li className='leftBottomButton' onClick={() => this.leftOnClick()}>
             <button>
               {leftLabel}
             </button>
           </li>
-          <li className='rightBottomButton' onClick={() => rightOnClick()}>
+          <li className='rightBottomButton' onClick={() => this.rightOnClick()}>
             <button>
               {rightLabel}
             </button>
