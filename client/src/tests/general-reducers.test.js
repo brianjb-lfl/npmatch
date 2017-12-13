@@ -1,6 +1,6 @@
 import { reducer } from '../reducers/general';
 import * as actions from '../actions/general';
-import { general as initialState } from '../reducers/potentialStates';
+import { general as initialState } from '../reducers/potential-states';
 
 describe('reducer - display', () => {
   

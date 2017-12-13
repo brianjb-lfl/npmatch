@@ -1,6 +1,6 @@
-import { reducer } from '../reducers/userViewed';
-import * as actions from '../actions/userViewed';
-import {user as initialState} from '../reducers/potentialStates';
+import { reducer } from '../reducers/user-viewed';
+import * as actions from '../actions/user-viewed';
+import {user as initialState} from '../reducers/potential-states';
 
 describe('reducer - user viewed', () => {
   

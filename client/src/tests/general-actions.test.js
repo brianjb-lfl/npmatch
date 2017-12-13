@@ -1,5 +1,5 @@
 import * as actionsGeneral from '../actions/general';
-import * as actionsUsersList from '../actions/usersList';
+import * as actionsUsersList from '../actions/users-list';
 // import * as actionsUsersList from '../actions/usersList';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'

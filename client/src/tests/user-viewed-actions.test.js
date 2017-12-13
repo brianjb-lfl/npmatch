@@ -1,4 +1,4 @@
-import * as actionsUserViewed from '../actions/userViewed';
+import * as actionsUserViewed from '../actions/user-viewed';
 import * as actionsDisplay from '../actions/display';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'

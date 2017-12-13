@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
-import  * as actionsUserViewed from './userViewed';
+import  * as actionsUserViewed from './user-viewed';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when creating, editing, or viewing YOUR OWN profile

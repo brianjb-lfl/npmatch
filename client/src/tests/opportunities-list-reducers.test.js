@@ -1,6 +1,6 @@
 import { reducer } from '../reducers/opportunities-list';
 import * as actions from '../actions/opportunities-list';
-import { opportunitiesList as initialState } from '../reducers/potentialStates';
+import { opportunitiesList as initialState } from '../reducers/potential-states';
 
 describe('reducer - opportunities list', () => {
   

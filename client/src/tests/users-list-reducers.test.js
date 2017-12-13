@@ -1,6 +1,6 @@
-import { reducer } from '../reducers/usersList';
-import * as actions from '../actions/usersList';
-import { usersList as initialState } from '../reducers/potentialStates';
+import { reducer } from '../reducers/users-list';
+import * as actions from '../actions/users-list';
+import { usersList as initialState } from '../reducers/potential-states';
 
 describe('reducer - list of users', () => {
   

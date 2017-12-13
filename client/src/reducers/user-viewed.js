@@ -1,5 +1,5 @@
-import * as actions from '../actions/userViewed'
-import {user as initialState} from './potentialStates'
+import * as actions from '../actions/user-viewed'
+import {user as initialState} from './potential-states'
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when viewing someone else's profile

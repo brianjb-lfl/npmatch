@@ -1,5 +1,5 @@
 import * as actions from '../actions/opportunity'
-import {opportunity as initialState} from './potentialStates'
+import {opportunity as initialState} from './potential-states'
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page

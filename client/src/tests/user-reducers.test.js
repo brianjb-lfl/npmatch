@@ -1,6 +1,6 @@
 import { reducer } from '../reducers/user';
 import * as actions from '../actions/user';
-import {user as initialState} from '../reducers/potentialStates';
+import {user as initialState} from '../reducers/potential-states';
 
 describe('reducer - single user', () => {
   

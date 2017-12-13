@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import { SubmissionError } from 'redux-form';
 import * as actionsDisplay from './display';
-import * as actionsUsersList from './usersList';
+import * as actionsUsersList from './users-list';
 
 // library of all causes, loads once only on app load
 export const LOAD_CAUSES = 'LOAD_CAUSES';

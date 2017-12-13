@@ -1,4 +1,4 @@
-import * as actionsOppsList from '../actions/opportunitiesList';
+import * as actionsOppsList from '../actions/opportunities-list';
 import * as actionsDisplay from '../actions/display';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
