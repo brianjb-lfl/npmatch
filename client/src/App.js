@@ -6,8 +6,8 @@ import * as actionsGeneral from './actions/general';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './components/HomePage/HomePage';
-// import LandingPage from './components/LandingPage/LandingPage';
-import UserProfile from './components/UserProfile/UserProfile';
+import LandingPage from './components/LandingPage/LandingPage';
+import userProfile from './components/userProfile/userProfile';
 import ExplorePage from './components/ExplorePage/ExplorePage';
 import TopNavBar from './components/TopNavBar/TopNavBar';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
@@ -29,7 +29,7 @@ export class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={renderPage} />
-          <Route path="/:id" component={UserProfile} />
+          <Route path="/:id" component={userProfile} />
           {/* <Route path="/register" component={RegisterPage} /> */}
           <Route path="/organizations" component={ExplorePage} />
           <Route path="/contributors" component={ExplorePage} />
