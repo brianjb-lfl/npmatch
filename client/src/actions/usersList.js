@@ -54,7 +54,7 @@ export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => disp
       return res.json();
     })
     .then(res=>{
-      // console.log('response from fetch',res)
+      console.log('response from fetch',res)
       return dispatch(loadUsersList(res));      
     })
     .catch(error => {

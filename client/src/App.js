@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import * as actionsUsersList from './actions/usersList';
+import * as actionsGeneral from './actions/general';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './components/HomePage/HomePage';
@@ -15,7 +15,7 @@ import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 export class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(actionsUsersList.fetchUsersList({}, this.props.user.authToken));
+    this.props.dispatch(actionsGeneral.fetchInitialize());
   }
 
   render() {
@@ -35,8 +35,8 @@ export class App extends Component {
           <Route path="/contributors" component={ExplorePage} />
           {/* <Route path="/inbox" component={InboxPage} />
           <Route path="/settings" component={SettingsPage} /> */}
-          <TopNavBar />
-          <BottomNavBar />
+          <Route component={TopNavBar} />
+          <Route component={BottomNavBar} />
         </div>
       </Router>
     );

@@ -37,20 +37,21 @@ adminRouter.get('/initialize', (req, res) => {
       return knex
         .select(
           'id', 
-          'username', 
           'location_city as locationCity', 
-          'location_state as locationState', 
-          'first_name as firstName', 
-          'last_name as lastName', 
+          'location_state as locationState',
+          'location_country as locationCountry', 
+          'bio',
+          'logo',
           'user_type as userType')
         .from('users')
+        .where({user_type: 'organization'})
         .orderBy('organization')
         .orderBy('lastName')
         .orderBy('firstName')
         .debug(false);
     })
     .then( results => {
-      userArr = results.map( item => item);
+      userArr = results.map( item => item );
       resObj = Object.assign( {}, {
         causes: causeArr,
         skills: skillArr,
@@ -62,6 +63,8 @@ adminRouter.get('/initialize', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });    
 });
+//id, organization, bio, logo, all location fields, links, causes
+
 
 // GET api/causes/oppslist
 

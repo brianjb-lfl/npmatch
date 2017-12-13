@@ -21,7 +21,7 @@ export const loadSkills = skills => ({
 
 export const fetchInitialize = () => dispatch => {
 
-  const url = `${REACT_APP_BASE_URL}/api/initialize`;
+  const url = `${REACT_APP_BASE_URL}/api/admin/initialize`;
   const headers = {
     'content-type': 'application/json',
     // "Authorization": `Bearer ${authToken}`, 
@@ -37,7 +37,8 @@ export const fetchInitialize = () => dispatch => {
     })
     .then(res => {
       console.log('response from initialize fetch', res)
-      dispatch(actionsUsersList.loadUsersList(res.usersList));
+      dispatch(actionsUsersList.loadUsersList(res.users));
+      console.log('We cant access props from here');
       return res;
     })
     .then(res => {
@@ -48,6 +49,7 @@ export const fetchInitialize = () => dispatch => {
       return dispatch(loadCauses(res.causes));
     })
     .then(res=>{
+      console.log('Is it reaching this?');
       return dispatch(actionsDisplay.changeDisplay('homePage'));
     })
     .catch(error => {
