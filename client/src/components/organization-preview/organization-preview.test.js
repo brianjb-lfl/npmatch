@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import OrganizationPreview from './OrganizationPreview';
+import OrganizationPreview from './organization-preview';
 
 describe('Organization Preview component display functionality', () => {
   it('Smoke test - component should render', () => {

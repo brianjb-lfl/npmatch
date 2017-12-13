@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { display } from '../../reducers/potentialStates';
+import { display } from '../../reducers/potential-states';
 import * as userActions from '../../actions/user';
 
 export class SignInPage extends Component {
