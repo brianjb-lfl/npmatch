@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import DetailedOrganizationPreview from '../DetailedOrganizationPreview/DetailedOrganizationPreview';
-import DetailedContributorPreview from '../DetailedContributorPreview/DetailedContributorPreview';
+import DetailedOrganizationPreview from '../detailed-organization-preview/detailed-organization-preview';
+import DetailedContributorPreview from '../detailed-contributor-preview/detailed-contributor-preview';
 
 
 export class ExplorePage extends Component {

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 
-import ContributorPreview from './ContributorPreview';
+import ContributorPreview from './contributor-preview';
 
 describe('Contributor Preview component display functionality', () => {
   const user = {

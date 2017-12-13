@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import HomePage from './components/HomePage/HomePage';
-import LandingPage from './components/LandingPage/LandingPage';
-import userProfile from './components/userProfile/userProfile';
-import ExplorePage from './components/ExplorePage/ExplorePage';
+import HomePage from './components/home-page/home-page';
+import LandingPage from './components/landing-page/landing-page';
+import userProfile from './components/user-profile/user-profile';
+import ExplorePage from './components/explore-page/explore-page';
 import TopNavBar from './components/top-nav-bar/top-nav-bar';
-import BottomNavBar from './components/BottomNavBar/BottomNavBar';
+import BottomNavBar from './components/bottom-nav-bar/bottom-nav-bar';
 
 export class App extends Component {
 

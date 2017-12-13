@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router-dom';
 
-import {BottomNavBar} from './BottomNavBar';
-import {mapStateToProps} from './BottomNavBar';
+import {BottomNavBar} from './bottom-nav-bar';
+import {mapStateToProps} from './bottom-nav-bar';
 
 describe('Bottom Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {

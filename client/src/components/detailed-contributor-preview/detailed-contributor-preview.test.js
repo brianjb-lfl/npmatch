@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { DetailedContributorPreview } from './DetailedContributorPreview';
+import { DetailedContributorPreview } from './detailed-contributor-preview';
 
 describe('Detailed Contributor Preview component display functionality', () => {
   const user = {
