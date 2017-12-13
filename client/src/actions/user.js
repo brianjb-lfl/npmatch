@@ -67,3 +67,31 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
     })
 }
 
+export const login = (user) => dispatch => {
+
+  dispatch(actionsDisplay.changeDisplay('loading'));
+  
+  const url = `${REACT_APP_BASE_URL}/api/auth/login`;
+  const auth = `${user.username}:${user.password}`; // u & pw as string
+  const headers = {
+    "Authorization": "Basic " + btoa(auth), // base64 encryption
+    "x-requested-with": "xhr"
+  }; 
+  const init = { 
+    method: 'POST',
+    headers
+  };
+  console.log('log in init',init)
+  return fetch(url,init)
+    .then(user => {
+      return user.json()
+    })
+    .then(user=>{ 
+      console.log('returned user', user)
+      dispatch(loadUser(user));
+    })
+    .catch(error => {
+      // console.log('error',error);
+      return dispatch(actionsDisplay.toggleModal(error));
+    });
+}

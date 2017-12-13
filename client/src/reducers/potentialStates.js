@@ -12,6 +12,7 @@
 
 export const user = {
   id: '',
+  authToken: '',
   firstName: '',
   lastName: '',
   username: '',
