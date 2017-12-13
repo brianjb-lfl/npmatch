@@ -11,7 +11,7 @@
 */
 
 export const user = {
-  id: '',
+  id: null,
   authToken: '',
   firstName: '',
   lastName: '',

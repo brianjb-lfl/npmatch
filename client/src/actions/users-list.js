@@ -36,7 +36,7 @@ export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => disp
     }
   */
   
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  // dispatch(actionsDisplay.changeDisplay('loading'));
 
   const url = `${REACT_APP_BASE_URL}/api/${type}/list`;
   const headers = {

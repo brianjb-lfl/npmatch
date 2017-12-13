@@ -3,34 +3,36 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
+// import * as actionsDisplay from './actions/display';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import HomePage from './components/home-page/home-page';
-import LandingPage from './components/landing-page/landing-page';
-import userProfile from './components/user-profile/user-profile';
+import LoginPage from './components/login-page/login-page';
+import RegisterPage from './components/register-page/register-page'
+// import HomePage from './components/home-page/home-page';
+// import LandingPage from './components/landing-page/landing-page';
+import UserProfile from './components/user-profile/user-profile';
 import ExplorePage from './components/explore-page/explore-page';
 import TopNavBar from './components/top-nav-bar/top-nav-bar';
 import BottomNavBar from './components/bottom-nav-bar/bottom-nav-bar';
+import RootPage from './components/root-page/root-page';
 
 export class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(actionsGeneral.fetchInitialize());
+    if (this.props.general.causes.length < 1) {
+      console.log('called')
+      this.props.dispatch(actionsGeneral.fetchInitialize());
+    }
   }
 
   render() {
-    console.log('App', this.props.users);
-    let renderPage;
-    if (this.props.login === 'true') {
-      renderPage = HomePage;
-    }
-    else renderPage = HomePage;
     return (
       <Router>
         <div>
-          <Route exact path="/" component={renderPage} />
-          <Route path="/:id" component={userProfile} />
-          {/* <Route path="/register" component={RegisterPage} /> */}
+          <Route exact path="/" component={RootPage} />
+          <Route path="/:id" component={UserProfile} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
           <Route path="/organizations" component={ExplorePage} />
           <Route path="/contributors" component={ExplorePage} />
           {/* <Route path="/inbox" component={InboxPage} />
@@ -50,5 +52,6 @@ export const mapStateToProps = state => ({
   opportunity: state.opportunity,
   opportunitiesList: state.opportunitiesList,
   display: state.display,
+  general: state.general
 })
 export default connect(mapStateToProps)(App);

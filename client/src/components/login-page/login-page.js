@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
 import * as userActions from '../../actions/user';
 
-export class SignInPage extends Component {
+export class LoginPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.login(input))
     .then(() => this.props.history.push('/'))
@@ -13,7 +13,7 @@ export class SignInPage extends Component {
 
   render() {
     return (
-      <form className='signInForm'
+      <form className='loginForm'
         onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
       >
         <Field className='usernameInput' name='username' id='username'
@@ -35,5 +35,5 @@ export const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
-  reduxForm({ form: 'signInForm' })
-)(SignInPage);
+  reduxForm({ form: 'loginForm' })
+)(LoginPage);
