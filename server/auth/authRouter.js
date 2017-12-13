@@ -13,6 +13,8 @@ authRouter.use(bodyParser.json());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+const knex = require('../db');
+
 const createAuthToken = function (user){
   return jwt.sign({user}, JWT_SECRET, {
     subject: user.username,
@@ -31,9 +33,20 @@ authRouter.get('/testify', jwtAuth, (req, res) => {
 
 authRouter.post('/login', localAuth, (req, res) => {
   console.log(req.body);
-  const authToken = createAuthToken(req.body);
-  const { username, firstName, lastName } = req.body;
-  res.json({ authToken, username, firstName, lastName });
+  let user = req.body;
+  return knex('users')
+    .select()
+    .where({username: user.username})
+    .then( result => {
+      user = Object.assign( {}, user, {
+        first_name: result[0].first_name,
+        last_name: result[0].last_name,
+        user_type: result[0].user_type
+      });
+      const authToken = createAuthToken(user);
+      const { username, firstName, lastName, user_type } = req.body;
+      res.json({ authToken, username, firstName, lastName, user_type });
+    });
 });
 
 authRouter.post('/refresh', jwtAuth, (req, res) => {
