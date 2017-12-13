@@ -6,7 +6,7 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class UserProfile extends Component {
 
   render() {
-    let opportunityPreviews = this.props.opportunities.map((opp, key) => (
+    let opportunityPreviews = typeof this.props.opportunities !== 'object' ? '' : this.props.opportunities.map((opp, key) => (
       <OpportunityPreview opportunity={opp} key={key} />
     )
     );

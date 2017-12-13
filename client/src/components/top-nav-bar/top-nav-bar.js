@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './top-nav-bar.css'
 
 
-export default class TopNavBar extends Component {
+export class TopNavBar extends Component {
 
   render() {
     return (
@@ -27,3 +27,9 @@ export default class TopNavBar extends Component {
     )
   }
 }
+
+export const mapStateToProps = state => ({
+  display: state.display.view,
+  user: state.user
+})
+export default connect(mapStateToProps)(TopNavBar);
