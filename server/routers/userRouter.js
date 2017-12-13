@@ -4,7 +4,7 @@ const express = require('express');
 const userRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-//const bcrypt = require('bcryptjs');
+const { hashPassword } = require('../auth/bcrypt');
 
 process.stdout.write('\x1Bc');
 
@@ -17,8 +17,14 @@ userRouter.get('/testify/', (req, res) => {
 userRouter.get('/list', (req, res) => {
   const knex = require('../db');
   return knex
-    .select('id', 'username', 'location_city as locationCity', 'location_state as locationState', 
-      'first_name', 'last_name', 'user_type')
+    .select(
+      'id',
+      'username',
+      'location_city as locationCity',
+      'location_state as locationState', 
+      'first_name as firstName',
+      'last_name as lastName',
+      'user_type as userType')
     .from ('users')
     .where({user_type: 'individual'})
     .orderBy('username')
@@ -41,10 +47,10 @@ userRouter.get('/:id', (req, res) => {
     .where({id: req.params.id})
     .then( results => {
       usrObj = (results[0]);
-      delete usrObj['passwd'];
+      delete usrObj['password'];
       // get user links
       return knex('links')
-        .select('id', 'link_type', 'link_url')
+        .select('id', 'link_type as linkType', 'link_url as linkUrl')
         .where({id_user: usrObj.id});
     })
     .then( results => {
@@ -73,16 +79,16 @@ userRouter.get('/:id', (req, res) => {
 });
 
 // POST api/users
-userRouter.post('/', jsonParser, (req, res) => {
+userRouter.post('/register', jsonParser, (req, res) => {
   const knex = require('../db');
-  const reqFields = ['username', 'passwd'];
+  const reqFields = ['username', 'password'];
   const missingField = reqFields.filter( field => !(field in req.body));
   // check for missing username or passwd
   if(missingField.length > 0) {
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
-      message: 'Error: username and passwd are required'
+      message: 'Error: username and password are required'
     });
   }
   // check for dup username
@@ -100,6 +106,10 @@ userRouter.post('/', jsonParser, (req, res) => {
       }
     })    // no dup, insert new user
     .then( () => {
+      return hashPassword(inUsrObj.password);
+    })
+    .then( result => {
+      inUsrObj.password = result;
       return knex('users')
         .insert(inUsrObj)
         .returning(['id', 'username'])

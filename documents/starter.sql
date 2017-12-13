@@ -17,7 +17,7 @@ CREATE TABLE users (
   id serial primary key,
   timestamp_created timestamp default current_timestamp,
   username text UNIQUE,
-  passwd text,
+  password text,
   -- type: individual, organization
   user_type text default 'individual',
   location_city text,
