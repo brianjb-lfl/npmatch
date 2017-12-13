@@ -7,6 +7,16 @@ import * as actionsDisplay from '../../actions/display';
 import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
+  signIn() {
+    this.props.dispatch(actionsDisplay.changeDisplay('login'))
+    .then(() => this.props.history.push('/login'))
+  }
+
+  signUp() {
+    this.props.dispatch(actionsDisplay.changeDisplay('register'))
+    .then(() => this.props.history.push('/register'))
+  }
+
   exploreOrganizations() {
     console.log('this is firing');
     this.props.dispatch(actionsUsersList.fetchUsersList(
@@ -34,8 +44,10 @@ export class BottomNavBar extends Component {
   render() {
     let leftButton;
     let leftLabel;
+    let leftOnClick;
     let rightButton;
     let rightLabel;
+    let rightOnClick;
     let homeButton;
     if (this.props.display !== 'landingPage' && this.props.display !== 'homePage') {
       homeButton = <Link to='/'>
@@ -50,26 +62,31 @@ export class BottomNavBar extends Component {
     if (this.props.display === 'landingPage') {
       leftButton = '/signInPage'
       leftLabel = 'Sign In'
+      leftOnClick = this.signIn
       rightButton = '/registerPage'
       rightLabel = 'Sign Up'
+      rightOnClick = this.signUp
+
     }
     else {
       leftButton = '/organizations'
       leftLabel = 'Organizations'
+      leftOnClick - this.exploreOrganizations
       rightButton = '/contributors'
       rightLabel = 'Contributors'
+      rightOnClick = this.exploreContributors
     }
 
     return (
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          <li className='leftBottomButton' onClick={() => this.exploreOrganizations()}>
+          <li className='leftBottomButton' onClick={() => leftOnClick()}>
             <button>
               {leftLabel}
             </button>
           </li>
-          <li className='rightBottomButton' onClick={() => this.exploreContributors()}>
+          <li className='rightBottomButton' onClick={() => rightOnClick()}>
             <button>
               {rightLabel}
             </button>
