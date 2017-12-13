@@ -121,7 +121,7 @@ export const registerUser = (credentials) => dispatch => {
       return dispatch(loadUser(user));
     })
     .then(()=>{
-      return dispatch(actionsDisplay.changeDisplay('homePage'));
+      return dispatch(actionsDisplay.changeDisplay('normal'));
     })
     .catch(error => {
       dispatch(actionsDisplay.toggleModal(error));
