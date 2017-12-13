@@ -16,7 +16,7 @@ export const user = {
   firstName: '',
   lastName: '',
   username: '',
-  userType: '', 
+  userType: '',         // organization, individual
   organization: '',
   locationCity: '',
   locationState: '',

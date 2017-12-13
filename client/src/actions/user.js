@@ -96,7 +96,7 @@ export const login = (user) => dispatch => {
     });
 }
 
-export const newUser = (credentials) => dispatch => {
+export const registerUser = (credentials) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
     
@@ -118,15 +118,12 @@ export const newUser = (credentials) => dispatch => {
       return res.json();
     }) 
     .then(user => { 
-      user.quizzes = [];
-      user.recent = [];
-      user.badges = [];
-      dispatch(updateUserStore(user));
+      return dispatch(loadUser(user));
     })
     .then(()=>{
-      return dispatch(actionsMode.changeMode('login'));
+      return dispatch(actionsDisplay.changeDisplay('homePage'));
     })
     .catch(error => {
-      dispatch(actionsMode.showModal(error));
+      dispatch(actionsDisplay.toggleModal(error));
     });
   }
