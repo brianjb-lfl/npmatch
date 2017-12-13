@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OpportunityPreview from '../OpportunityPreview/OpportunityPreview';
+import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 
 export class UserProfile extends Component {
 
