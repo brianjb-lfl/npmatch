@@ -8,6 +8,7 @@ import './BottomNavBar.css'
 
 export class BottomNavBar extends Component {
   exploreOrganizations() {
+    console.log('this is firing');
     this.props.dispatch(actionsUsersList.fetchUsersList(
       {},
       this.props.user.authToken,
@@ -23,9 +24,12 @@ export class BottomNavBar extends Component {
       this.props.user.authToken,
       'users'
     ))
-    .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors')))
-    .then(() => this.props.history.push('/contributors'))
+    // .then(() => this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors')))
+    .then(() => {
+      console.log('HERE IS THE HISTORY', this.props.history)
+      return this.props.history.push('/contributors')})
   }
+
   
   render() {
     let leftButton;
@@ -60,12 +64,12 @@ export class BottomNavBar extends Component {
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          <li className='leftBottomButton' onclick={() => this.exploreOrganizations()}>
+          <li className='leftBottomButton' onClick={() => this.exploreOrganizations()}>
             <button>
               {leftLabel}
             </button>
           </li>
-          <li className='rightBottomButton' onclick={() => this.exploreContributors()}>
+          <li className='rightBottomButton' onClick={() => this.exploreContributors()}>
             <button>
               {rightLabel}
             </button>
