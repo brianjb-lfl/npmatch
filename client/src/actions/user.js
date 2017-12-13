@@ -95,3 +95,38 @@ export const login = (user) => dispatch => {
       return dispatch(actionsDisplay.toggleModal(error));
     });
 }
+
+export const newUser = (credentials) => dispatch => {
+  
+    dispatch(actionsDisplay.changeDisplay('loading'));
+    
+    const url = `${REACT_APP_BASE_URL}/api/users/register`;
+    const headers = { "Content-Type": "application/json",
+      "x-requested-with": "xhr" };
+    const init = { 
+      method: 'POST',
+      body: JSON.stringify(credentials),
+      headers
+    };
+    console.log('init', init);
+    return fetch(url, init)
+    .then(res=>{ //response user api repr firstName, lastName, username, id
+      console.log(res);
+      if (!res.ok) { 
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    }) 
+    .then(user => { 
+      user.quizzes = [];
+      user.recent = [];
+      user.badges = [];
+      dispatch(updateUserStore(user));
+    })
+    .then(()=>{
+      return dispatch(actionsMode.changeMode('login'));
+    })
+    .catch(error => {
+      dispatch(actionsMode.showModal(error));
+    });
+  }
