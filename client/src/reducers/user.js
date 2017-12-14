@@ -28,6 +28,12 @@ export const reducer = (state = initialState, action) => {
     });
   }
 
+  else if (action.type === actions.SET_FORM_TYPE) {
+    return Object.assign({}, state, {
+      formType: action.formType,
+    });
+  }
+  
   else {
     return state;
   }

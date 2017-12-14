@@ -1,5 +1,3 @@
-'use strict';
-
 /*  This file is a fully populated outline of the Redux state, used as the guideline for all actions and reducers.
     
     user: only one; this is the user that is logged in

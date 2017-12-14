@@ -29,6 +29,12 @@ export const loadUser = user => ({
   following: user.following, // array of objects
 });
 
+export const SET_FORM_TYPE = 'SET_FORM_TYPE';
+export const setFormType = formType => ({
+  type: SET_FORM_TYPE,
+  formType: formType,
+});
+
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
@@ -99,6 +105,8 @@ export const login = (user) => dispatch => {
 export const registerUser = (credentials) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
+
+    delete credentials.password2;
     
     const url = `${REACT_APP_BASE_URL}/api/users/register`;
     const headers = { "Content-Type": "application/json",
