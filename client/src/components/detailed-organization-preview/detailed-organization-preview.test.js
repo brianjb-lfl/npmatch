@@ -17,7 +17,7 @@ describe('Detailed Organization Preview component display functionality', () => 
   it('Smoke test - component should render', () => {
     shallow(<DetailedOrganizationPreview user={user} />);
   });
-  it('Should use the props for logo, name, and description', () => {
+  it('Should use the props for logo, name, and bio', () => {
     const wrapper = shallow(<DetailedOrganizationPreview user={user} />);
     expect(wrapper.find('img').prop('src')).toEqual('http://i0.kym-cdn.com/photos/images/original/000/692/145/49c.png');
     expect(wrapper.find('.name').text()).toEqual('Facebook');
@@ -26,7 +26,7 @@ describe('Detailed Organization Preview component display functionality', () => 
     expect(wrapper.find('.skillsSought').text()).toEqual('Web development, Inception');
     expect(wrapper.find('.upcomingProjects').text()).toEqual('San Francisco Starving Developer March, Chili Cookoff');
   });
-  it('Should display a different logo, name, a description with different props', () => {
+  it('Should display a different logo, name, a bio with different props', () => {
     const user = {
       logo: 'https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg',
       name: 'Twitter',

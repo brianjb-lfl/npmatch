@@ -18,8 +18,8 @@ describe('Contributor Preview component display functionality', () => {
   it('Should display the avatar, name, and bio', () => {
     const wrapper = shallow(<ContributorPreview user={user} />);
     expect(wrapper.find('img').prop('src')).toEqual('http://i0.kym-cdn.com/photos/images/original/000/692/145/49c.png');
-    expect(wrapper.find('h3').text()).toEqual('Ben Malin');
-    expect(wrapper.find('p').text()).toEqual('I am a front-end developer.');
+    expect(wrapper.find('.name').text()).toEqual('Ben Malin');
+    expect(wrapper.find('.bio').text()).toEqual('I am a front-end developer.');
   });
   
   it('Should display a different logo, name, and description', () => {
@@ -31,8 +31,8 @@ describe('Contributor Preview component display functionality', () => {
     }
     const wrapper = shallow(<ContributorPreview user={user} />);
     expect(wrapper.find('img').prop('src')).toEqual('https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg');
-    expect(wrapper.find('h3').text()).toEqual('Stephen Hawking');
-    expect(wrapper.find('p').text()).toEqual('I am a genius.');
+    expect(wrapper.find('.name').text()).toEqual('Stephen Hawking');
+    expect(wrapper.find('.bio').text()).toEqual('I am a genius.');
   });
   it('Should dispatch an actions when the component is clicked', () => {
     const spy = jest.fn();

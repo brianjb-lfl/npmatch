@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
 
-export class OrganizationPreview extends Component {
+export default class OrganizationPreview extends Component {
   handleClick(id) {
     this.props.dispatch(actionsUser.fetchUser(
       id,
@@ -22,5 +22,3 @@ export class OrganizationPreview extends Component {
     )
   }
 }
-
-export default connect()(OrganizationPreview);
