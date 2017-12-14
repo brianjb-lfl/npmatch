@@ -57,7 +57,10 @@ adminRouter.get('/initialize', (req, res) => {
       userArr = results;
       return knex('users_causes')
         .join('causes', 'users_causes.id_cause', '=', 'causes.id')
-        .select('id_user', 'causes.id', 'causes.cause')
+        .select(
+          'id_user',
+          'causes.id',
+          'causes.cause')
         .orderBy('causes.cause')
         .debug(false);
     })
@@ -97,8 +100,6 @@ adminRouter.get('/initialize', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });    
 });
-
-
 
 // GET api/causes/oppslist
 

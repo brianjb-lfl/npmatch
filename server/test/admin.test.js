@@ -50,6 +50,18 @@ describe('admin', function() {
     });
   });
   
+  // ***** COMM TEST
+  describe('api/admin/testify GET comm check', function() {
+    it('should demonstrate that comm to the endpoint is working', function() {
+      return chai.request(app)
+        .get('/api/admin/testify')
+        .then(function(res) {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Good to go');
+        });
+    });
+  });
+
   // ***** INITIALIZE
   describe('api/admin/initialize GET list', function() {
     it('should return a list of existing causes, skills and opportunities', function() {

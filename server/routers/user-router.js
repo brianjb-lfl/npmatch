@@ -109,7 +109,24 @@ userRouter.post('/register', jsonParser, (req, res) => {
       return hashPassword(inUsrObj.password);
     })
     .then( result => {
-      inUsrObj.password = result;
+      if(inUsrObj.userType === 'organization') {
+        inUsrObj = Object.assign( {}, inUsrObj, {
+          user_type: inUsrObj.userType,
+          password: result,
+        });
+        delete inUsrObj.userType;
+      }
+      else {
+        inUsrObj = Object.assign( {}, inUsrObj, {
+          user_type: inUsrObj.userType,
+          first_name: inUsrObj.firstName,
+          last_name: inUsrObj.lastName,
+          password: result,
+        });
+        delete inUsrObj.firstName;
+        delete inUsrObj.lastName;
+        delete inUsrObj.userType;
+      }
       return knex('users')
         .insert(inUsrObj)
         .returning(['id', 'username'])

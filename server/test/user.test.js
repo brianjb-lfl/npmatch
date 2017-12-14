@@ -41,6 +41,18 @@ describe('user', function() {
 
   });
 
+  // ***** COMM TEST
+  describe('api/users/testify GET comm check', function() {
+    it('should demonstrate that comm to the endpoint is working', function() {
+      return chai.request(app)
+        .get('/api/users/testify')
+        .then(function(res) {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Good to go');
+        });
+    });
+  });
+
   // ***** GET USER LIST
   describe('api/users/list GET user list', function() {
     it('should return a list of existing users', function() {
