@@ -19,7 +19,7 @@ testF.getFocusUser = function() {
         skills: [...testData.testUserSkills]
       });
       return(usrObj);
-    })
+    });
 };
 
 testF.getFocusOrg = function() {
@@ -32,10 +32,10 @@ testF.getFocusOrg = function() {
       orgObj = Object.assign( {}, orgObj, ...results, {
         links: [...testData.testOrgLinks],
         causes: [...testData.testOrgCauses],
-        opps: [...testData.orgOppSeeds]
+        opps: testData.oppSeeds.filter( item => !item.offer)
       });
       return(orgObj);
-    })
+    });
 };
 
 module.exports = { testF };

@@ -60,7 +60,6 @@ describe('user', function() {
         .get('/api/users/list')
         .then(function(res) {
           let userNames = testData.userSeeds
-            .filter( item => item.user_type === 'individual')
             .map( item => item.username );
           expect(res.body.length).to.equal(userNames.length);
           for(let uCtr = 0; uCtr < res.body.length; uCtr++) {

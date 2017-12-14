@@ -94,7 +94,7 @@ testData.testOrganization = {
   organization: 'Deer Lake Child Care'
 };
 
-testData.orgOppSeeds = [
+testData.oppSeeds = [
   {
     opportunity_type: 'goods',
     offer: false,
@@ -118,8 +118,24 @@ testData.orgOppSeeds = [
     narrative: 'funding needed to build climate controlled storage facility - every little bit helps!',
     location_city: 'lake city',
     location_state: 'fl',
+  },
+  {
+    opportunity_type: 'services',
+    offer: true,
+    title: 'light repairs and maintenance',
+    narrative: 'long time handyman in gainesville area willing to perform repairs and maintenance.',
+    location_city: 'gainesville',
+    location_state: 'fl',
+  },
+  {
+    opportunity_type: 'goods',
+    offer: true,
+    title: 'office supplies',
+    narrative: 'at our store we often have to dispose of slightly damaged shipments of office supplies.',
+    location_city: 'sarasota',
+    location_state: 'fl',
   }
-]
+];
 
 testData.testUserLinks = [
   {
@@ -130,7 +146,7 @@ testData.testUserLinks = [
     link_type: 'resume',
     link_url: 'http://www.ezresumes.com/abc'
   }
-]
+];
 
 testData.testOrgLinks = [
   {
@@ -141,7 +157,7 @@ testData.testOrgLinks = [
     link_type: 'news',
     link_url: 'http://www.thetimes.com/abc'
   }
-]
+];
 
 testData.causeSeeds = [
   {cause: 'environment'},
@@ -150,18 +166,18 @@ testData.causeSeeds = [
   {cause: 'malnutrition'},
   {cause: 'pediatric-aids'},
   {cause: 'adult-literacy'}
-]
+];
 
 testData.testUserCauses = [
   {cause: 'homelessness'},
   {cause: 'pediatric-aids'}
-]
+];
 
 testData.testOrgCauses = [
   {cause: 'homelessness'},
   {cause: 'teen-pregnancy'},
   {cause: 'malnutrition'}
-]
+];
 
 testData.skillSeeds = [
   {skill: 'clerical'},
@@ -170,12 +186,12 @@ testData.skillSeeds = [
   {skill: 'cooking'},
   {skill: 'fund-raising'},
   {skill: 'handyman'}
-]
+];
 
 testData.testUserSkills = [
   {skill: 'clerical'},
   {skill: 'cooking'}
-]
+];
 
 testData.seedUsersTable = function() {
   return knex('users')
@@ -185,11 +201,11 @@ testData.seedUsersTable = function() {
 testData.seedCausesTable = function() {
   return knex('causes')
     .insert(testData.causeSeeds);
-}
+};
 
 testData.seedSkillsTable = function() {
   return knex('skills')
     .insert(testData.skillSeeds);
-}
+};
 
 module.exports = { testData };

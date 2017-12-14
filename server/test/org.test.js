@@ -99,11 +99,11 @@ describe('organization', function() {
             expect(expOrgCausesArr).to.include(res.body.causes[cCtr].cause);
           }
           // test org opportunities
-          expect(res.body.opps.length).to.equal(testData.orgOppSeeds.length);
+          expect(res.body.opps.length).to.equal(testData.oppSeeds.filter( item => !item.offer).length);
           // expect(res.body.skills.length).to.equal(97);    // failing test
-          const expOrgOppsArr = testData.orgOppSeeds.map( item => item.narrative);
+          const expOppsArr = testData.oppSeeds.map( item => item.narrative);
           for(let oCtr = 0; oCtr < res.body.opps.length; oCtr++) {
-            expect(expOrgOppsArr).to.include(res.body.opps[oCtr].narrative);
+            expect(expOppsArr).to.include(res.body.opps[oCtr].narrative);
           }
         })
     })

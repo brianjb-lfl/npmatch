@@ -16,6 +16,11 @@ userRouter.get('/testify/', (req, res) => {
 // GET api/users/list
 userRouter.get('/list', (req, res) => {
   const knex = require('../db');
+  const calcUserField = 
+    "case when users.organization isnull then "
+      + "users.last_name || ', '  || users.first_name "
+      + "else users.organization "
+      + "end as user_string";
   return knex
     .select(
       'id',
@@ -24,9 +29,11 @@ userRouter.get('/list', (req, res) => {
       'location_state as locationState', 
       'first_name as firstName',
       'last_name as lastName',
-      'user_type as userType')
+      'user_type as userType',
+      knex.raw(calcUserField)
+    )
     .from ('users')
-    .where({user_type: 'individual'})
+    //.where({user_type: 'individual'})
     .orderBy('username')
     .debug(false)
     .then( results => {
@@ -113,6 +120,8 @@ userRouter.post('/register', jsonParser, (req, res) => {
         inUsrObj = Object.assign( {}, inUsrObj, {
           user_type: inUsrObj.userType,
           password: result,
+          first_name: null,
+          last_name: null
         });
         delete inUsrObj.userType;
       }
@@ -122,6 +131,7 @@ userRouter.post('/register', jsonParser, (req, res) => {
           first_name: inUsrObj.firstName,
           last_name: inUsrObj.lastName,
           password: result,
+          organization: null,
         });
         delete inUsrObj.firstName;
         delete inUsrObj.lastName;

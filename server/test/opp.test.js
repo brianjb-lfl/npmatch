@@ -21,7 +21,10 @@ chai.use(chaiHttp);
 describe('opp', function() {
 
   before(function() {
-    return (testSetup.buildFullDB());
+    return (testSetup.tearDownDB())
+      .then( () => {
+        return (testSetup.buildFullDB());
+      });
   });
 
   after(function() {
@@ -53,21 +56,22 @@ describe('opp', function() {
     });
   });
 
-  // ***** GET CAUSE LIST
-  // describe('api/causes/list GET cause list', function() {
-  //   it('should return a list of existing causes', function() {
-  //     return chai.request(app)
-  //       .get('/api/causes/list')
-  //       .then(function(res) {
-  //         let causeStrings = testData.causeSeeds.map( item => item.cause );
-  //         expect(res.body.length).to.equal(causeStrings.length);
-  //         for(let cCtr = 0; cCtr < res.body.length; cCtr++) {
-  //           expect(causeStrings).to.include(res.body[cCtr].cause);
-  //         }
-  //         // expect(res.body[0].cause).to.equal('cowboyfans');    // failing test
-  //       });
-  //   });
-  // });
+  // ***** GET OPPORTUNITY LIST
+  describe('api/opps/list GET opportunities list', function() {
+    it('should return a list of opportunities', function() {
+      return chai.request(app)
+        .get('/api/opps/list')
+        .then(function(res) {
+          let oppStrings = testData.oppSeeds.map( item => item.narrative );
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(oppStrings.length);
+          for(let oCtr = 0; oCtr < res.body.length; oCtr += 1) {
+            expect(oppStrings).to.include(res.body[oCtr].narrative);
+          }
+          // expect(res.body[0].narrative).to.equal('out, out, damned spot!');    // failing test
+        });
+    });
+  });
 
   // ***** GET OPPORTUNITIES BY CAUSE LIST
 
