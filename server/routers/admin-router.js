@@ -97,7 +97,7 @@ adminRouter.get('/initialize', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });    
 });
-//id, organization, bio, logo, all location fields, links, causes
+
 
 
 // GET api/causes/oppslist
