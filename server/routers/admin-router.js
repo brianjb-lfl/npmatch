@@ -18,6 +18,9 @@ adminRouter.get('/initialize', (req, res) => {
   let causeArr = [];
   let skillArr = [];
   let userArr = [];
+  let userCauseArr = [];
+  let userLinkArr = [];
+
   const knex = require('../db');
   return knex
     .select('cause')
@@ -25,7 +28,7 @@ adminRouter.get('/initialize', (req, res) => {
     .orderBy('cause')
     .debug(false)
     .then( results => {
-      causeArr = results.map( item => item.cause);
+      causeArr = results.map( item => item.cause );
       return knex
         .select('skill')
         .from('skills')
@@ -34,7 +37,7 @@ adminRouter.get('/initialize', (req, res) => {
     })
     .then( results => {
       skillArr = results.map( item => item.skill);
-      return knex
+      return knex('users')
         .select(
           'id',
           'username', 
@@ -44,7 +47,6 @@ adminRouter.get('/initialize', (req, res) => {
           'bio',
           'logo',
           'user_type as userType')
-        .from('users')
         .where({user_type: 'organization'})
         .orderBy('organization')
         .orderBy('last_name')
@@ -52,11 +54,42 @@ adminRouter.get('/initialize', (req, res) => {
         .debug(false);
     })
     .then( results => {
-      userArr = results.map( item => item );
-      resObj = Object.assign( {}, {
+      userArr = results;
+      return knex('users_causes')
+        .join('causes', 'users_causes.id_cause', '=', 'causes.id')
+        .select('id_user', 'causes.id', 'causes.cause')
+        .orderBy('causes.cause')
+        .debug(false);
+    })
+    .then( results => {
+      userCauseArr = results;
+      return knex('links')
+        .select(
+          'id_user',
+          'id',
+          'link_type as linkType',
+          'link_url as linkUrl')
+        .orderBy('link_type')
+        .debug(false);
+    })
+    .then( results => {
+      userLinkArr = results;
+      resObj.users = [];
+      userArr.forEach( usr => {
+        const tempLinks = userLinkArr
+          .filter( item => item.id_user === usr.id );
+        const tempCauses = userCauseArr
+          .filter( item => item.id_user === usr.id);
+        usr = Object.assign( {}, usr, {
+          links: tempLinks.map( item => 
+            Object.assign( {}, {linkType: item.linkType, linkUrl: item.linkUrl} )),
+          causes: tempCauses.map( item => item.cause )
+        });
+        resObj.users.push(usr);
+      });
+      resObj = Object.assign( {}, resObj, {
         causes: causeArr,
         skills: skillArr,
-        users: userArr
       });
       res.json(resObj);
     })
@@ -64,7 +97,7 @@ adminRouter.get('/initialize', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });    
 });
-//id, organization, bio, logo, all location fields, links, causes
+
 
 
 // GET api/causes/oppslist
