@@ -105,6 +105,8 @@ export const login = (user) => dispatch => {
 export const registerUser = (credentials) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
+
+    delete credentials.password2;
     
     const url = `${REACT_APP_BASE_URL}/api/users/register`;
     const headers = { "Content-Type": "application/json",
