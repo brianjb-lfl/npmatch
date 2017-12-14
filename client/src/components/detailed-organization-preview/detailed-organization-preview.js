@@ -15,7 +15,7 @@ export class DetailedOrganizationPreview extends Component {
   render() {
     return (
       <div onClick={() => this.handleClick(this.props.user.id)}>
-        <img className='logo' src={this.props.user.logo}></img>
+        <img className='logo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>
         <h3 className='name'>{this.props.user.name}</h3>
         <p className='bio'>{this.props.user.bio}</p>
         <p className='causes'>{this.props.user.causes.join(', ')}</p>

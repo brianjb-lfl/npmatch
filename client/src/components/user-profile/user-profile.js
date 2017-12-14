@@ -14,7 +14,7 @@ export class UserProfile extends Component {
     return (
       <main>
         <div>
-          <img src={this.props.logo}></img>
+          <img src={this.props.logo} alt={`${this.props.name} logo`}></img>
           <h3>{this.props.name}NAME NAME</h3>
           <h4>{this.props.locationCity} CITY STATE {this.props.locationState}</h4>
           <p>{this.props.description}</p>
