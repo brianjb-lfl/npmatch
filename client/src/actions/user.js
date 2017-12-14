@@ -29,6 +29,12 @@ export const loadUser = user => ({
   following: user.following, // array of objects
 });
 
+export const SET_FORM_TYPE = 'SET_FORM_TYPE';
+export const setFormType = formType => ({
+  type: SET_FORM_TYPE,
+  formType: formType,
+});
+
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
