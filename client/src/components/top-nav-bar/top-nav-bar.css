@@ -1,3 +1,8 @@
+ul.topNav {
+  margin: 0;
+  padding: 0;
+}
+
 .topNav {
   list-style-type: none;
   list-style-position:inside;
@@ -9,17 +14,17 @@
   position: fixed;
   top: 0px;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.leftTopButton, .rightTopButton {
-  display: inline-block;
+.leftTopButton, .rightTopButton, .searchBar {
   z-index: 1000;
   color: white;
   margin: 5px 20px 4px 20px;
   padding: 5px;
   font-weight: 700;
-}
-
-.searchBar {
-  display: inline-block;
+  font-size: 18px;
+  align-self: center;
 }

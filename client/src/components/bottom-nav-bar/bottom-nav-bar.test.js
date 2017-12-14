@@ -7,11 +7,18 @@ import {mapStateToProps} from './bottom-nav-bar';
 
 describe('Bottom Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {
-    shallow(<BottomNavBar />);
+    shallow(<BottomNavBar 
+      match= {{
+        url: '/'
+      }}
+    />);
   });
   it('Should render the component with the correct links passed down as props on Landing Page', () => {
     const wrapper = shallow(<BottomNavBar 
       display='landingPage'
+      match= {{
+        url: '/'
+      }}
     />);
     expect(wrapper.find('.leftBottomButton button').text()).toEqual('Sign In');
     expect(wrapper.find('.rightBottomButton button').text()).toEqual('Sign Up');
@@ -19,6 +26,9 @@ describe('Bottom Nav Bar component display functionality', () => {
   it('Should render the component with the correct links passed down as props on other pages', () => {
     const wrapper = shallow(<BottomNavBar 
       display='explorePage'
+      match= {{
+        url: '/organizations'
+      }}
     />);
     expect(wrapper.find('.leftBottomButton button').text()).toEqual('Organizations');
     expect(wrapper.find('.rightBottomButton button').text()).toEqual('Contributors');
@@ -26,24 +36,36 @@ describe('Bottom Nav Bar component display functionality', () => {
   it('Should render the Home Button when the display is NOT landingPage or homePage', () => {
     const wrapper = shallow(<BottomNavBar 
       display='explorePage'
+      match= {{
+        url: '/contributors'
+      }}
     />);
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(true);
   });
   it('Should NOT render the Home Button when the display is homePage', () => {
     const wrapper = shallow(<BottomNavBar 
       display='homePage'
+      match= {{
+        url: '/'
+      }}
     />);
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
   });
   it('Should NOT render the Home Button when the display is landingPage', () => {
     const wrapper = shallow(<BottomNavBar 
       display='landingPage'
+      match= {{
+        url: '/'
+      }}
     />);
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
   });
   it('Should render the Home Button correctly', () => {
     const wrapper = shallow(<BottomNavBar 
       display='explorePage'
+      match= {{
+        url: '/organizations'
+      }}
     />);
     expect(wrapper.find('.homeBottomButton button').text()).toEqual('Home');
   });
@@ -52,5 +74,16 @@ describe('Bottom Nav Bar component display functionality', () => {
     const expectedProps = {display: 'homePage'};
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
+  })
+  it('Should dispatch actions when the component is clicked', () => {
+    const spy = jest.fn();
+    const wrapper = shallow(<BottomNavBar
+      display='explorePage'
+      match= {{
+        url: '/organizations'
+      }}
+    />);
+    expect(wrapper.find('.leftBottomButton button').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(2);
   })
 });
