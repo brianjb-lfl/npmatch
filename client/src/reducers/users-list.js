@@ -1,21 +1,14 @@
-import * as actions from '../actions/display'
-import {display as initialState} from './potential-states'
+import * as actions from '../actions/users-list'
+import {usersList as initialState} from './potential-states'
 
 // right now we have 1 'main' list of users; we can have as many lists as we want, each following identical format
 // if we add lists, each one should have an action and reducer; each one can populate 1 key, like "main" does
 
 export const reducer = (state = initialState, action) => {
-  
-  if (action.type === actions.CHANGE_DISPLAY) {
+  if (action.type === actions.LOAD_USERS_LIST) {
+    console.log('load users list reducer')
     return Object.assign({}, state, {
-      view: action.view
-    });
-  }
-
-  else if (action.type === actions.TOGGLE_MODAL) {
-    return Object.assign({}, state, {
-      modal: !state.modal,
-      modalMessage: action.message
+      main: action.main
     });
   }
 

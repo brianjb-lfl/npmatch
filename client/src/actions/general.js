@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import { SubmissionError } from 'redux-form';
 import * as actionsDisplay from './display';
-import * as actionsUsersList from './usersList';
+import * as actionsUsersList from './users-list';
 
 // library of all causes, loads once only on app load
 export const LOAD_CAUSES = 'LOAD_CAUSES';
@@ -48,10 +48,10 @@ export const fetchInitialize = () => dispatch => {
     .then(res => {
       return dispatch(loadCauses(res.causes));
     })
-    .then(res=>{
-      console.log('Is it reaching this?');
-      return dispatch(actionsDisplay.changeDisplay('homePage'));
-    })
+    // .then(res=>{
+    //   console.log('Is it reaching this?');
+    //   return dispatch(actionsDisplay.changeDisplay('homePage'));
+    // })
     .catch(error => {
       console.log('error', error);
       return dispatch(actionsDisplay.toggleModal(error));

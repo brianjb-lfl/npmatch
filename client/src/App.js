@@ -3,40 +3,43 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
+// import * as actionsDisplay from './actions/display';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import HomePage from './components/HomePage/HomePage';
-import LandingPage from './components/LandingPage/LandingPage';
-import UserProfile from './components/UserProfile/UserProfile';
-import ExplorePage from './components/ExplorePage/ExplorePage';
-import TopNavBar from './components/TopNavBar/TopNavBar';
-import BottomNavBar from './components/BottomNavBar/BottomNavBar';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import LoginPage from './components/login-page/login-page';
+import RegisterPage from './components/register-page/register-page'
+// import HomePage from './components/home-page/home-page';
+// import LandingPage from './components/landing-page/landing-page';
+import UserProfile from './components/user-profile/user-profile';
+import ExplorePage from './components/explore-page/explore-page';
+import TopNavBar from './components/top-nav-bar/top-nav-bar';
+import BottomNavBar from './components/bottom-nav-bar/bottom-nav-bar';
+import RootPage from './components/root-page/root-page';
 
 export class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(actionsGeneral.fetchInitialize());
+    if (this.props.general.causes.length < 1) {
+      console.log('called')
+      this.props.dispatch(actionsGeneral.fetchInitialize());
+    }
   }
 
   render() {
-    console.log('App', this.props.users);
-    let renderPage;
-    if (this.props.login === 'true') {
-      renderPage = HomePage;
-    }
-    else renderPage = HomePage;
     return (
       <Router>
         <div>
-          <Route exact path="/" component={renderPage} />
-          <Route path="/:id" component={UserProfile} />
-          {/* <Route path="/register" component={RegisterPage} /> */}
-          <Route path="/organizations" component={ExplorePage} />
-          <Route path="/contributors" component={ExplorePage} />
+          <Route exact path="/" component={RootPage} />
+          <Route exact path="/profiles/:id" component={UserProfile} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/organizations" component={ExplorePage} />
+          <Route exact path="/contributors" component={ExplorePage} />
           {/* <Route path="/inbox" component={InboxPage} />
           <Route path="/settings" component={SettingsPage} /> */}
-          <Route component={TopNavBar} />
-          <Route component={BottomNavBar} />
+          {/* <Redirect from='*' to='/' /> */}
+          <Route path='/*' component={TopNavBar} />
+          <Route path='/*' component={BottomNavBar} />
         </div>
       </Router>
     );
@@ -50,5 +53,6 @@ export const mapStateToProps = state => ({
   opportunity: state.opportunity,
   opportunitiesList: state.opportunitiesList,
   display: state.display,
+  general: state.general
 })
 export default connect(mapStateToProps)(App);

@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
-import  * as actionsUserViewed from './userViewed';
+import  * as actionsUserViewed from './user-viewed';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when creating, editing, or viewing YOUR OWN profile
@@ -95,3 +95,35 @@ export const login = (user) => dispatch => {
       return dispatch(actionsDisplay.toggleModal(error));
     });
 }
+
+export const registerUser = (credentials) => dispatch => {
+  
+    dispatch(actionsDisplay.changeDisplay('loading'));
+    
+    const url = `${REACT_APP_BASE_URL}/api/users/register`;
+    const headers = { "Content-Type": "application/json",
+      "x-requested-with": "xhr" };
+    const init = { 
+      method: 'POST',
+      body: JSON.stringify(credentials),
+      headers
+    };
+    console.log('init', init);
+    return fetch(url, init)
+    .then(res=>{ //response user api repr firstName, lastName, username, id
+      console.log(res);
+      if (!res.ok) { 
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    }) 
+    .then(user => { 
+      return dispatch(loadUser(user));
+    })
+    .then(()=>{
+      return dispatch(actionsDisplay.changeDisplay('normal'));
+    })
+    .catch(error => {
+      dispatch(actionsDisplay.toggleModal(error));
+    });
+  }

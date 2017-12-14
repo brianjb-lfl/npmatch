@@ -1,8 +1,8 @@
-import { reducer } from '../reducers/user';
-import * as actions from '../actions/user';
+import { reducer } from '../reducers/user-viewed';
+import * as actions from '../actions/user-viewed';
 import {user as initialState} from '../reducers/potential-states';
 
-describe('reducer - single user', () => {
+describe('reducer - user viewed', () => {
   
   it('Should return the initial state when nothing is passed in', () => {
     const state = reducer(undefined, {type: '__UNKNOWN'});
@@ -33,7 +33,7 @@ describe('reducer - single user', () => {
       adminOf: undefined,
       following: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -57,7 +57,7 @@ describe('reducer - single user', () => {
       adminOf: undefined,
       following: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -102,7 +102,7 @@ describe('reducer - single user', () => {
         }
       ]
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER}, expectedResult);
+    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
