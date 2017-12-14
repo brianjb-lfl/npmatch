@@ -142,4 +142,24 @@ userRouter.post('/register', jsonParser, (req, res) => {
     });
 });
 
+// Clear test data
+userRouter.delete('/clear/test/data', jsonParser, (req, res) => {
+  const knex = require('../db');
+  return knex('users')
+    .where('username', 'like', '%user%')
+    .del()
+    .then( () => {
+      return knex('users')
+        .where('username', 'like', '%test%')
+        .del()
+        .then( () => {
+          res.status(200).json({message: 'Test data deleted'});
+        });
+    })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+
 module.exports = { userRouter };
