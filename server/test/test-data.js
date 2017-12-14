@@ -82,26 +82,15 @@ testData.userSeeds = [
 testData.testIndividual = {
   username: 'attorneyinks',
   password: 'attorneyspassword',
-  user_type: 'individual',
-  location_city: 'topeka',
-  location_state: 'ks',
-  location_country: 'USA',
-  bio: 'i speak legal',
-  first_name: 'grady',
-  last_name: 'goodlove',
-  organization: ''
+  userType: 'individual',
+  firstName: 'grady',
+  lastName: 'goodlove',
 };
 
 testData.testOrganization = {
   username: 'dragonfly11',
   password: 'dragonflyspassword',
-  user_type: 'organization',
-  location_city: 'wildwood',
-  location_state: 'fl',
-  location_country: 'USA',
-  bio: 'your child care partner in central fl',
-  first_name: '',
-  last_name: '',
+  userType: 'organization',
   organization: 'Deer Lake Child Care'
 };
 
