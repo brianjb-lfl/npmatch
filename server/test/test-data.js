@@ -94,6 +94,24 @@ testData.testOrganization = {
   organization: 'Deer Lake Child Care'
 };
 
+testData.testOrgOpp = {
+  opportunityType: 'goods',
+  offer: false,
+  title: 'test goods opportunity',
+  narrative: 'testing our need of goods',
+  locationCity: 'chattanooga',
+  locationState: 'tn',
+}
+
+testData.testIndOpp = {
+  opportunityType: 'services',
+  offer: true,
+  title: 'test service offer',
+  narrative: 'testing my offer of services',
+  locationCity: 'topeka',
+  locationState: 'ks',
+}
+
 testData.oppSeeds = [
   {
     opportunity_type: 'goods',

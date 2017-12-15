@@ -51,4 +51,46 @@ oppRouter.get('/list', (req, res) => {
     });    
 });
 
+// POST api/opps
+oppRouter.post('/', (req, res) => {
+  let inOppObj = req.body;
+  const knex = require('../db');
+  const reqFields = ['opportunityType', 'title', 'narrative'];
+  const missingField = reqFields.filter( field => !(field in inOppObj));
+  
+  //check for missing fields
+  if(missingField.length > 0) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Error: username and password are required',
+      location: missingField[0]
+    });
+  }
+  inUsrObj = Object.assign( {}, inOppObj, {
+    opportunity_type: inOppObj.opportunityType,
+    location_city: inOppObj.locationCity ? inOppObj.locationCity : null,
+    location_state: inOppObj.locationState ? inOppObj.locationState : null,
+    location_country: inOppObj.locationCountry ? inOppObj.locationCountry : null,
+  });
+
+  delete inOppObj.opportunityType;
+  inOppObj.locationCity ? delete inOppObj.locationCity : null;
+  inOppObj.locationState ? delete inOppObj.locationState : null;
+  inOppObj.locationCountry ? delete inOppObj.locationCountry : null;
+  
+  return knex('opportunities')
+    .insert(inOppObj)
+    .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
+    .then( results => {
+      res.status(201).json(results[0])
+    })
+    .catch( err => {
+      if(err.reason === 'ValidationError') {
+        return res.status(err.code).json(err);
+      }
+      res.status(500).json({message: 'Internal server error'});
+    });
+});
+
 module.exports = { oppRouter };

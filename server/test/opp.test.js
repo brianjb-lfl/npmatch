@@ -73,7 +73,38 @@ describe('opp', function() {
     });
   });
 
-  // ***** GET OPPORTUNITIES BY CAUSE LIST
+  // ***** POST A NEW ORG OPPORTUNITY
+  describe('api/opps POST new opportunity', function() {
+    it.only('should add an opportunity', function() {
+      let testOpp = testData.testOrgOpp;
+      return testF.getFocusOrg()
+        .then( result => {
+          console.log(result);
+          testOpp = Object.assign( {}, testOpp, {
+            id_user: result.focus_org_id
+          });
+          console.log(testOpp);
+          return chai.request(app)
+            .post('/api/opps')
+            .send(testOpp)
+        })
+        .then( res => {
+          expect(res.status).to.be(201);
+          return knex('opportunities')
+            .select()
+            .where({id: res.id})
+        })
+        .then( results => {
+          expect(results.length).to.equal(1);
+          expect(results.id_user).to.equal(testOpp.id_user);
+          expect(results.offer).to.be(false);
+          expect(results.title).to.equal(testOpp.title);
+          expect(results.narrative).to.equal(testOpp.narrative);
+        });
+    });
+  });
+
+
 
 
 });
