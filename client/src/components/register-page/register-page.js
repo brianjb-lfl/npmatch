@@ -3,18 +3,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
-import * as userActions from '../../actions/user';
+import * as actionsUser from '../../actions/user';
 
 import './register-page.css';
 
 export class RegisterPage extends Component {
 
   handleTypeChange(userType) {
-    this.props.dispatch(userActions.setFormType(userType))
+    this.props.dispatch(actionsUser.setFormType(userType))
   }
 
   handleSubmitButton(input) {
-    this.props.dispatch(userActions.registerUser(input))
+    this.props.dispatch(actionsUser.registerUser(input))
       .then(() => this.props.history.push('/'))
   }
 
