@@ -23,7 +23,7 @@ oppRouter.get('/testify/secure', jwtAuth, (req, res) => {
 });
 
 //GET api/opps/list
-oppRouter.get('/list', (req, res) => {
+oppRouter.get('/list', jwtAuth, (req, res) => {
   const knex = require('../db');
   const calcUserField = 
     "case when users.organization isnull then "
@@ -70,7 +70,6 @@ oppRouter.post('/', jsonParser, (req, res) => {
   
   //check for missing fields
   if(missingField) {
-    console.log('handling missing field');
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
