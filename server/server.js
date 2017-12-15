@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { userRouter } = require('./routers/user-router');
 const { orgRouter } = require('./routers/org-router');
+const { oppRouter } = require('./routers/opp-router');
 const { causeRouter } = require('./routers/cause-router');
 const { adminRouter } = require('./routers/admin-router');
 const { authRouter } = require('./auth/auth-router');
@@ -21,6 +22,7 @@ app.use(
 
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
+app.use('/api/opps', oppRouter);
 app.use('/api/causes', causeRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/auth', authRouter);

@@ -30,12 +30,17 @@ testSetup.seedLinksTable = function( usrID, orgID ) {
     .insert(linksArr);
 };
 
-testSetup.seedOppsTable = function(orgID) {
+testSetup.seedOppsTable = function(orgID, usrID) {
   // console.log('running seedOppsTable');
   let tempOppsArr = [];
   let tempObj = {};
-  testData.orgOppSeeds.map( item => {
-    tempObj = Object.assign( {}, item, {id_user: orgID});
+  testData.oppSeeds.map( item => {
+    if(item.offer){
+      tempObj = Object.assign( {}, item, {id_user: usrID});
+    }
+    else {
+      tempObj = Object.assign( {}, item, {id_user: orgID});
+    }
     tempOppsArr.push(tempObj);
   });
   return knex('opportunities')
@@ -53,8 +58,8 @@ testSetup.seedUsersCausesTable = function(usrID) {
           .insert({
             id_user: usrID,
             id_cause: result[0].id
-          })
-      })
+          });
+      });
   });
 };
 
@@ -69,8 +74,8 @@ testSetup.seedOrgCausesTable = function(orgID) {
           .insert({
             id_user: orgID,
             id_cause: result[0].id
-          })
-      })
+          });
+      });
   });
 };
 
@@ -104,7 +109,7 @@ testSetup.buildFullDB = function() {
     .then( results => {
       focusUserID = results[0].focus_user_id;
       focusOrgID = results[0].focus_org_id;
-      return(testSetup.seedOppsTable(focusOrgID));
+      return(testSetup.seedOppsTable(focusOrgID, focusUserID));
     })
     .then( () => {
       return (testSetup.seedLinksTable(focusUserID, focusOrgID));

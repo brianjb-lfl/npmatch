@@ -60,7 +60,6 @@ describe('user', function() {
         .get('/api/users/list')
         .then(function(res) {
           let userNames = testData.userSeeds
-            .filter( item => item.user_type === 'individual')
             .map( item => item.username );
           expect(res.body.length).to.equal(userNames.length);
           for(let uCtr = 0; uCtr < res.body.length; uCtr++) {
@@ -150,23 +149,49 @@ describe('user', function() {
         });
     });
 
-    it('should add user to users table as type individual', function() {
+    it('should add individual user to users table as type individual', function() {
       let testUser = Object.assign( {}, testData.testIndividual);
       return chai.request(app)
         .post('/api/users/register')
         .send(testUser)
         .then(function(res) {
-          expect(res.body.length).to.equal(1);
-          expect(res.body[0].username).to.equal(testData.testIndividual.username);
+          console.log(res.body);
+          expect(res.body).type.to.be('object');
+          expect(res.body.username).to.equal(testData.testIndividual.username);
           return chai.request(app)
-            .get(`/api/users/${res.body[0].id}`)
+            .get(`/api/users/${res.body.id}`)
             .then(function(res) {
               expect(res.body.username).to.equal(testData.testIndividual.username);
-              expect(res.body.user_type).to.equal('individual');
-              expect(res.body.first_name).to.equal(testData.testIndividual.first_name);
+              expect(res.body.userType).to.equal('individual');
+              expect(res.body.firstName).to.equal(testData.testIndividual.firstName);
               // expect(res.body.first_name).to.equal('notyouraveragefirstname');    // failing test
-              expect(res.body.last_name).to.equal(testData.testIndividual.last_name);
-              expect(res.body.organization).to.equal('');
+              expect(res.body.lastName).to.equal(testData.testIndividual.lastName);
+            });
+        })
+        .catch( err => {
+          if(err instanceof chai.AssertionError) {
+            throw err;
+          }
+          //console.log(err.response);
+        });
+    });
+
+    it('should add organization user to users table as type organization', function() {
+      let testOrg = Object.assign( {}, testData.testOrganization);
+      return chai.request(app)
+        .post('/api/users/register')
+        .send(testOrg)
+        .then(function(res) {
+          console.log(res.body);
+          expect(res.body).type.to.be('object');
+          expect(res.body.username).to.equal(testOrg.username);
+          return chai.request(app)
+            .get(`/api/users/${res.body.id}`)
+            .then(function(res) {
+              expect(res.body.username).to.equal(testOrg.username);
+              expect(res.body.userType).to.equal('organization');
+              expect(res.body.organization).to.equal(testOrg.organization);
+              // expect(res.body.organization).to.equal('atleastwerenothitler');    // failing test
             });
         })
         .catch( err => {

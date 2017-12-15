@@ -40,15 +40,11 @@ export class BottomNavBar extends Component {
   }
 
   render() {
-    console.log(this.props);
     let leftButton;
     let leftLabel;
-    let leftOnClick;
     let rightButton;
     let rightLabel;
-    let rightOnClick;
     let homeButton;
-    console.log(this.props.match);
     if (this.props.match.url !== '/') {
       homeButton = <Link to='/'>
         <li className='homeBottomButton'>
@@ -60,37 +56,34 @@ export class BottomNavBar extends Component {
     }
 
     if (this.props.display === 'landingPage') {
-      leftButton = '/signInPage'
       leftLabel = 'Sign In'
-      leftOnClick = this.signIn
-      rightButton = '/registerPage'
       rightLabel = 'Sign Up'
-      rightOnClick = this.signUp
 
     }
     else {
-      leftButton = '/organizations'
       leftLabel = 'Organizations'
-      leftOnClick - this.exploreOrganizations
-      rightButton = '/contributors'
       rightLabel = 'Contributors'
-      rightOnClick = this.exploreContributors
+    }
+
+    if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
+      leftButton = <li className='leftBottomButton' onClick={() => this.leftOnClick()}>
+        <button>
+          {leftLabel}
+        </button>
+      </li>
+      rightButton = <li className='rightBottomButton' onClick={() => this.rightOnClick()}>
+        <button>
+          {rightLabel}
+        </button>
+      </li>
     }
 
     return (
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          <li className='leftBottomButton' onClick={() => this.leftOnClick()}>
-            <button>
-              {leftLabel}
-            </button>
-          </li>
-          <li className='rightBottomButton' onClick={() => this.rightOnClick()}>
-            <button>
-              {rightLabel}
-            </button>
-          </li>
+          {leftButton}
+          {rightButton}
         </ul>
       </div>
     )
