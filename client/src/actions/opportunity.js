@@ -34,7 +34,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
     const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
     const headers = {
       'content-type': 'application/json',
-      // "Authorization": `Bearer ${authToken}`, 
+      'Authorization': `Bearer ${authToken}`, 
     }; 
   
     const init = { 

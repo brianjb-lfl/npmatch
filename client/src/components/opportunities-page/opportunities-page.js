@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
 import * as actionsUser from '../../actions/user';
@@ -11,9 +11,9 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class OpportunitiesPage extends Component {
 
   render() {
-
+    console.log('this.props.opportunitiesList.main',this.props.opportunitiesList.main)
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
-      <li><OpportunityPreview opportunity={opp} key={index}/></li>
+      return <li key={index}><OpportunityPreview opportunity={opp} history={this.props.history}/></li>
     })
 
     return (

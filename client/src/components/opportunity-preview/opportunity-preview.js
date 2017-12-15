@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import * as actionsOpportunity from '../../actions/opportunity';
 import './opportunity-preview.css'
 
@@ -7,6 +8,7 @@ export class OpportunityPreview extends Component {
 
   editOpportunity(id) {
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
+    // .then(()=> <Redirect to='/opportunities/create' from='/*'/>)
       .then(() => this.props.history.push('/opportunities/create'))
   }
 
