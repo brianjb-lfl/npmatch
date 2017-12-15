@@ -35,7 +35,7 @@ describe('reducer - single opportunity', () => {
             id: 54,
             idOpportunity: 88,
             organization: 'Healthcare For The Homeless',// SQL join
-            idUser: 72,
+            userId: 72,
             firstName: 'Janet',   // SQL join
             lastName: 'Smythe',    // SQL join
             responseStatus: 'accepted',

@@ -76,7 +76,7 @@ export const usersList = {
       opportunities: [ // SQL join
         {
           id: '',
-          idUser: '',          // not needed on nested list, but native data, so keep
+          userId: '',          // not needed on nested list, but native data, so keep
           // organization: '', // not on nested list
           opportunityType: '',
           offer: '',
@@ -97,7 +97,7 @@ export const usersList = {
   
 export const opportunity = {
   id: '',
-  idUser: '',
+  userId: '',
   organization: '',     // SQL join (in case of individuals, list individual's full name here)
   opportunityType: '',
   offer: '',
@@ -115,7 +115,7 @@ export const opportunity = {
         id: '',
         idOpportunity: '',
         organization: '',// SQL join
-        idUser: '',
+        userId: '',
         firstName: '',   // SQL join
         lastName: '',    // SQL join
         responseStatus: '',
@@ -129,7 +129,7 @@ export const opportunitiesList = {
   main: [
     {
       id: '',
-      idUser: '',
+      userId: '',
       organization: '', // SQL join (in case of individuals, list individual's full name here)
       opportunityType: '',
       offer: '',

@@ -9,8 +9,8 @@ import ContributorPreview from '../contributor-preview/contributor-preview';
 export class HomePage extends Component {
   render() {
     let previews = typeof this.props.usersList !== 'object' ? '' : this.props.usersList.map((user, key) => (
-      <Link to={`/profiles/${user.id}`}>
-        <OrganizationPreview user={user} key={key} />
+      <Link to={`/profiles/${user.id}`} key={key} >
+        <OrganizationPreview user={user} />
       </Link>
         )
       );

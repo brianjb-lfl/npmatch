@@ -9,7 +9,7 @@ export const LOAD_OPPORTUNITY = 'LOAD_OPPORTUNITY';
 export const loadOpportunity = action => ({
   type: LOAD_OPPORTUNITY,
   id: action.id,
-  idUser: action.idUser,
+  userId: action.userId,
   organization: action.organization,
   opportunityType: action.opportunityType,
   offer: action.offer,

@@ -38,13 +38,13 @@ export const setFormType = formType => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (idUser, authToken, type = 'orgs', stateLocation = 'user') => dispatch => {
+export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'user') => dispatch => {
   // type options = 'users' and 'orgs'
   // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
-    const url = `${REACT_APP_BASE_URL}/api/${type}/${idUser}`;
+    const url = `${REACT_APP_BASE_URL}/api/${type}/${userId}`;
     const headers = {
       'content-type': 'application/json',
       "Authorization": `Bearer ${authToken}`, 

@@ -234,7 +234,7 @@ export const mapStateToProps = state => {
 
   const initialForm = Object.assign({},state.opportunity)
   delete initialForm.responses;
-  initialForm.idUser = initialForm.idUser ? initialForm.idUser : state.user.id ;
+  initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id ;
   initialForm.causes = initialForm.causes ? initialForm.causes : null ;
 
   return {

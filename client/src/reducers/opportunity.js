@@ -9,7 +9,7 @@ export const reducer = (state = initialState, action) => {
   if (action.type === actions.LOAD_OPPORTUNITY) {
     return Object.assign({}, state, {
       id: action.id,
-      idUser: action.idUser,
+      userId: action.userId,
       organization: action.organization,
       opportunityType: action.opportunityType,
       offer: action.offer,

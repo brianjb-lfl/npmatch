@@ -41,7 +41,7 @@ describe('actions - list of users', () => {
         opportunities: [
           {
             id: 2,
-            idUser: 1,
+            userId: 1,
             opportunityType: 'services',
             offer: false,
             title: 'Buzz Me 2018',
@@ -56,7 +56,7 @@ describe('actions - list of users', () => {
           },
           {
             id: 3,
-            idUser: 1,
+            userId: 1,
             opportunityType: 'financial',
             offer: false,
             title: 'Buzz Me 2018 Fund Drive',
