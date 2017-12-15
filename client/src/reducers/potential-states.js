@@ -155,6 +155,10 @@ export const display = {
 export const general = {
   causes: [],
   skills: [],
+  offerTypes: [
+    'offer to provide services',
+    'request for volunteers',
+  ],
   oppTypes: ['financial','goods','services'],
   states: [
     {

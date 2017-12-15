@@ -7,8 +7,10 @@ import SelectList from 'react-widgets/lib/SelectList'
 import Multiselect from 'react-widgets/lib/Multiselect'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import 'react-widgets/dist/css/react-widgets.css'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment-localizer'
+
+import Moment from 'moment';
+import momentLocalizer from 'react-widgets-moment'; 
+
 import { display } from '../../reducers/potential-states';
 import * as actionsOpportunity from '../../actions/opportunity';
 
@@ -21,7 +23,8 @@ export class OpportunityCreate extends Component {
 
   render() {
 
-    momentLocaliser(moment)    
+    Moment.locale('en')
+    momentLocalizer()
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>
     <DropdownList {...input}
@@ -36,8 +39,7 @@ export class OpportunityCreate extends Component {
       value={input.value || []} // requires value to be an array
       data={data}
       valueField={valueField}
-      textField={textField}
-    />
+      textField={textField} />
   
   const renderSelectList = ({ input, data }) =>
     <SelectList {...input}
@@ -47,16 +49,10 @@ export class OpportunityCreate extends Component {
   const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
     <DateTimePicker
       onChange={onChange}
-      format="DD MMM YYYY"
+      format={Moment().format()}
       time={showTime}
-      value={!value ? null : new Date(value)}
-    />
+       />
     
-    const offerTypes = [
-      'offer to provide services',
-      'request for volunteers',
-    ]
-
     return (
       <main>
 
@@ -126,7 +122,7 @@ export class OpportunityCreate extends Component {
               name='offer'
               id='offer'
               component={renderSelectList}
-              data={offerTypes}
+              data={this.props.general.offerTypes}
               className='opportunityInput'
               required />              
             <label 
@@ -190,6 +186,31 @@ export class OpportunityCreate extends Component {
               htmlFor={'link'}>Opportunity-Specific URL
             </label>
           </div>
+
+          <div>
+            <Field
+              name="timestampStart"
+              id="timestampStart"
+              component={renderDateTimePicker}
+              className='opportunityInput'/>
+            <label 
+              className='inputLabel' 
+              htmlFor={'timestampStart'}>Start
+            </label>
+          </div>
+
+          <div>
+            <Field
+              name="timestampEnd"
+              id="timestampEnd"
+              component={renderDateTimePicker}
+              className='opportunityInput'/>
+            <label 
+              className='inputLabel' 
+              htmlFor={'timestampEnd'}>End
+            </label>
+          </div>
+
 
           <div>
             <button 
