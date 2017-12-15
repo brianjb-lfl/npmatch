@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './top-nav-bar.css'
-
+import * as actionsOpportunitiesList from '../../actions/opportunities-list';
 
 export class TopNavBar extends Component {
+
+  listOpportunities(searchCriteria) {
+    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(searchCriteria,this.props.user.authToken))
+    .then(()=> this.props.history.push('/myopportunities'))
+  }
 
   render() {
     return (
@@ -11,6 +16,10 @@ export class TopNavBar extends Component {
         <ul className='topNav'>
           <li className='leftTopButton'>
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
+          </li>
+          <li className='opportunitiesButton'>
+            <i class="fa fa-briefcase" aria-hidden="true"
+              onClick={()=>this.listOpportunities({userId: this.props.user.id})}></i>
           </li>
           <li className='searchBar'>
             <form className="search">
