@@ -131,7 +131,7 @@ userRouter.post('/register', jsonParser, (req, res) => {
         .insert(inUsrObj)
         .returning(['id', 'username'])
         .then( results => {
-          res.status(201).json(results);
+          res.status(201).json(results[0]);
         });
     })
     .catch( err => {

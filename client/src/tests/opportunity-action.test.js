@@ -58,7 +58,7 @@ describe('actions - single opportunity', () => {
     
   });
 
-  it('should call actions to fetch opportunity from server', () => {
+  it('should call action to fetch opportunity from server', () => {
     
     const oppId = 5; // doesn't matter for testing
     const expectedResponse = {id: oppId}; // this will be the response of the mock call
@@ -81,11 +81,105 @@ describe('actions - single opportunity', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions',expectedActions)
-        expect(expectedActions.length).toBe(3);
-        expect.assertions(2);  // number of callback functions
+        expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsOpp.LOAD_OPPORTUNITY, id: oppId }
+        );
+      })
+  });
+
+  it('should fail to call action to fetch opportunity from server', () => {
+    
+    const oppId = 5; // doesn't matter for testing
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOpp.fetchOpp(oppId, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(4); // 2 as of last test, plus 2 this time
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error }
+        );
+      })
+  });
+
+  it('should call action to send opportunity to server', () => {
+    
+    const opp = {title:'someOpp'}; // doesn't matter for testing
+    const oppId = 88; // doesn't matter for testing
+    const expectedResponse = {id: oppId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOpp.createOpportunity(opp, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(6); // 4 as of prior test, 2 from this test
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsOpp.LOAD_OPPORTUNITY, id: oppId }
+        );
+      })
+  });
+
+  it('should fail to call action to send opportunity to server', () => {
+    
+    const opp = {title:'someOpp'}; // doesn't matter for testing
+    const oppId = 88; // doesn't matter for testing
+    const expectedResponse = {id: oppId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, 'bad fetch', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOpp.createOpportunity(opp, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(8); // 6 as of prior test, 2 from this test
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.TOGGLE_MODAL, message: 'bad fetch' }
         );
       })
   });

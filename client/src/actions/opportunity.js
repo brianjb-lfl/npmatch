@@ -46,11 +46,38 @@ export const fetchOpp = (oppId, type, authToken) => dispatch => {
       return res.json();
     })
     .then(res=>{
-      console.log('response from single opportunity fetch',res)
       return dispatch(loadOpportunity(res));      
     })
     .catch(error => {
-      console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }
+
+export const createOpportunity = (opportunity, authToken) => dispatch => {
+  
+    dispatch(actionsDisplay.changeDisplay('loading'));
+    
+    const url = `${REACT_APP_BASE_URL}/api/opportunities`;
+    const headers = { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${authToken}`
+    };
+    const init = { 
+      method: 'POST',
+      body: JSON.stringify(opportunity),
+      headers
+    };
+    return fetch(url, init)
+    .then(res=>{
+      if (!res.ok) { 
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    }) 
+    .then(user => { 
+      return dispatch(loadOpportunity(user));
+    })
+    .catch(error => {
+      dispatch(actionsDisplay.toggleModal(error));
+    });
+  }

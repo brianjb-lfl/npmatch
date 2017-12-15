@@ -8,11 +8,13 @@ import * as userActions from '../../actions/user';
 export class LoginPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.login(input))
-      .then(() => this.props.history.push('/'))
+      .then(() => {
+        this.props.reset();        
+        this.props.history.push('/');
+      })
   }
 
   render() {
-    console.log('LOGIN PAGE', this.props.match)
     return (
       <main>
         <form className='loginForm'

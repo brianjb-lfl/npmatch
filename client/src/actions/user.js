@@ -47,7 +47,7 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
     const url = `${REACT_APP_BASE_URL}/api/${type}/${userId}`;
     const headers = {
       'content-type': 'application/json',
-      // "Authorization": `Bearer ${authToken}`, 
+      "Authorization": `Bearer ${authToken}`, 
     }; 
   
     const init = { 
@@ -78,14 +78,18 @@ export const login = (user) => dispatch => {
   dispatch(actionsDisplay.changeDisplay('loading'));
   
   const url = `${REACT_APP_BASE_URL}/api/auth/login`;
-  const auth = `${user.username}:${user.password}`; // u & pw as string
+  const userObject = {
+    username: user.username,
+    password: user.password
+  };
+
   const headers = {
-    "Authorization": "Basic " + btoa(auth), // base64 encryption
-    // "x-requested-with": "xhr"
+    "Content-Type": "application/json"
   }; 
   const init = { 
     method: 'POST',
-    headers
+    headers,
+    body: JSON.stringify(userObject)
   };
   console.log('log in init',init)
   return fetch(url,init)
@@ -109,8 +113,10 @@ export const registerUser = (credentials) => dispatch => {
     delete credentials.password2;
     
     const url = `${REACT_APP_BASE_URL}/api/users/register`;
-    const headers = { "Content-Type": "application/json",
-      "x-requested-with": "xhr" };
+    const headers = { 
+      "Content-Type": "application/json",
+      "x-requested-with": "xhr" 
+    };
     const init = { 
       method: 'POST',
       body: JSON.stringify(credentials),
@@ -126,6 +132,7 @@ export const registerUser = (credentials) => dispatch => {
       return res.json();
     }) 
     .then(user => { 
+      console.log('user returned at registration', user)
       return dispatch(loadUser(user));
     })
     .then(()=>{
