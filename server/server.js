@@ -22,7 +22,7 @@ app.use(
 
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
-app.use('/api/opps', oppRouter);
+app.use('/api/opportunities', oppRouter);
 app.use('/api/causes', causeRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/auth', authRouter);
