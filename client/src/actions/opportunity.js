@@ -27,7 +27,7 @@ export const loadOpportunity = action => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchOpp = (oppId, type, authToken) => dispatch => {
+export const fetchOpp = (oppId, authToken) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -72,7 +72,7 @@ export const createOpportunity = (opportunity, authToken) => dispatch => {
       opportunity.locationCountry = opportunity.locationCountry.code;
     } 
     
-    const url = `${REACT_APP_BASE_URL}/api/opps`;
+    const url = `${REACT_APP_BASE_URL}/api/opportunities`;
     const headers = { 
       "Content-Type": "application/json",
       "Authorization": `Bearer ${authToken}`
