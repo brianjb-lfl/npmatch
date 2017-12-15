@@ -56,6 +56,12 @@ export const fetchOpp = (oppId, type, authToken) => dispatch => {
 export const createOpportunity = (opportunity, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
+
+    if ( opportunity.offer.substring(0,5) === 'offer' ) {
+      opportunity.offer = true;
+    } else {
+      opportunity.offer = false;
+    }
     
     const url = `${REACT_APP_BASE_URL}/api/opportunities`;
     const headers = { 
@@ -67,6 +73,7 @@ export const createOpportunity = (opportunity, authToken) => dispatch => {
       body: JSON.stringify(opportunity),
       headers
     };
+    console.log('create opp',init)
     return fetch(url, init)
     .then(res=>{
       if (!res.ok) { 
