@@ -101,7 +101,7 @@ testData.testOrgOpp = {
   narrative: 'testing our need of goods',
   locationCity: 'chattanooga',
   locationState: 'tn',
-}
+};
 
 testData.testIndOpp = {
   opportunityType: 'services',
@@ -110,7 +110,7 @@ testData.testIndOpp = {
   narrative: 'testing my offer of services',
   locationCity: 'topeka',
   locationState: 'ks',
-}
+};
 
 testData.oppSeeds = [
   {

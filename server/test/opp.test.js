@@ -48,7 +48,7 @@ describe('opp', function() {
   describe('api/opps/testify GET comm check', function() {
     it('should demonstrate that comm to the endpoint is working', function() {
       return chai.request(app)
-        .get('/api/causes/testify')
+        .get('/api/opps/testify')
         .then(function(res) {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Good to go');
@@ -75,37 +75,73 @@ describe('opp', function() {
 
   // ***** POST A NEW ORG OPPORTUNITY
   describe('api/opps POST new opportunity', function() {
-    it.only('should add an opportunity', function() {
-      let testOpp = testData.testOrgOpp;
+    let testOpp = testData.testOrgOpp;
+
+    it('should reject a post with missing idUser', function() {
       return testF.getFocusOrg()
         .then( result => {
-          console.log(result);
           testOpp = Object.assign( {}, testOpp, {
-            id_user: result.focus_org_id
+            idUser: result.focus_org_id
           });
-          console.log(testOpp);
+          let failedTestOpp = Object.assign( {}, testOpp);
+          delete failedTestOpp.idUser;
           return chai.request(app)
             .post('/api/opps')
-            .send(testOpp)
-        })
+            .send(failedTestOpp)
+            .then( () =>
+              expect.fail(null, null, 'Request should fail')
+            )
+            .catch( err => {
+              if(err instanceof chai.AssertionError) {
+                throw err;
+              }
+              const res = err.response;
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal('ValidationError');
+              expect(res.body.location).to.equal('idUser');
+            });
+        });
+    });
+
+    it('should reject a post with missing title', function() {
+      let failedTestOpp = Object.assign( {}, testOpp);
+      delete failedTestOpp.title;
+      return chai.request(app)
+        .post('/api/opps')
+        .send(failedTestOpp)
+        .then( () =>
+          expect.fail(null, null, 'Request should fail')
+        )
+        .catch( err => {
+          if(err instanceof chai.AssertionError) {
+            throw err;
+          }
+          const res = err.response;
+          expect(res).to.have.status(422);
+          expect(res.body.reason).to.equal('ValidationError');
+          expect(res.body.location).to.equal('title');
+        });
+    });
+
+    it('should add an opportunity', function() {
+      return chai.request(app)
+        .post('/api/opps')
+        .send(testOpp)
         .then( res => {
-          expect(res.status).to.be(201);
+          expect(res).to.have.status(201);
+          const knex = require('../db');
           return knex('opportunities')
             .select()
-            .where({id: res.id})
+            .where({id: res.body.id});
         })
         .then( results => {
           expect(results.length).to.equal(1);
-          expect(results.id_user).to.equal(testOpp.id_user);
-          expect(results.offer).to.be(false);
-          expect(results.title).to.equal(testOpp.title);
-          expect(results.narrative).to.equal(testOpp.narrative);
+          expect(results[0].id_user).to.equal(testOpp.idUser);
+          expect(results[0].offer).to.equal(false);
+          expect(results[0].title).to.equal(testOpp.title);
+          expect(results[0].narrative).to.equal(testOpp.narrative);
         });
     });
   });
 
-
-
-
 });
-

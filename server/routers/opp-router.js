@@ -52,29 +52,32 @@ oppRouter.get('/list', (req, res) => {
 });
 
 // POST api/opps
-oppRouter.post('/', (req, res) => {
+oppRouter.post('/', jsonParser, (req, res) => {
   let inOppObj = req.body;
   const knex = require('../db');
-  const reqFields = ['opportunityType', 'title', 'narrative'];
-  const missingField = reqFields.filter( field => !(field in inOppObj));
+  const reqFields = ['opportunityType', 'title', 'narrative', 'idUser'];
+  const missingField = reqFields.find( field => !(field in inOppObj));
   
   //check for missing fields
-  if(missingField.length > 0) {
+  if(missingField) {
+    console.log('handling missing field');
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
-      message: 'Error: username and password are required',
-      location: missingField[0]
+      message: 'Missing field',
+      location: missingField
     });
   }
-  inUsrObj = Object.assign( {}, inOppObj, {
+  inOppObj = Object.assign( {}, inOppObj, {
     opportunity_type: inOppObj.opportunityType,
+    id_user: inOppObj.idUser,
     location_city: inOppObj.locationCity ? inOppObj.locationCity : null,
     location_state: inOppObj.locationState ? inOppObj.locationState : null,
     location_country: inOppObj.locationCountry ? inOppObj.locationCountry : null,
   });
 
   delete inOppObj.opportunityType;
+  delete inOppObj.idUser;
   inOppObj.locationCity ? delete inOppObj.locationCity : null;
   inOppObj.locationState ? delete inOppObj.locationState : null;
   inOppObj.locationCountry ? delete inOppObj.locationCountry : null;
@@ -83,7 +86,7 @@ oppRouter.post('/', (req, res) => {
     .insert(inOppObj)
     .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
     .then( results => {
-      res.status(201).json(results[0])
+      res.status(201).json(results[0]);
     })
     .catch( err => {
       if(err.reason === 'ValidationError') {
