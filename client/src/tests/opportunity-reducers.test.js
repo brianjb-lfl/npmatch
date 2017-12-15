@@ -17,7 +17,7 @@ describe('reducer - single opportunity', () => {
   it('Should load a single opportunity into state', () => {
     const expectedResult = {
       id: 88,
-      userId: 33,
+      idUser: 33,
       organization: 'Healthcare For The Homeless',     // SQL join (in case of individuals, list individual's full name here)
       opportunityType: 'services',
       offer: true,
@@ -35,7 +35,7 @@ describe('reducer - single opportunity', () => {
             id: 54,
             idOpportunity: 88,
             organization: 'Healthcare For The Homeless',// SQL join
-            idUser: 72,
+            userId: 72,
             firstName: 'Janet',   // SQL join
             lastName: 'Smythe',    // SQL join
             responseStatus: 'accepted',

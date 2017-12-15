@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import './user-profile.css';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 
 export class UserProfile extends Component {
@@ -13,7 +14,7 @@ export class UserProfile extends Component {
 
     return (
       <main>
-        <div>
+        <div className='userProfile'>
           <img src={this.props.logo} alt={`${this.props.name} logo`}></img>
           <h3>{this.props.name}NAME NAME</h3>
           <h4>{this.props.locationCity} CITY STATE {this.props.locationState}</h4>

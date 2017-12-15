@@ -8,6 +8,7 @@ export const reducer = (state = initialState, action) => {
   if (action.type === actions.LOAD_USER) {
     return Object.assign({}, state, {
       id: action.id,
+      authToken: action.authToken,
       firstName: action.firstName,
       lastName: action.lastName,
       username: action.username,

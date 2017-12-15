@@ -9,7 +9,8 @@ import  * as actionsUserViewed from './user-viewed';
 export const LOAD_USER = 'LOAD_USER';
 export const loadUser = user => ({
   type: LOAD_USER,
-  id: user.id,
+  id: user.username ? 3 : user.id, //FIX THIS SHIT
+  authToken: user.authToken,
   firstName: user.firstName,
   lastName: user.lastName,
   username: user.username,
