@@ -8,6 +8,8 @@ const { setDbMode } = require('../config');
 // set .env DB_MODE to test to point knex instances to test db
 setDbMode('test');
 
+
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app } = require('../server');
