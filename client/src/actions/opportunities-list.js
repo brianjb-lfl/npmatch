@@ -18,7 +18,7 @@ export const fetchOppsList = (searchCriteria, authToken) => dispatch => {
   /* searchCriteria should be an object with following props.
     values are priority, 1 being soonest for MVP
     {
-      userId                    6 
+      idUser                    6 
       organization              6
       opportunityType  1
       offer               2

@@ -1,0 +1,56 @@
+NFP MATCHMAKER
+
+ACTIONS TO WRITE
+		  user create an account  DONE
+      user log in             DONE
+
+      create opportunity      CONFIRM FRIDAY
+
+      update opportunity      FRIDAY
+      
+      user update profile     FRIDAY
+
+      create userSkills       FRIDAY
+      create userCauses       FRIDAY
+      create oppCauses        FRIDAY
+                              all 3 cases populate simple join table
+                              recommendation: keep inside create/edit user and opportunities 
+                              not separate endpoint or action
+      
+      search opportunities    create search action (FRIDAY)
+                              send search criteria to server DONE
+                              server searches SQL and responds
+                              list loads to state DONE
+
+      search users            create search action (FRIDAY)
+                              send search criteria to server DONE
+                              server searches SQL and responds
+                              list loads to state DONE
+                          
+      respond to opprtnties   FRIDAY
+
+      create role             FRIDAY
+                              user follows other user 
+                              (can limit to follow orgs)
+                        
+      user capabilities       MONDAY
+                              enhance roles to capabilities
+
+ ************** REMAINING ************
+  ORGANIZATION
+			5 - I can send information and reach out to my subscribers
+
+			6 - I can provide recommendations/feedback on contributors that I've worked with
+					- I can share a "gold list" of contributors - w contributors' consent
+					- I can list past contributors which will show on their profiles
+
+  CONTRIBUTOR
+			6 - much later
+			
+				- I can "send" opportunities to friends
+				- I can share my history of involvement - must be verified by organization
+				- I can provide feedback on organizations that I've worked with
+
+			7 - very last
+
+				- eCommerce

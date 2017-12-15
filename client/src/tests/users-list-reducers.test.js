@@ -42,7 +42,7 @@ describe('reducer - list of users', () => {
         opportunities: [
           {
             id: 2,
-            userId: 1,
+            idUser: 1,
             opportunityType: 'services',
             offer: false,
             title: 'Buzz Me 2018',
@@ -57,7 +57,7 @@ describe('reducer - list of users', () => {
           },
           {
             id: 3,
-            userId: 1,            
+            idUser: 1,            
             opportunityType: 'financial',
             offer: false,
             title: 'Buzz Me 2018 Fund Drive',

@@ -9,7 +9,7 @@ export const LOAD_OPPORTUNITY = 'LOAD_OPPORTUNITY';
 export const loadOpportunity = action => ({
   type: LOAD_OPPORTUNITY,
   id: action.id,
-  userId: action.userId,
+  idUser: action.idUser,
   organization: action.organization,
   opportunityType: action.opportunityType,
   offer: action.offer,
@@ -57,13 +57,22 @@ export const createOpportunity = (opportunity, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
 
+    // conform data format
     if ( opportunity.offer.substring(0,5) === 'offer' ) {
       opportunity.offer = true;
     } else {
       opportunity.offer = false;
     }
+
+    if ( typeof opportunity.locationState === 'object' ) {
+      opportunity.locationState = opportunity.locationState.abbreviation;
+    } 
+
+    if ( typeof opportunity.locationCountry === 'object' ) {
+      opportunity.locationCountry = opportunity.locationCountry.code;
+    } 
     
-    const url = `${REACT_APP_BASE_URL}/api/opportunities`;
+    const url = `${REACT_APP_BASE_URL}/api/opps`;
     const headers = { 
       "Content-Type": "application/json",
       "Authorization": `Bearer ${authToken}`

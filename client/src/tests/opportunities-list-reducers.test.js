@@ -18,7 +18,7 @@ describe('reducer - opportunities list', () => {
     const arrayOfOpps = [
       {
         id: 1,
-        userId: 2,
+        idUser: 2,
         organization: 'Ace Hardware', // SQL join (in case of individuals, list individual's full name here)
         opportunityType: 'services',
         offer: false,
@@ -34,7 +34,7 @@ describe('reducer - opportunities list', () => {
       },
       {
         id: 3,
-        userId: 5,
+        idUser: 5,
         organization: 'ACME Hardware', // SQL join (in case of individuals, list individual's full name here)
         opportunityType: 'services',
         offer: false,

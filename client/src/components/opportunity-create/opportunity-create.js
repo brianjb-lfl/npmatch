@@ -70,7 +70,8 @@ export class OpportunityCreate extends Component {
               id='title'
               component='input'
               type='text'              
-              className='opportunityInput'/>
+              className='opportunityInput'
+              required />
             <label 
               className='inputLabel' 
               htmlFor={'title'}>Opportunity Title
@@ -83,7 +84,8 @@ export class OpportunityCreate extends Component {
               id='narrative'
               component='input'
               type='text'              
-              className='opportunityInput'/>
+              className='opportunityInput'
+              required />
             <label 
               className='inputLabel' 
               htmlFor={'narrative'}>Describe This Opportunity
@@ -98,7 +100,8 @@ export class OpportunityCreate extends Component {
               data={this.props.general.oppTypes}
               textField='type'
               valueField='type'
-              className='opportunityInput'/>              
+              className='opportunityInput'
+              required />              
             <label 
               className='inputLabel' 
               htmlFor={'opportunityType'}>Opportunity Type
@@ -124,7 +127,8 @@ export class OpportunityCreate extends Component {
               id='offer'
               component={renderSelectList}
               data={offerTypes}
-              className='opportunityInput'/>              
+              className='opportunityInput'
+              required />              
             <label 
               className='inputLabel' 
               htmlFor={'offer'}>Give or Receive
@@ -209,7 +213,7 @@ export const mapStateToProps = state => {
 
   const initialForm = Object.assign({},state.opportunity)
   delete initialForm.responses;
-  initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id ;
+  initialForm.idUser = initialForm.idUser ? initialForm.idUser : state.user.id ;
   initialForm.causes = initialForm.causes ? initialForm.causes : null ;
 
   return {

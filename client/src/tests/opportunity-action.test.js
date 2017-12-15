@@ -16,7 +16,7 @@ describe('actions - single opportunity', () => {
   it('should create a single opportunity action', () => {
     const opportunity = {
       id: 1,
-      userId: 2,
+      idUser: 2,
       organization: 'ABC Group',
       opportunityType: 'services',
       offer: false,
@@ -34,7 +34,7 @@ describe('actions - single opportunity', () => {
     const expectedAction = {
       type: actionsOpp.LOAD_OPPORTUNITY,
       id: 1,
-      userId: 2,
+      idUser: 2,
       organization: 'ABC Group',
       opportunityType: 'services',
       offer: false,

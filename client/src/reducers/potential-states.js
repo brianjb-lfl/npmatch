@@ -9,7 +9,7 @@
 */
 
 export const user = {
-  id: null,
+  id: 1,
   authToken: '',
   firstName: '',
   lastName: '',
@@ -76,7 +76,7 @@ export const usersList = {
       opportunities: [ // SQL join
         {
           id: '',
-          userId: '',          // not needed on nested list, but native data, so keep
+          idUser: '',          // not needed on nested list, but native data, so keep
           // organization: '', // not on nested list
           opportunityType: '',
           offer: '',
@@ -97,7 +97,7 @@ export const usersList = {
   
 export const opportunity = {
   id: '',
-  userId: '',
+  idUser: '',
   organization: '',     // SQL join (in case of individuals, list individual's full name here)
   opportunityType: '',
   offer: '',
@@ -107,7 +107,7 @@ export const opportunity = {
   timestampEnd: '',
   locationCity: '',
   locationState: '',
-  locationCountry: 'United States',
+  locationCountry: {name: 'United States', code: 'US'},
   link: '',
   causes: null,        // SQL join
   responses: [         // SQL join, load in single only, not in list
@@ -129,7 +129,7 @@ export const opportunitiesList = {
   main: [
     {
       id: '',
-      userId: '',
+      idUser: '',
       organization: '', // SQL join (in case of individuals, list individual's full name here)
       opportunityType: '',
       offer: '',
