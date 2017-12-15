@@ -83,13 +83,17 @@ oppRouter.post('/', jsonParser, (req, res) => {
     location_city: inOppObj.locationCity ? inOppObj.locationCity : null,
     location_state: inOppObj.locationState ? inOppObj.locationState : null,
     location_country: inOppObj.locationCountry ? inOppObj.locationCountry : null,
+    timestamp_start: inOppObj.timestampStart ? inOppObj.timestampStart : null,
+    timestamp_end: inOppObj.timestampEnd ? inOppObj.timestampEnd : null,
   });
 
-  inOppObj.opportunityType ? delete inOppObj.opportunityType : null;
+  delete inOppObj.opportunityType;
   delete inOppObj.userId;
-  inOppObj.locationCity ? delete inOppObj.locationCity : null;
-  inOppObj.locationState ? delete inOppObj.locationState : null;
-  inOppObj.locationCountry ? delete inOppObj.locationCountry : null;
+  delete inOppObj.locationCity;
+  delete inOppObj.locationState;
+  delete inOppObj.locationCountry;
+  delete inOppObj.timestampStart;
+  delete inOppObj.timestampEnd;
   
   return knex('opportunities')
     .insert(inOppObj)
