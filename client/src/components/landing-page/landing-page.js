@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as actionsDisplay from '../../actions/display';
 
+import './landing-page.css'
+
 import OrganizationPreview from '../organization-preview/organization-preview';
 
 export class LandingPage extends Component {
@@ -19,8 +21,11 @@ export class LandingPage extends Component {
     );
 
     return (
-      <div>
-        <p>Welcome to our amazing web application!</p>
+      <div className='landingPage'>
+        <p>
+          Welcome to our amazing web application! 
+          This will likely be the best experience you ever have using an app. Get ready...
+        </p>
         {previews}
       </div>
     )

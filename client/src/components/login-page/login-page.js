@@ -5,6 +5,8 @@ import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
 import * as userActions from '../../actions/user';
 
+import './login-page.css';
+
 export class LoginPage extends Component {
   handleSubmitButton(input) {
     this.props.dispatch(userActions.login(input))
@@ -20,9 +22,12 @@ export class LoginPage extends Component {
         <form className='loginForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
+          <label className='inputLabel' htmlFor={'username'}>Email Address</label>
           <Field className='usernameInput' name='username' id='username'
             component='input' type='text' placeholder='Email Address' required
           />
+
+          <label className='inputLabel' htmlFor={'password'}>Password</label>
           <Field className='passwordInput' name='password' id='password'
             component='input' type='text' placeholder='Password' required
           />
