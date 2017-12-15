@@ -45,10 +45,10 @@ describe('opp', function() {
   });
 
   // ***** COMM TEST
-  describe('api/opps/testify GET comm check', function() {
+  describe('api/opportunities/testify GET comm check', function() {
     it('should demonstrate that comm to the endpoint is working', function() {
       return chai.request(app)
-        .get('/api/opps/testify')
+        .get('/api/opportunities/testify')
         .then(function(res) {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Good to go');
@@ -57,10 +57,10 @@ describe('opp', function() {
   });
 
   // ***** GET OPPORTUNITY LIST
-  describe('api/opps/list GET opportunities list', function() {
+  describe('api/opportunities/list GET opportunities list', function() {
     it('should return a list of opportunities', function() {
       return chai.request(app)
-        .get('/api/opps/list')
+        .get('/api/opportunities/list')
         .then(function(res) {
           let oppStrings = testData.oppSeeds.map( item => item.narrative );
           expect(res.body).to.be.an('array');
@@ -74,19 +74,19 @@ describe('opp', function() {
   });
 
   // ***** POST A NEW ORG OPPORTUNITY
-  describe('api/opps POST new opportunity', function() {
+  describe('api/opportunities POST new opportunity', function() {
     let testOpp = testData.testOrgOpp;
 
-    it('should reject a post with missing idUser', function() {
+    it('should reject a post with missing userId', function() {
       return testF.getFocusOrg()
         .then( result => {
           testOpp = Object.assign( {}, testOpp, {
-            idUser: result.focus_org_id
+            userId: result.focus_org_id
           });
           let failedTestOpp = Object.assign( {}, testOpp);
-          delete failedTestOpp.idUser;
+          delete failedTestOpp.userId;
           return chai.request(app)
-            .post('/api/opps')
+            .post('/api/opportunities')
             .send(failedTestOpp)
             .then( () =>
               expect.fail(null, null, 'Request should fail')
@@ -98,7 +98,7 @@ describe('opp', function() {
               const res = err.response;
               expect(res).to.have.status(422);
               expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.location).to.equal('idUser');
+              expect(res.body.location).to.equal('userId');
             });
         });
     });
@@ -107,7 +107,7 @@ describe('opp', function() {
       let failedTestOpp = Object.assign( {}, testOpp);
       delete failedTestOpp.title;
       return chai.request(app)
-        .post('/api/opps')
+        .post('/api/opportunities')
         .send(failedTestOpp)
         .then( () =>
           expect.fail(null, null, 'Request should fail')
@@ -125,7 +125,7 @@ describe('opp', function() {
 
     it('should add an opportunity', function() {
       return chai.request(app)
-        .post('/api/opps')
+        .post('/api/opportunities')
         .send(testOpp)
         .then( res => {
           expect(res).to.have.status(201);
@@ -136,7 +136,7 @@ describe('opp', function() {
         })
         .then( results => {
           expect(results.length).to.equal(1);
-          expect(results[0].id_user).to.equal(testOpp.idUser);
+          expect(results[0].id_user).to.equal(testOpp.userId);
           expect(results[0].offer).to.equal(false);
           expect(results[0].title).to.equal(testOpp.title);
           expect(results[0].narrative).to.equal(testOpp.narrative);

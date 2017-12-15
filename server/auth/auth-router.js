@@ -31,6 +31,7 @@ authRouter.get('/testify', jwtAuth, (req, res) => {
   res.status(200).json({message: 'Good to go'});
 });
 
+// login
 authRouter.post('/login', localAuth, (req, res) => {
   console.log(req.body);
   let user = req.body;
@@ -49,6 +50,7 @@ authRouter.post('/login', localAuth, (req, res) => {
     });
 });
 
+// refresh
 authRouter.post('/refresh', jwtAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
   res.json({ authToken });
