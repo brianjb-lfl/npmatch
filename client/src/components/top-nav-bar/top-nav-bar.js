@@ -18,7 +18,7 @@ export class TopNavBar extends Component {
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
           </li>
           <li className='opportunitiesButton'>
-            <i class="fa fa-briefcase" aria-hidden="true"
+            <i className="fa fa-briefcase" aria-hidden="true"
               onClick={()=>this.listOpportunities({userId: this.props.user.id})}></i>
           </li>
           <li className='searchBar'>

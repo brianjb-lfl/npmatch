@@ -17,8 +17,11 @@ import * as actionsOpportunity from '../../actions/opportunity';
 export class OpportunityCreate extends Component {
   
   handleSubmitButton(input) {
-    this.props.dispatch(actionsOpportunity.createOpportunity(input))
-      .then(() => this.props.history.push('/'))
+    const newOpp = Object.assign({},input);
+    newOpp.userId = this.props.user.id;
+    console.log('newOpp',newOpp)
+    this.props.dispatch(actionsOpportunity.createOpportunity(newOpp))
+      .then(() => this.props.history.push('/myopportunities'))
   }
 
   render() {
@@ -239,6 +242,7 @@ export const mapStateToProps = state => {
 
   return {
   general: state.general,
+  user: state.user,
   opportunity: state.opportunity,
   display: state.display.view,
   initialValues: initialForm

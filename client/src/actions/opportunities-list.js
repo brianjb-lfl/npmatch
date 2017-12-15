@@ -14,7 +14,7 @@ export const loadOpportunitiesList = (array) => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchOppsList = (searchCriteria, authToken) => dispatch => {
+export const fetchOppsList = (query, authToken) => dispatch => {
   /* searchCriteria should be an object with following props.
     values are priority, 1 being soonest for MVP
     {
@@ -37,16 +37,19 @@ export const fetchOppsList = (searchCriteria, authToken) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
 
-  const url = `${REACT_APP_BASE_URL}/api/opportunities/list`;
+  const url = new URL(`${REACT_APP_BASE_URL}/api/opportunities/list`);
+
+  Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
+  
+  console.log('url after query',url)
   const headers = {
     'content-type': 'application/json',
-    // "Authorization": `Bearer ${authToken}`, 
+    "Authorization": `Bearer ${authToken}`, 
   }; 
 
   const init = { 
     method: 'GET',
     headers,
-    body: JSON.stringify(searchCriteria)
   };
   return fetch(url, init)    
     .then(res=>{
