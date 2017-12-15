@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { display } from '../../reducers/potential-states';
 import * as actionsUser from '../../actions/user';
