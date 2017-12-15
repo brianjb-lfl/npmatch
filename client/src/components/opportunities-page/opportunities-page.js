@@ -11,9 +11,9 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class OpportunitiesPage extends Component {
 
   render() {
-
+    console.log('this.props.opportunitiesList.main',this.props.opportunitiesList.main)
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
-      <li><OpportunityPreview opportunity={opp} key={index}/></li>
+      return <li key={index}><OpportunityPreview opportunity={opp} history={this.props.history}/></li>
     })
 
     return (

@@ -5,8 +5,9 @@ import * as actionsOpportunitiesList from '../../actions/opportunities-list';
 
 export class TopNavBar extends Component {
 
-  listOpportunities(searchCriteria) {
-    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(searchCriteria,this.props.user.authToken))
+  listOpportunities(query) {
+    console.log('list opps query',query)
+    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query,this.props.user.authToken))
     .then(()=> this.props.history.push('/myopportunities'))
   }
 

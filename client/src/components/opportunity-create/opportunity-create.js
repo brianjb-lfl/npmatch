@@ -16,15 +16,19 @@ import * as actionsOpportunity from '../../actions/opportunity';
 
 export class OpportunityCreate extends Component {
   
-  handleSubmitButton(input) {
-    const newOpp = Object.assign({},input);
-    newOpp.userId = this.props.user.id;
-    console.log('newOpp',newOpp)
-    this.props.dispatch(actionsOpportunity.createOpportunity(newOpp))
+  handleSubmitButton(input, isNew) {
+    const opp = Object.assign({},input);
+    opp.userId = isNew ? this.props.user.id : opp.userId ;
+    console.log('opp',opp)
+    
+    this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => this.props.history.push('/myopportunities'))
   }
 
   render() {
+
+    const isNew = this.props.display === 'editOpportunity' ? false : true ;
+    const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity' ;
 
     Moment.locale('en')
     momentLocalizer()
@@ -36,31 +40,31 @@ export class OpportunityCreate extends Component {
       textField={textField}
       onChange={input.onChange} />
   
-  const renderMultiselect = ({ input, data, valueField, textField }) =>
-    <Multiselect {...input}
-      onBlur={() => input.onBlur()}
-      value={input.value || []} // requires value to be an array
-      data={data}
-      valueField={valueField}
-      textField={textField} />
+    const renderMultiselect = ({ input, data, valueField, textField }) =>
+      <Multiselect {...input}
+        onBlur={() => input.onBlur()}
+        value={input.value || []} // requires value to be an array
+        data={data}
+        valueField={valueField}
+        textField={textField} />
   
-  const renderSelectList = ({ input, data }) =>
-    <SelectList {...input}
-      onBlur={() => input.onBlur()}
-      data={data} />
+    const renderSelectList = ({ input, data }) =>
+      <SelectList {...input}
+        onBlur={() => input.onBlur()}
+        data={data} />
   
-  const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
-    <DateTimePicker
-      onChange={onChange}
-      format={Moment().format()}
-      time={showTime}
-       />
+    const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
+      <DateTimePicker
+        onChange={onChange}
+        format={Moment().format()}
+        time={showTime}
+        />
     
     return (
       <main>
 
         <form className='createOpportunity'
-          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}
         >
 
           <div>
@@ -217,11 +221,11 @@ export class OpportunityCreate extends Component {
 
           <div>
             <button 
-              type="submit" disabled={this.props.pristine || this.props.submitting}>Post Opportunity
+              type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
             </button>
             <button 
               type="button" disabled={this.props.pristine || this.props.submitting} 
-              onClick={this.props.reset}>Reset Values
+              onClick={this.props.reset}>Clear Form
             </button>
           </div>
 

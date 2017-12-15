@@ -12,10 +12,10 @@ export const loadUsersList = (array) => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => dispatch => {
+export const fetchUsersList = (query, authToken, type = 'orgs') => dispatch => {
   // type options = 'users' and 'orgs'
 
-  /* searchCriteria should be an object with following props.
+  /* query should be an object with following props.
     values are priority, 1 being soonest for MVP
     {
       firstName         3 
@@ -38,23 +38,24 @@ export const fetchUsersList = (searchCriteria, authToken, type = 'orgs') => disp
   
   // dispatch(actionsDisplay.changeDisplay('loading'));
 
-  const url = `${REACT_APP_BASE_URL}/api/${type}/list`;
+  const url = new URL(`${REACT_APP_BASE_URL}/api/${type}/list`);
+  Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
+  
   const headers = {
     'content-type': 'application/json',
-    // "Authorization": `Bearer ${authToken}`, 
+    'Authorization': `Bearer ${authToken}`, 
   }; 
 
   const init = { 
     method: 'GET',
     headers,
-    // body: JSON.stringify(searchCriteria)
   };
   return fetch(url, init)    
     .then(res=>{
       return res.json();
     })
     .then(res=>{
-      console.log('response from fetch',res)
+      console.log('response of users from fetch',res)
       return dispatch(loadUsersList(res));      
     })
     .catch(error => {
