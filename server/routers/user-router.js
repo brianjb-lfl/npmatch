@@ -5,6 +5,7 @@ const userRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { hashPassword } = require('../auth/bcrypt');
+const { epHelp } = require('./router-helpers');
 
 process.stdout.write('\x1Bc');
 
@@ -46,42 +47,14 @@ userRouter.get('/list', (req, res) => {
 
 // GET api/users/:id
 userRouter.get('/:id', (req, res) => {
-  let usrObj = {};
-  const knex = require('../db');
-  // get user base info
-  return knex('users')
-    .select()
-    .where({id: req.params.id})
+  return epHelp.buildUser(req.params.id)
     .then( results => {
-      usrObj = (results[0]);
-      delete usrObj['password'];
-      // get user links
-      return knex('links')
-        .select('id', 'link_type as linkType', 'link_url as linkUrl')
-        .where({id_user: usrObj.id});
-    })
-    .then( results => {
-      usrObj.links = results;
-      // get user causes
-      return knex('users_causes')
-        .join('causes', 'users_causes.id_cause', '=', 'causes.id')
-        .select('causes.id', 'causes.cause')
-        .where({id_user: usrObj.id});
-    })
-    .then( results => {
-      usrObj.causes = results;
-      // get user skills
-      return knex('users_skills')
-        .join('skills', 'users_skills.id_skill', '=', 'skills.id')
-        .select('skills.id', 'skills.skill')
-        .where({id_user: usrObj.id});
-    })
-    .then( results => {
-      usrObj.skills = results;
-      res.json(usrObj);
-    })
-    .catch( err => {
-      res.status(500).json({message: 'Internal server error'});
+      if(!results.err) {
+        res.json(results);
+      }
+      else {
+        res.status(500).json({message: 'Internal server error'});
+      }
     });
 });
 
