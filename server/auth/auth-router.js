@@ -2,6 +2,7 @@
 
 const express = require('express');
 const authRouter = express.Router();
+const { epHelp } = require('../routers/router-helpers');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { localStrategy } = require('./local-strategy');
@@ -45,10 +46,21 @@ authRouter.post('/login', localAuth, (req, res) => {
         user_type: result[0].user_type
       });
       const authToken = createAuthToken(user);
-      const { username, firstName, lastName, user_type } = req.body;
-      res.json({ authToken, username, firstName, lastName, user_type });
+      return epHelp.buildUser(result[0].id)
+        .then( usrObj => {
+          if(!usrObj.err) {
+            usrObj = Object.assign( {}, usrObj, {
+              token: authToken
+            });
+            res.json(usrObj);
+          }
+          else {
+            res.status(500).json({message: 'Error retrieving user data'});
+          }
+        });
     });
 });
+
 
 // refresh
 authRouter.post('/refresh', jwtAuth, (req, res) => {

@@ -4,25 +4,23 @@ ACTIONS TO WRITE
 		  user create an account  DONE
       user log in             DONE
 
-      create opportunity      CONFIRM FRIDAY
+      create opportunity      DONE
 
-      update opportunity      FRIDAY
+      update opportunity      DONE
       
       user update profile     FRIDAY
 
       create userSkills       FRIDAY
-      create userCauses       FRIDAY
+      create userCauses       DONE
       create oppCauses        FRIDAY
-                              all 3 cases populate simple join table
-                              recommendation: keep inside create/edit user and opportunities 
-                              not separate endpoint or action
+                              all 3 cases send arrays with post or put endpoints
       
-      search opportunities    create search action (FRIDAY)
+      search opportunities    create search action (SATURDAY)
                               send search criteria to server DONE
                               server searches SQL and responds
                               list loads to state DONE
 
-      search users            create search action (FRIDAY)
+      search users            create search action (SATURDAY)
                               send search criteria to server DONE
                               server searches SQL and responds
                               list loads to state DONE

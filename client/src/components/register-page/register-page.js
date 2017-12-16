@@ -2,45 +2,27 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { display } from '../../reducers/potential-states';
 import * as actionsUser from '../../actions/user';
+import IndivNameForm from '../form-sub-components/name-indiv';
+import OrgNameForm from '../form-sub-components/name-org';
+import UandPForm from '../form-sub-components/u-and-p';
 
 import './register-page.css';
 
 export class RegisterPage extends Component {
 
-  handleTypeChange(userType) {
+  handleFormTypeChange(userType) {
     this.props.dispatch(actionsUser.setFormType(userType))
   }
 
   handleSubmitButton(input) {
-    this.props.dispatch(actionsUser.registerUser(input))
-      .then(() => this.props.history.push('/'))
+    this.props.dispatch(actionsUser.createOrEditUser(input))
+      .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
   }
 
-  indivFormBody =
-    <div>
-      <label className='inputLabel' htmlFor={'firstName'}>FirstName</label>
-      <Field className='firstNameInput' name='firstName' id='firstName'
-        component='input' type='text' placeholder='First Name' required
-      />
-
-      <label className='inputLabel' htmlFor={'lastName'}>Last Name</label>
-      <Field className='lastNameInput' name='lastName' id='lastName'
-        component='input' type='text' placeholder='Last Name' required
-      />
-    </div>;
-
-  orgFormBody =
-    <div>
-      <label className='inputLabel' htmlFor={'organization'}>Organization</label>
-      <Field className='organizationInput' name='organization' id='organization'
-        component='input' type='text' placeholder='Organization Name' required
-      />
-    </div>;
 
   render() {
-    this.formBody = this.props.user.formType === 'individual' ? this.indivFormBody : this.orgFormBody;
+    const nameForm = this.props.user.formType === 'individual' ? <IndivNameForm/> : <OrgNameForm/>;
 
     return (
       <main>
@@ -49,30 +31,17 @@ export class RegisterPage extends Component {
         >
           <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
           <Field className='userTypeInput' name='userType' id='userTypeI'
-            component='input' type='radio' value='individual' onChange={() => this.handleTypeChange('individual')}
+            component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
           />
 
           <label className='inputLabel' htmlFor={'userTypeO'}>Organization</label>
           <Field className='userTypeInput' name='userType' id='userTypeO'
-            component='input' type='radio' value='organization' onChange={() => this.handleTypeChange('organization')}
+            component='input' type='radio' value='organization' onChange={() => this.handleFormTypeChange('organization')}
           />
 
-          {this.formBody}
+          {nameForm}
 
-          <label className='inputLabel' htmlFor={'username'}>Username</label>
-          <Field className='usernameInput' name='username' id='username'
-            component='input' type='text' placeholder='Email Address' required
-          />
-
-          <label className='inputLabel' htmlFor={'password'}>Password</label>
-          <Field className='passwordInput' name='password' id='password'
-            component='input' type='password' placeholder='Password' required
-          />
-
-          <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
-          <Field className='passwordInput' name='password2' id='password2'
-            component='input' type='password' placeholder='Confirm Password' required
-          />
+          <UandPForm confirm={true}/>
 
           <button type='submit'>Sign Up</button>
         </form>

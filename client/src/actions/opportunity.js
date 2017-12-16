@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-import {SubmissionError} from 'redux-form';
+// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
@@ -34,7 +34,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
     const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
     const headers = {
       'content-type': 'application/json',
-      // "Authorization": `Bearer ${authToken}`, 
+      'Authorization': `Bearer ${authToken}`, 
     }; 
   
     const init = { 
@@ -53,7 +53,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
     })
 }
 
-export const createOpportunity = (opportunity, authToken) => dispatch => {
+export const createOpportunity = (opportunity, authToken, isNew) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
 
@@ -72,13 +72,16 @@ export const createOpportunity = (opportunity, authToken) => dispatch => {
       opportunity.locationCountry = opportunity.locationCountry.code;
     } 
     
-    const url = `${REACT_APP_BASE_URL}/api/opportunities`;
+    const params = isNew ? `/${opportunity.id}` : '' ;
+    const method = isNew ? 'POST' : 'PUT' ;
+
+    const url = `${REACT_APP_BASE_URL}/api/opportunities${params}`
     const headers = { 
       "Content-Type": "application/json",
       "Authorization": `Bearer ${authToken}`
     };
     const init = { 
-      method: 'POST',
+      method,
       body: JSON.stringify(opportunity),
       headers
     };

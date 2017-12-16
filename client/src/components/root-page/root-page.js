@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LandingPage from '../landing-page/landing-page';
 import HomePage from '../home-page/home-page';
-import * as actionsDisplay from '../../actions/display';
+// import * as actionsDisplay from '../../actions/display';
 
 export class RootPage extends Component {
   render() {

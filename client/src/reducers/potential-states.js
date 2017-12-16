@@ -147,7 +147,7 @@ export const opportunitiesList = {
 };
 
 export const display = {
-  view: 'homePage',    // options: 'homePage', 'explorePage', 
+  view: 'homePage',    // options: 'homePage', 'explorePage', 'editOpportunity'
   modal: false,
   modalMessage: ''
 };

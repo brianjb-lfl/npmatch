@@ -62,13 +62,16 @@ oppRouter.get('/list', jwtAuth, (req, res) => {
 });
 
 // POST api/opps
-oppRouter.post('/', jsonParser, (req, res) => {
+oppRouter.post('/', jwtAuth, jsonParser, (req, res) => {
   let inOppObj = req.body;
+  let retObj = {};
+  let causesInArr = inOppObj.causes.slice();
+  let causesPostArr = [];
   const knex = require('../db');
-  const reqFields = ['title', 'narrative', 'userId'];
+  const reqFields = ['title', 'narrative', 'userId', 'causes'];
   const missingField = reqFields.find( field => !(field in inOppObj));
   
-  //check for missing fields
+  // check for missing fields
   if(missingField) {
     return res.status(422).json({
       code: 422,
@@ -77,25 +80,62 @@ oppRouter.post('/', jsonParser, (req, res) => {
       location: missingField
     });
   }
+  // camelCase to snake_case conversion
   inOppObj = Object.assign( {}, inOppObj, {
     opportunity_type: inOppObj.opportunityType ? inOppObj.opportunityType : null,
     id_user: inOppObj.userId,
     location_city: inOppObj.locationCity ? inOppObj.locationCity : null,
     location_state: inOppObj.locationState ? inOppObj.locationState : null,
     location_country: inOppObj.locationCountry ? inOppObj.locationCountry : null,
+    timestamp_start: inOppObj.timestampStart ? inOppObj.timestampStart : null,
+    timestamp_end: inOppObj.timestampEnd ? inOppObj.timestampEnd : null,
   });
 
-  inOppObj.opportunityType ? delete inOppObj.opportunityType : null;
+  delete inOppObj.opportunityType;
   delete inOppObj.userId;
-  inOppObj.locationCity ? delete inOppObj.locationCity : null;
-  inOppObj.locationState ? delete inOppObj.locationState : null;
-  inOppObj.locationCountry ? delete inOppObj.locationCountry : null;
+  delete inOppObj.locationCity;
+  delete inOppObj.locationState;
+  delete inOppObj.locationCountry;
+  delete inOppObj.timestampStart;
+  delete inOppObj.timestampEnd;
+  delete inOppObj.causes;
   
+  // post base opportunity info - get id
   return knex('opportunities')
     .insert(inOppObj)
     .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
+
     .then( results => {
-      res.status(201).json(results[0]);
+      // save return info for client response
+      retObj = Object.assign( {}, results[0]);
+
+      if(causesInArr.length > 0) {
+        // need to add opp - cause link records
+        // get all causes and id's for lookup
+        return knex('causes')
+          .select('id', 'cause')
+          .then( allCauses => {
+            // loop through causes in req, add item to postArr for each
+            causesInArr.forEach( cItem => {
+              let tempCItem = allCauses.filter( item => item.cause === cItem )[0];
+              causesPostArr.push(
+                Object.assign( {}, {
+                  id_opp: retObj.id,
+                  id_cause: tempCItem.id
+                })
+              );
+            });
+            return knex('opportunities_causes')
+              .insert(causesPostArr);
+          });
+      }
+      else {
+        // no causes in req, skip to response
+        return;
+      }
+    })
+    .then( () => {
+      res.status(201).json(retObj);
     })
     .catch( err => {
       if(err.reason === 'ValidationError') {

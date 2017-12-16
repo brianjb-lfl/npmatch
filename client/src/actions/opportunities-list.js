@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-import {SubmissionError} from 'redux-form';
+// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 
 // right now we have 1 'main' list of opportunities; we can have as many lists as we want, each following identical format
@@ -15,7 +15,7 @@ export const loadOpportunitiesList = (array) => ({
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOppsList = (query, authToken) => dispatch => {
-  /* searchCriteria should be an object with following props.
+  /* query should be an object with following props.
     values are priority, 1 being soonest for MVP
     {
       userId                    6 
@@ -38,7 +38,6 @@ export const fetchOppsList = (query, authToken) => dispatch => {
   dispatch(actionsDisplay.changeDisplay('loading'));
 
   const url = new URL(`${REACT_APP_BASE_URL}/api/opportunities/list`);
-
   Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
   
   console.log('url after query',url)
@@ -51,6 +50,7 @@ export const fetchOppsList = (query, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
+
   return fetch(url, init)    
     .then(res=>{
       return res.json();
