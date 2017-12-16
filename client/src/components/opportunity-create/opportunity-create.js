@@ -4,15 +4,12 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import SelectList from 'react-widgets/lib/SelectList'
-import Multiselect from 'react-widgets/lib/Multiselect'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import 'react-widgets/dist/css/react-widgets.css'
 
-import Moment from 'moment';
-import momentLocalizer from 'react-widgets-moment'; 
-
-import { display } from '../../reducers/potential-states';
 import * as actionsOpportunity from '../../actions/opportunity';
+import LocationForm from '../form-sub-components/location';
+import CausesForm from '../form-sub-components/causes';
+import StartEndForm from '../form-sub-components/start-end';
 
 export class OpportunityCreate extends Component {
   
@@ -30,9 +27,6 @@ export class OpportunityCreate extends Component {
     const isNew = this.props.display === 'editOpportunity' ? false : true ;
     const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity' ;
 
-    Moment.locale('en')
-    momentLocalizer()
-
     const renderDropdownList = ({ input, data, valueField, textField }) =>
     <DropdownList {...input}
       data={data}
@@ -40,25 +34,11 @@ export class OpportunityCreate extends Component {
       textField={textField}
       onChange={input.onChange} />
   
-    const renderMultiselect = ({ input, data, valueField, textField }) =>
-      <Multiselect {...input}
-        onBlur={() => input.onBlur()}
-        value={input.value || []} // requires value to be an array
-        data={data}
-        valueField={valueField}
-        textField={textField} />
-  
     const renderSelectList = ({ input, data }) =>
       <SelectList {...input}
         onBlur={() => input.onBlur()}
         data={data} />
   
-    const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
-      <DateTimePicker
-        onChange={onChange}
-        format={Moment().format()}
-        time={showTime}
-        />
     
     return (
       <main>
@@ -111,18 +91,7 @@ export class OpportunityCreate extends Component {
             </label>
           </div>
 
-          <div>
-            <Field
-              name='causes'
-              id='causes'
-              component={renderMultiselect}
-              data={this.props.general.causes}
-              className='opportunityInput'/>              
-            <label 
-              className='inputLabel' 
-              htmlFor={'causes'}>Causes
-            </label>
-          </div>
+          <CausesForm/>
 
           <div>
             <Field
@@ -138,48 +107,7 @@ export class OpportunityCreate extends Component {
             </label>
           </div>
 
-          <div>
-            <Field
-              name='locationCity'
-              id='locationCity'
-              component='input'
-              type='text'
-              className='opportunityInput'/>
-            <label 
-              className='inputLabel' 
-              htmlFor={'locationCity'}>City
-            </label>
-          </div>
-
-          <div>
-            <Field
-              name='locationState'
-              id='locationState'
-              component={renderDropdownList}
-              data={this.props.general.states}
-              textField='name'
-              valueField='abbreviation'
-              className='opportunityInput'/>              
-            <label 
-              className='inputLabel' 
-              htmlFor={'locationState'}>State
-            </label>
-          </div>
-
-          <div>
-            <Field
-              name='locationCountry'
-              id='locationCountry'
-              component={renderDropdownList}
-              data={this.props.general.countries}
-              textField='name'
-              valueField='code'
-              className='opportunityInput'/>              
-            <label 
-              className='inputLabel' 
-              htmlFor={'locationCountry'}>Country
-            </label>
-          </div>
+          <LocationForm/>
 
           <div>
             <Field
@@ -194,31 +122,8 @@ export class OpportunityCreate extends Component {
             </label>
           </div>
 
-          <div>
-            <Field
-              name="timestampStart"
-              id="timestampStart"
-              component={renderDateTimePicker}
-              className='opportunityInput'/>
-            <label 
-              className='inputLabel' 
-              htmlFor={'timestampStart'}>Start
-            </label>
-          </div>
-
-          <div>
-            <Field
-              name="timestampEnd"
-              id="timestampEnd"
-              component={renderDateTimePicker}
-              className='opportunityInput'/>
-            <label 
-              className='inputLabel' 
-              htmlFor={'timestampEnd'}>End
-            </label>
-          </div>
-
-
+          <StartEndForm/>
+   
           <div>
             <button 
               type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}

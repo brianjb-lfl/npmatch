@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
 import './opportunity-preview.css'

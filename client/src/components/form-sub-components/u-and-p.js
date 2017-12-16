@@ -4,6 +4,16 @@ import { Field } from 'redux-form';
 export default class UandPForm extends Component {
 
   render() {
+    const confirmPw = this.props.confirm ?
+      <div>
+        <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
+      <Field className='passwordInput' name='password2' id='password2'
+        component='input' type='password' placeholder='Confirm Password' required
+      />
+      </div>
+      : '' ;
+
+
 
     return (
       <div>
@@ -16,11 +26,9 @@ export default class UandPForm extends Component {
           <Field className='passwordInput' name='password' id='password'
             component='input' type='password' placeholder='Password' required
           />
+        
+        {confirmPw}
 
-        <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
-          <Field className='passwordInput' name='password2' id='password2'
-            component='input' type='password' placeholder='Confirm Password' required
-          />
       </div>
     );
   }

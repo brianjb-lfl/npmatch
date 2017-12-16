@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-import {SubmissionError} from 'redux-form';
+// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 import  * as actionsUserViewed from './user-viewed';
 
@@ -112,14 +112,15 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     dispatch(actionsDisplay.changeDisplay('loading'));
 
     delete user.password2;
-    
-    const url = `${REACT_APP_BASE_URL}/api/users/register`;
+    const params = isNew ? 'register' : user.id ;
+    const method = isNew ? 'POST' : 'PUT';
+
+    const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
     const headers = { 
       "Content-Type": "application/json",
       "x-requested-with": "xhr" 
     };
     if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
-    const method = isNew ? 'POST' : 'PUT';
 
     const init = { 
       method,

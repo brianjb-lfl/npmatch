@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-import {SubmissionError} from 'redux-form';
+// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 
 // right now we have 1 'main' list of users; we can have as many lists as we want, each following identical format

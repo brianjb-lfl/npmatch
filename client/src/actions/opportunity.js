@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-import {SubmissionError} from 'redux-form';
+// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 
 // this is all detail for 1 opportunity; we should only need one at a time;

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
 // import * as actionsDisplay from './actions/display';
 
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginPage from './components/login-page/login-page';
 import RegisterPage from './components/register-page/register-page'
 // import HomePage from './components/home-page/home-page';

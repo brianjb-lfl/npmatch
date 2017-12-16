@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { display } from '../../reducers/potential-states';
 import * as actionsUser from '../../actions/user';
-import IndivNameForm from './register-page-name-indiv';
-import OrgNameForm from './register-page-name-org';
-import UandPForm from './register-page-u-and-p';
+import IndivNameForm from '../form-sub-components/name-indiv';
+import OrgNameForm from '../form-sub-components/name-org';
+import UandPForm from '../form-sub-components/u-and-p';
 
 import './register-page.css';
 
@@ -42,7 +41,7 @@ export class RegisterPage extends Component {
 
           {nameForm}
 
-          <UandPForm/>
+          <UandPForm confirm={true}/>
 
           <button type='submit'>Sign Up</button>
         </form>
