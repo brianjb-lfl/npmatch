@@ -34,6 +34,13 @@ export const reducer = (state = initialState, action) => {
       formType: action.formType,
     });
   }
+
+  else if (action.type === actions.TOGGLE_EDIT_LINK) {
+    console.log('in reducer', action.links)
+    return Object.assign({}, state, {
+      links: action.links,
+    });
+  }
   
   else {
     return state;

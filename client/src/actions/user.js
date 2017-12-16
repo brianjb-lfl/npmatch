@@ -36,6 +36,15 @@ export const setFormType = formType => ({
   formType: formType,
 });
 
+export const TOGGLE_EDIT_LINK = 'TOGGLE_EDIT_LINK';
+export const toggleEditLink = (index, edit = false, links) => {
+  links[index].edit = edit;
+  console.log('edited links', links)
+  return {
+    type: TOGGLE_EDIT_LINK,
+    links,
+  }
+};
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
@@ -155,6 +164,7 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     console.log('user in manage links',user)
     if ( action === 'edit') {
       user.links[index] = link;
+      user.links.edit = false;
     } else if ( action === 'delete') {
       user.links.splice(index,1);
     } else { // assume action === add

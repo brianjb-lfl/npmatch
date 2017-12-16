@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 
-export class LocationFields extends Component {
+export class LinkFields extends Component {
 
   render() {
 
@@ -50,4 +50,4 @@ export class LocationFields extends Component {
 export const mapStateToProps = state => ({
   general: state.general
 })
-export default connect(mapStateToProps)(LocationFields);
+export default connect(mapStateToProps)(LinkFields);

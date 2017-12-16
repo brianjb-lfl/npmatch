@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import 'react-widgets/dist/css/react-widgets.css'
 
 import UserEditGeneralForm from './user-profile-edit-general';
 import UserEditUandPwForm from './user-profile-edit-u-and-pw';
 import UserEditLinksForm from './user-profile-edit-links';
 
-export default class UserProfileEdit extends Component {
+export class UserProfileEdit extends Component {
 
   render() {
     
@@ -24,3 +26,5 @@ export default class UserProfileEdit extends Component {
     );
   }
 }
+
+export default connect()(UserProfileEdit);

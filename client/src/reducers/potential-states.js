@@ -24,7 +24,12 @@ export const user = {
   bio: '', 
   links: [              // SQL join
     {
-      linkType: 'home',
+      edit: true,
+      linkType: 'home1',
+      linkURL: 'www.home.com',
+    },
+    {
+      linkType: 'contribution',
       linkURL: 'www.home.com',
     }
   ],
