@@ -8,7 +8,7 @@ ul.bottomNav {
   list-style-position:inside;
   margin:0;
   padding:0;
-  background-color: #318b54;
+  background-color: #082E41;
   text-align: center;
   position: fixed;
   bottom: 0px;
@@ -27,7 +27,7 @@ ul.bottomNav {
   background: none;
   color: white;
   font-weight: 700;
-  margin: 2px 20px 2px 20px;
+  margin: 2px 5vw 2px 5vw;
   padding: 5px;
   font-size: 14px;
 }

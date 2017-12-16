@@ -21,18 +21,20 @@ export class TopNavBar extends Component {
     return (
       <div>
         <ul className='topNav'>
-          <li className='leftTopButton'>
+          <li className='inboxButton'>
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
           </li>
           <li className='opportunitiesButton'>
             <i className="fa fa-briefcase" aria-hidden="true"
-              onClick={()=>this.listOpportunities({userId: this.props.user.id})}></i>
+              onClick={() => this.listOpportunities({ userId: this.props.user.id })}></i>
           </li>
           <li className='searchBar'>
             <form className="search">
               <label htmlFor="userinput"></label>
               <input type="text" className="userinput"></input>
-              <button type="submit" className="submit-button">Search</button>
+              <button type="submit" className="submit-button">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
             </form>
           </li>
           <li className='editProfileButton'>
