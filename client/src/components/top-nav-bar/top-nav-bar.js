@@ -7,9 +7,9 @@ import * as actionsDisplay from '../../actions/display';
 export class TopNavBar extends Component {
 
   listOpportunities(query) {
-    console.log('list opps query',query)
-    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query,this.props.user.authToken))
-    .then(()=> this.props.history.push('/myopportunities'))
+    console.log('list opps query', query)
+    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
+      .then(() => this.props.history.push('/myopportunities'))
   }
 
   editProfile() {
@@ -39,9 +39,9 @@ export class TopNavBar extends Component {
           </li>
           <li className='editProfileButton'>
             <i className="fa fa-user-circle-o" aria-hidden="true"
-              onClick={()=>this.editProfile()}></i>
+              onClick={() => this.editProfile()}></i>
           </li>
-          <li className='rightTopButton'>
+          <li className='settingsButton'>
             <i className="fa fa-bars" aria-hidden="true"></i>
           </li>
         </ul>
