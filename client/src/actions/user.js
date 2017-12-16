@@ -107,25 +107,28 @@ export const login = (user) => dispatch => {
     });
 }
 
-export const createOrEditUser = (credentials, isNew = false, authToken) => dispatch => {
+export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
 
-    delete credentials.password2;
+    delete user.password2;
     
     const url = `${REACT_APP_BASE_URL}/api/users/register`;
     const headers = { 
       "Content-Type": "application/json",
       "x-requested-with": "xhr" 
     };
+    if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
+    const method = isNew ? 'POST' : 'PUT';
+
     const init = { 
-      method: 'POST',
-      body: JSON.stringify(credentials),
+      method,
+      body: JSON.stringify(user),
       headers
     };
     console.log('init', init);
     return fetch(url, init)
-    .then(res=>{ //response user api repr firstName, lastName, username, id
+    .then(res=>{ 
       console.log(res);
       if (!res.ok) { 
         return Promise.reject(res.statusText);

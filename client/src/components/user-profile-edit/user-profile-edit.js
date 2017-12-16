@@ -10,6 +10,9 @@ import 'react-widgets/dist/css/react-widgets.css'
 
 import { display } from '../../reducers/potential-states';
 import * as actionsUser from '../../actions/user';
+import IndivNameForm from '../register-page/register-page-name-indiv';
+import OrgNameForm from '../register-page/register-page-name-org';
+import UandPForm from '../register-page/register-page-u-and-p';
 
 export class UserProfileEdit extends Component {
   
@@ -24,6 +27,8 @@ export class UserProfileEdit extends Component {
   }
 
   render() {
+
+    const nameForm = this.props.user.userType === 'individual' ? <IndivNameForm/> : <OrgNameForm/>;
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>
     <DropdownList {...input}
@@ -51,20 +56,10 @@ export class UserProfileEdit extends Component {
         <form className='userProfile'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
+        
+          {nameForm}
 
-          <div>
-            <Field
-              name='title'
-              id='title'
-              component='input'
-              type='text'              
-              className='opportunityInput'
-              required />
-            <label 
-              className='inputLabel' 
-              htmlFor={'title'}>Opportunity Title
-            </label>
-          </div>
+          <UandPForm/>
 
           <div>
             <Field
