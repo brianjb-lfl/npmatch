@@ -25,16 +25,20 @@
   background-color: #DA2536;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   height: 30px;
   width: 60px;
+}
+
+.loginForm button:hover {
+  cursor: pointer;
 }
 
 .loginForm .usernameInput, .loginForm .passwordInput {
   width: 60%;
   max-width: 250px;
   border: 1px solid #082E41;
-  border-radius: 5px;
+  border-radius: 2px;
   height: 20px;
   margin-top: 5px;
 }

@@ -23,7 +23,7 @@ export default class UandPFields extends Component {
           />
 
         <label className='inputLabel' htmlFor={'password'}>Password</label>
-          <Field className='inputField' name='password' id='password'
+          <Field className='passwordInput' name='password' id='password'
             component='input' type='password' placeholder='Password' required
           />
         
