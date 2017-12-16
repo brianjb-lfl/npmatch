@@ -14,7 +14,7 @@ export class RegisterPage extends Component {
   }
 
   handleSubmitButton(input) {
-    this.props.dispatch(actionsUser.registerUser(input))
+    this.props.dispatch(actionsUser.createOrEditUser(input))
       .then(() => this.props.history.push('/'))
   }
 

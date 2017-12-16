@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './top-nav-bar.css'
 import * as actionsOpportunitiesList from '../../actions/opportunities-list';
+import * as actionsDisplay from '../../actions/display';
 
 export class TopNavBar extends Component {
 
@@ -9,6 +10,11 @@ export class TopNavBar extends Component {
     console.log('list opps query',query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query,this.props.user.authToken))
     .then(()=> this.props.history.push('/myopportunities'))
+  }
+
+  editProfile() {
+    this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
+    this.props.history.push(`/profiles/${this.props.user.id}/edit`)
   }
 
   render() {
@@ -28,6 +34,10 @@ export class TopNavBar extends Component {
               <input type="text" className="userinput"></input>
               <button type="submit" className="submit-button">Search</button>
             </form>
+          </li>
+          <li className='editProfileButton'>
+            <i className="fa fa-user-circle-o" aria-hidden="true"
+              onClick={()=>this.editProfile()}></i>
           </li>
           <li className='rightTopButton'>
             <i className="fa fa-bars" aria-hidden="true"></i>

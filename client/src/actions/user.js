@@ -107,7 +107,7 @@ export const login = (user) => dispatch => {
     });
 }
 
-export const registerUser = (credentials) => dispatch => {
+export const createOrEditUser = (credentials, isNew = false, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
 

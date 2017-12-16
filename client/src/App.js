@@ -11,6 +11,7 @@ import RegisterPage from './components/register-page/register-page'
 // import HomePage from './components/home-page/home-page';
 // import LandingPage from './components/landing-page/landing-page';
 import UserProfile from './components/user-profile/user-profile';
+import UserProfileEdit from './components/user-profile-edit/user-profile-edit';
 import ExplorePage from './components/explore-page/explore-page';
 import OpportunityCreate from './components/opportunity-create/opportunity-create';
 import TopNavBar from './components/top-nav-bar/top-nav-bar';
@@ -33,6 +34,7 @@ export class App extends Component {
         <div>
           <Route exact path="/" component={RootPage} />
           <Route exact path="/profiles/:id" component={UserProfile} />
+          <Route exact path="/profiles/:id/edit" component={UserProfileEdit} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/organizations" component={ExplorePage} />
