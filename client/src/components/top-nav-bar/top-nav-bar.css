@@ -19,10 +19,10 @@ ul.topNav {
   justify-content: center;
 }
 
-.inboxButton, .opportunitiesButton, .settingsButton, .searchBar {
+.inboxButton, .opportunitiesButton, .editProfileButton, .settingsButton, .searchBar {
   z-index: 1000;
   color: white;
-  margin: 0 2vw 0 2vw;
+  margin: 0 2.5vw 0 2.5vw;
   padding: 5px;
   font-weight: 700;
   font-size: 18px;
@@ -51,6 +51,6 @@ ul.topNav {
   width: 18px;
 }
 
-.inboxButton:hover, .opportunitiesButton:hover, .settingsButton:hover {
+.inboxButton:hover, .opportunitiesButton:hover, .editProfileButton:hover, .settingsButton:hover, .searchBar button:hover {
   cursor: pointer;
 }
