@@ -30,8 +30,9 @@ export class RegisterPage extends Component {
         <form className='registerForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
+          <h3>Register</h3>
           <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
-          <Field className='inputField' name='userType' id='userTypeI'
+          <Field className='userTypeInput' name='userType' id='userTypeI'
             component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
           />
 

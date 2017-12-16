@@ -31,12 +31,12 @@ ul.topNav {
 
 .searchBar form {
   margin: 0;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
 }
 
 .searchBar input, .searchBar button {
   margin: 0px 0.5vw 0 0.5vw;
-  padding: 2px;
+  height: 20px;
 }
 
 .searchBar input, .searchBar button {
@@ -48,7 +48,6 @@ ul.topNav {
 .searchBar button {
   background-color: #EF525B;
   color: white;
-  width: 18px;
 }
 
 .inboxButton:hover, .opportunitiesButton:hover, .editProfileButton:hover, .settingsButton:hover, .searchBar button:hover {

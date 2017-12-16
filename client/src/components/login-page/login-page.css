@@ -2,7 +2,6 @@
   padding: 40px 15px 40px 15px;
   margin: 100px auto;
   text-align: center;
-  /* border: 1px solid #082E41; */
   background-color: rgb(248, 248, 248);
   border-radius: 5px;
   width: 70%;
@@ -14,7 +13,6 @@
   display: block;
   width: 100%;
   margin-top: 10px;
-  color: #082E41;
 }
 
 .loginForm button {
