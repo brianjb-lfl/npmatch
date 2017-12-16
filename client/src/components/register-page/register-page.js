@@ -3,9 +3,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import * as actionsUser from '../../actions/user';
-import IndivNameForm from '../form-sub-components/name-indiv';
-import OrgNameForm from '../form-sub-components/name-org';
-import UandPForm from '../form-sub-components/u-and-p';
+import IndivNameFields from '../fields/name-indiv';
+import OrgNameFields from '../fields/name-org';
+import UandPwFields from '../fields/u-and-pw';
 
 import './register-page.css';
 
@@ -22,7 +22,8 @@ export class RegisterPage extends Component {
 
 
   render() {
-    const nameForm = this.props.user.formType === 'individual' ? <IndivNameForm/> : <OrgNameForm/>;
+    const nameForm = this.props.user.formType === 'individual' ? 
+      <IndivNameFields/> : <OrgNameFields/>;
 
     return (
       <main>
@@ -30,7 +31,7 @@ export class RegisterPage extends Component {
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
           <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
-          <Field className='userTypeInput' name='userType' id='userTypeI'
+          <Field className='inputField' name='userType' id='userTypeI'
             component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
           />
 
@@ -41,7 +42,7 @@ export class RegisterPage extends Component {
 
           {nameForm}
 
-          <UandPForm confirm={true}/>
+          <UandPwFields confirm={true}/>
 
           <button type='submit'>Sign Up</button>
         </form>

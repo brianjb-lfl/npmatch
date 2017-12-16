@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Field } from 'redux-form';
 
-export default class UandPForm extends Component {
+export default class UandPFields extends Component {
 
   render() {
     const confirmPw = this.props.confirm ?
       <div>
         <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
-      <Field className='passwordInput' name='password2' id='password2'
+      <Field className='inputField' name='password2' id='password2'
         component='input' type='password' placeholder='Confirm Password' required
       />
       </div>
@@ -23,7 +23,7 @@ export default class UandPForm extends Component {
           />
 
         <label className='inputLabel' htmlFor={'password'}>Password</label>
-          <Field className='passwordInput' name='password' id='password'
+          <Field className='inputField' name='password' id='password'
             component='input' type='password' placeholder='Password' required
           />
         

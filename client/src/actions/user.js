@@ -147,3 +147,20 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
       dispatch(actionsDisplay.toggleModal(error));
     });
   }
+
+  export const manageLinks = (immutableUser, link, index, action) => dispatch => {
+
+    const user = Object.assign({}, immutableUser);
+    const isNew = false;
+    console.log('user in manage links',user)
+    if ( action === 'edit') {
+      user.links[index] = link;
+    } else if ( action === 'delete') {
+      user.links.splice(index,1);
+    } else { // assume action === add
+      user.links.push(link);
+    }
+
+    dispatch(createOrEditUser(user, isNew, user.authToken))
+
+  }

@@ -5,18 +5,16 @@ import { reduxForm } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsUser from '../../actions/user';
-import UandPForm from '../form-sub-components/u-and-p';
+import UandPwFields from '../fields/u-and-pw';
 
 export class UserEditUandPwForm extends Component {
   
-  handleSubmitButton(input) {
-    const user = Object.assign({},input);
-    user.id = this.props.user.id;
+  handleSubmitButton(user) {
     console.log('user',user)
     const isNew = false;
     
-    this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.user.authToken, isNew))
-      .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
+    this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.initialValues.authToken))
+      .then(() => this.props.history.push(`/profiles/${this.props.initialValues.id}`))
   }
 
   render() {
@@ -25,7 +23,7 @@ export class UserEditUandPwForm extends Component {
       <form className='userProfile'
         onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
       >
-        <UandPForm confirm={true}/>
+        <UandPwFields confirm={true}/>
 
         <div>
           <button 
@@ -43,7 +41,7 @@ export class UserEditUandPwForm extends Component {
 
 
 export const mapStateToProps = state => ({
-  initialValues: state.user
+  initialValues: state.user,
 });
 
 export default compose(

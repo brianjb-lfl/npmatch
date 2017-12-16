@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import Multiselect from 'react-widgets/lib/Multiselect'
 
-export class SkillsForm extends Component {
+export class SkillsFields extends Component {
 
   render() {
 
@@ -22,7 +22,7 @@ export class SkillsForm extends Component {
           id='skills'
           component={renderMultiselect}
           data={this.props.general.skills}
-          className='opportunityInput'/>              
+          className='inputField'/>              
         <label 
           className='inputLabel' 
           htmlFor={'skills'}>Skills
@@ -35,4 +35,4 @@ export class SkillsForm extends Component {
 export const mapStateToProps = state => ({
   general: state.general
 })
-export default connect(mapStateToProps)(SkillsForm);
+export default connect(mapStateToProps)(SkillsFields);

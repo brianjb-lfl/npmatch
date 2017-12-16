@@ -4,7 +4,7 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets-moment'; 
 
-export default class StartEndForm extends Component {
+export default class StartEndFields extends Component {
 
   render() {
 
@@ -25,7 +25,7 @@ export default class StartEndForm extends Component {
             name="timestampStart"
             id="timestampStart"
             component={renderDateTimePicker}
-            className='opportunityInput'/>
+            className='inputField'/>
           <label 
             className='inputLabel' 
             htmlFor={'timestampStart'}>Start
@@ -37,7 +37,7 @@ export default class StartEndForm extends Component {
             name="timestampEnd"
             id="timestampEnd"
             component={renderDateTimePicker}
-            className='opportunityInput'/>
+            className='inputField'/>
           <label 
             className='inputLabel' 
             htmlFor={'timestampEnd'}>End

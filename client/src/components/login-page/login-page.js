@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import * as userActions from '../../actions/user';
-import UandPForm from '../form-sub-components/u-and-p';
+import UandPFields from '../fields/u-and-pw';
 
 import './login-page.css';
 
@@ -22,7 +22,7 @@ export class LoginPage extends Component {
         <form className='loginForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
-          <UandPForm/>
+          <UandPFields/>
           <button type='submit'>Sign In</button>
         </form>
       </main>

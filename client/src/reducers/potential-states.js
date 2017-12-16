@@ -16,6 +16,7 @@ export const user = {
   username: '',
   userType: '',         // organization, individual
   organization: '',
+  logo: '',
   locationCity: '',
   locationState: '',
   locationCountry: '',
@@ -23,8 +24,8 @@ export const user = {
   bio: '', 
   links: [              // SQL join
     {
-      linkType: '',
-      linkURL: '',
+      linkType: 'home',
+      linkURL: 'www.home.com',
     }
   ],
   causes: [''],
@@ -160,6 +161,7 @@ export const general = {
     'request for volunteers',
   ],
   oppTypes: ['financial','goods','services'],
+  linkTypes: ['home', 'contribution'],
   states: [
     {
         name: 'Alabama',

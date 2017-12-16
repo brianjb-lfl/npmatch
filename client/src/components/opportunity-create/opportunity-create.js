@@ -7,9 +7,9 @@ import SelectList from 'react-widgets/lib/SelectList'
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsOpportunity from '../../actions/opportunity';
-import LocationForm from '../form-sub-components/location';
-import CausesForm from '../form-sub-components/causes';
-import StartEndForm from '../form-sub-components/start-end';
+import LocationFields from '../fields/location';
+import CausesFields from '../fields/causes';
+import StartEndFields from '../fields/start-end';
 
 export class OpportunityCreate extends Component {
   
@@ -53,7 +53,7 @@ export class OpportunityCreate extends Component {
               id='title'
               component='input'
               type='text'              
-              className='opportunityInput'
+              className='inputField'
               required />
             <label 
               className='inputLabel' 
@@ -67,7 +67,7 @@ export class OpportunityCreate extends Component {
               id='narrative'
               component='input'
               type='text'              
-              className='opportunityInput'
+              className='inputField'
               required />
             <label 
               className='inputLabel' 
@@ -83,7 +83,7 @@ export class OpportunityCreate extends Component {
               data={this.props.general.oppTypes}
               textField='type'
               valueField='type'
-              className='opportunityInput'
+              className='inputField'
               required />              
             <label 
               className='inputLabel' 
@@ -91,7 +91,7 @@ export class OpportunityCreate extends Component {
             </label>
           </div>
 
-          <CausesForm/>
+          <CausesFields/>
 
           <div>
             <Field
@@ -99,7 +99,7 @@ export class OpportunityCreate extends Component {
               id='offer'
               component={renderSelectList}
               data={this.props.general.offerTypes}
-              className='opportunityInput'
+              className='inputField'
               required />              
             <label 
               className='inputLabel' 
@@ -107,7 +107,7 @@ export class OpportunityCreate extends Component {
             </label>
           </div>
 
-          <LocationForm/>
+          <LocationFields/>
 
           <div>
             <Field
@@ -115,14 +115,14 @@ export class OpportunityCreate extends Component {
               id='link'
               component='input'
               type='text'
-              className='opportunityInput'/>
+              className='inputField'/>
             <label 
               className='inputLabel' 
               htmlFor={'link'}>Opportunity-Specific URL
             </label>
           </div>
 
-          <StartEndForm/>
+          <StartEndFields/>
    
           <div>
             <button 

@@ -5,11 +5,11 @@ import { Field, reduxForm } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsUser from '../../actions/user';
-import IndivNameForm from '../form-sub-components/name-indiv';
-import OrgNameForm from '../form-sub-components/name-org';
-import LocationForm from '../form-sub-components/location';
-import CausesForm from '../form-sub-components/causes';
-import SkillsForm from '../form-sub-components/skills';
+import IndivNameFields from '../fields/name-indiv';
+import OrgNameFields from '../fields/name-org';
+import LocationFields from '../fields/location';
+import CausesFields from '../fields/causes';
+import SkillsFields from '../fields/skills';
 
 export class UserEditGeneralForm extends Component {
   
@@ -25,7 +25,8 @@ export class UserEditGeneralForm extends Component {
 
   render() {
 
-    const nameForm = this.props.user.userType === 'individual' ? <IndivNameForm/> : <OrgNameForm/>;
+    const nameForm = this.props.user.userType === 'individual' ? 
+    <IndivNameFields/> : <OrgNameFields/>;
     
     return (
       <form className='userProfile'
@@ -40,27 +41,40 @@ export class UserEditGeneralForm extends Component {
             id='bio'
             component='input'
             type='text'              
-            className='opportunityInput' />
+            className='inputField' />
           <label 
             className='inputLabel' 
             htmlFor={'bio'}>Bio
           </label>
         </div>
 
-        <CausesForm/>
-        <SkillsForm/>
-        <LocationForm/>
+        <LocationFields/>
+        <CausesFields/>
+        <SkillsFields/>
 
         <div>
           <Field
-            name='link'
-            id='link'
+            name='availability'
+            id='availability'
             component='input'
             type='text'
-            className='opportunityInput'/>
+            className='inputField'/>
           <label 
             className='inputLabel' 
-            htmlFor={'link'}>Opportunity-Specific URL
+            htmlFor={'availability'}>Availability
+          </label>
+        </div>
+
+        <div>
+          <Field
+            name='logo'
+            id='logo'
+            component='input'
+            type='text'
+            className='inputField'/>
+          <label 
+            className='inputLabel' 
+            htmlFor={'logo'}>Logo URL
           </label>
         </div>
 
@@ -84,6 +98,8 @@ export class UserEditGeneralForm extends Component {
 export const mapStateToProps = state => {
 
   const initialForm = Object.assign({},state.user)
+  initialForm.causes = initialForm.causes ? initialForm.causes : null ;
+  initialForm.skills = initialForm.skills ? initialForm.skills : null ;
 
   return {
   general: state.general,

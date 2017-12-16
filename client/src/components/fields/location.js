@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 
-export class LocationForm extends Component {
+export class LocationFields extends Component {
 
   render() {
 
@@ -22,7 +22,7 @@ export class LocationForm extends Component {
             id='locationCity'
             component='input'
             type='text'
-            className='opportunityInput'/>
+            className='inputField'/>
           <label 
             className='inputLabel' 
             htmlFor={'locationCity'}>City
@@ -37,7 +37,7 @@ export class LocationForm extends Component {
             data={this.props.general.states}
             textField='name'
             valueField='abbreviation'
-            className='opportunityInput'/>              
+            className='inputField'/>              
           <label 
             className='inputLabel' 
             htmlFor={'locationState'}>State
@@ -52,7 +52,7 @@ export class LocationForm extends Component {
             data={this.props.general.countries}
             textField='name'
             valueField='code'
-            className='opportunityInput'/>              
+            className='inputField'/>              
           <label 
             className='inputLabel' 
             htmlFor={'locationCountry'}>Country
@@ -66,4 +66,4 @@ export class LocationForm extends Component {
 export const mapStateToProps = state => ({
   general: state.general
 })
-export default connect(mapStateToProps)(LocationForm);
+export default connect(mapStateToProps)(LocationFields);
