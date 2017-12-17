@@ -50,7 +50,7 @@ authRouter.post('/login', localAuth, (req, res) => {
         .then( usrObj => {
           if(!usrObj.err) {
             usrObj = Object.assign( {}, usrObj, {
-              token: authToken
+              authToken: authToken
             });
             res.json(usrObj);
           }
@@ -60,7 +60,6 @@ authRouter.post('/login', localAuth, (req, res) => {
         });
     });
 });
-
 
 // refresh
 authRouter.post('/refresh', jwtAuth, (req, res) => {

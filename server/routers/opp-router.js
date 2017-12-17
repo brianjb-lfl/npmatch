@@ -4,6 +4,7 @@ const express = require('express');
 const passport = require('passport');
 const { jwtStrategy } = require('../auth/jwt-strategy');
 const oppRouter = express.Router();
+const { epHelp } = require('./router-helpers');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -61,17 +62,15 @@ oppRouter.get('/list', jwtAuth, (req, res) => {
     });    
 });
 
-// POST api/opps
-oppRouter.post('/', jwtAuth, jsonParser, (req, res) => {
+// POST api/opportunities
+oppRouter.post('/',jwtAuth, jsonParser, (req, res) => {
   let inOppObj = req.body;
   let retObj = {};
-  let causesInArr = inOppObj.causes.slice();
-  let causesPostArr = [];
-  const knex = require('../db');
+  let inCausesArr = inOppObj.causes.slice();
+
+  // check for missing fields
   const reqFields = ['title', 'narrative', 'userId', 'causes'];
   const missingField = reqFields.find( field => !(field in inOppObj));
-  
-  // check for missing fields
   if(missingField) {
     return res.status(422).json({
       code: 422,
@@ -80,53 +79,23 @@ oppRouter.post('/', jwtAuth, jsonParser, (req, res) => {
       location: missingField
     });
   }
-  // camelCase to snake_case conversion
-  inOppObj = Object.assign( {}, inOppObj, {
-    opportunity_type: inOppObj.opportunityType ? inOppObj.opportunityType : null,
-    id_user: inOppObj.userId,
-    location_city: inOppObj.locationCity ? inOppObj.locationCity : null,
-    location_state: inOppObj.locationState ? inOppObj.locationState : null,
-    location_country: inOppObj.locationCountry ? inOppObj.locationCountry : null,
-    timestamp_start: inOppObj.timestampStart ? inOppObj.timestampStart : null,
-    timestamp_end: inOppObj.timestampEnd ? inOppObj.timestampEnd : null,
-  });
 
-  delete inOppObj.opportunityType;
-  delete inOppObj.userId;
-  delete inOppObj.locationCity;
-  delete inOppObj.locationState;
-  delete inOppObj.locationCountry;
-  delete inOppObj.timestampStart;
-  delete inOppObj.timestampEnd;
-  delete inOppObj.causes;
-  
-  // post base opportunity info - get id
+  // post base opportunity info - get id'
+  const postOppObj = epHelp.buildOppBase(inOppObj);
+  const knex = require('../db');
+
   return knex('opportunities')
-    .insert(inOppObj)
+    .insert(postOppObj)
     .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
 
     .then( results => {
       // save return info for client response
       retObj = Object.assign( {}, results[0]);
-
-      if(causesInArr.length > 0) {
-        // need to add opp - cause link records
-        // get all causes and id's for lookup
-        return knex('causes')
-          .select('id', 'cause')
-          .then( allCauses => {
-            // loop through causes in req, add item to postArr for each
-            causesInArr.forEach( cItem => {
-              let tempCItem = allCauses.filter( item => item.cause === cItem )[0];
-              causesPostArr.push(
-                Object.assign( {}, {
-                  id_opp: retObj.id,
-                  id_cause: tempCItem.id
-                })
-              );
-            });
+      if(inCausesArr.length > 0) {
+        return epHelp.buildOppCausesArr(retObj.id, inCausesArr)
+          .then( postCausesArr => {
             return knex('opportunities_causes')
-              .insert(causesPostArr);
+              .insert(postCausesArr);
           });
       }
       else {
@@ -134,9 +103,11 @@ oppRouter.post('/', jwtAuth, jsonParser, (req, res) => {
         return;
       }
     })
+
     .then( () => {
       res.status(201).json(retObj);
     })
+
     .catch( err => {
       if(err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
@@ -144,5 +115,68 @@ oppRouter.post('/', jwtAuth, jsonParser, (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });
 });
+
+
+// PUT api/opportunities/:id
+oppRouter.put('/:id', jwtAuth, jsonParser, (req, res) => {
+  let inOppObj = req.body;
+  let oppId = req.params.id;
+  let retObj = {};
+  let inCausesArr = inOppObj.causes.slice();
+
+  // check for missing fields
+  const reqFields = ['title', 'narrative', 'userId', 'causes'];
+  const missingField = reqFields.find( field => !(field in inOppObj));
+  if(missingField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Missing field',
+      location: missingField
+    });
+  }
+
+  // update base opportunity info - get id'
+  const postOppObj = epHelp.buildOppBase(inOppObj);
+  const knex = require('../db');
+
+  return knex('opportunities')
+    .where('id', '=', oppId)
+    .update(postOppObj)
+    .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
+
+    .then( results => {
+      // save return info for client response
+      retObj = Object.assign( {}, results[0]);
+      return knex('opportunities_causes')
+        .where('id_opp', '=', oppId)
+        .del()
+        .then( () => {
+          if(inCausesArr.length > 0) {
+            return epHelp.buildOppCausesArr(retObj.id, inCausesArr)
+              .then( postCausesArr => {
+                return knex('opportunities_causes')
+                  .insert(postCausesArr);
+              });
+          }
+          else {
+            // no causes in req, skip to response
+            return;
+          }
+        })
+
+        .then( () => {
+          res.status(201).json(retObj);
+        })
+
+        .catch( err => {
+          if(err.reason === 'ValidationError') {
+            return res.status(err.code).json(err);
+          }
+          res.status(500).json({message: 'Internal server error'});
+        });
+    });
+});
+
 
 module.exports = { oppRouter };
