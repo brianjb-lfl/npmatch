@@ -14,9 +14,14 @@ userRouter.get('/testify/', (req, res) => {
   res.status(200).json({message: 'Good to go'});
 });
 
-// GET api/users/list
-userRouter.get('/list', (req, res) => {
+// ***** TEST START
+
+// GET api/users/test
+userRouter.get('/test', jsonParser, (req, res) => {
   const knex = require('../db');
+
+  let convQuery = epHelp.convertCase(req.query, 'ccToSnake');
+  
   const calcUserField = 
     "case when users.organization isnull then "
       + "users.last_name || ', '  || users.first_name "
@@ -30,11 +35,47 @@ userRouter.get('/list', (req, res) => {
       'location_state as locationState', 
       'first_name as firstName',
       'last_name as lastName',
+      'organization',
       'user_type as userType',
       knex.raw(calcUserField)
     )
     .from ('users')
-    //.where({user_type: 'individual'})
+    .where(convQuery)
+    .orderBy('username')
+    .debug(false)
+    .then( results => {
+      res.json(results);
+    })
+    .catch( err => {
+      res.status(500).json({message: 'Internal server error'});
+    });    
+});
+
+// ***** TEST END
+
+// GET api/users/list
+userRouter.get('/list', (req, res) => {
+  const knex = require('../db');
+  let convQuery = epHelp.convertCase(req.query, 'ccToSnake');
+  const calcUserField = 
+    "case when users.organization isnull then "
+      + "users.last_name || ', '  || users.first_name "
+      + "else users.organization "
+      + "end as user_string";
+  return knex
+    .select(
+      'id',
+      'username',
+      'location_city as locationCity',
+      'location_state as locationState', 
+      'first_name as firstName',
+      'last_name as lastName',
+      'organization',
+      'user_type as userType',
+      knex.raw(calcUserField)
+    )
+    .from ('users')
+    .where(convQuery)
     .orderBy('username')
     .debug(false)
     .then( results => {
