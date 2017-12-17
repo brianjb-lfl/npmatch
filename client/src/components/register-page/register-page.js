@@ -12,7 +12,8 @@ import './register-page.css';
 export class RegisterPage extends Component {
 
   handleFormTypeChange(userType) {
-    this.props.dispatch(actionsUser.setFormType(userType))
+    this.props.dispatch(actionsUser.setFormType(userType));
+
   }
 
   handleSubmitButton(input) {
@@ -22,28 +23,44 @@ export class RegisterPage extends Component {
 
 
   render() {
-    const nameForm = this.props.user.formType === 'individual' ? 
-      <IndivNameFields/> : <OrgNameFields/>;
+    const nameForm = this.props.user.formType === 'individual' ?
+      <IndivNameFields /> : <OrgNameFields />;
 
     return (
       <main>
         <form className='registerForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
-          <h3>Register</h3>
-          <label className='inputLabel' htmlFor={'userTypeI'}>Individual</label>
-          <Field className='userTypeInput' name='userType' id='userTypeI'
-            component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
-          />
+          <h2>Register</h2>
+          <div className='individualOption'>
+            <label className='inputLabel'
+              style={{
+                backgroundColor: this.props.user.formType === 'individual' ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                color: this.props.user.formType === 'individual' ? 'white' : '#082E41'
+              }}
+              htmlFor={'userTypeI'}>Individual</label>
+            <Field className='userTypeInput' name='userType' id='userTypeI'
+              style={{ display: 'none', margin: 'auto' }}
+              component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
+            />
+          </div>
 
-          <label className='inputLabel' htmlFor={'userTypeO'}>Organization</label>
-          <Field className='userTypeInput' name='userType' id='userTypeO'
-            component='input' type='radio' value='organization' onChange={() => this.handleFormTypeChange('organization')}
-          />
+          <div className='organizationOption'>
+            <label className='inputLabel'
+              style={{
+                backgroundColor: this.props.user.formType === 'organization' ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                color: this.props.user.formType === 'organization' ? 'white' : '#082E41'
+              }}
+              htmlFor={'userTypeO'}>Organization</label>
+            <Field className='userTypeInput' name='userType' id='userTypeO'
+              style={{ display: 'none', margin: 'auto' }}
+              component='input' type='radio' value='organization' onChange={() => this.handleFormTypeChange('organization')}
+            />
+          </div>
 
           {nameForm}
 
-          <UandPwFields confirm={true}/>
+          <UandPwFields confirm={true} />
 
           <button type='submit'>Sign Up</button>
         </form>
