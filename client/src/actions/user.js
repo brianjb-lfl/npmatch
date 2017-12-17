@@ -121,6 +121,7 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     dispatch(actionsDisplay.changeDisplay('loading'));
 
     delete user.password2;
+    delete user.authToken;
     const params = isNew ? 'register' : user.id ;
     const method = isNew ? 'POST' : 'PUT';
 

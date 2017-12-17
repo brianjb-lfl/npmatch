@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsUser from '../../actions/user';
@@ -21,8 +21,6 @@ export class UserEditLinksForm extends Component {
 
   render() {
 
-    const linkCheck = this.props.user.links[0].edit ? 'editing' : 'not editing' ;
-
     const myLinks = this.props.user.links.map((link,index)=>{
       console.log('link inside map',!link.edit, link.edit, link);
       if (link.edit && this.props.display.view === 'editLink') {
@@ -41,7 +39,7 @@ export class UserEditLinksForm extends Component {
         console.log('not editing link')
         return <li key={index}>
           <div>{link.linkType}</div>
-          <div>{link.linkURL}{linkCheck}</div>
+          <div>{link.linkURL}</div>
           <button onClick={()=>this.handleSubmitButton(link,index,'delete')}>Delete</button>
           <button onClick={()=>this.handleEditButton(index, true)}>Edit</button>
         </li>

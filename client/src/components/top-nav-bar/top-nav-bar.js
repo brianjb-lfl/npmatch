@@ -33,7 +33,7 @@ export class TopNavBar extends Component {
               <label htmlFor="userinput"></label>
               <input type="text" className="userinput"></input>
               <button type="submit" className="submit-button">
-                <i class="fa fa-search" aria-hidden="true"></i>
+                <i className="fa fa-search" aria-hidden="true"></i>
               </button>
             </form>
           </li>
