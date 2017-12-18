@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "nodemon ./server/server.js",
-    "test": "mocha --colors --watch  server/test/*test.js",
+    "test": "mocha --colors server/test/*test.js",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha --exit server/test/*test.js",
