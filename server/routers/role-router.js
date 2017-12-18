@@ -79,8 +79,9 @@ roleRouter.put('/:id', jsonParser, (req, res) => {
 });
 
 // DELETE api/roles/:id
-const knex = require('../db');
+
 roleRouter.delete('/:id', (req, res) => {
+  const knex = require('../db');
   return knex('roles')
     .where('id', '=', req.params.id)
     .del()
@@ -90,7 +91,7 @@ roleRouter.delete('/:id', (req, res) => {
     .catch( err => {
       res.status(500).json({message: 'Internal server error'});
     });
-  });
+});
 
 
 module.exports = { roleRouter };

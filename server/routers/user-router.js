@@ -59,7 +59,7 @@ userRouter.get('/test', jsonParser, (req, res) => {
 // ***** TEST END
 
 // GET api/users/list
-userRouter.get('/list', jwtAuth, (req, res) => {
+userRouter.get('/list', (req, res) => {
   const knex = require('../db');
   let convQuery = epHelp.convertCase(req.query, 'ccToSnake');
   const calcUserField = 
@@ -92,7 +92,7 @@ userRouter.get('/list', jwtAuth, (req, res) => {
 });
 
 // GET api/users/:id
-userRouter.get('/:id', jwtAuth, (req, res) => {
+userRouter.get('/:id', (req, res) => {
   return epHelp.buildUser(req.params.id)
     .then( results => {
       if(!results.err) {
@@ -105,7 +105,7 @@ userRouter.get('/:id', jwtAuth, (req, res) => {
 });
 
 // POST api/users/register
-userRouter.post('/register', jwtAuth, jsonParser, (req, res) => {
+userRouter.post('/register', jsonParser, (req, res) => {
   const knex = require('../db');
   const reqFields = ['username', 'password'];
   const missingField = reqFields.filter( field => !(field in req.body));
@@ -165,7 +165,7 @@ userRouter.post('/register', jwtAuth, jsonParser, (req, res) => {
 });
 
 // PUT api/users/:id
-userRouter.put('/:id', jwtAuth, jsonParser, (req, res) => {
+userRouter.put('/:id', jsonParser, (req, res) => {
   const usrId = req.params.id;
   const knex = require('../db');
   let inUsrObj = Object.assign( {}, req.body);

@@ -101,6 +101,10 @@ testData.testOrgOpp = {
   narrative: 'testing our need of goods',
   locationCity: 'chattanooga',
   locationState: 'tn',
+  userId: '31',
+  causes: [
+    'environment'
+  ]
 };
 
 testData.testIndOpp = {
