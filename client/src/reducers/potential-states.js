@@ -41,13 +41,20 @@ export const user = {
       id: '',
     }
   ],
+  admins: [            // SQL join, single only, not in list
+    {
+      firstName: '',   // nested SQL join
+      lastName: '',    // nested SQL join
+      id: '',
+    }
+  ],
   following: [          // SQL join, single only, not in list
     {
       organization: '', // nested SQL join
       id: '',
     }
   ],
-  opportunities: [ // SQL join
+  opportunities: [      // SQL join
     {
       id: '',
       userId: '',          // not needed on nested list, but native data, so keep
@@ -69,8 +76,15 @@ export const user = {
     {
       id: '',
       idOpportunity: '',
+      organization: '', // SQL join
+      userId: '',
+      firstName: '',    // SQL join
+      lastName: '',     // SQL join
       responseStatus: '',
-      title: '',        // nested SQL join
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
     }
   ], 
 };
@@ -101,14 +115,15 @@ export const opportunity = {
       {
         id: '',
         idOpportunity: '',
-        organization: '',// SQL join
         userId: '',
-        firstName: '',   // SQL join
-        lastName: '',    // SQL join
+        notes: '',
         responseStatus: '',
-        title: '',
         timestampStatusChange: '',
         timestampCreated: '',
+        organization: '',// copy, populated at creation
+        firstName: '',   // copy, populated at creation
+        lastName: '',    // copy, populated at creation
+        title: '',       // copy, populated at creation
       }
     ],
 };

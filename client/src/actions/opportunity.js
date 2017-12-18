@@ -24,6 +24,15 @@ export const loadOpportunity = action => ({
   responses: action.responses,
 });
 
+
+export const LOAD_RESPONSE = 'LOAD_RESPONSE';
+export const loadResponse = (response,index,action) => ({
+  type: LOAD_RESPONSE,
+  response,
+  index,
+  action,
+});
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOpp = (oppId, authToken) => dispatch => {

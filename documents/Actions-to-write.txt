@@ -15,13 +15,12 @@ ACTIONS TO WRITE
       create oppCauses        DONE  all 3 cases send arrays with post or put endpoints
       
       search opportunities    CONFIRM
-      search users            ...same as search opportunities
+      search users            CONFIRM
                           
-      respond to opprtnties   SUNDAY
+      respond to opprtnties   CONFIRM
 
-      create role             SUNDAY
-                              user follows other user 
-                              (can limit to follow orgs)
+      create role             CONFIRM
+      delete role             CONFIRM
                         
       user capabilities       MONDAY
                               enhance roles to capabilities
