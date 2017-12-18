@@ -40,8 +40,8 @@ export class UserEditLinksForm extends Component {
         return <li key={index}>
           <div>{link.linkType}</div>
           <div>{link.linkURL}</div>
-          <button onClick={()=>this.handleSubmitButton(link,index,'delete')}>Delete</button>
-          <button onClick={()=>this.handleEditButton(index, true)}>Edit</button>
+          <button className='editLink' onClick={()=>this.handleSubmitButton(link,index,'delete')}>Delete</button>
+          <button className='deleteLink' onClick={()=>this.handleEditButton(index, true)}>Edit</button>
         </li>
       }
     })
@@ -62,7 +62,7 @@ export class UserEditLinksForm extends Component {
           <LinkFields/>
 
           <div>
-            <button 
+            <button className='submitButton'
               type="submit" disabled={this.props.pristine || this.props.submitting}>Add
             </button>
           </div>

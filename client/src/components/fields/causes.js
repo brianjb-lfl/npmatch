@@ -17,16 +17,16 @@ export class CausesFields extends Component {
 
     return (
       <div>
+        <label 
+          className='inputLabel' 
+          htmlFor={'causes'}>Causes
+        </label>
         <Field
           name='causes'
           id='causes'
           component={renderMultiselect}
           data={this.props.general.causes}
           className='inputField'/>              
-        <label 
-          className='inputLabel' 
-          htmlFor={'causes'}>Causes
-        </label>
       </div>
     );
   }

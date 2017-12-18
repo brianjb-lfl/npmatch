@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 // import * as actionsOpportunity from '../../actions/opportunity';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 
+import './opportunities-page.css';
+
 export class OpportunitiesPage extends Component {
 
   render() {
@@ -14,10 +16,11 @@ export class OpportunitiesPage extends Component {
     })
 
     return (
-      <main>
-        <Link to='/opportunities/create'>
+      <main className='opportunitiesPage'>
+        <h2>Opportunities</h2>
+        <Link to='/opportunities/create' className='link'>
           <div>
-            <button>Add Opportunity</button>
+            <button className='addOpportunity'>Add Opportunity</button>
           </div>
         </Link>
 
