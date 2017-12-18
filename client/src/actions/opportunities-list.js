@@ -19,7 +19,7 @@ export const fetchOppsList = (query, authToken) => dispatch => {
   const url = new URL(`${REACT_APP_BASE_URL}/api/opportunities/list`);
   Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
   
-  console.log('url after query',url)
+  // console.log('url after query',url)
   const headers = {
     'content-type': 'application/json',
     "Authorization": `Bearer ${authToken}`, 
@@ -35,11 +35,11 @@ export const fetchOppsList = (query, authToken) => dispatch => {
       return res.json();
     })
     .then(res=>{
-      console.log('response from opps list fetch',res)
+      // console.log('response from opps list fetch',res)
       return dispatch(loadOpportunitiesList(res));
     })
     .catch(error => {
-      console.log('error',error);
+      // console.log('error',error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

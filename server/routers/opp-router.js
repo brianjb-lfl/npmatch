@@ -23,7 +23,7 @@ oppRouter.get('/testify/secure', jwtAuth, (req, res) => {
   res.status(200).json({message: 'Good to go - *SECURED*'});
 });
 
-//GET api/opps/list
+//GET api/opportunities/list
 oppRouter.get('/list', jwtAuth, (req, res) => {
   const knex = require('../db');
   const calcUserField = 
@@ -61,6 +61,7 @@ oppRouter.get('/list', jwtAuth, (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });    
 });
+
 
 // POST api/opportunities
 oppRouter.post('/',jwtAuth, jsonParser, (req, res) => {

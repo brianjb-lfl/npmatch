@@ -18,14 +18,16 @@ describe('reducer - list of users', () => {
     const arrayOfUsers = [
       {
         id: 1,
-        firstName: '',
-        lastName: '',
         username: '',
         userType: '', 
+        firstName: '',
+        lastName: '',
         organization: 'Coffee for the Future',
+        logo: '',
         locationCity: 'Birmingham',
         locationState: 'AL',
         locationCountry: 'USA',
+        availability: '',
         bio: 'We work to ensure the world never runs out of caffeine',
         links: [
           {
@@ -74,10 +76,10 @@ describe('reducer - list of users', () => {
       },
       {
         id: 1,
-        firstName: '',
-        lastName: '',
         username: '',
         userType: '', 
+        firstName: '',
+        lastName: '',
         organization: 'The Literary Project',
         locationCity: 'San Diego',
         locationState: 'CA',

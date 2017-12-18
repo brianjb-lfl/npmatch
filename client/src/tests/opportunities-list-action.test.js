@@ -108,8 +108,7 @@ describe('actions - opportunities list', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions',expectedActions)
-        expect(expectedActions.length).toBe(3);
-        expect.assertions(2);  // number of callback functions
+        expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsOppsList.LOAD_OPPS_LIST, main: {} }

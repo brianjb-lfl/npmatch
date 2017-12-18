@@ -1,6 +1,8 @@
 'use strict';
 
 const express = require('express');
+const passport = require('passport');
+const { jwtStrategy } = require('../auth/jwt-strategy');
 const userRouter = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
@@ -8,6 +10,9 @@ const { hashPassword } = require('../auth/bcrypt');
 const { epHelp } = require('./router-helpers');
 
 process.stdout.write('\x1Bc');
+
+passport.use(jwtStrategy);
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // comm test
 userRouter.get('/testify/', (req, res) => {
@@ -54,7 +59,7 @@ userRouter.get('/test', jsonParser, (req, res) => {
 // ***** TEST END
 
 // GET api/users/list
-userRouter.get('/list', (req, res) => {
+userRouter.get('/list', jwtAuth, (req, res) => {
   const knex = require('../db');
   let convQuery = epHelp.convertCase(req.query, 'ccToSnake');
   const calcUserField = 
@@ -87,7 +92,7 @@ userRouter.get('/list', (req, res) => {
 });
 
 // GET api/users/:id
-userRouter.get('/:id', (req, res) => {
+userRouter.get('/:id', jwtAuth, (req, res) => {
   return epHelp.buildUser(req.params.id)
     .then( results => {
       if(!results.err) {
@@ -100,7 +105,7 @@ userRouter.get('/:id', (req, res) => {
 });
 
 // POST api/users/register
-userRouter.post('/register', jsonParser, (req, res) => {
+userRouter.post('/register', jwtAuth, jsonParser, (req, res) => {
   const knex = require('../db');
   const reqFields = ['username', 'password'];
   const missingField = reqFields.filter( field => !(field in req.body));
@@ -160,7 +165,7 @@ userRouter.post('/register', jsonParser, (req, res) => {
 });
 
 // PUT api/users/:id
-userRouter.put('/:id', jsonParser, (req, res) => {
+userRouter.put('/:id', jwtAuth, jsonParser, (req, res) => {
   const usrId = req.params.id;
   const knex = require('../db');
   let inUsrObj = Object.assign( {}, req.body);
@@ -188,16 +193,19 @@ userRouter.put('/:id', jsonParser, (req, res) => {
     })    // user exists, update info
     
     .then( () => {
+      // get hashed pw
       convInUsrObj = epHelp.convertCase(inUsrObj, 'ccToSnake');
       if(convInUsrObj.password) {
         return hashPassword(convInUsrObj.password);
       }
       else {
-        return ('no password change');
+        return;
       }
     })
+
     .then( result => {
-      if(result !== 'no password change'){
+      // process base user info
+      if(result){
         convInUsrObj = Object.assign( {}, convInUsrObj, {
           password: result
         });
@@ -210,6 +218,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         .update(convInUsrObj)
         .returning(['id', 'username'])
     })
+
     .then( result => {
       retObj = result;
       // process links
@@ -315,7 +324,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
 });
 
 // Clear test data
-userRouter.delete('/clear/test/data', jsonParser, (req, res) => {
+userRouter.delete('/clear/test/data', (req, res) => {
   const knex = require('../db');
   return knex('users')
     .where('username', 'like', '%user%')

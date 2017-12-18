@@ -31,24 +31,7 @@ describe('actions - single opportunity', () => {
       causes: ['elderly', 'community'],  
       responses: [],
     };
-    const expectedAction = {
-      type: actionsOpp.LOAD_OPPORTUNITY,
-      id: 1,
-      userId: 2,
-      organization: 'ABC Group',
-      opportunityType: 'services',
-      offer: false,
-      title: 'Take a Senior Shopping!',
-      narrative: 'Whether fetching necessities or in need of some retail therapy, it can be hard for some elderly to get to the store. Can you provide a ride and some company?',
-      timestampStart: '2018-02-13 12:51:00',
-      timestampEnd: 'infinity',
-      locationCity: 'The Plains',
-      locationState: 'VA',
-      locationCountry: 'USA',
-      link: 'http://shop-dont-drop.org',
-      causes: ['elderly', 'community'],  
-      responses: [],
-    };
+    const expectedAction = {...opportunity, type: actionsOpp.LOAD_OPPORTUNITY};
     const result = actionsOpp.loadOpportunity(opportunity);
     expect(result).toEqual(expectedAction);
     expect(result).toBeDefined();
@@ -80,7 +63,6 @@ describe('actions - single opportunity', () => {
     return store.dispatch(actionsOpp.fetchOpp(oppId, authToken))
       .then(() => {
         const expectedActions = store.getActions();
-        // console.log('expectedActions',expectedActions)
         expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
@@ -175,7 +157,6 @@ describe('actions - single opportunity', () => {
     return store.dispatch(actionsOpp.createOpportunity(opp, authToken))
       .then(() => {
         const expectedActions = store.getActions();
-        // console.log('expectedActions',expectedActions)
         expect(expectedActions.length).toBe(8); // 6 as of prior test, 2 from this test
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
