@@ -130,29 +130,22 @@ userRouter.post('/register', jsonParser, (req, res) => {
       return hashPassword(inUsrObj.password);
     })
     .then( result => {
-      if(inUsrObj.userType === 'organization') {
-        inUsrObj = Object.assign( {}, inUsrObj, {
-          user_type: inUsrObj.userType,
+      let convInUsrObj = epHelp.convertCase(inUsrObj, 'ccToSnake');
+      if(convInUsrObj.user_type === 'organization') {
+        convInUsrObj = Object.assign( {}, convInUsrObj, {
           password: result,
           first_name: null,
           last_name: null
         });
-        delete inUsrObj.userType;
       }
       else {
-        inUsrObj = Object.assign( {}, inUsrObj, {
-          user_type: inUsrObj.userType,
-          first_name: inUsrObj.firstName,
-          last_name: inUsrObj.lastName,
+        convInUsrObj = Object.assign( {}, convInUsrObj, {
           password: result,
           organization: null,
         });
-        delete inUsrObj.firstName;
-        delete inUsrObj.lastName;
-        delete inUsrObj.userType;
       }
       return knex('users')
-        .insert(inUsrObj)
+        .insert(convInUsrObj)
         .returning(['id', 'username'])
         .then( results => {
           res.status(201).json(results[0]);
