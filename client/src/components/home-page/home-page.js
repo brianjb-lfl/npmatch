@@ -26,7 +26,7 @@ export class HomePage extends Component {
 export const mapStateToProps = state => ({
   user: state.user,
   userViewed: state.userViewed,
-  usersList: state.usersList,
+  usersList: state.usersList.main,
   opportunity: state.opportunity,
   opportunitiesList: state.opportunitiesList,
   display: state.display,

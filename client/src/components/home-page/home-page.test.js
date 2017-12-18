@@ -7,7 +7,9 @@ import { OrganizationPreview } from '../organization-preview/organization-previe
 
 describe('Home Page component display functionality', () => {
   const usersList = [{
-    id: 1,
+    main: {
+      id: 1,
+    }
   }];
   it('Smoke test - component should render', () => {
     shallow(<HomePage />);

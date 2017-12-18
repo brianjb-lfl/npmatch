@@ -8,7 +8,9 @@ import { DetailedContributorPreview } from '../detailed-contributor-preview/deta
 
 describe('Explore Page component display functionality', () => {
   const usersList = [{
-    id: 1,
+    main: {
+      id: 1,
+    }
   }];
   it('Smoke test - component should render', () => {
     shallow(<ExplorePage usersList={usersList} />);
