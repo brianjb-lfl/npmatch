@@ -159,8 +159,6 @@ userRouter.post('/register', jsonParser, (req, res) => {
     });
 });
 
-
-
 // PUT api/users/:id
 userRouter.put('/:id', jsonParser, (req, res) => {
   const usrId = req.params.id;
@@ -249,11 +247,11 @@ userRouter.put('/:id', jsonParser, (req, res) => {
               .select('id', 'cause')
           }
           else {
-            return ('no causes')
+            return;
           }
         })
         .then( results => {
-          if(results !== 'no causes') {
+          if(results) {
             causesArr.forEach( causeItem => {
               const causeId = results.filter( item => item.cause === causeItem )[0].id;
               causePostArr.push(
@@ -288,7 +286,6 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         })
         .then( results => {
           if(results) {
-            console.log('running if block');
             skillsArr.forEach( skillItem => {
               const skillId = results.filter( item => item.skill === skillItem )[0].id;
               skillPostArr.push(
@@ -316,8 +313,6 @@ userRouter.put('/:id', jsonParser, (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });
 });
-
-
 
 // Clear test data
 userRouter.delete('/clear/test/data', jsonParser, (req, res) => {

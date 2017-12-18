@@ -12,7 +12,7 @@ orgRouter.get('/testify/', (req, res) => {
   res.status(200).json({message: 'Good to go'});
 });
 
-// GET api/users/list
+// GET api/orgs/list
 orgRouter.get('/list', (req, res) => {
   const knex = require('../db');
   return knex
