@@ -10,11 +10,10 @@
 
 export const user = {
   id: null,
-  authToken: '',
-  firstName: '',
-  lastName: '',
   username: '',
   userType: '',         // organization, individual
+  firstName: '',
+  lastName: '',
   organization: '',
   logo: '',
   locationCity: '',
@@ -22,6 +21,7 @@ export const user = {
   locationCountry: '',
   availability: '',
   bio: '', 
+  authToken: '',
   links: [              // SQL join
     {
       edit: true,
@@ -35,14 +35,6 @@ export const user = {
   ],
   causes: [''],
   skills: [''],
-  responses: [          // SQL join, single only, not in list
-    {
-      id: '',
-      id_opp: '',
-      response_status: '',
-      title: '',        // nested SQL join
-    }
-  ],
   adminOf: [            // SQL join, single only, not in list
     {
       organization: '', // nested SQL join
@@ -54,50 +46,39 @@ export const user = {
       organization: '', // nested SQL join
       id: '',
     }
-  ]
+  ],
+  opportunities: [ // SQL join
+    {
+      id: '',
+      userId: '',          // not needed on nested list, but native data, so keep
+      // organization: '', // not on nested list
+      opportunityType: '',
+      offer: '',
+      title: '',
+      narrative: '',
+      timestampStart: '',
+      timestampEnd: '',
+      locationCity: '',
+      locationState: '',
+      locationCountry: '',
+      link: '',
+      causes: [''], // nested SQL join  
+    }
+  ],
+  responses: [          // SQL join, single only, not in list
+    {
+      id: '',
+      idOpportunity: '',
+      responseStatus: '',
+      title: '',        // nested SQL join
+    }
+  ], 
 };
 
 export const usersList = {
   main: [
-    {
-      id: '',
-      firstName: '',
-      lastName: '',
-      username: '',
-      userType: '', 
-      organization: '',
-      locationCity: '',
-      locationState: '',
-      locationCountry: '',
-      availability: '',      
-      bio: '',
-      links: [         // SQL join
-        {
-          linkType: '',
-          linkURL: '',
-        }
-      ],
-      causes: [''],    // SQL join
-      skills: [''],    // SQL join
-      opportunities: [ // SQL join
-        {
-          id: '',
-          userId: '',          // not needed on nested list, but native data, so keep
-          // organization: '', // not on nested list
-          opportunityType: '',
-          offer: '',
-          title: '',
-          narrative: '',
-          timestampStart: '',
-          timestampEnd: '',
-          locationCity: '',
-          locationState: '',
-          locationCountry: '',
-          link: '',
-          causes: [''], // nested SQL join        
-        }
-      ]
-    }
+    // array of users, sans adminOf, following, responses,
+    // might or might not include opportunities
   ]
 };
   
@@ -125,30 +106,16 @@ export const opportunity = {
         firstName: '',   // SQL join
         lastName: '',    // SQL join
         responseStatus: '',
-        timestamp_status_change: '',
-        timestamp_created: '',
+        title: '',
+        timestampStatusChange: '',
+        timestampCreated: '',
       }
     ],
 };
 
 export const opportunitiesList = {
   main: [
-    {
-      id: '',
-      userId: '',
-      organization: '', // SQL join (in case of individuals, list individual's full name here)
-      opportunityType: '',
-      offer: '',
-      title: '',
-      narrative: '',
-      timestampStart: '',
-      timestampEnd: '',
-      locationCity: '',
-      locationState: '',
-      locationCountry: '',
-      link: '',
-      causes: null,     // SQL join   
-    }
+    // array of opportunities, sans responses
   ]
 };
 

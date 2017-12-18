@@ -46,15 +46,35 @@ export const toggleEditLink = (index, edit = false, links) => {
   }
 };
 
+// @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
+
+
+export const manageLinks = (immutableUser, link, index, action) => dispatch => {
+
+  const user = Object.assign({}, immutableUser);
+  const isNew = false;
+  console.log('user in manage links',user)
+  if ( action === 'edit') {
+    user.links[index] = link;
+    user.links.edit = false;
+  } else if ( action === 'delete') {
+    user.links.splice(index,1);
+  } else { // assume action === add
+    user.links.push(link);
+  }
+
+  dispatch(createOrEditUser(user, isNew, user.authToken))
+}
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'user') => dispatch => {
+export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {
   // type options = 'users' and 'orgs'
   // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
-    const url = `${REACT_APP_BASE_URL}/api/${type}/${userId}`;
+    const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
     const headers = {
       'content-type': 'application/json',
       "Authorization": `Bearer ${authToken}`, 
@@ -83,7 +103,7 @@ export const fetchUser = (userId, authToken, type = 'orgs', stateLocation = 'use
     })
 }
 
-export const login = (user) => dispatch => {
+export const login = user => dispatch => {
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -156,22 +176,4 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     .catch(error => {
       dispatch(actionsDisplay.toggleModal(error));
     });
-  }
-
-  export const manageLinks = (immutableUser, link, index, action) => dispatch => {
-
-    const user = Object.assign({}, immutableUser);
-    const isNew = false;
-    console.log('user in manage links',user)
-    if ( action === 'edit') {
-      user.links[index] = link;
-      user.links.edit = false;
-    } else if ( action === 'delete') {
-      user.links.splice(index,1);
-    } else { // assume action === add
-      user.links.push(link);
-    }
-
-    dispatch(createOrEditUser(user, isNew, user.authToken))
-
-  }
+}

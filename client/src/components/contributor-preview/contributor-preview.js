@@ -9,7 +9,6 @@ export default class ContributorPreview extends Component {
     this.props.dispatch(actionsUser.fetchUser(
       id,
       this.props.user.authToken,
-      'users',
       'userViewed'
     ))
   }

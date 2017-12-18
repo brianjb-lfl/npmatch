@@ -12,33 +12,11 @@ export const loadUsersList = (array) => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUsersList = (query, authToken, type = 'orgs') => dispatch => {
-  // type options = 'users' and 'orgs'
-
-  /* query should be an object with following props.
-    values are priority, 1 being soonest for MVP
-    {
-      firstName         3 
-      lastName          3 
-      username          3 
-      userType        1
-      organization      3 
-      locationCity      3
-      locationState     3
-      locationCountry   3
-      bio                 9
-      links               9
-      causes           2
-      skills:          2
-      responses           4
-      adminOf             4
-      following           4
-    }
-  */
+export const fetchUsersList = (query, authToken) => dispatch => {
   
-  // dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplay('loading'));
 
-  const url = new URL(`${REACT_APP_BASE_URL}/api/${type}/list`);
+  const url = new URL(`${REACT_APP_BASE_URL}/api/users/list`);
   Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
   
   const headers = {

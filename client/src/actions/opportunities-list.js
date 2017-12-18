@@ -1,11 +1,9 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-// import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
 
 // right now we have 1 'main' list of opportunities; we can have as many lists as we want, each following identical format
 // if we add lists, each one should have an action and reducer; each one can populate 1 key, like "main" does
-
 export const LOAD_OPPORTUNITIES_LIST = 'LOAD_OPPORTUNITIES_LIST';
 export const loadOpportunitiesList = (array) => ({
   type: LOAD_OPPORTUNITIES_LIST,
@@ -15,25 +13,6 @@ export const loadOpportunitiesList = (array) => ({
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOppsList = (query, authToken) => dispatch => {
-  /* query should be an object with following props.
-    values are priority, 1 being soonest for MVP
-    {
-      userId                    6 
-      organization              6
-      opportunityType  1
-      offer               2
-      title            1
-      narrative                 4
-      timestampStart      2
-      timestampEnd        2
-      locationCity            3
-      locationState           3
-      locationCountry         3
-      link:                     4
-      causes           1
-      responses                 5
-    }
-  */
   
   dispatch(actionsDisplay.changeDisplay('loading'));
 

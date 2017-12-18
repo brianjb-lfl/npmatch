@@ -19,7 +19,7 @@ export class UserEditGeneralForm extends Component {
     console.log('user',user)
     const isNew = false;
     
-    this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.user.authToken, isNew))
+    this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.user.authToken))
       .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
   }
 
