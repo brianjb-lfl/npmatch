@@ -48,6 +48,35 @@ epHelp.buildUser = function (userId) {
     });
 };
 
+epHelp.getOppBase = function(inOppId) {
+  const knex = require('../db');
+  const calcUserField = 
+    "case when users.organization isnull then "
+      + "users.last_name || ', '  || users.first_name "
+      + "else users.organization "
+      + "end as userString";
+  return knex('opportunities')
+    .join('users', 'opportunities.id_user', '=', 'users.id')
+    .select(
+      'opportunities.id',
+      'users.id',
+      'opportunity_type as opportunityType',
+      'users.username',
+      'opportunities.id_user as idUser',
+      'offer',
+      'title',
+      'narrative',
+      'timestamp_start as timestampStart',
+      'timestamp_end as timestampEnd',
+      'opportunities.location_city as locationCity',
+      'opportunities.location_state as locationState',
+      'opportunities.location_country as locationCountry',
+      'link',
+      knex.raw(calcUserField)
+    )
+    .where()
+};
+
 epHelp.buildOppBase = function(inOppObj) {
 
   // camelCase to snake_case conversion
@@ -98,29 +127,6 @@ epHelp.buildOppCausesArr = function(oppId, inCausesArr) {
       return {err: 500, message: 'Internal server error'};
     });
 };
-
-// const ccToSnake = {
-//   userType: 'user_type',
-//   locationCity: 'location_city',
-//   locationState: 'location_state',
-//   locationCountry: 'location_country',
-//   firstName: 'first_name',
-//   lastName: 'last_name',
-//   opportunityType: 'opportunity_type',
-//   userId: 'id_user',
-//   idCause: 'id_cause',
-//   idOpp: 'id_opp',
-//   idSkill: 'id_skill',
-//   idUserAdding: 'id_user_adding',
-//   idUserReceiving: 'id_user_receiving',
-//   linkType: 'link_type',
-//   linkUrl: 'link_url',
-//   responseStatus: 'response_status',
-//   timestampCreated: 'timestamp_created',
-//   timestampStart: 'timestamp_start',
-//   timestampEnd: 'timestamp_end',
-//   timestampStatusChange: 'timestamp_status_change'
-// };
 
 const snakeToCC = {
   user_type: 'userType',

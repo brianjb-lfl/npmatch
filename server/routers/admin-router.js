@@ -101,7 +101,5 @@ adminRouter.get('/initialize', (req, res) => {
     });    
 });
 
-// GET api/causes/oppslist
-
 
 module.exports = { adminRouter };
