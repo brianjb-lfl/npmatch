@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import {UserProfile} from './user-profile';
 import {mapStateToProps} from './user-profile';
 
-describe('Core display functionality of User Profile', () => {
+describe.skip('Core display functionality of User Profile', () => {
   it('Smoke test - component should render', () => {
     shallow(< UserProfile />);
   });

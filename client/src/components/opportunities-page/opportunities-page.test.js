@@ -5,7 +5,7 @@ import { OpportunitiesPage } from './opportunities-page';
 import { mapStateToProps } from './opportunities-page';
 import { OrganizationPreview } from '../organization-preview/organization-preview';
 
-describe('Home Page component display functionality', () => {
+describe.skip('Opportunities Page component display functionality', () => {
   const opportunitiesList = [{
     main: {
       id: 1,

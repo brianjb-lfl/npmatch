@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import TopNavBar from './top-nav-bar';
 
-describe('Top Nav Bar component display functionality', () => {
+describe.skip('Top Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {
     shallow(<TopNavBar />);
   });

@@ -6,7 +6,7 @@ import { mapStateToProps } from './landing-page';
 import { LandingPage } from './landing-page';
 import { OrganizationPreview } from '../organization-preview/organization-preview';
 
-const mockStore = configureStore(middle)
+const mockStore = configureStore();
 
 describe('Landing Page component display functionality', () => {
   const spy = jest.fn();

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 
-import OrganizationPreview from './organization-preview';
+import { OrganizationPreview } from './organization-preview';
 
 describe('Organization Preview component display functionality', () => {
   const user = {
