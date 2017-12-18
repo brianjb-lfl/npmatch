@@ -24,7 +24,7 @@ oppRouter.get('/testify/secure', jwtAuth, (req, res) => {
 });
 
 //GET api/opportunities/list
-oppRouter.get('/list', jwtAuth, (req, res) => {
+oppRouter.get('/list', (req, res) => {
   const knex = require('../db');
   const calcUserField = 
     "case when users.organization isnull then "
@@ -64,7 +64,7 @@ oppRouter.get('/list', jwtAuth, (req, res) => {
 
 
 // POST api/opportunities
-oppRouter.post('/',jwtAuth, jsonParser, (req, res) => {
+oppRouter.post('/', jsonParser, (req, res) => {
   let inOppObj = req.body;
   let retObj = {};
   let inCausesArr = inOppObj.causes.slice();
@@ -119,7 +119,7 @@ oppRouter.post('/',jwtAuth, jsonParser, (req, res) => {
 
 
 // PUT api/opportunities/:id
-oppRouter.put('/:id', jwtAuth, jsonParser, (req, res) => {
+oppRouter.put('/:id', jsonParser, (req, res) => {
   let inOppObj = req.body;
   let oppId = req.params.id;
   let retObj = {};
