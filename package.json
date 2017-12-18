@@ -34,7 +34,7 @@
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha test/setup.test.js */*.test.js",
     "heroku": "node index.js",
-    "travis": "mocha test/setup.test.js */*.test.js"
+    "travis": "mocha server/test/*test.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",
