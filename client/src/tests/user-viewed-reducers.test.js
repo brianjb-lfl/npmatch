@@ -17,23 +17,27 @@ describe('reducer - user viewed', () => {
   it('Should load a minimal user into state', () => {
     const expectedResult = {
       id: 3,
-      firstName: 'Jim',
-      lastName: 'Smith',
       username: 'jimmys',
       userType: undefined,
+      firstName: 'Jim',
+      lastName: 'Smith',
       organization: null,
       locationCity: undefined,
       locationState: undefined,
       locationCountry: undefined,
+      availability: 'tomorrow',
       bio: undefined,
+      authToken: 'XXX333',
       links: undefined,
       causes: undefined,
       skills: undefined,
-      responses: undefined,
       adminOf: undefined,
+      admins: undefined,
       following: undefined,
+      opportunities: undefined,
+      responses: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
+    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -41,23 +45,27 @@ describe('reducer - user viewed', () => {
   it('Should load a simple user into state', () => {
     const expectedResult = {
       id: 3,
-      firstName: 'Jim',
-      lastName: 'Smith',
       username: 'jimmys',
       userType: 'individual',
+      firstName: 'Jim',
+      lastName: 'Smith',
       organization: null,
+      logo: null,
       locationCity: 'Des Moynes',
       locationState: 'IL',
       locationCountry: 'USA',
       bio: 'Sausage-maker',
+      authToken: '756XTJ',
       links: undefined,
       causes: [],
       skills: [],
-      responses: undefined,
       adminOf: undefined,
+      admins: undefined,
       following: undefined,
+      opportunities: [],
+      responses: undefined,
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
+    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -65,15 +73,18 @@ describe('reducer - user viewed', () => {
   it('Should load a complex user into state', () => {
     const expectedResult = {
       id: 3,
-      firstName: 'Jim',
-      lastName: 'Smith',
       username: 'jimmys',
       userType: 'individual',
+      firstName: 'Jim',
+      lastName: 'Smith',
       organization: null,
+      logo: 'www.logos-r-us.com',
       locationCity: 'Des Moynes',
       locationState: 'IL',
       locationCountry: 'USA',
+      availability: 'whenever',
       bio: 'Sausage-maker',
+      authToken: 'ABC876',
       links: [
         {
           linkType: 'home',
@@ -82,17 +93,17 @@ describe('reducer - user viewed', () => {
       ],
       causes: ['sausage-making', 'sausage-eating'],
       skills: ['carpentry'],
-      responses: [
-        {
-          id: 3,
-          id_opp: 4,
-          response_status: 'pending',
-        }
-      ],
       adminOf: [
         {
           organization: 'SOME',
           id: 1,
+        }
+      ],
+      admins: [    
+        {
+          firstName: '', 
+          lastName: '',
+          id: '',
         }
       ],
       following: [
@@ -100,9 +111,42 @@ describe('reducer - user viewed', () => {
           organization: 'Bookmobile',
           id: 2,
         }
-      ]
+      ],
+      opportunities: [  
+        {
+          id: '',
+          userId: '',
+          organization: '',
+          opportunityType: '',
+          offer: '',
+          title: '',
+          narrative: 'testing this',
+          timestampStart: '',
+          timestampEnd: '',
+          locationCity: '',
+          locationState: '',
+          locationCountry: '',
+          link: '',
+          causes: [''],
+        }
+      ],
+      responses: [   
+        {
+          id: '',
+          idOpportunity: '',
+          organization: '', 
+          userId: '',
+          firstName: '', 
+          lastName: 'last name in response', 
+          responseStatus: '',
+          title: '',
+          timestampStatusChange: '',
+          timestampCreated: '',
+          notes: '',
+        }
+      ], 
     }
-    const action = Object.assign({}, {type: actions.LOAD_USER_VIEWED}, expectedResult);
+    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });

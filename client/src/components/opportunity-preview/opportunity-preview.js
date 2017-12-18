@@ -20,7 +20,7 @@ export class OpportunityPreview extends Component {
       <div className='opportunityPreview'>
         <h3 className='opportunityTitle'>{this.props.opportunity.title}</h3>
         <h4 className='requiredSkills'>{this.props.opportunity.requiredSkills}</h4>
-        <p className='timeframe'>{this.props.opportunity.requiredSkills}</p>
+        <p className='timeframe'>{this.props.opportunity.timeframe}</p>
         <p className='description'>{this.props.opportunity.description}</p>
         <button onClick={()=>this.editOpportunity(this.props.opportunity.id)}>Edit</button>
       </div>

@@ -22,7 +22,7 @@ export const reducer = (state = initialState, action) => {
       locationCountry: action.locationCountry,
       link: action.link,
       causes: action.causes,
-      responses: action.responses
+      responses: action.responses,
     });
   }
 

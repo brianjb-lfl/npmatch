@@ -21,6 +21,7 @@ describe('actions - single user', () => {
     const expectedAction = {
       type: actionsUser.LOAD_USER,
       id: undefined,
+      authToken: undefined,
       firstName: 'Bob',
       lastName: 'Jones',
       username:   undefined,
@@ -29,13 +30,17 @@ describe('actions - single user', () => {
       locationCity:  undefined,
       locationState:  undefined,
       locationCountry: undefined,
+      availability: undefined,
       bio:  undefined,
       links: undefined,
       causes: undefined,
       skills:  undefined,
       responses: undefined,
       adminOf:  undefined,
+      admins: undefined,
       following: undefined,
+      opportunities: undefined,
+      responses: undefined,
     }
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
@@ -43,56 +48,47 @@ describe('actions - single user', () => {
   it('should create an action to load a simple user', () => {
     const user = {
       id: 7,
-      firstName: 'Bob',
-      lastName: 'Jones',
       username: 'bobjones',
       userType: 'individual',
+      firstName: 'Bob',
+      lastName: 'Jones',
       organization: undefined,
+      logo: 'http://mylogo.com',
       locationCity: 'Morgan City',
       locationState: 'LA',
       locationCountry: 'USA',
+      availability: 'anytime',
       bio: 'just a simple man',
+      authToken: 'XYZ123',
       links: [],
       causes: [],
       skills: [],
       responses: [],
       adminOf: [],
+      admins: [],
       following: [],
+      opportunities: [],
+      responses: [],
     };
-    const expectedAction = {
-      type: actionsUser.LOAD_USER,
-      id: 7,
-      firstName: 'Bob',
-      lastName: 'Jones',
-      username: 'bobjones',
-      userType: 'individual',
-      organization: undefined,
-      locationCity: 'Morgan City',
-      locationState: 'LA',
-      locationCountry: 'USA',
-      bio: 'just a simple man',
-      links: [],
-      causes: [],
-      skills: [],
-      responses: [],
-      adminOf: [],
-      following: [],
-    }
+    const expectedAction = {...user, type: actionsUser.LOAD_USER}
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a user with nested arrays', () => {
     const user = {
       id: 8,
-      firstName: 'Bob',
-      lastName: 'Jones',
       username: 'bobjones',
       userType: 'individual',
+      firstName: 'Bob',
+      lastName: 'Jones',
       organization: undefined,
+      logo: 'http://mylogo.com',
       locationCity: 'Morgan City',
       locationState: 'LA',
       locationCountry: 'USA',
+      availability: 'anytime',
       bio: 'just a simple man',
+      authToken: 'XYZ123',
       links: [
         {
           linkType: 'home',
@@ -115,55 +111,54 @@ describe('actions - single user', () => {
           id: 1,
         }
       ],
+      admins: [
+        {
+          firstName: 'adminFirst',
+          lastName: 'adminLast',  
+          id: '44',
+        }
+      ],
       following: [
         {
           organization: 'Bookmobile',
           id: 2,
+        }
+      ],
+      opportunities: [
+        {
+          id: 355,
+          userId: '',
+          organization: '', 
+          opportunityType: '',
+          offer: '',
+          title: 'test opportunity',
+          narrative: '',
+          timestampStart: '',
+          timestampEnd: '',
+          locationCity: '',
+          locationState: '',
+          locationCountry: '',
+          link: '',
+          causes: [''], 
+        }
+      ],
+      responses: [
+        {
+          id: 67,
+          idOpportunity: '',
+          organization: '',
+          userId: '',
+          firstName: 'Dan',
+          lastName: 'Wriggle', 
+          responseStatus: '',
+          title: '',
+          timestampStatusChange: '',
+          timestampCreated: '',
+          notes: '',
         }
       ],
     };
-    const expectedAction = {
-      type: actionsUser.LOAD_USER,
-      id: 8,
-      id: 8,
-      firstName: 'Bob',
-      lastName: 'Jones',
-      username: 'bobjones',
-      userType: 'individual',
-      organization: undefined,
-      locationCity: 'Morgan City',
-      locationState: 'LA',
-      locationCountry: 'USA',
-      bio: 'just a simple man',
-      links: [
-        {
-          linkType: 'home',
-          linkURL: 'http://about.me/bobjones',
-        }
-      ],
-      causes: ['children', 'elderly'],
-      skills: ['listening', 'tutoring'],
-      responses: [
-        {
-          id: '',
-          id_opp: '',
-          response_status: '',
-          title: '',
-        }
-      ],
-      adminOf: [
-        {
-          organization: 'SOME',
-          id: 1,
-        }
-      ],
-      following: [
-        {
-          organization: 'Bookmobile',
-          id: 2,
-        }
-      ],
-    }
+    const expectedAction = {...user, type: actionsUser.LOAD_USER}
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
@@ -192,10 +187,9 @@ describe('actions - single user', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(3);
+        expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
           {type: actionsUser.LOAD_USER, id: userId }
         );
       })
@@ -224,10 +218,9 @@ describe('actions - single user', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(3);
+        expect(expectedActions.length).toBe(4); // 2 this time, 2 prior run
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
           {type: actionsUser.LOAD_USER, id: userId }
         );
       })

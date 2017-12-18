@@ -33,7 +33,7 @@ export const fetchUsersList = (query, authToken) => dispatch => {
       return res.json();
     })
     .then(res=>{
-      console.log('response of users from fetch',res)
+      // console.log('response of users from fetch',res)
       return dispatch(loadUsersList(res));      
     })
     .catch(error => {

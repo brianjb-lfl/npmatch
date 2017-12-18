@@ -18,7 +18,7 @@ export class DetailedContributorPreview extends Component {
         <img className='logo' src={this.props.user.logo} alt={this.props.user.firstName}></img>
         <h3 className='name'>{this.props.user.name}</h3>
         <p className='bio'>{this.props.user.bio}</p>
-        <p className='causes'>{this.props.user.causes.join(', ')}</p>
+        {/* <p className='causes'>{this.props.user.causes.join(', ')}</p> */}
         {/* <p className='skills'>{this.props.user.skills.join(', ')}</p> */}
         <p className='availability'>{this.props.user.availability}</p>
       </div>

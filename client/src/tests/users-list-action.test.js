@@ -17,10 +17,10 @@ describe('actions - list of users', () => {
     const arrayOfUsers = [
       {
         id: 1,
+        username: '',
+        userType: '',  
         firstName: '',
         lastName: '',
-        username: '',
-        userType: '',         
         organization: 'Coffee for the Future',
         locationCity: 'Birmingham',
         locationState: 'AL',
@@ -125,8 +125,7 @@ describe('actions - list of users', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions',expectedActions)
-        expect(expectedActions.length).toBe(3);
-        expect.assertions(2);  // number of callback functions
+        expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsUsersList.LOAD_USERS_LIST, main: {} }

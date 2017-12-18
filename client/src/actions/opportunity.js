@@ -11,15 +11,15 @@ export const loadOpportunity = action => ({
   userId: action.userId,
   organization: action.organization,
   opportunityType: action.opportunityType,
-  offer: action.offer,
+  offer: action.offer || false,
   title: action.title,
-  narrative: action.narrative, // do we need this?
+  narrative: action.narrative, 
   timestampStart: action.timestampStart,
   timestampEnd: action.timestampEnd,
   locationCity: action.locationCity,
   locationState: action.locationState,
   locationCountry: action.locationCountry,
-  link: action.link, // array of objects
+  link: action.link,
   causes: action.causes,
   responses: action.responses,
 });
@@ -66,10 +66,12 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
     dispatch(actionsDisplay.changeDisplay('loading'));
 
     // conform data format
-    if ( opportunity.offer.substring(0,5) === 'offer' ) {
-      opportunity.offer = true;
-    } else {
-      opportunity.offer = false;
+    if (typeof opportunity.offer === 'string') {
+      if ( opportunity.offer.substring(0,5) === 'offer' ) {
+        opportunity.offer = true;
+      } else {
+        opportunity.offer = false;
+      }  
     }
 
     if ( typeof opportunity.locationState === 'object' ) {
@@ -93,7 +95,7 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
       body: JSON.stringify(opportunity),
       headers
     };
-    console.log('create opp',init)
+    // console.log('create opp',init)
     return fetch(url, init)
     .then(res=>{
       if (!res.ok) { 

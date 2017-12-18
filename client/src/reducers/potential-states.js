@@ -22,43 +22,38 @@ export const user = {
   availability: '',
   bio: '', 
   authToken: '',
-  links: [              // SQL join
+  links: [      
     {
-      edit: true,
-      linkType: 'home1',
-      linkURL: 'www.home.com',
-    },
-    {
-      linkType: 'contribution',
-      linkURL: 'www.home.com',
+      linkType: '',
+      linkURL: '',
     }
   ],
   causes: [''],
   skills: [''],
-  adminOf: [            // SQL join, single only, not in list
+  adminOf: [       
     {
-      organization: '', // nested SQL join
+      organization: '',
       id: '',
     }
   ],
-  admins: [            // SQL join, single only, not in list
+  admins: [         
     {
-      firstName: '',   // nested SQL join
-      lastName: '',    // nested SQL join
+      firstName: '',  
+      lastName: '',    
       id: '',
     }
   ],
-  following: [          // SQL join, single only, not in list
+  following: [    
     {
-      organization: '', // nested SQL join
+      organization: '',
       id: '',
     }
   ],
-  opportunities: [      // SQL join
+  opportunities: [  
     {
       id: '',
-      userId: '',          // not needed on nested list, but native data, so keep
-      // organization: '', // not on nested list
+      userId: '',      
+      organization: '', 
       opportunityType: '',
       offer: '',
       title: '',
@@ -69,17 +64,18 @@ export const user = {
       locationState: '',
       locationCountry: '',
       link: '',
-      causes: [''], // nested SQL join  
+      causes: [''],   
+      responses: [],
     }
   ],
-  responses: [          // SQL join, single only, not in list
+  responses: [     
     {
       id: '',
       idOpportunity: '',
-      organization: '', // SQL join
+      organization: '',
       userId: '',
-      firstName: '',    // SQL join
-      lastName: '',     // SQL join
+      firstName: '', 
+      lastName: '', 
       responseStatus: '',
       title: '',
       timestampStatusChange: '',
@@ -99,7 +95,7 @@ export const usersList = {
 export const opportunity = {
   id: '',
   userId: '',
-  organization: '',     // SQL join (in case of individuals, list individual's full name here)
+  organization: '',
   opportunityType: '',
   offer: '',
   title: '',
@@ -110,8 +106,8 @@ export const opportunity = {
   locationState: '',
   locationCountry: {name: 'United States', code: 'US'},
   link: '',
-  causes: null,        // SQL join
-  responses: [         // SQL join, load in single only, not in list
+  causes: null,  
+  responses: [     
       {
         id: '',
         idOpportunity: '',
