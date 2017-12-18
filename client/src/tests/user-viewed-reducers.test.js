@@ -1,6 +1,7 @@
 import { reducer } from '../reducers/user-viewed';
 import * as actions from '../actions/user-viewed';
 import {user as initialState} from '../reducers/potential-states';
+delete initialState.authToken;
 
 describe('reducer - user viewed', () => {
   
@@ -27,7 +28,6 @@ describe('reducer - user viewed', () => {
       locationCountry: undefined,
       availability: 'tomorrow',
       bio: undefined,
-      authToken: 'XXX333',
       links: undefined,
       causes: undefined,
       skills: undefined,
@@ -55,7 +55,6 @@ describe('reducer - user viewed', () => {
       locationState: 'IL',
       locationCountry: 'USA',
       bio: 'Sausage-maker',
-      authToken: '756XTJ',
       links: undefined,
       causes: [],
       skills: [],
@@ -84,7 +83,6 @@ describe('reducer - user viewed', () => {
       locationCountry: 'USA',
       availability: 'whenever',
       bio: 'Sausage-maker',
-      authToken: 'ABC876',
       links: [
         {
           linkType: 'home',

@@ -20,7 +20,6 @@ export const reducer = (state = initialState, action) => {
       locationCountry: action.locationCountry,
       availability: action.availability,
       bio: action.bio,
-      authToken: action.authToken,
       links: action.links,
       causes: action.causes,
       skills: action.skills,

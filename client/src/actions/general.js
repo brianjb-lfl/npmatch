@@ -34,9 +34,7 @@ export const fetchInitialize = () => dispatch => {
       return res.json();
     })
     .then(res => {
-      console.log('response from initialize fetch', res)
       dispatch(actionsUsersList.loadUsersList(res.users));
-      console.log('We cant access props from here');
       return res;
     })
     .then(res => {
@@ -47,8 +45,7 @@ export const fetchInitialize = () => dispatch => {
       return dispatch(loadCauses(res.causes));
     })
     .catch(error => {
-      console.log('error', error);
+      // console.log('error', error);
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }
-

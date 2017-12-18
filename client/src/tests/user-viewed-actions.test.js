@@ -1,4 +1,4 @@
-import * as actionsUserViewed from '../actions/user-viewed';
+import * as actions from '../actions/user-viewed';
 import * as actionsDisplay from '../actions/display';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -19,14 +19,14 @@ describe('actions - user viewed', () => {
       lastName: 'Jones'
     };
     const expectedAction = {
-      type: actionsUser.LOAD_USER_VIEWED,
+      type: actions.LOAD_USER_VIEWED,
       id: undefined,
-      authToken: undefined,
-      firstName: 'Bob',
-      lastName: 'Jones',
       username:   undefined,
       userType:    undefined,
+      firstName: 'Bob',
+      lastName: 'Jones',
       organization: undefined,
+      logo: undefined,
       locationCity:  undefined,
       locationState:  undefined,
       locationCountry: undefined,
@@ -42,7 +42,7 @@ describe('actions - user viewed', () => {
       opportunities: undefined,
       responses: undefined,
     }
-    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
+    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a simple user', () => {
@@ -59,7 +59,6 @@ describe('actions - user viewed', () => {
       locationCountry: 'USA',
       availability: 'anytime',
       bio: 'just a simple man',
-      authToken: 'XYZ123',
       links: [],
       causes: [],
       skills: [],
@@ -70,8 +69,8 @@ describe('actions - user viewed', () => {
       opportunities: [],
       responses: [],
     };
-    const expectedAction = {...user, type: actionsUser.LOAD_USER_VIEWED}
-    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
+    const expectedAction = {...user, type: actions.LOAD_USER_VIEWED}
+    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a user with nested arrays', () => {
@@ -88,7 +87,6 @@ describe('actions - user viewed', () => {
       locationCountry: 'USA',
       availability: 'anytime',
       bio: 'just a simple man',
-      authToken: 'XYZ123',
       links: [
         {
           linkType: 'home',
@@ -158,8 +156,8 @@ describe('actions - user viewed', () => {
         }
       ],
     };
-    const expectedAction = {...user, type: actionsUser.LOAD_USER_VIEWED}
-    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
+    const expectedAction = {...user, type: actions.LOAD_USER_VIEWED}
+    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
   });
 
 })

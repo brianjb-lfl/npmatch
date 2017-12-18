@@ -4,23 +4,26 @@ export const LOAD_USER_VIEWED = 'LOAD_USER_VIEWED';
 export const loadUserViewed = user => ({
   type: LOAD_USER_VIEWED,
   id: user.id,
-  firstName: user.firstName,
-  lastName: user.lastName,
   username: user.username,
   userType: user.userType,
+  firstName: user.firstName,
+  lastName: user.lastName,
   organization: user.organization,
+  logo: user.logo,
   locationCity: user.locationCity,
   locationState: user.locationState,
   locationCountry: user.locationCountry,
   availability: user.availability,
   bio: user.bio,
-  logo: user.logo,
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
   responses: user.responses, // array of objects
   adminOf: user.adminOf, // array of objects
+  admins: user.admins,
   following: user.following, // array of objects
+  opportunities: user.opportunities,
+  responses: user.responses,
 });
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
