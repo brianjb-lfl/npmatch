@@ -159,6 +159,166 @@ userRouter.post('/register', jsonParser, (req, res) => {
     });
 });
 
+
+
+// PUT api/users/:id
+userRouter.put('/:id', jsonParser, (req, res) => {
+  const usrId = req.params.id;
+  const knex = require('../db');
+  let inUsrObj = Object.assign( {}, req.body);
+  let convInUsrObj = {};
+  let retObj = {};
+  let linksArr = req.body.links.slice();
+  let linkPostArr = [];
+  let causesArr = req.body.causes.slice();
+  let causePostArr = [];
+  let skillsArr = req.body.skills.slice();
+  let skillPostArr = [];
+
+  // verify id
+  return knex('users')
+    .select()
+    .where('id', '=', usrId)
+    .then( results => {
+      if(!results) {
+        return Promise.reject({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'User id not found.',
+        });
+      }
+    })    // user exists, update info
+    
+    .then( () => {
+      convInUsrObj = epHelp.convertCase(inUsrObj, 'ccToSnake');
+      if(convInUsrObj.password) {
+        return hashPassword(convInUsrObj.password);
+      }
+      else {
+        return ('no password change');
+      }
+    })
+    .then( result => {
+      if(result !== 'no password change'){
+        convInUsrObj = Object.assign( {}, convInUsrObj, {
+          password: result
+        });
+      };;
+      delete convInUsrObj.links;
+      delete convInUsrObj.causes;
+      delete convInUsrObj.skills;
+      return knex('users')
+        .where('id', '=', usrId)
+        .update(convInUsrObj)
+        .returning(['id', 'username'])
+    })
+    .then( result => {
+      retObj = result;
+      // process links
+      return knex('links')
+        .where('id_user', '=', usrId)
+        .del()
+        .then( () => {
+          if(linksArr.length > 0) {
+            linksArr.forEach( linkItem => {
+              linkPostArr.push(
+                Object.assign( {}, {
+                  id_user: usrId,
+                  link_url: linkItem.linkUrl,
+                  link_type: linkItem.linkType
+                })
+              );
+            });
+            return knex('links')
+              .insert(linkPostArr)
+          }
+          else {
+            return;
+          }
+        });
+    })
+    
+    .then( () => {
+      // process causes
+      return knex('users_causes')
+        .where('id_user', '=', usrId)
+        .del()
+        .then( () => {
+          if(causesArr.length > 0) {
+            return knex('causes')
+              .select('id', 'cause')
+          }
+          else {
+            return ('no causes')
+          }
+        })
+        .then( results => {
+          if(results !== 'no causes') {
+            causesArr.forEach( causeItem => {
+              const causeId = results.filter( item => item.cause === causeItem )[0].id;
+              causePostArr.push(
+                Object.assign ( {}, {
+                  id_user: usrId,
+                  id_cause: causeId
+                })
+              );
+            });
+            return knex('users_causes')
+              .insert(causePostArr)
+          }
+          else {
+            return;
+          }
+        });
+    })
+
+    .then( () => {
+      // process skills
+      return knex('users_skills')
+        .where('id_user', '=', usrId)
+        .del()
+        .then( () => {
+          if(skillsArr.length > 0) {
+            return knex('skills')
+              .select('id', 'skill')
+          }
+          else {
+            return;
+          }
+        })
+        .then( results => {
+          if(results) {
+            console.log('running if block');
+            skillsArr.forEach( skillItem => {
+              const skillId = results.filter( item => item.skill === skillItem )[0].id;
+              skillPostArr.push(
+                Object.assign ( {}, {
+                  id_user: usrId,
+                  id_skill: skillId
+                })
+              );
+            });
+            return knex('users_skills')
+              .insert(skillPostArr)
+          }
+          else {
+            return;
+          }
+        });
+    })
+    .then( () => {
+      res.status(201).json(retObj)
+    })
+    .catch( err => {
+      if(err.reason === 'ValidationError') {
+        return res.status(err.code).json(err);
+      }
+      res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+
+
 // Clear test data
 userRouter.delete('/clear/test/data', jsonParser, (req, res) => {
   const knex = require('../db');
