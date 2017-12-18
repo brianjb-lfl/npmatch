@@ -23,7 +23,6 @@ export const fetchInitialize = () => dispatch => {
   const url = `${REACT_APP_BASE_URL}/api/admin/initialize`;
   const headers = {
     'content-type': 'application/json',
-    // "Authorization": `Bearer ${authToken}`, 
   };
 
   const init = {
@@ -47,10 +46,6 @@ export const fetchInitialize = () => dispatch => {
     .then(res => {
       return dispatch(loadCauses(res.causes));
     })
-    // .then(res=>{
-    //   console.log('Is it reaching this?');
-    //   return dispatch(actionsDisplay.changeDisplay('homePage'));
-    // })
     .catch(error => {
       console.log('error', error);
       return dispatch(actionsDisplay.toggleModal(error));

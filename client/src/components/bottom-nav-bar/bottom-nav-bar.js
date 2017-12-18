@@ -16,7 +16,6 @@ export class BottomNavBar extends Component {
       this.props.dispatch(actionsUsersList.fetchUsersList(
         {},
         this.props.user.authToken,
-        'orgs'
       ));
       this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations'));
       this.props.history.push('/organizations');
@@ -32,7 +31,6 @@ export class BottomNavBar extends Component {
       this.props.dispatch(actionsUsersList.fetchUsersList(
         {},
         this.props.user.authToken,
-        'users'
       ));
       this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors'));
       this.props.history.push('/contributors');

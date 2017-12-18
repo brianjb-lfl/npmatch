@@ -13,8 +13,6 @@ export default class UandPFields extends Component {
       </div>
       : '' ;
 
-
-
     return (
       <div>
         <label className='inputLabel' htmlFor={'username'}>Username</label>

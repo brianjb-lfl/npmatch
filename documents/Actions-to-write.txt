@@ -8,26 +8,18 @@ ACTIONS TO WRITE
 
       update opportunity      DONE
       
-      user update profile     FRIDAY
+      user update profile     DONE (with issue)
 
-      create userSkills       FRIDAY
+      create userSkills       DONE
       create userCauses       DONE
-      create oppCauses        FRIDAY
-                              all 3 cases send arrays with post or put endpoints
+      create oppCauses        DONE  all 3 cases send arrays with post or put endpoints
       
-      search opportunities    create search action (SATURDAY)
-                              send search criteria to server DONE
-                              server searches SQL and responds
-                              list loads to state DONE
-
-      search users            create search action (SATURDAY)
-                              send search criteria to server DONE
-                              server searches SQL and responds
-                              list loads to state DONE
+      search opportunities    CONFIRM
+      search users            ...same as search opportunities
                           
-      respond to opprtnties   FRIDAY
+      respond to opprtnties   SUNDAY
 
-      create role             FRIDAY
+      create role             SUNDAY
                               user follows other user 
                               (can limit to follow orgs)
                         

@@ -1,4 +1,4 @@
-// actions for changing display
+// display is primarily handled via routers. Display in state is for helper properties, such as modal, editing or not, etc. NOT for primary navigation.
 export const CHANGE_DISPLAY = 'CHANGE_DISPLAY';
 export const changeDisplay = (view) => ({
   type: CHANGE_DISPLAY,

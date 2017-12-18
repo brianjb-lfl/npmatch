@@ -7,7 +7,6 @@ export class DetailedOrganizationPreview extends Component {
     this.props.dispatch(actionsUser.fetchUser(
       id,
       this.props.user.authToken,
-      'orgs',
       'userViewed'
     ))
   }
