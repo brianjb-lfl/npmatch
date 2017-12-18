@@ -7,7 +7,7 @@ const makeServiceWorkerEnv = require('service-worker-mock');
 const Response = () => ({ clone: jest.fn() });
 const Request = () => ({ url: '/test' });
 
-describe('Service worker', () => {
+describe.skip('Service worker', () => {
   beforeEach(() => {
     Object.assign(global, makeServiceWorkerEnv());
     jest.resetModules();
