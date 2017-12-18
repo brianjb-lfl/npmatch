@@ -26,10 +26,10 @@ export class UserEditUandPwForm extends Component {
         <UandPwFields confirm={true}/>
 
         <div>
-          <button 
+          <button className='submitButton'
             type="submit" disabled={this.props.pristine || this.props.submitting}>Save
           </button>
-          <button 
+          <button className='clearFormButton'
             type="button" disabled={this.props.pristine || this.props.submitting} 
             onClick={this.props.reset}>Clear Form
           </button>
