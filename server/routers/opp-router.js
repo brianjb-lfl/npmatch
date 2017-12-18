@@ -136,7 +136,7 @@ oppRouter.put('/:id', jwtAuth, jsonParser, (req, res) => {
     });
   }
 
-  // update base opportunity info - get id'
+  // update base opportunity info'
   const postOppObj = epHelp.buildOppBase(inOppObj);
   const knex = require('../db');
 
