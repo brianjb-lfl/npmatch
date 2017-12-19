@@ -12,7 +12,7 @@ export class OpportunityPreview extends Component {
       .then(() => {
         this.props.history.push('/opportunities/create');
         this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
-      })
+      });
   }
 
   render() {
@@ -22,7 +22,7 @@ export class OpportunityPreview extends Component {
         <h4 className='requiredSkills'>{this.props.opportunity.requiredSkills}</h4>
         <p className='timeframe'>{this.props.opportunity.timeframe}</p>
         <p className='description'>{this.props.opportunity.description}</p>
-        <button onClick={()=>this.editOpportunity(this.props.opportunity.id)}>Edit</button>
+        <button onClick={() => this.editOpportunity(this.props.opportunity.id)}>Edit</button>
       </div>
     )
   }
