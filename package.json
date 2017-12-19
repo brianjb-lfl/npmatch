@@ -34,7 +34,8 @@
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha --exit server/test/*test.js",
     "heroku": "node index.js",
-    "travis": "mocha --exit server/test/*test.js"
+    "server-test": "mocha --exit server/test/*test.js",
+    "travis": "server-test && cd $CLIENT_DIR && npm install && npm test"
   },
   "devDependencies": {
     "chai": "^4.1.2",

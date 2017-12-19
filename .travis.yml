@@ -1,7 +1,7 @@
 language: node_js
 node_js: node
 services:
-- postgresql
+  - postgresql
 deploy:
   provider: heroku
   api_key:
@@ -9,3 +9,6 @@ deploy:
   app: arcane-journey-50164
   on:
     repo: brianjb-lfl/npmatch
+env:
+  - SERVER_DIR=server
+  - CLIENT_DIR=client
