@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://arcane-journey-50164.herokuapp.com/client/",
   "dependencies": {
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "moment": "^2.19.4",
