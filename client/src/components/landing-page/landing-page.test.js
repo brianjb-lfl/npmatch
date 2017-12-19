@@ -24,14 +24,24 @@ describe('Landing Page component display functionality', () => {
       <OrganizationPreview />
     ));
   });
-  // it('Should map state to props', () => {
-  //   const initialState = { display: 'landingPage', usersList: usersList };
-  //   const expectedProps = { display: 'landingPage', usersList: [{
-  //     main: {
-  //       id: 1,
-  //     }
-  //   }]};
-  //   const mockState = mapStateToProps(initialState);
-  //   expect(mockState).toEqual(expectedProps);
-  // })
+  it('Should map state to props', () => {
+    const initialState = {
+      usersList: {
+        main: {
+          id: 1
+        }
+      },
+      display: {
+        view: 'landingPage'
+      },
+    };
+    const expectedProps = {
+      usersList: {
+        id: 1
+      },
+      display: 'landingPage'
+    };
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  })
 });
