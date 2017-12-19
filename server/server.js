@@ -35,7 +35,7 @@ app.use('/api/roles', roleRouter);
 app.use('/api/responses', responseRouter);
 
 app.use('*', (req, res) => {
-  return res.status(404).json({message: 'Not Found'});
+  return res.status(404).json({message: 'test'});
 });
 
 function runServer(port = PORT) {
