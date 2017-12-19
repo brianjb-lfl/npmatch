@@ -18,7 +18,7 @@ export class OpportunityCreate extends Component {
   handleSubmitButton(input, isNew) {
     const opp = Object.assign({}, input);
     opp.userId = isNew ? this.props.user.id : opp.userId;
-    console.log('opp', opp)
+    console.log('opp to submit', opp)
 
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => this.props.history.push('/myopportunities'))
@@ -26,7 +26,7 @@ export class OpportunityCreate extends Component {
 
   render() {
 
-    const isNew = this.props.display === 'editOpportunity' ? false : true;
+    const isNew = this.props.display.view === 'editOpportunity' ? false : true;
     const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity';
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>
@@ -43,7 +43,7 @@ export class OpportunityCreate extends Component {
 
 
     return (
-      <main class='createOpportunity'>
+      <main className='createOpportunity'>
         <h2>Opportunity</h2>
 
         <form className='opportunityForm'
@@ -151,12 +151,13 @@ export const mapStateToProps = state => {
   delete initialForm.responses;
   initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id;
   initialForm.causes = initialForm.causes ? initialForm.causes : null;
+  initialForm.organization = state.user.userType === 'organization' ? state.user.organization : `${state.user.firstName} ${state.user.lastName}` ;
 
   return {
     general: state.general,
     user: state.user,
     opportunity: state.opportunity,
-    display: state.display.view,
+    display: state.display,
     initialValues: initialForm
   }
 };

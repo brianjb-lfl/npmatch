@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsUser from '../../actions/user';
+import * as actionsDisplay from '../../actions/display';
 import IndivNameFields from '../fields/name-indiv';
 import OrgNameFields from '../fields/name-org';
 import LocationFields from '../fields/location';
@@ -21,7 +22,10 @@ export class UserEditGeneralForm extends Component {
     console.log('this.props.user id', this.props.user.id)
 
     this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.user.authToken))
-      .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
+      .then(() => {
+        this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+        this.props.history.push(`/profiles/${this.props.user.id}`)
+      })
   }
 
   render() {

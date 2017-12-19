@@ -67,8 +67,7 @@ oppRouter.get('/list', (req, res) => {
 oppRouter.post('/', jsonParser, (req, res) => {
   let inOppObj = req.body;
   let retObj = {};
-  let inCausesArr = inOppObj.causes.slice();
-
+  let inCausesArr = typeof inOppObj.causes === 'object' ? inOppObj.causes.slice() : [] ;
   // check for missing fields
   const reqFields = ['title', 'narrative', 'userId', 'causes'];
   const missingField = reqFields.find( field => !(field in inOppObj));

@@ -7,7 +7,7 @@ import * as actionsDisplay from '../../actions/display';
 export class TopNavBar extends Component {
 
   listOpportunities(query) {
-    console.log('list opps query', query)
+    // console.log('list opps query', query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
       .then(() => this.props.history.push('/myopportunities'))
   }

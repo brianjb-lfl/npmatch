@@ -142,6 +142,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch
 }
 
 export const login = user => dispatch => {
+  console.log('user at login',{user})
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -179,11 +180,11 @@ export const login = user => dispatch => {
 export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
-
+    const originalUser = {username: user.username, password: user.password};
     delete user.password2;
     delete user.authToken;
+    // DELETE THIS WHEN BRIAN ADDS TO DB
     delete user.availability;
-    delete user.logo;
     const params = isNew ? 'register' : user.id ;
     const method = isNew ? 'POST' : 'PUT';
 
@@ -208,6 +209,9 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
       return user.json();
     }) 
     .then(user => { 
+      if (isNew) {
+        return dispatch(login(originalUser))
+      }
       console.log('user just before stringing arrays',user);
       user.causes = stringArrayOfObjects(user.causes, 'cause');
       user.skills = stringArrayOfObjects(user.skills, 'skill');

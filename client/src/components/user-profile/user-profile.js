@@ -7,7 +7,9 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class UserProfile extends Component {
 
   render() {
-    let opportunityPreviews = typeof this.props.opportunities !== 'object' ? '' : this.props.opportunities.map((opp, key) => (
+    const user = this.props.user;
+
+    let opportunityPreviews = typeof user.opportunities !== 'object' ? '' : user.opportunities.map((opp, key) => (
       <OpportunityPreview opportunity={opp} key={key} />
     )
     );
@@ -15,10 +17,14 @@ export class UserProfile extends Component {
     return (
       <main>
         <div className='userProfile'>
-          <img src={this.props.logo} alt={`${this.props.name} logo`}></img>
-          <h3>{this.props.name}NAME NAME</h3>
-          <h4>{this.props.locationCity} CITY STATE {this.props.locationState}</h4>
-          <p>{this.props.description}</p>
+          <img src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
+          <h3>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
+          <h4>{this.props.locationCity}{user.locationState}{user.locationCountry}</h4>
+          <p>{user.bio}</p>
+          <p>{user.availability}</p>
+          <p>{user.links.join(', ')}</p>
+          <p>{user.causes.join(', ')}</p>
+          <p>{user.skills.join(', ')}</p>
         </div>
         {opportunityPreviews}
       </main>
@@ -26,8 +32,11 @@ export class UserProfile extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  userViewed: state.userViewed,
-  display: state.display
-})
+export const mapStateToProps = state => {
+  const user = state.display.view === 'selfProfile' || 'profileEdit' ? state.user : state.userViewed ;
+  return {
+    user,
+    display: state.display
+  }
+}
 export default connect(mapStateToProps)(UserProfile);

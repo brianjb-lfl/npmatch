@@ -17,6 +17,7 @@ passport.use(jwtStrategy);
 const knex = require('../db');
 
 const createAuthToken = function (user){
+  console.log('user in create auth token');
   return jwt.sign({user}, JWT_SECRET, {
     subject: user.username,
     expiresIn: JWT_EXPIRY,
@@ -68,4 +69,4 @@ authRouter.post('/refresh', jwtAuth, (req, res) => {
   res.json({ authToken });
 });
 
-module.exports = { authRouter };
+module.exports = { authRouter, createAuthToken };

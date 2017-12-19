@@ -82,7 +82,10 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
       opportunity.locationCountry = opportunity.locationCountry.code;
     } 
     
-    const params = isNew ? `/${opportunity.id}` : '' ;
+    if (isNew) delete opportunity.id;
+    // DELETE THIS WHEN BRIAN ADDS TO DB
+    delete opportunity.organization;
+    const params = isNew ? '' : `/${opportunity.id}` ;
     const method = isNew ? 'POST' : 'PUT' ;
 
     const url = `${REACT_APP_BASE_URL}/api/opportunities${params}`
@@ -95,7 +98,7 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
       body: JSON.stringify(opportunity),
       headers
     };
-    // console.log('create opp',init)
+    console.log('create opp',init)
     return fetch(url, init)
     .then(res=>{
       if (!res.ok) { 

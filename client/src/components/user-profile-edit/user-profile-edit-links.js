@@ -12,6 +12,9 @@ export class UserEditLinksForm extends Component {
   
   handleSubmitButton(link, index = 0, action = 'add') {
     this.props.dispatch(actionsUser.manageLinks(this.props.user, link, index, action))
+    .then(() => {
+      this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+    })
   }
 
   handleEditButton(index, edit=false) {

@@ -171,11 +171,11 @@ userRouter.put('/:id', jsonParser, (req, res) => {
   let inUsrObj = Object.assign( {}, req.body);
   let convInUsrObj = {};
   let retObj = {};
-  let linksArr = req.body.links.slice();
+  let linksArr = typeof req.body.links === 'object' ? req.body.links.slice() : [] ;
   let linkPostArr = [];
-  let causesArr = req.body.causes.slice();
+  let causesArr = typeof req.body.causes === 'object' ? req.body.causes.slice() : [] ;
   let causePostArr = [];
-  let skillsArr = req.body.skills.slice();
+  let skillsArr = typeof req.body.skills === 'object' ? req.body.skills.slice() : [] ;
   let skillPostArr = [];
 
   // verify id
@@ -209,7 +209,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         convInUsrObj = Object.assign( {}, convInUsrObj, {
           password: result
         });
-      };;
+      }
       delete convInUsrObj.links;
       delete convInUsrObj.causes;
       delete convInUsrObj.skills;
@@ -347,6 +347,5 @@ userRouter.delete('/clear/test/data', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });
 });
-
 
 module.exports = { userRouter };

@@ -113,12 +113,14 @@ epHelp.buildOppCausesArr = function(oppId, inCausesArr) {
     .then( allCauses => {
       inCausesArr.forEach( oppCause => {
         let tempCItem = allCauses.filter( item => item.cause === oppCause )[0];
-        retArr.push(
-          Object.assign( {}, {
-            id_opp: oppId,
-            id_cause: tempCItem.id
-          })
-        );
+        if (typeof tempCItem === 'object') {
+          retArr.push(
+            Object.assign( {}, {
+              id_opp: oppId,
+              id_cause: tempCItem.id
+            })
+          );
+        }
       });
       return retArr;
     })
