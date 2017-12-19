@@ -66,7 +66,7 @@ export class OpportunityResponse extends Component {
         </div> 
       } else if (false){
         theForm = <div>
-          <form className='opportunityResponse' initialValues={this.props.opportunity}
+          <form className='opportunityResponse' initialvalues={this.props.opportunity}
             onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues, this.props.index))}
           >
             {theField}

@@ -18,7 +18,6 @@ export const loadUserViewed = user => ({
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
-  responses: user.responses, // array of objects
   adminOf: user.adminOf, // array of objects
   admins: user.admins,
   following: user.following, // array of objects

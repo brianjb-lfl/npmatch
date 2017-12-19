@@ -24,7 +24,6 @@ export const reducer = (state = initialState, action) => {
       links: action.links,
       causes: action.causes,
       skills: action.skills,
-      responses: action.responses,
       adminOf: action.adminOf, 
       admins: action.admins,
       following: action.following,

@@ -7,7 +7,7 @@ import deepAssign from 'deep-assign';
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_USER_VIEWED) {
-    return Object.assign({}, state, {
+    return deepAssign({}, state, {
       id: action.id,
       username: action.username,
       userType: action.userType,
@@ -23,7 +23,6 @@ export const reducer = (state = initialState, action) => {
       links: action.links,
       causes: action.causes,
       skills: action.skills,
-      responses: action.responses,
       adminOf: action.adminOf, 
       admins: action.admins,
       following: action.following,

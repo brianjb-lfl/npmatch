@@ -26,7 +26,6 @@ export const loadUser = user => ({
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
-  responses: user.responses, // array of objects
   adminOf: user.adminOf, // array of objects
   admins: user.admins,
   following: user.following, // array of objects
@@ -222,41 +221,6 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     });
 }
 
-/*
-
-#######################
-
-this.props.handleSubmit={(formValues)=>{addResponse(opportunity, formValues)}
-
-const addResponse = (opportunity, formValues) {
-  const response = {
-    idOpportunity: opportunity.id,
-    userId: this.props.user.id,
-    notes: formValues.notes,
-    responseStatus: 'offered',
-    organization: opportunity.organization,
-    firstName: this.props.user.firstName,
-    lastName: this.props.user.lastName
-    title: opportunity.title,
-  }
-  this.props.dispatch(actionsUser.createOrEditResponse(response, -1, this.props.user.authToken, true));
-  then.props.dispatch(actionsDisplay.changeDisplay('normal'))
-}
-
-#######################
-
-this.props.handleSubmit={(formValues)=>{editResponse(formValues, index)}
-  // formValues.status === 'offered' || 'deleted' ==> available to respondants
-  // formValues.status === 'accepted' || 'denied' ==> available to posters
-  // control availability via React component
-
-const editResponse = (response, index) {
-  this.props.dispatch(actionsUser.createOrEditResponse(response, index, this.props.user.authToken, false));
-  then.props.dispatch(actionsDisplay.changeDisplay('normal'))
-}
-
-*/
-
 export const createOrEditResponse = (response, index, authToken, isNew = true) => dispatch => {
   /* response = {
     id: 0 // only is isNew !== true
@@ -266,6 +230,8 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
     title: 'title of opportunity, read from state at time of click'
     notes: 
   } */
+
+  console.log('response',response, 'index',index, authToken, isNew)
 
   dispatch(actionsDisplay.changeDisplay('loading'));
 
@@ -281,18 +247,18 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
   const params = isNew ? '' : response.id ;
   const method = isNew ? 'POST' : 'PUT';
 
-  const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
+  const url = `${REACT_APP_BASE_URL}/api/responses/${params}`;
   const headers = { 
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
-
+  console.log('response transmitted', response)
   const init = { 
     method,
     body: JSON.stringify(response),
     headers
   };
-  console.log('init', init);
+  console.log('init at response', init);
   return fetch(url, init)
   .then(res=>{ 
     console.log(res);
