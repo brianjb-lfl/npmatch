@@ -7,16 +7,19 @@ import {display as initialState} from './potential-states'
 export const reducer = (state = initialState, action) => {
   
   if (action.type === actions.CHANGE_DISPLAY) {
-    return Object.assign({}, state, {
-      view: action.view
-    });
+    return {...state, view: action.view};
   }
 
   else if (action.type === actions.TOGGLE_MODAL) {
-    return Object.assign({}, state, {
-      modal: !state.modal,
-      modalMessage: action.message
-    });
+    return {...state, modal: !state.modal, modalMessage: action.message };
+  }
+
+  else if (action.type === actions.TOGGLE_USER) {
+    return {...state, userId: action.userId };
+  }
+
+  else if (action.type === actions.TOGGLE_OPPORTUNITY) {
+    return {...state, opportunityId: action.opportunityId };
   }
 
   else {

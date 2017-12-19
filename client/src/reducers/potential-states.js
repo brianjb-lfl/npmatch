@@ -133,7 +133,9 @@ export const opportunitiesList = {
 export const display = {
   view: 'homePage',    // options: 'homePage', 'explorePage', 'editOpportunity'
   modal: false,
-  modalMessage: ''
+  modalMessage: '',
+  userId: '',
+  opportunityId: '',
 };
 
 export const general = {

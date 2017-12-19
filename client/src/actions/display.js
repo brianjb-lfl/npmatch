@@ -10,3 +10,15 @@ export const toggleModal = (message) => ({
   type: TOGGLE_MODAL,
   modalMessage: message
 });
+
+export const TOGGLE_OPPORTUNITY = 'TOGGLE_OPPORTUNITY';
+export const toggleOpportunity = opportunityId => ({
+  type: TOGGLE_OPPORTUNITY,
+  opportunityId
+});
+
+export const TOGGLE_USER = 'TOGGLE_USER';
+export const toggleUser = userId => ({
+  type: TOGGLE_USER,
+  userId
+});
