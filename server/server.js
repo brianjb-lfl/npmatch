@@ -22,7 +22,9 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
-// comment
+
+app.use(express.static('public')); 
+//app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html'); });
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
 app.use('/api/opportunities', oppRouter);
