@@ -74,6 +74,16 @@ export const toggleEditLink = (index, edit = false, links) => {
   }
 };
 
+// @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
+
+export const stringArrayOfObjects=(array,key)=>{
+  // input: [ {}, {} ]      output ['','']
+  if (typeof array === 'object') {
+    return array.map(item=>item[key])
+  }
+  return [];
+}
+
 // @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
 
 
@@ -156,6 +166,8 @@ export const login = user => dispatch => {
     })
     .then(user=>{ 
       console.log('returned user', user)
+      user.causes = stringArrayOfObjects(user.causes, 'cause');
+      user.skills = stringArrayOfObjects(user.skills, 'skill');
       dispatch(loadUser(user));
     })
     .catch(error => {
@@ -170,6 +182,8 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
 
     delete user.password2;
     delete user.authToken;
+    delete user.availability;
+    delete user.logo;
     const params = isNew ? 'register' : user.id ;
     const method = isNew ? 'POST' : 'PUT';
 
@@ -186,15 +200,17 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     };
     console.log('init', init);
     return fetch(url, init)
-    .then(res=>{ 
-      console.log(res);
-      if (!res.ok) { 
-        return Promise.reject(res.statusText);
+    .then(user=>{ 
+      console.log('user returned', user)
+      if (!user.ok) { 
+        return Promise.reject(user.statusText);
       }
-      return res.json();
+      return user.json();
     }) 
     .then(user => { 
-      console.log('user returned at registration', user)
+      console.log('user just before stringing arrays',user);
+      user.causes = stringArrayOfObjects(user.causes, 'cause');
+      user.skills = stringArrayOfObjects(user.skills, 'skill');
       return dispatch(loadUser(user));
     })
     .catch(error => {
