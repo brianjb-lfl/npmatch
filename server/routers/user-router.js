@@ -209,7 +209,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         convInUsrObj = Object.assign( {}, convInUsrObj, {
           password: result
         });
-      };;
+      }
       delete convInUsrObj.links;
       delete convInUsrObj.causes;
       delete convInUsrObj.skills;

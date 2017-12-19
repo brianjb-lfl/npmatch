@@ -11,6 +11,8 @@ const { causeRouter } = require('./routers/cause-router');
 const { adminRouter } = require('./routers/admin-router');
 const { authRouter } = require('./auth/auth-router');
 const { roleRouter } = require('./routers/role-router');
+const { responseRouter } = require('./routers/response-router');
+
 
 const app = express();
 app.use(morgan('common', { skip: () => process.env.DB_MODE === 'test'}));
@@ -28,6 +30,7 @@ app.use('/api/causes', causeRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/roles', roleRouter);
+app.use('/api/responses', responseRouter);
 
 app.use('*', (req, res) => {
   return res.status(404).json({message: 'Not Found'});
