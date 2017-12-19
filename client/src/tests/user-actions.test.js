@@ -35,7 +35,6 @@ describe('actions - single user', () => {
       links: undefined,
       causes: undefined,
       skills:  undefined,
-      responses: undefined,
       adminOf:  undefined,
       admins: undefined,
       following: undefined,
@@ -63,12 +62,11 @@ describe('actions - single user', () => {
       links: [],
       causes: [],
       skills: [],
-      responses: [],
-      adminOf: [],
+      adminOf: {},
       admins: [],
-      following: [],
-      opportunities: [],
-      responses: [],
+      following: {},
+      opportunities: {},
+      responses: {},
     };
     const expectedAction = {...user, type: actionsUser.LOAD_USER}
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
@@ -97,20 +95,20 @@ describe('actions - single user', () => {
       ],
       causes: ['children', 'elderly'],
       skills: ['listening', 'tutoring'],
-      responses: [
-        {
-          id: '',
+      responses: {
+        8: {
+          id: 8,
           id_opp: '',
           response_status: '',
           title: '',
         }
-      ],
-      adminOf: [
-        {
+      },
+      adminOf: {
+        1: {
           organization: 'SOME',
           id: 1,
         }
-      ],
+      },
       admins: [
         {
           firstName: 'adminFirst',
@@ -118,14 +116,14 @@ describe('actions - single user', () => {
           id: '44',
         }
       ],
-      following: [
-        {
+      following: {
+        2: {
           organization: 'Bookmobile',
           id: 2,
         }
-      ],
-      opportunities: [
-        {
+      },
+      opportunities: {
+        355: {
           id: 355,
           userId: '',
           organization: '', 
@@ -141,9 +139,9 @@ describe('actions - single user', () => {
           link: '',
           causes: [''], 
         }
-      ],
-      responses: [
-        {
+      },
+      responses: {
+        67: {
           id: 67,
           idOpportunity: '',
           organization: '',
@@ -156,7 +154,7 @@ describe('actions - single user', () => {
           timestampCreated: '',
           notes: '',
         }
-      ],
+      },
     };
     const expectedAction = {...user, type: actionsUser.LOAD_USER}
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)

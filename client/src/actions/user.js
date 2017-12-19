@@ -34,26 +34,23 @@ export const loadUser = user => ({
 });
 
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = (response,index,action) => ({
+export const loadResponse = (response,action) => ({
   type: LOAD_RESPONSE,
   response,
-  index,
   action,
 });
 
 export const LOAD_ADMIN = 'LOAD_ADMIN';
-export const loadAdmin = (admin,index,isNew) => ({
+export const loadAdmin = (admin,isNew) => ({
   type: LOAD_ADMIN,
   admin,
-  index,
   isNew,
 });
 
 export const LOAD_FOLLOWING = 'LOAD_FOLLOWING';
-export const loadFollowing = (following,index,isNew) => ({
+export const loadFollowing = (following,isNew) => ({
   type: LOAD_FOLLOWING,
   following,
-  index,
   isNew,
 });
 
@@ -137,7 +134,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch
     .then(res=>{
       // console.log('response from single user fetch',res)
       if (stateLocation === 'userViewed') {
-        dispatch(actionsUserViewed.loadUserViewed(res));   
+        dispatch(actionsUserViewed.loadUser(res));   
       } else {
         dispatch(loadUser(res));
       }
@@ -177,8 +174,10 @@ export const login = user => dispatch => {
       console.log('returned user', user)
       user.causes = stringArrayOfObjects(user.causes,        'cause');
       user.skills = stringArrayOfObjects(user.skills,        'skill');
+      user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+      user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
       user.opportunities = arrayToObject(user.opportunities, 'id');
-      user.responses =     arrayToObject(user.responses,     'id');
+      user.responses     = arrayToObject(user.responses,     'idOpportunity');
       dispatch(loadUser(user));
     })
     .catch(error => {
@@ -223,8 +222,12 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
         return dispatch(login(originalUser))
       }
       console.log('user just before stringing arrays',user);
-      user.causes = stringArrayOfObjects(user.causes, 'cause');
-      user.skills = stringArrayOfObjects(user.skills, 'skill');
+      user.causes = stringArrayOfObjects(user.causes,        'cause');
+      user.skills = stringArrayOfObjects(user.skills,        'skill');
+      user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+      user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
+      user.opportunities = arrayToObject(user.opportunities, 'id');
+      user.responses     = arrayToObject(user.responses,     'idOpportunity');
       return dispatch(loadUser(user));
     })
     .catch(error => {
@@ -232,7 +235,7 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     });
 }
 
-export const createOrEditResponse = (response, index, authToken, isNew = true) => dispatch => {
+export const createOrEditResponse = (response, authToken, isNew = true) => dispatch => {
   /* response = {
     id: 0 // only is isNew !== true
     responseStatus: 'offered' || 'accepted' || 'denied' || 'deleted' // only if isNew !== true
@@ -242,7 +245,7 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
     notes: 
   } */
 
-  console.log('response',response, 'index',index, authToken, isNew)
+  console.log('response',response, authToken, isNew)
 
   dispatch(actionsDisplay.changeDisplay('loading'));
 
@@ -281,9 +284,9 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
   .then(returnedResponse => { 
     console.log('returnedResponse', returnedResponse)
     if ( loadTo === 'user') {
-      return dispatch(loadResponse(returnedResponse,index,action));
+      return dispatch(loadResponse(returnedResponse,action));
     } else {
-      return dispatch(actionsOpportunity.loadResponse(returnedResponse,index,action));
+      return dispatch(actionsOpportunity.loadResponse(returnedResponse,action));
     }
   })
   .catch(error => {
@@ -327,7 +330,7 @@ const deleteRole = (role, index) {
 
 */
 
-export const createOrDeleteRole = (role, index, authToken, isNew = true) => dispatch => {
+export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch => {
   /* role = {
     id: for delete only
     idUserAdding:
@@ -365,9 +368,9 @@ export const createOrDeleteRole = (role, index, authToken, isNew = true) => disp
   .then(returnedRole => { 
     console.log('returnedRole', returnedRole)
     if ( isAdmin ) {
-      return dispatch(loadAdmin(returnedRole, index, isNew));
+      return dispatch(loadAdmin(returnedRole, isNew));
     } else {
-      return dispatch(loadFollowing(returnedRole, index, isNew));
+      return dispatch(loadFollowing(returnedRole, isNew));
     }
   })
   .catch(error => {

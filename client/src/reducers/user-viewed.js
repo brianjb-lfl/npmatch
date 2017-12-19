@@ -6,8 +6,8 @@ import deepAssign from 'deep-assign';
 // this would be used when viewing someone else's profile
 export const reducer = (state = initialState, action) => {
 
-  if (action.type === actions.LOAD_USER_VIEWED) {
-    return deepAssign({}, state, {
+  if (action.type === actions.LOAD_USER) {
+    return {...state,
       id: action.id,
       username: action.username,
       userType: action.userType,
@@ -20,6 +20,7 @@ export const reducer = (state = initialState, action) => {
       locationCountry: action.locationCountry,
       availability: action.availability,
       bio: action.bio,
+      authToken: action.authToken,
       links: action.links,
       causes: action.causes,
       skills: action.skills,
@@ -28,11 +29,9 @@ export const reducer = (state = initialState, action) => {
       following: action.following,
       opportunities: action.opportunities,
       responses: action.responses,
-    });
+    };
   }
 
-  else {
-    return state;
-  }
+  return state;
 
 }

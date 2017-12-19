@@ -1,4 +1,4 @@
-import * as actions from '../actions/user-viewed';
+import * as actionsUser from '../actions/user-viewed';
 import * as actionsDisplay from '../actions/display';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -19,14 +19,14 @@ describe('actions - user viewed', () => {
       lastName: 'Jones'
     };
     const expectedAction = {
-      type: actions.LOAD_USER_VIEWED,
+      type: actionsUser.LOAD_USER,
       id: undefined,
-      username:   undefined,
-      userType:    undefined,
+      authToken: undefined,
       firstName: 'Bob',
       lastName: 'Jones',
+      username:   undefined,
+      userType:    undefined,
       organization: undefined,
-      logo: undefined,
       locationCity:  undefined,
       locationState:  undefined,
       locationCountry: undefined,
@@ -35,14 +35,13 @@ describe('actions - user viewed', () => {
       links: undefined,
       causes: undefined,
       skills:  undefined,
-      responses: undefined,
       adminOf:  undefined,
       admins: undefined,
       following: undefined,
       opportunities: undefined,
       responses: undefined,
     }
-    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a simple user', () => {
@@ -59,18 +58,18 @@ describe('actions - user viewed', () => {
       locationCountry: 'USA',
       availability: 'anytime',
       bio: 'just a simple man',
+      authToken: 'XYZ123',
       links: [],
       causes: [],
       skills: [],
-      responses: [],
-      adminOf: [],
+      adminOf: {},
       admins: [],
-      following: [],
-      opportunities: [],
-      responses: [],
+      following: {},
+      opportunities: {},
+      responses: {},
     };
-    const expectedAction = {...user, type: actions.LOAD_USER_VIEWED}
-    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
+    const expectedAction = {...user, type: actionsUser.LOAD_USER}
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
   it('should create an action to load a user with nested arrays', () => {
@@ -87,6 +86,7 @@ describe('actions - user viewed', () => {
       locationCountry: 'USA',
       availability: 'anytime',
       bio: 'just a simple man',
+      authToken: 'XYZ123',
       links: [
         {
           linkType: 'home',
@@ -95,20 +95,20 @@ describe('actions - user viewed', () => {
       ],
       causes: ['children', 'elderly'],
       skills: ['listening', 'tutoring'],
-      responses: [
-        {
-          id: '',
+      responses: {
+        8: {
+          id: 8,
           id_opp: '',
           response_status: '',
           title: '',
         }
-      ],
-      adminOf: [
-        {
+      },
+      adminOf: {
+        1: {
           organization: 'SOME',
           id: 1,
         }
-      ],
+      },
       admins: [
         {
           firstName: 'adminFirst',
@@ -116,14 +116,14 @@ describe('actions - user viewed', () => {
           id: '44',
         }
       ],
-      following: [
-        {
+      following: {
+        2: {
           organization: 'Bookmobile',
           id: 2,
         }
-      ],
-      opportunities: [
-        {
+      },
+      opportunities: {
+        355: {
           id: 355,
           userId: '',
           organization: '', 
@@ -139,9 +139,9 @@ describe('actions - user viewed', () => {
           link: '',
           causes: [''], 
         }
-      ],
-      responses: [
-        {
+      },
+      responses: {
+        67: {
           id: 67,
           idOpportunity: '',
           organization: '',
@@ -154,10 +154,10 @@ describe('actions - user viewed', () => {
           timestampCreated: '',
           notes: '',
         }
-      ],
+      },
     };
-    const expectedAction = {...user, type: actions.LOAD_USER_VIEWED}
-    expect(actions.loadUserViewed(user)).toEqual(expectedAction)
+    const expectedAction = {...user, type: actionsUser.LOAD_USER}
+    expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
 })

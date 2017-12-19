@@ -22,8 +22,6 @@ export const reducer = (state = initialState, action) => {
     return {...state, opportunityId: action.opportunityId };
   }
 
-  else {
-    return state;
-  }
+  return state;
 
 }

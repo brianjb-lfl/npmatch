@@ -30,12 +30,12 @@ export const user = {
   ],
   causes: [''],
   skills: [''],
-  adminOf: [       
-    {
+  adminOf: {       
+    0: {
       organization: '',
       id: '',
     }
-  ],
+  },
   admins: [         
     {
       firstName: '',  
@@ -43,12 +43,12 @@ export const user = {
       id: '',
     }
   ],
-  following: [    
-    {
+  following: {    
+    0: {
       organization: '',
       id: '',
     }
-  ],
+  },
   opportunities: {  
     0: {
       id: '',

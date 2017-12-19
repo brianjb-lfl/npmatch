@@ -1,5 +1,5 @@
 import { reducer } from '../reducers/user';
-import * as actions from '../actions/user';
+import * as actionsUser from '../actions/user';
 import {user as initialState} from '../reducers/potential-states';
 
 describe('reducer - single user', () => {
@@ -37,7 +37,7 @@ describe('reducer - single user', () => {
       opportunities: undefined,
       responses: undefined,
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -62,10 +62,10 @@ describe('reducer - single user', () => {
       adminOf: undefined,
       admins: undefined,
       following: undefined,
-      opportunities: [],
+      opportunities: {},
       responses: undefined,
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -93,12 +93,12 @@ describe('reducer - single user', () => {
       ],
       causes: ['sausage-making', 'sausage-eating'],
       skills: ['carpentry'],
-      adminOf: [
-        {
+      adminOf: {
+        1: {
           organization: 'SOME',
           id: 1,
         }
-      ],
+      },
       admins: [    
         {
           firstName: '', 
@@ -106,15 +106,15 @@ describe('reducer - single user', () => {
           id: '',
         }
       ],
-      following: [
-        {
+      following: {
+        2: {
           organization: 'Bookmobile',
           id: 2,
         }
-      ],
-      opportunities: [  
-        {
-          id: '',
+      },
+      opportunities: {  
+        88: {
+          id: 88,
           userId: '',
           organization: '',
           opportunityType: '',
@@ -129,10 +129,10 @@ describe('reducer - single user', () => {
           link: '',
           causes: [''],
         }
-      ],
-      responses: [   
-        {
-          id: '',
+      },
+      responses: {   
+        67: {
+          id: 67,
           idOpportunity: '',
           organization: '', 
           userId: '',
@@ -144,9 +144,9 @@ describe('reducer - single user', () => {
           timestampCreated: '',
           notes: '',
         }
-      ], 
+      }, 
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });

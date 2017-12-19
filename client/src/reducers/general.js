@@ -6,19 +6,13 @@ import {general as initialState} from './potential-states'
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_CAUSES) {
-    return Object.assign({}, state, {
-      causes: action.causes // array of strings;
-    });
+    return {...state, causes: action.causes};
   }
 
   else if (action.type === actions.LOAD_SKILLS) {
-    return Object.assign({}, state, {
-      skills: action.skills // array of strings;
-    });
+    return {...state, skills: action.skills };
   }
 
-  else {
-    return state;
-  }
+  return state;
 
 }

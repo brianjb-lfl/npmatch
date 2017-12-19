@@ -9,9 +9,7 @@ export const reducer = (state = initialState, action) => {
     // console.log('load users list reducer')
     return {...state, main: action.main};
   }
-
-  else {
-    return state;
-  }
+  
+  return state;
 
 }
