@@ -13,7 +13,7 @@ export class OpportunitiesPage extends Component {
     console.log('this.props.opportunitiesList.main',this.props.opportunitiesList.main)
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
       return <li key={index}><OpportunityPreview opportunity={opp} history={this.props.history}/></li>
-    })
+    });
 
     return (
       <main className='opportunitiesPage'>
