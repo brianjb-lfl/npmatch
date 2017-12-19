@@ -24,11 +24,9 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, '../client/public')));
-console.log(path.join(__dirname, '../client/public'));
-//app.use(express.static('../client/public')); 
-app.get('/', (req, res) => { res.sendFile(__dirname + '../client/public/index.html'); });
-console.log(__dirname + '../client/public/index.html');
+
+app.use(express.static('../client/public')); 
+app.get('/', (req, res) => { res.sendFile('../client/public/index.html'); });
 
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
