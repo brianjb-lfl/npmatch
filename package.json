@@ -11,6 +11,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "chai-spies": "^0.7.1",
+    "concurrently": "^3.5.1",
     "cors": "^2.8.4",
     "deep-assign": "^2.0.0",
     "dotenv": "^4.0.0",
@@ -29,7 +30,7 @@
     "test-console": "^1.1.0"
   },
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "concurrently \"cd client && npm start\" \"nodemon ./server/server.js\"",
     "test": "mocha --colors server/test/*test.js",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
