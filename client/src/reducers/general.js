@@ -9,7 +9,7 @@ export const reducer = (state = initialState, action) => {
     return {...state, causes: action.causes};
   }
 
-  else if (action.type === actions.LOAD_SKILLS) {
+  if (action.type === actions.LOAD_SKILLS) {
     return {...state, skills: action.skills };
   }
 

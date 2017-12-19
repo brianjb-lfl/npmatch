@@ -49,4 +49,25 @@ describe('reducer - single opportunity', () => {
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
 
+  it('Should load opportunity responses into state', () => {
+    const newResponse = {
+      id: 54,
+      idOpportunity: 88,
+      organization: 'Healthcare For The Homeless',// SQL join
+      userId: 72,
+      firstName: 'Janet',   // SQL join
+      lastName: 'Smythe',    // SQL join
+      responseStatus: 'accepted',
+      timestamp_status_change: '2018-09-28 11:45:15',
+      timestamp_created: '2018-09-27 03:15:22',
+    }
+    const action = {type: actions.LOAD_RESPONSE, response: newResponse};
+    const state = reducer(initialState, action);
+    const expectedResponses = {...initialState.responses, [newResponse.id]: newResponse}
+    const expectedResult = {...initialState, responses: expectedResponses};
+    console.log(state);
+    console.log(expectedResult);
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
 });

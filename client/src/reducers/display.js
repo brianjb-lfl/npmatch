@@ -10,15 +10,15 @@ export const reducer = (state = initialState, action) => {
     return {...state, view: action.view};
   }
 
-  else if (action.type === actions.TOGGLE_MODAL) {
+  if (action.type === actions.TOGGLE_MODAL) {
     return {...state, modal: !state.modal, modalMessage: action.message };
   }
 
-  else if (action.type === actions.TOGGLE_USER) {
+  if (action.type === actions.TOGGLE_USER) {
     return {...state, userId: action.userId };
   }
 
-  else if (action.type === actions.TOGGLE_OPPORTUNITY) {
+  if (action.type === actions.TOGGLE_OPPORTUNITY) {
     return {...state, opportunityId: action.opportunityId };
   }
 

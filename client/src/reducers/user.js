@@ -33,36 +33,18 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.LOAD_RESPONSE) {
-    let mutableResponses = {...state.responses}; // responses is 1-level deep; no need for deep-assign
-
-    if (action.action === 'add') {
-      mutableResponses[action.response.id] = action.response;
-    } else if (action.action === 'edit') {
-      mutableResponses[action.response.id] = action.response;
-    } else if (action.action === 'delete') {
-      delete mutableResponses[action.response.id];
-    }
-    return {...state, responses: mutableResponses };
+    const newResponses = {...state.responses, [action.response.id]: action.response};
+    return {...state, responses: newResponses };
   }
 
   if (action.type === actions.LOAD_ADMIN) {
-    if (action.isNew) {
-      const newAdmins = {...state.admins, [action.admin.id]: action.admin}
-      return {...state, admins: newAdmins };
-    } else {
-      const newAdmins = {...state.admins, [action.admin.id]: null}
-      return {...state, admins: newAdmins };
-    }
+    const newAdmins = {...state.admins, [action.admin.id]: action.admin}
+    return {...state, admins: newAdmins };
   }
 
   if (action.type === actions.LOAD_FOLLOWING) {
-    if (action.isNew) {
-      const newFollowing = {...state.following, [action.following.id]: action.following}
-      return {...state, following: newFollowing };
-    } else {
-      const newFollowing = {...state.following, [action.following.id]: null}
-      return {...state, following: newFollowing };
-    }
+    const newFollowing = {...state.following, [action.following.id]: action.following}
+    return {...state, following: newFollowing };
   }
 
   if (action.type === actions.SET_FORM_TYPE) {

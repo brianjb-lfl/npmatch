@@ -36,13 +36,13 @@ export const user = {
       id: '',
     }
   },
-  admins: [         
-    {
+  admins: {         
+    0: {
       firstName: '',  
       lastName: '',    
       id: '',
     }
-  ],
+  },
   following: {    
     0: {
       organization: '',
@@ -107,8 +107,8 @@ export const opportunity = {
   locationCountry: {name: 'United States', code: 'US'},
   link: '',
   causes: null,  
-  responses: [     
-      {
+  responses: {     
+    0: {
         id: '',
         idOpportunity: '',
         userId: '',
@@ -121,7 +121,7 @@ export const opportunity = {
         lastName: '',    // copy, populated at creation
         title: '',       // copy, populated at creation
       }
-    ],
+    },
 };
 
 export const opportunitiesList = {

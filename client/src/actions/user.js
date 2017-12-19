@@ -175,6 +175,7 @@ export const login = user => dispatch => {
       user.causes = stringArrayOfObjects(user.causes,        'cause');
       user.skills = stringArrayOfObjects(user.skills,        'skill');
       user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+      user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
       user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
       user.opportunities = arrayToObject(user.opportunities, 'id');
       user.responses     = arrayToObject(user.responses,     'idOpportunity');
@@ -190,7 +191,7 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
   
     dispatch(actionsDisplay.changeDisplay('loading'));
     const originalUser = {username: user.username, password: user.password};
-    delete user.password2;
+    delete user.password2; // maybe set to null???
     delete user.authToken;
     // DELETE THIS WHEN BRIAN ADDS TO DB
     delete user.availability;
@@ -225,6 +226,7 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
       user.causes = stringArrayOfObjects(user.causes,        'cause');
       user.skills = stringArrayOfObjects(user.skills,        'skill');
       user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+      user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
       user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
       user.opportunities = arrayToObject(user.opportunities, 'id');
       user.responses     = arrayToObject(user.responses,     'idOpportunity');

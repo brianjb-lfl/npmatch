@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import  * as actionsDisplay from './display';
+import { arrayToObject } from './user';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -26,11 +27,9 @@ export const loadOpportunity = action => ({
 
 
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = (response,index,action) => ({
+export const loadResponse = response => ({
   type: LOAD_RESPONSE,
   response,
-  index,
-  action,
 });
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
@@ -53,8 +52,9 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
     .then(res=>{
       return res.json();
     })
-    .then(res=>{
-      return dispatch(loadOpportunity(res));      
+    .then(opportunity=>{
+      opportunity.responses = arrayToObject(opportunity.responses, 'id');
+      return dispatch(loadOpportunity(opportunity));      
     })
     .catch(error => {
       return dispatch(actionsDisplay.toggleModal(error));
@@ -98,7 +98,7 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
       body: JSON.stringify(opportunity),
       headers
     };
-    console.log('create opp',init)
+    // console.log('create opp',init)
     return fetch(url, init)
     .then(res=>{
       if (!res.ok) { 
