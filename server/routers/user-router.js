@@ -216,7 +216,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
       return knex('users')
         .where('id', '=', usrId)
         .update(convInUsrObj)
-        .returning(['id', 'username'])
+        .returning(['id', 'username']);
     })
 
     .then( result => {
@@ -305,7 +305,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
               );
             });
             return knex('users_skills')
-              .insert(skillPostArr)
+              .insert(skillPostArr);
           }
           else {
             return;
@@ -313,7 +313,13 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         });
     })
     .then( () => {
-      res.status(201).json(retObj)
+      console.log('retObj before', retObj);
+      return epHelp.buildUser(retObj[0].id);
+    })
+    .then( (retObj) => {
+      console.log('retObj after', retObj);
+      let usrObjCC = epHelp.convertCase(retObj, 'snakeToCC');
+      res.status(201).json(usrObjCC);
     })
     .catch( err => {
       if(err.reason === 'ValidationError') {

@@ -14,10 +14,11 @@ import SkillsFields from '../fields/skills';
 export class UserEditGeneralForm extends Component {
 
   handleSubmitButton(input) {
-    const user = Object.assign({}, input);
+    const user = {...input};
     user.id = this.props.user.id;
-    console.log('user', user)
+    console.log('user id', user.id)
     const isNew = false;
+    console.log('this.props.user id', this.props.user.id)
 
     this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.user.authToken))
       .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
