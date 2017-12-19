@@ -30,7 +30,7 @@
     "test-console": "^1.1.0"
   },
   "scripts": {
-    "start": "concurrently \"cd client && npm start\" \"nodemon ./server/server.js\"",
+    "start": "concurrently \"cd client && PORT=3000 npm start\" \"PORT=3001 nodemon ./server/server.js\"",
     "test": "mocha --colors server/test/*test.js",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
