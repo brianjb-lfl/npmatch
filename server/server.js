@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { userRouter } = require('./routers/user-router');
 const { orgRouter } = require('./routers/org-router');
@@ -23,8 +24,10 @@ app.use(
   })
 );
 
-app.use(express.static('../client/public')); 
-//app.get('/', (req, res) => { res.sendFile(__dirname + '/views/index.html'); });
+app.use(express.static(path.join(__dirname, '../client/public')));
+//app.use(express.static('../client/public')); 
+app.get('/', (req, res) => { res.sendFile(__dirname + '../client/public/index.html'); });
+
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
 app.use('/api/opportunities', oppRouter);
@@ -34,9 +37,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/roles', roleRouter);
 app.use('/api/responses', responseRouter);
 
-app.use('*', (req, res) => {
-  return res.status(404).json({message: 'test'});
-});
+// app.use('*', (req, res) => {
+//   return res.status(404).json({message: 'Not found'});
+// });
 
 function runServer(port = PORT) {
   const server = app
