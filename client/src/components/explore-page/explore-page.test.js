@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import {ExplorePage} from './explore-page';
-import {mapStateToProps} from './explore-page';
+import { ExplorePage } from './explore-page';
+import { mapStateToProps } from './explore-page';
 import { DetailedOrganizationPreview } from '../detailed-organization-preview/detailed-organization-preview';
 import { DetailedContributorPreview } from '../detailed-contributor-preview/detailed-contributor-preview';
 
@@ -27,9 +27,29 @@ describe('Explore Page component display functionality', () => {
       <DetailedContributorPreview />
     ));
   });
-  it.skip('Should map state to props', () => {
-    const initialState = {display: {view: 'homePage'}};
-    const expectedProps = {display: 'homePage'};
+  it('Should map state to props', () => {
+    const initialState = {
+      user: null,
+      userViewed: null,
+      usersList: {
+        main: {
+          id: 1
+        }
+      },
+      opportunity: null,
+      opportunitiesList: null,
+      display: {
+        view: 'exploreOrganizations'
+      },
+    };
+    const expectedProps = { 
+      user: null,
+      userViewed: null,
+      usersList: { id: 1 },
+      opportunity: null,
+      opportunitiesList: null,
+      display: 'exploreOrganizations'
+    };
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
   });

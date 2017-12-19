@@ -29,6 +29,6 @@ export const mapStateToProps = state => ({
   usersList: state.usersList.main,
   opportunity: state.opportunity,
   opportunitiesList: state.opportunitiesList,
-  display: state.display,
+  display: state.display.view,
 })
 export default connect(mapStateToProps)(HomePage);

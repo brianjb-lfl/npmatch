@@ -20,9 +20,29 @@ describe('Home Page component display functionality', () => {
       <OrganizationPreview />
     ));
   });
-  it.skip('Should map state to props', () => {
-    const initialState = { display: 'homePage' };
-    const expectedProps = { display: 'homePage' };
+  it('Should map state to props', () => {
+    const initialState = {
+      user: null,
+      userViewed: null,
+      usersList: {
+        main: {
+          id: 1
+        }
+      },
+      opportunity: null,
+      opportunitiesList: null,
+      display: {
+        view: 'homePage'
+      },
+    };
+    const expectedProps = { 
+      user: null,
+      userViewed: null,
+      usersList: { id: 1 },
+      opportunity: null,
+      opportunitiesList: null,
+      display: 'homePage'
+    };
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
   })
