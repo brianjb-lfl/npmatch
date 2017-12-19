@@ -23,16 +23,16 @@ chai.use(chaiHttp);
 describe('user', function() {
 
   before(function() {
-    //return (testSetup.buildFullDB());
+    return (testSetup.buildFullDB());
   });
 
   after(function() {
-    //setDbMode('dev');
-    // return (testSetup.tearDownDB())
-    //   .then( () => {
-    //     //restore .env DB_MODE to dev
-    //     setDbMode('dev');
-    //   });
+    setDbMode('dev');
+    return (testSetup.tearDownDB())
+      .then( () => {
+        //restore .env DB_MODE to dev
+        setDbMode('dev');
+      });
   });
 
   beforeEach(function() {
@@ -44,16 +44,16 @@ describe('user', function() {
   });
 
   // ***** COMM TEST
-  // describe('api/users/testify GET comm check', function() {
-  //   it('should demonstrate that comm to the endpoint is working', function() {
-  //     return chai.request(app)
-  //       .get('/api/users/testify')
-  //       .then(function(res) {
-  //         expect(res.status).to.equal(200);
-  //         expect(res.body.message).to.equal('Good to go');
-  //       });
-  //   });
-  // });
+  describe('api/users/testify GET comm check', function() {
+    it('should demonstrate that comm to the endpoint is working', function() {
+      return chai.request(app)
+        .get('/api/users/testify')
+        .then(function(res) {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Good to go');
+        });
+    });
+  });
 
   // // ***** GET USER LIST
   // describe('api/users/list GET user list', function() {
