@@ -19,24 +19,38 @@ export class OpportunityResponse extends Component {
       lastName: this.props.user.lastName,
       title: this.props.opportunity.title,
     }
-    this.props.dispatch(actionsUser.createOrEditResponse(response, -1, this.props.user.authToken, true))
+    this.props.dispatch(actionsUser.createOrEditResponse(response, this.props.user.authToken, true))
       .then(()=>this.props.dispatch(actionsDisplay.changeDisplay('normal')));
   }
-    
-    // formValues.status === 'offered' || 'deleted' ==> available to respondants
-    // formValues.status === 'accepted' || 'denied' ==> available to posters
-    // control availability via React component
   
-  editResponse (response, index) {
-    this.props.dispatch(actionsUser.createOrEditResponse(response, index, this.props.user.authToken, false))
+  editResponse (formValues, status) {
+    this.props.dispatch(actionsUser.createOrEditResponse(formValues, this.props.user.authToken, false))
       .then(()=>this.props.dispatch(actionsDisplay.changeDisplay('normal')));
   }
 
   render() {
-    const noteLabel = 'note';
-    const buttonLabel = 'add';
-    const submitLabel = 'confirm';
+    // calculate whether user has responded
+    const user = this.props.user;
+    const opportunity = this.props.opportunity;
+    const id = opportunity.id;
+    const isInFocus = this.props.display.opportunityId === id ? true : false ;
+    
+    let hasResponded = false;
+    let initialValues = opportunity;
+    if (typeof user.responses === 'object') {
+      if (typeof user.responses[id]  === 'object') {
+        hasResponded = true;
+        initialValues.note = user.responses[id].note;
+      }
+    }
 
+    const noteLabel = 'note';
+    const buttonLabel = hasResponded ? 'edit' : 'add' ;
+    const isMyOpportunity = opportunity.userId === user.id ? true : false ;
+    const positiveLabel =  isMyOpportunity ? 'accept'   : 'confirm' ;
+    const positiveAction = isMyOpportunity ? 'accepted' : 'offered' ;
+    const negativeLabel =  isMyOpportunity ? 'decline'  : `sorry, can't make it`;
+    const negativeAction = isMyOpportunity ? 'denied'   : 'deleted' ;
       const theField = <div>
         <Field
           name='notes'
@@ -51,28 +65,31 @@ export class OpportunityResponse extends Component {
       </div>;
 
       let theForm;
-      if (this.props.display.opportunityId === this.props.opportunity.id ) {
+      if (isInFocus && !hasResponded) {
         theForm = <div>
-          <form className='opportunityResponse' initialValues={this.props.opportunity}
+          <form className='opportunityResponse' initialvalues={initialValues}
             onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))}
           >
-          { theField}
+          {theField}
             <div>
               <button className='submitButton'
-                type="submit" disabled={this.props.submitting}>{submitLabel}
+                type="submit" disabled={this.props.submitting}>{positiveLabel}
               </button>
             </div>
           </form>
         </div> 
-      } else if (false){
+      } else if (isInFocus){
         theForm = <div>
-          <form className='opportunityResponse' initialvalues={this.props.opportunity}
-            onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues, this.props.index))}
+          <form className='opportunityResponse' initialvalues={initialValues}
+            onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues, positiveAction))}
           >
             {theField}
             <div>
               <button className='submitButton'
-                type="submit" disabled={this.props.submitting}>{submitLabel}
+                type="submit" disabled={this.props.submitting}>{positiveLabel}
+              </button>
+              <button className='submitButton'
+                onClick={(formValues)=>this.editResponse(formValues, negativeAction)}>{negativeLabel}
               </button>
             </div>
           </form>
@@ -81,7 +98,7 @@ export class OpportunityResponse extends Component {
 
     return (
       <div>
-        <button onClick={()=>this.props.dispatch(actionsDisplay.toggleOpportunity(this.props.opportunity.id))}>{buttonLabel}</button>
+        <button onClick={()=>this.props.dispatch(actionsDisplay.toggleOpportunity(opportunity.id))}>{buttonLabel}</button>
         {theForm}
       </div>
     );

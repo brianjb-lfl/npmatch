@@ -49,8 +49,8 @@ export const user = {
       id: '',
     }
   ],
-  opportunities: [  
-    {
+  opportunities: {  
+    0: {
       id: '',
       userId: '',      
       organization: '', 
@@ -67,9 +67,9 @@ export const user = {
       causes: [''],   
       responses: [],
     }
-  ],
-  responses: [     
-    {
+  },
+  responses: {     
+    0: {
       id: '',
       idOpportunity: '',
       organization: '',
@@ -82,7 +82,7 @@ export const user = {
       timestampCreated: '',
       notes: '',
     }
-  ], 
+  }, 
 };
 
 export const usersList = {

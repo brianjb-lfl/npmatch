@@ -83,6 +83,15 @@ export const stringArrayOfObjects=(array,key)=>{
   return [];
 }
 
+export const arrayToObject=(array,key='id')=>{
+  const newObject = {};
+  // input: [ {id:0}, {id:1} ]      output {0:{},1:{}}
+  if (typeof array === 'object') {
+    return array.forEach(item=>newObject[key] = item)
+  }
+  return {};
+}
+
 // @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
 
 
@@ -166,8 +175,10 @@ export const login = user => dispatch => {
     })
     .then(user=>{ 
       console.log('returned user', user)
-      user.causes = stringArrayOfObjects(user.causes, 'cause');
-      user.skills = stringArrayOfObjects(user.skills, 'skill');
+      user.causes = stringArrayOfObjects(user.causes,        'cause');
+      user.skills = stringArrayOfObjects(user.skills,        'skill');
+      user.opportunities = arrayToObject(user.opportunities, 'id');
+      user.responses =     arrayToObject(user.responses,     'id');
       dispatch(loadUser(user));
     })
     .catch(error => {
