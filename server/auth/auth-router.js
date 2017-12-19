@@ -52,7 +52,8 @@ authRouter.post('/login', localAuth, (req, res) => {
             usrObj = Object.assign( {}, usrObj, {
               authToken: authToken
             });
-            res.json(usrObj);
+            let usrObjCC = epHelp.convertCase(usrObj, 'snakeToCC');
+            res.json(usrObjCC);
           }
           else {
             res.status(500).json({message: 'Error retrieving user data'});
