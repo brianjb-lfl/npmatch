@@ -37,7 +37,7 @@
     "start": "nodemon ./server/server.js",
     "start:prod": "node server/build/server.js",
     "test": "mocha --colors server/test/*test.js",
-    "build": "concurrently \"cd client && npm build\" \"babel . --ignore node_modules,build --out-dir server\build\"",
+    "build": "concurrently \"cd client && npm build\" \"babel . --ignore node_modules,build --out-dir server/build\"",
     "heroku-postbuild": "npm build",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
