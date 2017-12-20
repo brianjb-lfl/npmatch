@@ -34,24 +34,21 @@ export const loadUser = user => ({
 });
 
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = (response,action) => ({
+export const loadResponse = response => ({
   type: LOAD_RESPONSE,
   response,
-  action,
 });
 
 export const LOAD_ADMIN = 'LOAD_ADMIN';
-export const loadAdmin = (admin,isNew) => ({
+export const loadAdmin = admin => ({
   type: LOAD_ADMIN,
   admin,
-  isNew,
 });
 
 export const LOAD_FOLLOWING = 'LOAD_FOLLOWING';
-export const loadFollowing = (following,isNew) => ({
+export const loadFollowing = following => ({
   type: LOAD_FOLLOWING,
   following,
-  isNew,
 });
 
 export const SET_FORM_TYPE = 'SET_FORM_TYPE';
@@ -74,7 +71,7 @@ export const toggleEditLink = (index, edit = false, links) => {
 
 export const stringArrayOfObjects=(array,key)=>{
   // input: [ {}, {} ]      output ['','']
-  if (typeof array === 'object') {
+  if (Array.isArray(array)) {
     return array.map(item=>item[key])
   }
   return [];
@@ -83,10 +80,23 @@ export const stringArrayOfObjects=(array,key)=>{
 export const arrayToObject=(array,key='id')=>{
   const newObject = {};
   // input: [ {id:0}, {id:1} ]      output {0:{},1:{}}
-  if (typeof array === 'object') {
-    return array.forEach(item=>newObject[key] = item)
+  if (Array.isArray(array)) {
+    array.forEach(item=>newObject[item[key]] = item);
+    return newObject;
   }
   return {};
+}
+
+export const objectToArray=(object)=>{
+  const newArray = [];
+  // input {0:{},1:{}}         output: [ {}, {} ]      
+  if (typeof object === 'object' && !Array.isArray(object)) {
+    for (let prop in object) {
+      newArray.push(object[prop]);
+    }
+    return newArray;
+  }
+  return [];
 }
 
 // @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
@@ -286,9 +296,9 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
   .then(returnedResponse => { 
     console.log('returnedResponse', returnedResponse)
     if ( loadTo === 'user') {
-      return dispatch(loadResponse(returnedResponse,action));
+      return dispatch(loadResponse(returnedResponse));
     } else {
-      return dispatch(actionsOpportunity.loadResponse(returnedResponse,action));
+      return dispatch(actionsOpportunity.loadResponse(returnedResponse));
     }
   })
   .catch(error => {

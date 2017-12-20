@@ -13,7 +13,7 @@ const store = mockStore(initialState)
 
 describe('actions - single opportunity', () => {
 
-  it('should create a single opportunity action', () => {
+  it('should create action to load single opportunity', () => {
     const opportunity = {
       id: 1,
       userId: 2,
@@ -39,6 +39,23 @@ describe('actions - single opportunity', () => {
     expect(result.id).toEqual(1);
     expect(result.id).toBeGreaterThanOrEqual(1);
     
+  });
+
+  it('should create an action to load response to opportunity', () => {
+    const newResponse = {
+      id: 54,
+      idOpportunity: 88,
+      organization: 'Healthcare For The Homeless',
+      userId: 72,
+      firstName: 'Janet',
+      lastName: 'Smythe',
+      responseStatus: 'accepted',
+      timestamp_status_change: '2018-09-28 11:45:15',
+      timestamp_created: '2018-09-27 03:15:22',
+    }
+    const expectedAction = {response: newResponse, type: actionsOpp.LOAD_RESPONSE};
+    const result = actionsOpp.loadResponse(newResponse);
+    expect(result).toEqual(expectedAction);
   });
 
   it('should call action to fetch opportunity from server', () => {

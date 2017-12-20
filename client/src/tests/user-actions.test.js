@@ -291,4 +291,182 @@ describe('actions - single user', () => {
       })
   });
 
+  it('should create an action to load response to user', () => {
+    const newResponse = {
+      id: 54,
+      idOpportunity: 88,
+      organization: 'Healthcare For The Homeless',
+      userId: 72,
+      firstName: 'Janet',
+      lastName: 'Smythe',
+      responseStatus: 'accepted',
+      timestamp_status_change: '2018-09-28 11:45:15',
+      timestamp_created: '2018-09-27 03:15:22',
+    }
+    const expectedAction = {response: newResponse, type: actionsUser.LOAD_RESPONSE};
+    const result = actionsUser.loadResponse(newResponse);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to load admin into state', () => {
+    const newAdmin = {
+      id: 54,
+      firstName: 'Janet',
+      lastName: 'Smythe',
+    }
+    const expectedAction = {admin: newAdmin, type: actionsUser.LOAD_ADMIN};
+    const result = actionsUser.loadAdmin(newAdmin);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to load following into state', () => {
+    const newFollowing = {
+      id: 54,
+      organization: 'ACME',
+    }
+    const expectedAction = {following: newFollowing, type: actionsUser.LOAD_FOLLOWING};
+    const result = actionsUser.loadFollowing(newFollowing);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to set form type in state', () => {
+    const expectedAction = {type: actionsUser.SET_FORM_TYPE, formType: 'testForm'};
+    const result = actionsUser.setFormType('testForm');
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to toggle edit link from true to false', () => {
+    const links = [      
+      {
+        edit: true,
+        linkType: 'home',
+        linkURL: 'www',
+      },
+      {
+        linkType: 'contribution',
+        linkURL: 'xxx',
+      },
+    ];
+    const newLinks = [...links];
+    newLinks[0].edit = false;
+    const expectedAction = {type: actionsUser.TOGGLE_EDIT_LINK, links: newLinks};
+    const result = actionsUser.toggleEditLink(0,false,links);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to toggle edit link from false to true', () => {
+    const links = [      
+      {
+        edit: false,
+        linkType: 'home',
+        linkURL: 'www',
+      },
+      {
+        linkType: 'contribution',
+        linkURL: 'xxx',
+      },
+    ];
+    const newLinks = [...links];
+    newLinks[0].edit = true;
+    const expectedAction = {type: actionsUser.TOGGLE_EDIT_LINK, links: newLinks};
+    const result = actionsUser.toggleEditLink(0,true,links);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should create action to NOT toggle edit link in state', () => {
+    const links = [      
+      {
+        edit: false,
+        linkType: 'home',
+        linkURL: 'www',
+      },
+      {
+        linkType: 'contribution',
+        linkURL: 'xxx',
+      },
+    ];
+    const newLinks = [...links];
+    newLinks[0].edit = false;
+    const expectedAction = {type: actionsUser.TOGGLE_EDIT_LINK, links: newLinks};
+    const result = actionsUser.toggleEditLink(0,false,links);
+    expect(result).toEqual(expectedAction);
+  });
+
+  it('Should convert an array of objects to an array of strings', () => {
+    const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
+    const expectedOutput = ['a','b'];
+    const key = 'id';
+    expect(actionsUser.stringArrayOfObjects(input,key)).toEqual(expectedOutput);
+  });
+
+  it('Should NOT convert a string to an array of strings', () => {
+    const input = 'just a string';
+    const key = 'id';
+    expect(actionsUser.stringArrayOfObjects(input,key)).toEqual([]);
+  });
+
+  it('Should NOT convert undefined to an array of strings', () => {
+    const input = undefined;
+    const key = 'id';
+    expect(actionsUser.stringArrayOfObjects(input,key)).toEqual([]);
+  });
+
+  it('Should NOT convert an object to an array of strings', () => {
+    const input = {id:'a',key:'g'};
+    const key = 'id';
+    expect(actionsUser.stringArrayOfObjects(input,key)).toEqual([]);
+  });
+
+  it('Should convert an array of objects to an object of keys (default key)', () => {
+    const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
+    const expectedOutput = {a:{id:'a',key:'g'},b:{id:'b',key:'e'}};
+    expect(actionsUser.arrayToObject(input)).toEqual(expectedOutput);
+  });
+
+  it('Should convert an array of objects to an object of keys', () => {
+    const input = [{x:'a',key:'g'},{x:'b',key:'e'}];
+    const expectedOutput = {a:{x:'a',key:'g'},b:{x:'b',key:'e'}};
+    const key = 'x';
+    expect(actionsUser.arrayToObject(input,key)).toEqual(expectedOutput);
+  });
+
+  it('Should NOT convert a string to an object of keys', () => {
+    const input = 'just a string';
+    const key = 'id';
+    expect(actionsUser.arrayToObject(input,key)).toEqual({});
+  });
+
+  it('Should NOT convert undefined to an object of keys', () => {
+    const input = undefined;
+    const key = 'id';
+    expect(actionsUser.arrayToObject(input,key)).toEqual({});
+  });
+
+  it('Should NOT convert an object to an object of keys', () => {
+    const input = {id:'a',key:'g'};
+    const key = 'id';
+    expect(actionsUser.arrayToObject(input,key)).toEqual({});
+  });
+
+  it('Should convert an array of objects to an object of keys', () => {
+    const input = {a:{id:'a',key:'g'},b:{id:'b',key:'e'}};
+    const expectedOutput = [{id:'a',key:'g'},{id:'b',key:'e'}];
+    expect(actionsUser.objectToArray(input)).toEqual(expectedOutput);
+  });
+
+  it('Should NOT convert a string to an object of keys', () => {
+    const input = 'just a string';
+    expect(actionsUser.objectToArray(input)).toEqual([]);
+  });
+
+  it('Should NOT convert undefined to an object of keys', () => {
+    const input = undefined;
+    expect(actionsUser.objectToArray(input)).toEqual([]);
+  });
+
+  it('Should NOT convert an object to an object of keys', () => {
+    const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
+    expect(actionsUser.objectToArray(input)).toEqual([]);
+  });
+
 })
