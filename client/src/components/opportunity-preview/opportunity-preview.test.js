@@ -37,13 +37,17 @@ describe('Opportunity Preview component display functionality', () => {
   });
   it.skip('Should dispatch an actions when the component is clicked', () => {
     const spy = jest.fn();
+    const historySpy = jest.fn();
     const user = { authToken: '000' };
     const wrapper = shallow(<OpportunityPreview
       opportunity={opportunity}
       dispatch={spy}
       user={user}
+      match={{url: '/profiles/3'}}
+      history={{push: historySpy}}
     />);
     expect(wrapper.find('button').simulate('click'));
-    expect(spy.mock.calls.length).toEqual(1);
+    expect(spy.mock.calls.length).toEqual(2);
+    expect(historySpy.mock.calls.length).toEqual(1);
   })
 });
