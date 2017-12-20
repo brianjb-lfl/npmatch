@@ -9,11 +9,12 @@ import OpportunityResponse from '../opportunity-response/opportunity-response';
 export class OpportunityPreview extends Component {
 
   editOpportunity(id) {
-    console.log('edit opp id', id)
+    console.log('first console');
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
+        console.log('after then');
         this.props.history.push('/opportunities/create');
-        this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
+        return this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
       });
   }
 
@@ -25,7 +26,7 @@ export class OpportunityPreview extends Component {
         <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
         <p className='timeframe'>{opportunity.timeframe}</p>
         <p className='description'>{opportunity.description}</p>
-        <button onClick={() => this.editOpportunity(opportunity.id)}>Edit</button>
+        <button className='editOpportunityButton' onClick={() => this.editOpportunity(opportunity.id)}>Edit</button>
         <OpportunityResponse opportunity={opportunity} />
       </div>
     )

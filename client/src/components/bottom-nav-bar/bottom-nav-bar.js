@@ -99,5 +99,5 @@ export class BottomNavBar extends Component {
 export const mapStateToProps = state => ({
   user: state.user,
   display: state.display.view
-})
+});
 export default connect(mapStateToProps)(BottomNavBar);

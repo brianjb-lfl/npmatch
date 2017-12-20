@@ -1,6 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
+import { mapStateToProps } from './opportunity-preview';
 import { OpportunityPreview } from './opportunity-preview';
 
 describe('Opportunity Preview component display functionality', () => {
@@ -36,18 +40,30 @@ describe('Opportunity Preview component display functionality', () => {
     expect(wrapper.find('.description').text()).toEqual('Shrinking consciousness');
   });
   it.skip('Should dispatch an actions when the component is clicked', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(async () => Promise.resolve({}));
     const historySpy = jest.fn();
-    const user = { authToken: '000' };
-    const wrapper = shallow(<OpportunityPreview
-      opportunity={opportunity}
-      dispatch={spy}
-      user={user}
-      match={{url: '/profiles/3'}}
-      history={{push: historySpy}}
-    />);
-    expect(wrapper.find('button').simulate('click'));
-    expect(spy.mock.calls.length).toEqual(2);
-    expect(historySpy.mock.calls.length).toEqual(1);
-  })
+    const wrapper = shallow(<MemoryRouter initialEntries={['/profiles/3']} initialIndex={0}>
+      <OpportunityPreview
+        opportunity={opportunity}
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/profiles/3' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.first().shallow().first().shallow().find('.editOpportunityButton').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+  });
+  it('Should map state to props', () => {
+    const initialState = {
+      display: 'homePage',
+      user: { id: 1 }
+    };
+    const expectedProps = { 
+      display: 'homePage',
+      user: { id: 1 }
+    };
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  });
 });
