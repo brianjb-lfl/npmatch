@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
   process.chdir('server');
   // Only require inside the if block so we don't run the server code twice
   // in development
-  const runServer = require('./server/server').runServer;
+  const runServer = require('./server/server.js').runServer;
   // Just run the server
   runServer(process.env.PORT || 8080);
 } else {
