@@ -49,9 +49,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "start": "run-p start:client start:server",
-    "start:client": "cd client && npm run start",
-    "start:server": "node index.js",
+    "start": "node index.js",
     "dev": "run-p dev:client dev:server",
     "dev:client": "cd client && npm start",
     "dev:server": "nodemon ./server/server.js",
