@@ -74,72 +74,72 @@ describe('opp', function() {
   });
 
   // ***** POST A NEW ORG OPPORTUNITY
-  describe('api/opportunities POST new opportunity', function() {
-    let testOpp = testData.testOrgOpp;
+  // describe('api/opportunities POST new opportunity', function() {
+  //   let testOpp = testData.testOrgOpp;
 
-    it('should reject a post with missing userId', function() {
-      return testF.getFocusOrg()
-        .then( result => {
-          testOpp = Object.assign( {}, testOpp, {
-            userId: result.focus_org_id
-          });
-          let failedTestOpp = Object.assign( {}, testOpp);
-          delete failedTestOpp.userId;
-          return chai.request(app)
-            .post('/api/opportunities')
-            .send(failedTestOpp)
-            .then( () =>
-              expect.fail(null, null, 'Request should fail')
-            )
-            .catch( err => {
-              if(err instanceof chai.AssertionError) {
-                throw err;
-              }
-              const res = err.response;
-              // expect(res.body.reason).to.equal('ValidationError');
-              // expect(res.body.location).to.equal('userId');
-            });
-        });
-    });
+  //   it('should reject a post with missing userId', function() {
+  //     return testF.getFocusOrg()
+  //       .then( result => {
+  //         testOpp = Object.assign( {}, testOpp, {
+  //           userId: result.focus_org_id
+  //         });
+  //         let failedTestOpp = Object.assign( {}, testOpp);
+  //         delete failedTestOpp.userId;
+  //         return chai.request(app)
+  //           .post('/api/opportunities')
+  //           .send(failedTestOpp)
+  //           .then( () =>
+  //             expect.fail(null, null, 'Request should fail')
+  //           )
+  //           .catch( err => {
+  //             if(err instanceof chai.AssertionError) {
+  //               throw err;
+  //             }
+  //             const res = err.response;
+  //             // expect(res.body.reason).to.equal('ValidationError');
+  //             // expect(res.body.location).to.equal('userId');
+  //           });
+  //       });
+  //   });
 
-    it('should reject a post with missing title', function() {
-      let failedTestOpp = Object.assign( {}, testOpp);
-      delete failedTestOpp.title;
-      return chai.request(app)
-        .post('/api/opportunities')
-        .send(failedTestOpp)
-        .then( () =>
-          expect.fail(null, null, 'Request should fail')
-        )
-        .catch( err => {
-          if(err instanceof chai.AssertionError) {
-            throw err;
-          }
-          const res = err.response;
-          // expect(res.body.reason).to.equal('ValidationError');
-          // expect(res.body.location).to.equal('title');
-        });
-    });
+  //   it('should reject a post with missing title', function() {
+  //     let failedTestOpp = Object.assign( {}, testOpp);
+  //     delete failedTestOpp.title;
+  //     return chai.request(app)
+  //       .post('/api/opportunities')
+  //       .send(failedTestOpp)
+  //       .then( () =>
+  //         expect.fail(null, null, 'Request should fail')
+  //       )
+  //       .catch( err => {
+  //         if(err instanceof chai.AssertionError) {
+  //           throw err;
+  //         }
+  //         const res = err.response;
+  //         // expect(res.body.reason).to.equal('ValidationError');
+  //         // expect(res.body.location).to.equal('title');
+  //       });
+  //   });
 
-    it('should add an opportunity', function() {
-      return chai.request(app)
-        .post('/api/opportunities')
-        .send(testOpp)
-        .then( res => {
-          expect(res).to.have.status(201);
-          const knex = require('../db');
-          return knex('opportunities')
-            .select()
-            .where({id: res.body.id});
-        })
-        .then( results => {
-          expect(results.length).to.equal(1);
-          expect(results[0].id_user).to.equal(testOpp.userId);
-          expect(results[0].offer).to.equal(false);
-          expect(results[0].title).to.equal(testOpp.title);
-          expect(results[0].narrative).to.equal(testOpp.narrative);
-        });
-    });
-  });
+  //   it('should add an opportunity', function() {
+  //     return chai.request(app)
+  //       .post('/api/opportunities')
+  //       .send(testOpp)
+  //       .then( res => {
+  //         expect(res).to.have.status(201);
+  //         const knex = require('../db');
+  //         return knex('opportunities')
+  //           .select()
+  //           .where({id: res.body.id});
+  //       })
+  //       .then( results => {
+  //         expect(results.length).to.equal(1);
+  //         expect(results[0].id_user).to.equal(testOpp.userId);
+  //         expect(results[0].offer).to.equal(false);
+  //         expect(results[0].title).to.equal(testOpp.title);
+  //         expect(results[0].narrative).to.equal(testOpp.narrative);
+  //       });
+  //   });
+  // });
 
 });

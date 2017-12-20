@@ -62,7 +62,6 @@ oppRouter.get('/list', (req, res) => {
     });    
 });
 
-
 // POST api/opportunities
 oppRouter.post('/', jsonParser, (req, res) => {
   let inOppObj = req.body;
