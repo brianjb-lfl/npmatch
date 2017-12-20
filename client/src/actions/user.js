@@ -99,61 +99,62 @@ export const objectToArray=(object)=>{
   return [];
 }
 
-// @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
-
-
-export const manageLinks = (immutableUser, link, index, action) => dispatch => {
-
-  const user = Object.assign({}, immutableUser);
-  const isNew = false;
-  console.log('user in manage links',user)
-  if ( action === 'edit') {
-    user.links[index] = link;
-    user.links.edit = false;
-  } else if ( action === 'delete') {
-    user.links.splice(index,1);
-  } else { // assume action === add
-    user.links.push(link);
-  }
-
-  dispatch(createOrEditUser(user, isNew, user.authToken))
-}
-
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {
-  // type options = 'users' and 'orgs'
-  // state location options = 'user' and 'userViewed'
+export const userAPICall = (url, init, callback) => dispatch => {
+
+  return fetch(url, init)   
+  .then(user=>{ 
+    console.log('user returned', user)
+    if (!user.ok) { 
+      return Promise.reject(user.statusText);
+    }
+    return user.json();
+  })
+  .then(user=>{
+    if (callback.isNew) {
+      return dispatch(login(callback.originalUser))
+    }
+    if (callback.stateLocation === 'userViewed') {
+      return dispatch(actionsUserViewed.loadUser(user));   
+    } 
+    console.log('returned user', user)
+    user.causes = stringArrayOfObjects(user.causes,        'cause');
+    user.skills = stringArrayOfObjects(user.skills,        'skill');
+    user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+    user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
+    user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
+    user.opportunities = arrayToObject(user.opportunities, 'id');
+    user.responses     = arrayToObject(user.responses,     'idOpportunity');
+    return dispatch(loadUser(user));
+  })
+  .catch(error => {
+    // console.log('error',error);
+    return dispatch(actionsDisplay.toggleModal(error));
+  })
+}
+
+// @@@@@@@@@@@@@@@ ASYNC HEADER/URL FORMATTING @@@@@@@@@@@@@@@@@
+
+export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {   // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
-    const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
-    const headers = {
-      'content-type': 'application/json',
-      "Authorization": `Bearer ${authToken}`, 
-    }; 
-  
-    const init = { 
-      method: 'GET',
-      headers,
-    };
-    return fetch(url, init)   
-    .then(res=>{
-      return res.json();
-    })
-    .then(res=>{
-      // console.log('response from single user fetch',res)
-      if (stateLocation === 'userViewed') {
-        dispatch(actionsUserViewed.loadUser(res));   
-      } else {
-        dispatch(loadUser(res));
-      }
-      return;      
-    })
-    .catch(error => {
-      // console.log('error',error);
-      return dispatch(actionsDisplay.toggleModal(error));
-    })
+  const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
+  const headers = {
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${authToken}`, 
+  }; 
+  const init = { 
+    method: 'GET',
+    headers,
+  };
+  const callback = {
+    isNew: false,
+    stateLocation,
+    originalUser: null,
+  }
+  return dispatch(userAPICall(url, init,callback));
 }
 
 export const login = user => dispatch => {
@@ -175,77 +176,63 @@ export const login = user => dispatch => {
     headers,
     body: JSON.stringify(userObject)
   };
-  console.log('log in init',init)
-  return fetch(url,init)
-    .then(user => {
-      return user.json()
-    })
-    .then(user=>{ 
-      console.log('returned user', user)
-      user.causes = stringArrayOfObjects(user.causes,        'cause');
-      user.skills = stringArrayOfObjects(user.skills,        'skill');
-      user.following     = arrayToObject(user.following,     'id');    // id of org being followed
-      user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
-      user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
-      user.opportunities = arrayToObject(user.opportunities, 'id');
-      user.responses     = arrayToObject(user.responses,     'idOpportunity');
-      dispatch(loadUser(user));
-    })
-    .catch(error => {
-      // console.log('error',error);
-      return dispatch(actionsDisplay.toggleModal(error));
-    });
-}
+  const callback = {
+    isNew: false,
+    stateLocation: 'user',
+    originalUser: null,
+  }
+  return dispatch(userAPICall(url, init,callback));}
 
 export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
   
-    dispatch(actionsDisplay.changeDisplay('loading'));
-    const originalUser = {username: user.username, password: user.password};
-    delete user.password2; // maybe set to null???
-    delete user.authToken;
-    // DELETE THIS WHEN BRIAN ADDS TO DB
-    delete user.availability;
-    const params = isNew ? 'register' : user.id ;
-    const method = isNew ? 'POST' : 'PUT';
+  dispatch(actionsDisplay.changeDisplay('loading'));
+  const originalUser = {username: user.username, password: user.password};
+  delete user.password2; // maybe set to null???
+  delete user.authToken;
+  // DELETE THIS WHEN BRIAN ADDS TO DB
+  delete user.availability;
+  const params = isNew ? 'register' : user.id ;
+  const method = isNew ? 'POST' : 'PUT';
 
-    const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
-    const headers = { 
-      "Content-Type": "application/json",
-    };
-    if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
+  const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
+  const headers = { 
+    'Content-Type': 'application/json',
+  };
+  if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
 
-    const init = { 
-      method,
-      body: JSON.stringify(user),
-      headers
-    };
-    console.log('init', init);
-    return fetch(url, init)
-    .then(user=>{ 
-      console.log('user returned', user)
-      if (!user.ok) { 
-        return Promise.reject(user.statusText);
-      }
-      return user.json();
-    }) 
-    .then(user => { 
-      if (isNew) {
-        return dispatch(login(originalUser))
-      }
-      console.log('user just before stringing arrays',user);
-      user.causes = stringArrayOfObjects(user.causes,        'cause');
-      user.skills = stringArrayOfObjects(user.skills,        'skill');
-      user.following     = arrayToObject(user.following,     'id');    // id of org being followed
-      user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
-      user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
-      user.opportunities = arrayToObject(user.opportunities, 'id');
-      user.responses     = arrayToObject(user.responses,     'idOpportunity');
-      return dispatch(loadUser(user));
-    })
-    .catch(error => {
-      dispatch(actionsDisplay.toggleModal(error));
-    });
+  const init = { 
+    method,
+    body: JSON.stringify(user),
+    headers
+  };
+  const callback = {
+    isNew,
+    stateLocation: 'user',
+    originalUser
+  }
+  return dispatch(userAPICall(url, init,callback));}
+
+// @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
+
+export const manageLinks = (immutableUser, link, index, action) => dispatch => {
+  // add, edit, or delete links in user array, then update user in db
+  
+  const user = {...immutableUser};
+  console.log('user in manage links',user)
+  if ( action === 'edit') {
+    user.links[index] = link;
+    user.links.edit = false;
+  } else if ( action === 'delete') {
+    user.links.splice(index,1);
+  } else { // assume action === add
+    user.links.push(link);
+  }
+  
+  const isNew = false; // user is not new
+  return dispatch(createOrEditUser(user, isNew, user.authToken))
 }
+
+// @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@
 
 export const createOrEditResponse = (response, authToken, isNew = true) => dispatch => {
   /* response = {

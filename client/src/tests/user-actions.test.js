@@ -11,7 +11,7 @@ const mockStore = configureStore(middlewares);
 const initialState = {}
 const store = mockStore(initialState)
 
-describe('actions - single user', () => {
+describe('plain actions - single user', () => {
 
   it('should create an action to load a minimal user', () => {
     const user = {
@@ -160,137 +160,6 @@ describe('actions - single user', () => {
     expect(actionsUser.loadUser(user)).toEqual(expectedAction)
   });
 
-  it('should call actions to fetch individual user from server and load as user in state', () => {
-    
-    const userId = 5; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
-    const stateLocation = 'user' // other option is 'orgs'
-    const expectedResponse = {id: userId}; // this will be the response of the mock call
-    const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
-    
-    window.fetch = jest.fn().mockImplementation(() =>
-      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
-              
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
-      .then(() => {
-        const expectedActions = store.getActions();
-        // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(2);
-        expect(expectedActions).toContainEqual(
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsUser.LOAD_USER, id: userId }
-        );
-      })
-  });
-
-  it('should call actions to fetch individual user from server and load as user in state (argument default option)', () => {
-    
-    const userId = 8; // doesn't matter for testing
-    const expectedResponse = {id: userId}; // this will be the response of the mock call
-    const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
-    
-    window.fetch = jest.fn().mockImplementation(() =>
-      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
-              
-    return store.dispatch(actionsUser.fetchUser(userId, authToken))
-      .then(() => {
-        const expectedActions = store.getActions();
-        // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(4); // 2 this time, 2 prior run
-        expect(expectedActions).toContainEqual(
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsUser.LOAD_USER, id: userId }
-        );
-      })
-  });
-
-  it('should call actions to fetch individual user from server and load as userViewed in state', () => {
-    
-    const userId = 6; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
-    const stateLocation = 'userViewed' // other option is 'orgs'
-    const expectedResponse = {id: userId}; // this will be the response of the mock call
-    const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
-    
-    window.fetch = jest.fn().mockImplementation(() =>
-      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
-              
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
-      .then(() => {
-        const expectedActions = store.getActions();
-        // console.log('expectedActions userViewed',expectedActions)
-        expect(expectedActions.length).toBe(6); // 3 from before, 3 from this time
-        expect(expectedActions).toContainEqual(
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
-          {type: actionsUser.LOAD_USER_VIEWED, id: userId }
-        );
-      })
-  });
-
-  it('should fail to call actions to fetch individual user from server and toggle modal', () => {
-    
-    const userId = 7; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
-    const stateLocation = 'user' // other option is 'orgs'
-    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
-    const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
-    
-    window.fetch = jest.fn().mockImplementation(() =>
-      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
-              
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
-      .then(() => {
-        const expectedActions = store.getActions();
-        // console.log('expectedActions fail user',expectedActions)
-        expect(expectedActions.length).toBe(8); // 3 from 1st, 3 from 2nd, 2 from now
-        expect(expectedActions).toContainEqual(
-          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
-          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
-        );
-      })
-  });
-
   it('should create an action to load response to user', () => {
     const newResponse = {
       id: 54,
@@ -392,6 +261,10 @@ describe('actions - single user', () => {
     expect(result).toEqual(expectedAction);
   });
 
+});
+
+describe('user action helper functions', () => {
+
   it('Should convert an array of objects to an array of strings', () => {
     const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
     const expectedOutput = ['a','b'];
@@ -467,6 +340,152 @@ describe('actions - single user', () => {
   it('Should NOT convert an object to an object of keys', () => {
     const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
     expect(actionsUser.objectToArray(input)).toEqual([]);
+  });
+
+});
+
+describe('user action async precursor functions', () => {
+
+
+  it('Should ', () => {
+
+    manageLinks(user, link, index, action)
+
+  });
+
+});
+
+describe('user action async functions', () => {
+
+  it('should fetch 1 user from server and load user in state', () => {
+    
+    const userId = 5; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'user' // other option is 'orgs'
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(2);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
+  });
+
+  it('should fetch 1 user from server and load user in state (argument default)', () => {
+    
+    const userId = 8; // doesn't matter for testing
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(4); // 2 this time, 2 prior run
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
+  });
+
+  it('should fetch 1 user from server and loaas userViewed in state', () => {
+    
+    const userId = 6; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'userViewed' // other option is 'orgs'
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions userViewed',expectedActions)
+        expect(expectedActions.length).toBe(6); // 3 from before, 3 from this time
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
+          {type: actionsUser.LOAD_USER_VIEWED, id: userId }
+        );
+      })
+  });
+
+  it('should fetch 1 user from server and toggle modal', () => {
+    
+    const userId = 7; // doesn't matter for testing
+    const type = 'users' // other option is 'orgs'
+    const stateLocation = 'user' // other option is 'orgs'
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const authToken = '';
+
+    const mockResponse = (status, statusText, response) => {
+      return new window.Response(response, {
+        status: status,
+        statusText: statusText,
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+    };
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions fail user',expectedActions)
+        expect(expectedActions.length).toBe(8); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
+        );
+      })
   });
 
 })

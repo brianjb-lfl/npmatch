@@ -9,10 +9,14 @@ export class UserProfile extends Component {
   render() {
     const user = this.props.user;
 
-    let opportunityPreviews = typeof user.opportunities !== 'object' ? null : user.opportunities.map((opp, key) => (
-      <OpportunityPreview opportunity={opp} key={key} />
-    )
-    );
+    let opportunityPreviews = [];
+    if (typeof user.opportunity === 'object') {
+      let key = 1
+      for (let prop in user.opportunities) {
+        opportunityPreviews.push(<OpportunityPreview opportunity={user.opportunities[prop]} key={key} />) 
+        key += 1;
+      }
+    }
 
     return (
       <main>

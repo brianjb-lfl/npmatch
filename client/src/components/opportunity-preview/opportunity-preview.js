@@ -9,6 +9,7 @@ import OpportunityResponse from '../opportunity-response/opportunity-response';
 export class OpportunityPreview extends Component {
 
   editOpportunity(id) {
+    console.log('edit opp id', id)
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
         this.props.history.push('/opportunities/create');

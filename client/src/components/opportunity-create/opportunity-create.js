@@ -147,7 +147,7 @@ export class OpportunityCreate extends Component {
 
 export const mapStateToProps = state => {
 
-  const initialForm = Object.assign({}, state.opportunity)
+  const initialForm = {...state.opportunity}
   delete initialForm.responses;
   initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id;
   initialForm.causes = initialForm.causes ? initialForm.causes : null;
