@@ -40,7 +40,7 @@
     "build:client": "cd client && npm build",
     "build:server": "--ignore node_modules,build --out-dir server/build",
     "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
-    "test": "mocha --colors --watch  test/setup.test.js */*.test.js",
+    "test": "mocha --colors --watch   server/test/*.test.js",
     "coverage": "nyc mocha --colors  server/test/*test.js",
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha test/setup.test.js */*.test.js",
