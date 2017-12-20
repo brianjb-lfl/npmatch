@@ -34,14 +34,14 @@
     "test-console": "^1.1.0"
   },
   "scripts": {
-    "start": "nodemon ./server/server.js",
-    "start:prod": "node server/build/server.js",
+    "start": "concurrently \"nodemon ./server/server.js\" \"cd client && react-scripts start\"",
     "test": "mocha --colors server/test/*test.js",
-    "build": "concurrently \"cd client && npm build\" \"babel . --ignore node_modules,build --out-dir server/build\"",
+    "build": "concurrently \"cd client && react-scripts build\" \" --ignore node_modules,build --out-dir server/build\"",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha --exit server/test/*test.js",
-    "heroku": "node index.js",
+    "heroku": "node server/server.js",
+    "heroku-postbuild": "cd ../client && npm install --only=dev && npm install && npm run build",
     "travis": "mocha --exit server/test/*test.js"
   },
   "devDependencies": {
