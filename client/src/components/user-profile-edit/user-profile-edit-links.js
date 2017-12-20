@@ -12,6 +12,9 @@ export class UserEditLinksForm extends Component {
   
   handleSubmitButton(link, index = 0, action = 'add') {
     this.props.dispatch(actionsUser.manageLinks(this.props.user, link, index, action))
+    .then(() => {
+      this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+    })
   }
 
   handleEditButton(index, edit=false) {
@@ -21,30 +24,33 @@ export class UserEditLinksForm extends Component {
 
   render() {
 
-    const myLinks = this.props.user.links.map((link,index)=>{
-      console.log('link inside map',!link.edit, link.edit, link);
-      if (link.edit && this.props.display.view === 'editLink') {
-        console.log('editing link')
-        return <li key={index}>
-          <form className='userProfile'
-            onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, index, 'edit'))}
-          >
-            <LinkFields initialValues = {link} anotherTest = {1}/>
-            <button 
-              type="submit" disabled={this.props.pristine || this.props.submitting}>Save
-            </button>
-          </form>
-        </li>
-      } else {
-        console.log('not editing link')
-        return <li key={index}>
-          <div>{link.linkType}</div>
-          <div>{link.linkURL}</div>
-          <button className='editLink' onClick={()=>this.handleSubmitButton(link,index,'delete')}>Delete</button>
-          <button className='deleteLink' onClick={()=>this.handleEditButton(index, true)}>Edit</button>
-        </li>
-      }
-    })
+    let myLinks;
+    if (Array.isArray(this.props.user.links) ) {
+      myLinks = this.props.user.links.map((link,index)=>{
+        // console.log('link inside map',!link.edit, link.edit, link);
+        if (link.edit && this.props.display.view === 'editLink') { // display.view invoked to cause React to re-render, as it is top-level, and re-render is shallow
+          // console.log('editing link')
+          return <li key={index}>
+            <form className='userProfile'
+              onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, index, 'edit'))}
+            >
+              <LinkFields initialValues = {link} anotherTest = {1}/>
+              <button 
+                type="submit" disabled={this.props.pristine || this.props.submitting}>Save
+              </button>
+            </form>
+          </li>
+        } else {
+          // console.log('not editing link')
+          return <li key={index}>
+            <div>{link.linkType}</div>
+            <div>{link.linkURL}</div>
+            <button className='editLink' onClick={()=>this.handleSubmitButton(link,index,'delete')}>Delete</button>
+            <button className='deleteLink' onClick={()=>this.handleEditButton(index, true)}>Edit</button>
+          </li>
+        }
+      })
+    }
     
     return (
       <div>

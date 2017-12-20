@@ -30,27 +30,27 @@ export const user = {
   ],
   causes: [''],
   skills: [''],
-  adminOf: [       
-    {
+  adminOf: {       
+    0: {
       organization: '',
       id: '',
     }
-  ],
-  admins: [         
-    {
+  },
+  admins: {         
+    0: {
       firstName: '',  
       lastName: '',    
       id: '',
     }
-  ],
-  following: [    
-    {
+  },
+  following: {    
+    0: {
       organization: '',
       id: '',
     }
-  ],
-  opportunities: [  
-    {
+  },
+  opportunities: {  
+    0: {
       id: '',
       userId: '',      
       organization: '', 
@@ -67,9 +67,9 @@ export const user = {
       causes: [''],   
       responses: [],
     }
-  ],
-  responses: [     
-    {
+  },
+  responses: {     
+    0: {
       id: '',
       idOpportunity: '',
       organization: '',
@@ -82,7 +82,7 @@ export const user = {
       timestampCreated: '',
       notes: '',
     }
-  ], 
+  }, 
 };
 
 export const usersList = {
@@ -107,8 +107,8 @@ export const opportunity = {
   locationCountry: {name: 'United States', code: 'US'},
   link: '',
   causes: null,  
-  responses: [     
-      {
+  responses: {     
+    0: {
         id: '',
         idOpportunity: '',
         userId: '',
@@ -121,7 +121,7 @@ export const opportunity = {
         lastName: '',    // copy, populated at creation
         title: '',       // copy, populated at creation
       }
-    ],
+    },
 };
 
 export const opportunitiesList = {
@@ -133,7 +133,9 @@ export const opportunitiesList = {
 export const display = {
   view: 'homePage',    // options: 'homePage', 'explorePage', 'editOpportunity'
   modal: false,
-  modalMessage: ''
+  modalMessage: '',
+  userId: '',
+  opportunityId: '',
 };
 
 export const general = {

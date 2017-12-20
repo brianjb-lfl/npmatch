@@ -13,6 +13,18 @@ const store = mockStore(initialState)
 
 describe('actions - list of users', () => {
 
+  let cumulativeActions = 0;
+  
+  const mockResponse = (status, statusText, response) => {
+    return new window.Response(response, {
+      status: status,
+      statusText: statusText,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+  };
+
   it('should create an action: array of users', () => {
     const arrayOfUsers = [
       {
@@ -98,17 +110,8 @@ describe('actions - list of users', () => {
     expect(result.main[0].id).toBe(1)
   });
 
-  it('should call actions to fetch user list from server', () => {
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
+  it('should fetch user list from server', () => {
+    cumulativeActions += 2;
 
     const expectedResponse = {}; // this will be the response of the mock call
     const searchCriteria = {}; // doesn't matter for testing
@@ -129,6 +132,31 @@ describe('actions - list of users', () => {
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsUsersList.LOAD_USERS_LIST, main: {} }
+        );
+      })
+  });
+
+  it('should fail to to fetch user list from server', () => {
+    cumulativeActions += 2;
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const searchCriteria = {}; // doesn't matter for testing
+    const authToken = '';
+
+    // cannot find docs on window.fetch. Does this intercept fetch in "this" window?
+    // i.e. when actions.fetchUsersList is called, does this intercept, because it is in the same "window"? 
+    window.fetch = jest.fn().mockImplementation(() =>
+    Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+
+    // console.log('store',store);
+      
+    return store.dispatch(actionsUsersList.fetchUsersList(searchCriteria, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
         );
       })
   });

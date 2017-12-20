@@ -67,8 +67,7 @@ oppRouter.get('/list', (req, res) => {
 oppRouter.post('/', jsonParser, (req, res) => {
   let inOppObj = req.body;
   let retObj = {};
-  let inCausesArr = inOppObj.causes.slice();
-
+  let inCausesArr = Array.isArray(inOppObj.causes) ? inOppObj.causes.slice() : [] ;
   // check for missing fields
   const reqFields = ['title', 'narrative', 'userId', 'causes'];
   const missingField = reqFields.find( field => !(field in inOppObj));
@@ -80,14 +79,26 @@ oppRouter.post('/', jsonParser, (req, res) => {
       location: missingField
     });
   }
-
   // post base opportunity info - get id'
   const postOppObj = epHelp.buildOppBase(inOppObj);
   const knex = require('../db');
 
   return knex('opportunities')
     .insert(postOppObj)
-    .returning(['id', 'opportunity_type as opportunityType', 'narrative'])
+    .returning(['id', 
+      'user_id as userId',
+      'organization',
+      'opportunity_type as opportunityType',
+      'offer',
+      'title',
+      'narrative',
+      'timestamp_start as timestampStart',
+      'timestamp_end as timestampEnd',
+      'location_city as locationCity',
+      'location_state as locationState',
+      'location_country as locationCountry',
+      'link'
+    ])
 
     .then( results => {
       // save return info for client response

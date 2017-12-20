@@ -171,11 +171,11 @@ userRouter.put('/:id', jsonParser, (req, res) => {
   let inUsrObj = Object.assign( {}, req.body);
   let convInUsrObj = {};
   let retObj = {};
-  let linksArr = req.body.links.slice();
+  let linksArr = typeof req.body.links === 'object' ? req.body.links.slice() : [] ;
   let linkPostArr = [];
-  let causesArr = req.body.causes.slice();
+  let causesArr = typeof req.body.causes === 'object' ? req.body.causes.slice() : [] ;
   let causePostArr = [];
-  let skillsArr = req.body.skills.slice();
+  let skillsArr = typeof req.body.skills === 'object' ? req.body.skills.slice() : [] ;
   let skillPostArr = [];
 
   // verify id
@@ -216,7 +216,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
       return knex('users')
         .where('id', '=', usrId)
         .update(convInUsrObj)
-        .returning(['id', 'username'])
+        .returning(['id', 'username']);
     })
 
     .then( result => {
@@ -305,7 +305,7 @@ userRouter.put('/:id', jsonParser, (req, res) => {
               );
             });
             return knex('users_skills')
-              .insert(skillPostArr)
+              .insert(skillPostArr);
           }
           else {
             return;
@@ -313,7 +313,13 @@ userRouter.put('/:id', jsonParser, (req, res) => {
         });
     })
     .then( () => {
-      res.status(201).json(retObj)
+      console.log('retObj before', retObj);
+      return epHelp.buildUser(retObj[0].id);
+    })
+    .then( (retObj) => {
+      console.log('retObj after', retObj);
+      let usrObjCC = epHelp.convertCase(retObj, 'snakeToCC');
+      res.status(201).json(usrObjCC);
     })
     .catch( err => {
       if(err.reason === 'ValidationError') {
@@ -341,6 +347,5 @@ userRouter.delete('/clear/test/data', (req, res) => {
       res.status(500).json({message: 'Internal server error'});
     });
 });
-
 
 module.exports = { userRouter };

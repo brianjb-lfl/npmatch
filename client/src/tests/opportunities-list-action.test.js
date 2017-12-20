@@ -13,6 +13,17 @@ const store = mockStore(initialState)
 
 describe('actions - opportunities list', () => {
 
+  let cumulativeActions = 0;
+  const mockResponse = (status, statusText, response) => {
+    return new window.Response(response, {
+      status: status,
+      statusText: statusText,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+  };
+
   it('should create an action: array of opportunities', () => {
     const arrayOfOpportunities = [
       {
@@ -85,17 +96,8 @@ describe('actions - opportunities list', () => {
     expect(result).toEqual(expectedAction)
   });
 
-  it('should call actions to fetch opportunities list from server', () => {
-    
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
+  it('should fetch opportunities list from server', () => {
+    cumulativeActions += 2;
     
     const expectedResponse = {}; // this will be the response of the mock call
     const searchCriteria = {}; // doesn't matter for testing
@@ -108,10 +110,32 @@ describe('actions - opportunities list', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions',expectedActions)
-        expect(expectedActions.length).toBe(2);
+        expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsOppsList.LOAD_OPPS_LIST, main: {} }
+        );
+      })
+  });
+
+  it('should fail to fetch opportunities list from server', () => {
+    cumulativeActions += 2;
+    
+    const expectedResponse = {error: 'error  234234234'}; // this will be the response of the mock call
+    const searchCriteria = {}; // doesn't matter for testing
+    const authToken = '';
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsOppsList.fetchOppsList(searchCriteria, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
         );
       })
   });

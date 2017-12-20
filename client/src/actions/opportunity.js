@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import  * as actionsDisplay from './display';
+import { arrayToObject } from './user';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -26,87 +27,84 @@ export const loadOpportunity = action => ({
 
 
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = (response,index,action) => ({
+export const loadResponse = response => ({
   type: LOAD_RESPONSE,
   response,
-  index,
-  action,
 });
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
+export const oppAPICall = (url, init) => dispatch => {
+  // console.log('init', init)
+  return fetch(url, init)   
+  .then(opp=>{
+    if (!opp.ok) { 
+      return Promise.reject(opp.statusText);
+    }
+    return opp.json();
+  }) 
+  .then(opportunity=>{
+    // console.log('opp returned', opportunity)
+    if (typeof opportunity.responses === 'object') {
+      // console.log('start formatting opp',opportunity.responses);
+      opportunity.responses = arrayToObject(opportunity.responses, 'id');
+    }
+    return dispatch(loadOpportunity(opportunity));      
+  })
+  .catch(error => {
+    return dispatch(actionsDisplay.toggleModal(error));
+  })
+}
 
 export const fetchOpp = (oppId, authToken) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
   
-    const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
-    const headers = {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${authToken}`, 
-    }; 
-  
-    const init = { 
-      method: 'GET',
-      headers,
-    };
-    return fetch(url, init)   
-    .then(res=>{
-      return res.json();
-    })
-    .then(res=>{
-      return dispatch(loadOpportunity(res));      
-    })
-    .catch(error => {
-      return dispatch(actionsDisplay.toggleModal(error));
-    })
+  const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
+  const headers = {
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${authToken}`, 
+  }; 
+  const init = { 
+    method: 'GET',
+    headers,
+  };
+  return dispatch(oppAPICall(url, init));
 }
 
 export const createOpportunity = (opportunity, authToken, isNew) => dispatch => {
   
-    dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplay('loading'));
 
-    // conform data format
-    if (typeof opportunity.offer === 'string') {
-      if ( opportunity.offer.substring(0,5) === 'offer' ) {
-        opportunity.offer = true;
-      } else {
-        opportunity.offer = false;
-      }  
-    }
-
-    if ( typeof opportunity.locationState === 'object' ) {
-      opportunity.locationState = opportunity.locationState.abbreviation;
-    } 
-
-    if ( typeof opportunity.locationCountry === 'object' ) {
-      opportunity.locationCountry = opportunity.locationCountry.code;
-    } 
-    
-    const params = isNew ? `/${opportunity.id}` : '' ;
-    const method = isNew ? 'POST' : 'PUT' ;
-
-    const url = `${REACT_APP_BASE_URL}/api/opportunities${params}`
-    const headers = { 
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${authToken}`
-    };
-    const init = { 
-      method,
-      body: JSON.stringify(opportunity),
-      headers
-    };
-    // console.log('create opp',init)
-    return fetch(url, init)
-    .then(res=>{
-      if (!res.ok) { 
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
-    }) 
-    .then(user => { 
-      return dispatch(loadOpportunity(user));
-    })
-    .catch(error => {
-      dispatch(actionsDisplay.toggleModal(error));
-    });
+  // conform data format
+  if (typeof opportunity.offer === 'string') {
+    if ( opportunity.offer.substring(0,5) === 'offer' ) {
+      opportunity.offer = true;
+    } else {
+      opportunity.offer = false;
+    }  
   }
+  if ( typeof opportunity.locationState === 'object' ) {
+    opportunity.locationState = opportunity.locationState.abbreviation;
+  } 
+  if ( typeof opportunity.locationCountry === 'object' ) {
+    opportunity.locationCountry = opportunity.locationCountry.code;
+  } 
+    
+  if (isNew) delete opportunity.id;
+  // DELETE THIS WHEN BRIAN ADDS TO DB
+  delete opportunity.organization;
+  const params = isNew ? '' : `/${opportunity.id}` ;
+  const method = isNew ? 'POST' : 'PUT' ;
+
+  const url = `${REACT_APP_BASE_URL}/api/opportunities${params}`
+  const headers = { 
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${authToken}`
+  };
+  const init = { 
+    method,
+    body: JSON.stringify(opportunity),
+    headers
+  };
+  return dispatch(oppAPICall(url, init));  
+}

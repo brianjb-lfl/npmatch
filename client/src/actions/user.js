@@ -26,7 +26,6 @@ export const loadUser = user => ({
   links: user.links, // array of objects
   causes: user.causes,
   skills: user.skills,
-  responses: user.responses, // array of objects
   adminOf: user.adminOf, // array of objects
   admins: user.admins,
   following: user.following, // array of objects
@@ -35,27 +34,21 @@ export const loadUser = user => ({
 });
 
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = (response,index,action) => ({
+export const loadResponse = response => ({
   type: LOAD_RESPONSE,
   response,
-  index,
-  action,
 });
 
 export const LOAD_ADMIN = 'LOAD_ADMIN';
-export const loadAdmin = (admin,index,isNew) => ({
+export const loadAdmin = admin => ({
   type: LOAD_ADMIN,
   admin,
-  index,
-  isNew,
 });
 
 export const LOAD_FOLLOWING = 'LOAD_FOLLOWING';
-export const loadFollowing = (following,index,isNew) => ({
+export const loadFollowing = following => ({
   type: LOAD_FOLLOWING,
   following,
-  index,
-  isNew,
 });
 
 export const SET_FORM_TYPE = 'SET_FORM_TYPE';
@@ -67,71 +60,119 @@ export const setFormType = formType => ({
 export const TOGGLE_EDIT_LINK = 'TOGGLE_EDIT_LINK';
 export const toggleEditLink = (index, edit = false, links) => {
   links[index].edit = edit;
-  console.log('edited links', links)
+  // console.log('edited links', links)
   return {
     type: TOGGLE_EDIT_LINK,
     links,
   }
 };
 
-// @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
 
-
-export const manageLinks = (immutableUser, link, index, action) => dispatch => {
-
-  const user = Object.assign({}, immutableUser);
-  const isNew = false;
-  console.log('user in manage links',user)
-  if ( action === 'edit') {
-    user.links[index] = link;
-    user.links.edit = false;
-  } else if ( action === 'delete') {
-    user.links.splice(index,1);
-  } else { // assume action === add
-    user.links.push(link);
+export const stringArrayOfObjects=(array,key)=>{
+  // input: [ {}, {} ]      output ['','']
+  if (Array.isArray(array)) {
+    return array.map(item=>item[key])
   }
+  return [];
+}
 
-  dispatch(createOrEditUser(user, isNew, user.authToken))
+export const arrayToObject=(array,key='id')=>{
+  const newObject = {};
+  // input: [ {id:0}, {id:1} ]      output {0:{},1:{}}
+  if (Array.isArray(array)) {
+    array.forEach(item=>newObject[item[key]] = item);
+    return newObject;
+  }
+  return {};
+}
+
+export const objectToArray=(object)=>{
+  const newArray = [];
+  // input {0:{},1:{}}         output: [ {}, {} ]      
+  if (typeof object === 'object' && !Array.isArray(object)) {
+    for (let prop in object) {
+      newArray.push(object[prop]);
+    }
+    return newArray;
+  }
+  return [];
+}
+
+export const updateLinks = (links, link, index, action) => {
+  const newLinks = [...links];
+  // console.log('links in manage links',newLinks)
+  if ( action === 'edit') {
+    newLinks[index] = link;
+    newLinks[index].edit = false;
+  } else if ( action === 'delete') {
+    newLinks.splice(index,1);
+  } else { // assume action === add
+    newLinks.push(link);
+  }
+  return newLinks;
 }
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {
-  // type options = 'users' and 'orgs'
-  // state location options = 'user' and 'userViewed'
+export const userAPICall = (url, init, callback) => dispatch => {
+
+  return fetch(url, init)   
+  .then(user=>{ 
+    // console.log('user returned', user)
+    if (!user.ok) { 
+      return Promise.reject(user.statusText);
+    }
+    return user.json();
+  })
+  .then(user=>{
+    if (callback.isNew) {
+      return dispatch(login(callback.originalUser))
+    }
+    if (callback.stateLocation === 'userViewed') {
+      return dispatch(actionsUserViewed.loadUser(user));   
+    } 
+    // console.log('returned user', user)
+    user.causes = stringArrayOfObjects(user.causes,        'cause');
+    user.skills = stringArrayOfObjects(user.skills,        'skill');
+    user.following     = arrayToObject(user.following,     'id');    // id of org being followed
+    user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
+    user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
+    user.opportunities = arrayToObject(user.opportunities, 'id');
+    user.responses     = arrayToObject(user.responses,     'idOpportunity');
+    return dispatch(loadUser(user));
+  })
+  .catch(error => {
+    // console.log('error',error);
+    return dispatch(actionsDisplay.toggleModal(error));
+  })
+}
+
+// @@@@@@@@@@@@@@@ ASYNC HEADER/URL FORMATTING @@@@@@@@@@@@@@@@@
+
+export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {   // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
-    const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
-    const headers = {
-      'content-type': 'application/json',
-      "Authorization": `Bearer ${authToken}`, 
-    }; 
-  
-    const init = { 
-      method: 'GET',
-      headers,
-    };
-    return fetch(url, init)   
-    .then(res=>{
-      return res.json();
-    })
-    .then(res=>{
-      // console.log('response from single user fetch',res)
-      if (stateLocation === 'userViewed') {
-        dispatch(actionsUserViewed.loadUserViewed(res));   
-      } else {
-        dispatch(loadUser(res));
-      }
-      return;      
-    })
-    .catch(error => {
-      // console.log('error',error);
-      return dispatch(actionsDisplay.toggleModal(error));
-    })
+  const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
+  const headers = {
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${authToken}`, 
+  }; 
+  const init = { 
+    method: 'GET',
+    headers,
+  };
+  const callback = {
+    isNew: false,
+    stateLocation,
+    originalUser: null,
+  }
+  return dispatch(userAPICall(url, init,callback));
 }
 
 export const login = user => dispatch => {
+  // console.log('user at login',{user})
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -149,95 +190,53 @@ export const login = user => dispatch => {
     headers,
     body: JSON.stringify(userObject)
   };
-  console.log('log in init',init)
-  return fetch(url,init)
-    .then(user => {
-      return user.json()
-    })
-    .then(user=>{ 
-      console.log('returned user', user)
-      dispatch(loadUser(user));
-    })
-    .catch(error => {
-      // console.log('error',error);
-      return dispatch(actionsDisplay.toggleModal(error));
-    });
-}
-
-export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
-  
-    dispatch(actionsDisplay.changeDisplay('loading'));
-
-    delete user.password2;
-    delete user.authToken;
-    const params = isNew ? 'register' : user.id ;
-    const method = isNew ? 'POST' : 'PUT';
-
-    const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
-    const headers = { 
-      "Content-Type": "application/json",
-    };
-    if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
-
-    const init = { 
-      method,
-      body: JSON.stringify(user),
-      headers
-    };
-    console.log('init', init);
-    return fetch(url, init)
-    .then(res=>{ 
-      console.log(res);
-      if (!res.ok) { 
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
-    }) 
-    .then(user => { 
-      console.log('user returned at registration', user)
-      return dispatch(loadUser(user));
-    })
-    .catch(error => {
-      dispatch(actionsDisplay.toggleModal(error));
-    });
-}
-
-/*
-
-#######################
-
-this.props.handleSubmit={(formValues)=>{addResponse(opportunity, formValues)}
-
-const addResponse = (opportunity, formValues) {
-  const response = {
-    idOpportunity: opportunity.id,
-    userId: this.props.user.id,
-    notes: formValues.notes,
-    responseStatus: 'offered',
-    organization: opportunity.organization,
-    firstName: this.props.user.firstName,
-    lastName: this.props.user.lastName
-    title: opportunity.title,
+  const callback = {
+    isNew: false,
+    stateLocation: 'user',
+    originalUser: null,
   }
-  this.props.dispatch(actionsUser.createOrEditResponse(response, -1, this.props.user.authToken, true));
-  then.props.dispatch(actionsDisplay.changeDisplay('normal'))
+  return dispatch(userAPICall(url, init,callback));}
+
+export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => {
+  
+  dispatch(actionsDisplay.changeDisplay('loading'));
+  const originalUser = {username: user.username, password: user.password};
+  delete user.password2; // maybe set to null???
+  delete user.authToken;
+  // DELETE THIS WHEN BRIAN ADDS TO DB
+  delete user.availability;
+  const params = isNew ? 'register' : user.id ;
+  const method = isNew ? 'POST' : 'PUT';
+
+  const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
+  const headers = { 
+    'Content-Type': 'application/json',
+  };
+  if ( !isNew ) headers.Authorization = `Bearer ${authToken}`;
+
+  const init = { 
+    method,
+    body: JSON.stringify(user),
+    headers
+  };
+  const callback = {
+    isNew,
+    stateLocation: 'user',
+    originalUser
+  }
+  return dispatch(userAPICall(url, init, callback));}
+
+export const manageLinks = (user, link, index, action) => dispatch => {
+  // add, edit, or delete links in user array, then update user in db
+  const newLinks = updateLinks(user.links, link, index, action);
+  const newUser = {...user, links: newLinks};
+  const isNew = false; // user is not new
+  return dispatch(createOrEditUser(newUser, user.authToken, isNew))
 }
 
-#######################
+// @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@
 
-this.props.handleSubmit={(formValues)=>{editResponse(formValues, index)}
-  // formValues.status === 'offered' || 'deleted' ==> available to respondants
-  // formValues.status === 'accepted' || 'denied' ==> available to posters
-  // control availability via React component
-
-const editResponse = (response, index) {
-  this.props.dispatch(actionsUser.createOrEditResponse(response, index, this.props.user.authToken, false));
-  then.props.dispatch(actionsDisplay.changeDisplay('normal'))
-}
-
-*/
-
-export const createOrEditResponse = (response, index, authToken, isNew = true) => dispatch => {
+export const createOrEditResponse = (response, authToken, isNew = true) => dispatch => {
   /* response = {
     id: 0 // only is isNew !== true
     responseStatus: 'offered' || 'accepted' || 'denied' || 'deleted' // only if isNew !== true
@@ -246,6 +245,8 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
     title: 'title of opportunity, read from state at time of click'
     notes: 
   } */
+
+  // console.log('response',response, authToken, isNew)
 
   dispatch(actionsDisplay.changeDisplay('loading'));
 
@@ -261,32 +262,32 @@ export const createOrEditResponse = (response, index, authToken, isNew = true) =
   const params = isNew ? '' : response.id ;
   const method = isNew ? 'POST' : 'PUT';
 
-  const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
+  const url = `${REACT_APP_BASE_URL}/api/responses/${params}`;
   const headers = { 
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
-
+  // console.log('response transmitted', response)
   const init = { 
     method,
     body: JSON.stringify(response),
     headers
   };
-  console.log('init', init);
+  // console.log('init at response', init);
   return fetch(url, init)
   .then(res=>{ 
-    console.log(res);
+    // console.log(res);
     if (!res.ok) { 
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedResponse => { 
-    console.log('returnedResponse', returnedResponse)
+    // console.log('returnedResponse', returnedResponse)
     if ( loadTo === 'user') {
-      return dispatch(loadResponse(returnedResponse,index,action));
+      return dispatch(loadResponse(returnedResponse));
     } else {
-      return dispatch(actionsOpportunity.loadResponse(returnedResponse,index,action));
+      return dispatch(actionsOpportunity.loadResponse(returnedResponse));
     }
   })
   .catch(error => {
@@ -330,7 +331,7 @@ const deleteRole = (role, index) {
 
 */
 
-export const createOrDeleteRole = (role, index, authToken, isNew = true) => dispatch => {
+export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch => {
   /* role = {
     id: for delete only
     idUserAdding:
@@ -356,21 +357,21 @@ export const createOrDeleteRole = (role, index, authToken, isNew = true) => disp
     body: JSON.stringify(role),
     headers
   };
-  console.log('init', init);
+  // console.log('init', init);
   return fetch(url, init)
   .then(res=>{ 
-    console.log(res);
+    // console.log(res);
     if (!res.ok) { 
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedRole => { 
-    console.log('returnedRole', returnedRole)
+    // console.log('returnedRole', returnedRole)
     if ( isAdmin ) {
-      return dispatch(loadAdmin(returnedRole, index, isNew));
+      return dispatch(loadAdmin(returnedRole, isNew));
     } else {
-      return dispatch(loadFollowing(returnedRole, index, isNew));
+      return dispatch(loadFollowing(returnedRole, isNew));
     }
   })
   .catch(error => {
