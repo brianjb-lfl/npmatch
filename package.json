@@ -41,7 +41,7 @@
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha --exit server/test/*test.js",
     "heroku": "node server/server.js",
-    "heroku-postbuild": "cd ../client && npm install --only=dev && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "travis": "mocha --exit server/test/*test.js"
   },
   "devDependencies": {
