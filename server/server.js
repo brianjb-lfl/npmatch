@@ -24,11 +24,10 @@ app.use(
   })
 );
 
-
-app.use(express.static(path.join(__dirname, '..', 'client/public/index.html'))); 
-app.get('/', (req, res) => { 
-  res.sendFile(path.join(__dirname, '..', 'client/public/index.html'));
-});
+// app.use(express.static(path.join(__dirname, '..', 'client/public/index.html'))); 
+// app.get('/', (req, res) => { 
+//   res.sendFile(path.join(__dirname, '..', 'client/public/index.html'));
+// });
 
 app.use('/api/users', userRouter);
 app.use('/api/orgs', orgRouter);
@@ -39,9 +38,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/roles', roleRouter);
 app.use('/api/responses', responseRouter);
 
-// app.use('*', (req, res) => {
-//   return res.status(404).json({message: 'Not found'});
-// });
+app.use('*', (req, res) => {
+  return res.status(404).json({message: 'Not found'});
+});
 
 function runServer(port = PORT) {
   const server = app

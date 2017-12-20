@@ -11,7 +11,6 @@
   "main": "/server/server.js",
   "private": true,
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "bcrypt": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
@@ -39,7 +38,6 @@
     "start:prod": "node server/build/server.js",
     "test": "mocha --colors server/test/*test.js",
     "build": "concurrently \"cd client && npm build\" \"babel . --ignore node_modules,build --out-dir server/build\"",
-    "heroku-postbuild": "npm build",
     "coverage": "nyc mocha --exit --colors  server/test/*test.js",
     "nyc": "test",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary mocha --exit server/test/*test.js",
