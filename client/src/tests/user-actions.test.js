@@ -1,5 +1,6 @@
 import * as actionsUser from '../actions/user';
 import * as actionsDisplay from '../actions/display';
+import * as actionsOpportunity from '../actions/opportunity';
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -406,7 +407,7 @@ describe('user action async functions', () => {
   it('should fetch 1 user from server and load user in state', () => {
     
     cumulativeActions += 2;
-    const userId = 5; // doesn't matter for testing
+    const userId = 6976897854655; // doesn't matter for testing
     const stateLocation = 'user' // other option is 'orgs'
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
@@ -421,14 +422,14 @@ describe('user action async functions', () => {
         expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsUser.LOAD_USER, id: userId }
+          {type: actionsUser.LOAD_USER, expectedResponse }
         );
       })
   });
 
   it('should fetch 1 user from server and load user in state (argument default)', () => {
     cumulativeActions += 2;
-    const userId = 8; // doesn't matter for testing
+    const userId = 77654433333338; // doesn't matter for testing
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
     
@@ -442,14 +443,14 @@ describe('user action async functions', () => {
         expect(expectedActions.length).toBe(cumulativeActions); // 2 this time, 2 prior run
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsUser.LOAD_USER, id: userId }
+          {type: actionsUser.LOAD_USER, expectedResponse }
         );
       })
   });
 
   it('should fetch 1 user from server and load as userViewed in state', () => {
     cumulativeActions += 2;
-    const userId = 6; // doesn't matter for testing
+    const userId = 11222112236; // doesn't matter for testing
     const stateLocation = 'userViewed' // other option is 'orgs'
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
@@ -465,14 +466,14 @@ describe('user action async functions', () => {
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
-          {type: actionsUser.LOAD_USER_VIEWED, id: userId }
+          {type: actionsUser.LOAD_USER_VIEWED, expectedResponse }
         );
       })
   });
 
   it('should fetch 1 user from server and toggle modal', () => {
     cumulativeActions += 2;
-    const userId = 7; // doesn't matter for testing
+    const userId = 7343578689; // doesn't matter for testing
     const stateLocation = 'user' // other option is 'orgs'
     const expectedResponse = {error: 'error'}; // this will be the response of the mock call
     const authToken = '';
@@ -499,7 +500,7 @@ describe('user action async functions', () => {
   it('should login 1 user and load user in state', () => {
     cumulativeActions += 2;
     const user = {username: 'username', password: 'password'};
-    const userId = 7;
+    const userId = 888767656457;
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     
     window.fetch = jest.fn().mockImplementation(() =>
@@ -512,7 +513,7 @@ describe('user action async functions', () => {
         expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-          {type: actionsUser.LOAD_USER, id: userId }
+          {type: actionsUser.LOAD_USER, expectedResponse }
         );
       })
   });
@@ -520,7 +521,7 @@ describe('user action async functions', () => {
   it('should login 1 user and toggle modal', () => {
     cumulativeActions += 2;
     const user = {username: 'username', password: 'password'};
-    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const expectedResponse = {error: 'error 35645634534'}; // this will be the response of the mock call
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
@@ -552,7 +553,7 @@ describe('user action async functions', () => {
       firstName: 'firstName',
       lastName: 'lastName',
     };
-    const userId = 7;
+    const userId = 1234598767;
     const isNew = true;
     const authToken = undefined;
 
@@ -569,7 +570,7 @@ describe('user action async functions', () => {
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at login
-          {type: actionsUser.LOAD_USER, id: userId } // in login
+          {type: actionsUser.LOAD_USER, expectedResponse} // in login
         );
       })
   });
@@ -583,7 +584,7 @@ describe('user action async functions', () => {
       firstName: 'firstName',
       lastName: 'lastName',
     };
-    const userId = 7;
+    const userId = 7657745634;
     const isNew = true;
     const authToken = undefined;
 
@@ -600,7 +601,7 @@ describe('user action async functions', () => {
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at login
-          {type: actionsUser.LOAD_USER, id: userId } // in login
+          {type: actionsUser.LOAD_USER, expectedResponse } // in login
         );
       })
   });
@@ -613,7 +614,7 @@ describe('user action async functions', () => {
       firstName: 'firstName',
       lastName: 'lastName',
     };
-    const userId = 7;
+    const userId = 714324234;
     const isNew = false;
     const authToken = 'XXX';
 
@@ -629,7 +630,7 @@ describe('user action async functions', () => {
         expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
-          {type: actionsUser.LOAD_USER, id: userId } // in login
+          {type: actionsUser.LOAD_USER, expectedResponse } // in login
         );
       })
   });
@@ -637,12 +638,12 @@ describe('user action async functions', () => {
   it('should try to create 1 user and toggle modal', () => {
     cumulativeActions += 2;
     const user = {username: 'username', password: 'password'};
-    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    const expectedResponse = {error: 'error  234234234'}; // this will be the response of the mock call
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
-              
-    return store.dispatch(actionsUser.login(user))
+
+      return store.dispatch(actionsUser.login(user))
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions fail user',expectedActions)
@@ -667,7 +668,7 @@ describe('user action async functions', () => {
       links,
       authToken: '',
     };
-    const userId = 7;
+    const userId = 763663543;
     const index = 1;
     const action = 'edit';
 
@@ -683,29 +684,391 @@ describe('user action async functions', () => {
         expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
-          {type: actionsUser.LOAD_USER, id: userId } // in login
+          {type: actionsUser.LOAD_USER, expectedResponse } // in login
         );
       })
   });
 
-})
-
-describe('response action async functions', () => {
-
-  const mockResponse = (status, statusText, response) => {
-    return new window.Response(response, {
-      status: status,
-      statusText: statusText,
-      headers: {
-        'Content-type': 'application/json'
-      }
-    });
-  };
-  let cumulativeActions = 0;
-
-  /* actionsUser.fetchUser options
-    stateLocation = 'user'
-    stateLocation = 'userViewed'
-    stateLocation is default
+  /* actionsUser.createOrEditResponse options
+    isNew = true
+      responseStatus = offered
+    isNew is undefined (defaults to true)
+      responseStatus if left off
+    isNew = false
+      responseStatus = deleted
+      responseStatus = accepted
+      responseStatus = denied
     error is thrown
   */
+  it('should create 1 user\'s response and load in state', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 856756788679,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'offered',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const isNew = true;
+    const authToken = 'XXX';
+
+    const expectedResponse = response; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsUser.LOAD_RESPONSE, expectedResponse } // in login
+        );
+      })
+  });
+
+  it('should create 1 user\'s response and load in state', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 863563546,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'offered',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const authToken = 'XXX';
+
+    const expectedResponse = response; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsUser.LOAD_RESPONSE, expectedResponse } // in login
+        );
+      })
+  });
+
+  it('should edit(delete) 1 user\'s response and load in state', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 8978,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'deleted',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = response; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsUser.LOAD_RESPONSE, expectedResponse } // in login
+        );
+      })
+  });
+
+  it('should edit(deny) 1 user\'s response and load in state', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 8324,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'accepted',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = response; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_RESPONSE, expectedResponse } // in login
+        );
+      })
+  });
+
+  it('should edit(deny) 1 user\'s response and load in state', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 88656,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'denied',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = response; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_RESPONSE, expectedResponse } // in login
+        );
+      })
+  });
+
+  it('should ERROR on user\'s response and toggle modal', () => {
+    cumulativeActions += 2;
+    const response = {
+      id: 88656,
+      idOpportunity: 9,
+      organization: 'a',
+      userId: 7,
+      firstName: 'b', 
+      lastName: 'c', 
+      responseStatus: 'denied',
+      title: '',
+      timestampStatusChange: '',
+      timestampCreated: '',
+      notes: '',
+    };
+    const userId = 7;
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = {error: 'error  353245432536456'}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+    Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditResponse(response, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
+        );
+      })
+  });
+
+  /*
+    actionsUser.createOrDeleteRole options
+    isNew = true
+      role.capabilities === admin
+      role.capabilities !== admin
+    isNew is undefined (defaults to true)
+    isNew = false
+      role.capabilities === admin
+      role.capabilities !== admin
+    error
+  */
+
+  it('add an admin role and load in state', () => {
+    cumulativeActions += 2;
+    const role = {
+      id: 982423432,
+      idUserAdding: 353454354,
+      idUserReceiving: 98989832392839,
+      organization: 'a',
+      capabilities: 'admin',
+    };
+    const isNew = true;
+    const authToken = 'XXX';
+
+    const expectedResponse = role; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrDeleteRole(role, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_ADMIN, expectedResponse, isNew} // in login
+        );
+      })
+  });
+
+  it('add a following role and load in state', () => {
+    cumulativeActions += 2;
+    const role = {
+      id: 98242366432,
+      idUserAdding: 35345664354,
+      idUserReceiving: 989898323888892839,
+      organization: 'a',
+      capabilities: 'following',
+    };
+    const isNew = true;
+    const authToken = 'XXX';
+
+    const expectedResponse = role; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrDeleteRole(role, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_FOLLOWING, expectedResponse, isNew} // in login
+        );
+      })
+  });
+
+  it('add a following role (default isNew) and load in state', () => {
+    cumulativeActions += 2;
+    const role = {
+      id: 98242366432,
+      idUserAdding: 35345664354,
+      idUserReceiving: 989898323888892839,
+      organization: 'a',
+      capabilities: 'following',
+    };
+    const authToken = 'XXX';
+
+    const expectedResponse = role; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrDeleteRole(role, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_FOLLOWING, expectedResponse, undefined} // in login
+        );
+      })
+  });
+
+  it('edit an admin role and load in state', () => {
+    cumulativeActions += 2;
+    const role = {
+      id: 9824668432,
+      idUserAdding: 359545434,
+      idUserReceiving: 9892839,
+      organization: 'a',
+      capabilities: 'admin',
+    };
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = role; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrDeleteRole(role, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_ADMIN, expectedResponse, isNew} // in login
+        );
+      })
+  });
+
+  it('edit a following role and load in state', () => {
+    cumulativeActions += 2;
+    const role = {
+      id: 66432,
+      idUserAdding: 3534535,
+      idUserReceiving: 992839,
+      organization: 'a',
+      capabilities: 'following',
+    };
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = role; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrDeleteRole(role, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsOpportunity.LOAD_FOLLOWING, expectedResponse, isNew} // in login
+        );
+      })
+  });
+
+});

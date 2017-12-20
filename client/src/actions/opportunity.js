@@ -43,9 +43,9 @@ export const oppAPICall = (url, init) => dispatch => {
     return opp.json();
   }) 
   .then(opportunity=>{
-    console.log('opp returned', opportunity)
+    // console.log('opp returned', opportunity)
     if (typeof opportunity.responses === 'object') {
-      console.log('start formatting opp',opportunity.responses);
+      // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
     }
     return dispatch(loadOpportunity(opportunity));      

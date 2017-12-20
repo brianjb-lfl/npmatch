@@ -60,7 +60,7 @@ export const setFormType = formType => ({
 export const TOGGLE_EDIT_LINK = 'TOGGLE_EDIT_LINK';
 export const toggleEditLink = (index, edit = false, links) => {
   links[index].edit = edit;
-  console.log('edited links', links)
+  // console.log('edited links', links)
   return {
     type: TOGGLE_EDIT_LINK,
     links,
@@ -101,7 +101,7 @@ export const objectToArray=(object)=>{
 
 export const updateLinks = (links, link, index, action) => {
   const newLinks = [...links];
-  console.log('links in manage links',newLinks)
+  // console.log('links in manage links',newLinks)
   if ( action === 'edit') {
     newLinks[index] = link;
     newLinks[index].edit = false;
@@ -119,7 +119,7 @@ export const userAPICall = (url, init, callback) => dispatch => {
 
   return fetch(url, init)   
   .then(user=>{ 
-    console.log('user returned', user)
+    // console.log('user returned', user)
     if (!user.ok) { 
       return Promise.reject(user.statusText);
     }
@@ -132,7 +132,7 @@ export const userAPICall = (url, init, callback) => dispatch => {
     if (callback.stateLocation === 'userViewed') {
       return dispatch(actionsUserViewed.loadUser(user));   
     } 
-    console.log('returned user', user)
+    // console.log('returned user', user)
     user.causes = stringArrayOfObjects(user.causes,        'cause');
     user.skills = stringArrayOfObjects(user.skills,        'skill');
     user.following     = arrayToObject(user.following,     'id');    // id of org being followed
@@ -172,7 +172,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch
 }
 
 export const login = user => dispatch => {
-  console.log('user at login',{user})
+  // console.log('user at login',{user})
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -246,7 +246,7 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
     notes: 
   } */
 
-  console.log('response',response, authToken, isNew)
+  // console.log('response',response, authToken, isNew)
 
   dispatch(actionsDisplay.changeDisplay('loading'));
 
@@ -267,23 +267,23 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
-  console.log('response transmitted', response)
+  // console.log('response transmitted', response)
   const init = { 
     method,
     body: JSON.stringify(response),
     headers
   };
-  console.log('init at response', init);
+  // console.log('init at response', init);
   return fetch(url, init)
   .then(res=>{ 
-    console.log(res);
+    // console.log(res);
     if (!res.ok) { 
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedResponse => { 
-    console.log('returnedResponse', returnedResponse)
+    // console.log('returnedResponse', returnedResponse)
     if ( loadTo === 'user') {
       return dispatch(loadResponse(returnedResponse));
     } else {
@@ -357,17 +357,17 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     body: JSON.stringify(role),
     headers
   };
-  console.log('init', init);
+  // console.log('init', init);
   return fetch(url, init)
   .then(res=>{ 
-    console.log(res);
+    // console.log(res);
     if (!res.ok) { 
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedRole => { 
-    console.log('returnedRole', returnedRole)
+    // console.log('returnedRole', returnedRole)
     if ( isAdmin ) {
       return dispatch(loadAdmin(returnedRole, isNew));
     } else {
