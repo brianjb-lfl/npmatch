@@ -37,7 +37,7 @@
     "dev:client": "cd client && npm start",
     "dev:server": "nodemon ./server/server.js",
     "build": "run-p build:client build:server",
-    "build:client": "cd client && npm run-script build",
+    "build:client": "cd client && npm install --only=dev && npm install && npm run build",
     "build:server": "--ignore node_modules,build --out-dir server/build",
     "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
     "test": "mocha --colors server/test/*.test.js",
