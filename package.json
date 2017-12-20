@@ -3,6 +3,7 @@
   "authors": "Brian Besaw, Ben Malin, Brad Garner",
   "version": "0.1.0",
   "description": "npmatch",
+  "homepage": "https://arcane-journey-50164.herokuapp.com/client",
   "engines": {
     "node": "8.2.1"
   },
