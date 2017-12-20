@@ -20,3 +20,11 @@ spelled out id_opportunity
 126-130
 added organization, firstName, lastName, title; copies of data to be saved at entry to minimize SQL joins (down the road, if the user edits their name or name of the event, we can find these and update them, but I think that will be many fewer fetches and joins than each time they are called up)
 
+@@@@@@@@@@@@@@
+
+opp router
+70
+changed data check for array to Array.isArray()
+88-101
+returning all needed fields
+
