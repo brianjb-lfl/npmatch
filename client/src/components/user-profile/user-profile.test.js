@@ -32,7 +32,7 @@ describe('Core display functionality of User Profile', () => {
   });
   it('Should display basic user information from props', () => {
     const wrapper = shallow(<UserProfile user={user} />);
-    expect(wrapper.find('userProfile img').prop('src')).toEqual('http://www.google.com/');
+    expect(wrapper.find('.userProfile img').prop('src')).toEqual('http://www.google.com/');
     expect(wrapper.find('.name').text()).toEqual('TARDIS');
     expect(wrapper.find('.location').text()).toEqual('Providence, RI, USA');
     expect(wrapper.find('.bio').text()).toEqual('Travels through time and space.');

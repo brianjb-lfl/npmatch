@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Link } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import { BottomNavBar } from './bottom-nav-bar';
 import { mapStateToProps } from './bottom-nav-bar';
@@ -75,16 +76,68 @@ describe('Bottom Nav Bar component display functionality', () => {
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
   })
-  it.skip('Should dispatch actions when the component is clicked', () => {
+  it('Should dispatch actions when clicking Organizations', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<BottomNavBar
-      display='explorePage'
-      dispatch={spy}
-      user={{ authToken: 12345 }}
-      match={{ url: '/organizations' }}
-      history={{ history: './organizations' }}
-    />);
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <BottomNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
     expect(wrapper.find('.leftBottomButton').simulate('click'));
     expect(spy.mock.calls.length).toEqual(2);
-  })
+    expect(historySpy.mock.calls.length).toEqual(1);
+  });
+  it('Should dispatch actions when clicking Contributors', () => {
+    const spy = jest.fn();
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <BottomNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.find('.rightBottomButton').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(2);
+    expect(historySpy.mock.calls.length).toEqual(1);
+  });
+  it('Should dispatch actions when clicking Login', () => {
+    const spy = jest.fn();
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
+      <BottomNavBar
+        display='landingPage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.find('.leftBottomButton').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+    expect(historySpy.mock.calls.length).toEqual(1);
+  });
+  it('Should dispatch actions when clicking Sign Up', () => {
+    const spy = jest.fn();
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
+      <BottomNavBar
+        display='landingPage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.find('.rightBottomButton').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+    expect(historySpy.mock.calls.length).toEqual(1);
+  });
 });
