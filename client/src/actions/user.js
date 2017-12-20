@@ -99,6 +99,20 @@ export const objectToArray=(object)=>{
   return [];
 }
 
+export const updateLinks = (links, link, index, action) => {
+  const newLinks = [...links];
+  console.log('links in manage links',newLinks)
+  if ( action === 'edit') {
+    newLinks[index] = link;
+    newLinks[index].edit = false;
+  } else if ( action === 'delete') {
+    newLinks.splice(index,1);
+  } else { // assume action === add
+    newLinks.push(link);
+  }
+  return newLinks;
+}
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const userAPICall = (url, init, callback) => dispatch => {
@@ -183,7 +197,7 @@ export const login = user => dispatch => {
   }
   return dispatch(userAPICall(url, init,callback));}
 
-export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
+export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
   const originalUser = {username: user.username, password: user.password};
@@ -210,26 +224,14 @@ export const createOrEditUser = (user, isNew = true, authToken) => dispatch => {
     stateLocation: 'user',
     originalUser
   }
-  return dispatch(userAPICall(url, init,callback));}
+  return dispatch(userAPICall(url, init, callback));}
 
-// @@@@@@@@@@@@@@@ ASYNC PRECURSORS @@@@@@@@@@@@@@@@@
-
-export const manageLinks = (immutableUser, link, index, action) => dispatch => {
+export const manageLinks = (user, link, index, action) => dispatch => {
   // add, edit, or delete links in user array, then update user in db
-  
-  const user = {...immutableUser};
-  console.log('user in manage links',user)
-  if ( action === 'edit') {
-    user.links[index] = link;
-    user.links.edit = false;
-  } else if ( action === 'delete') {
-    user.links.splice(index,1);
-  } else { // assume action === add
-    user.links.push(link);
-  }
-  
+  const newLinks = updateLinks(user.links, link, index, action);
+  const newUser = {...user, links: newLinks};
   const isNew = false; // user is not new
-  return dispatch(createOrEditUser(user, isNew, user.authToken))
+  return dispatch(createOrEditUser(newUser, user.authToken, isNew))
 }
 
 // @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@

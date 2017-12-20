@@ -341,48 +341,84 @@ describe('user action helper functions', () => {
     const input = [{id:'a',key:'g'},{id:'b',key:'e'}];
     expect(actionsUser.objectToArray(input)).toEqual([]);
   });
+  /* actionsUser.manageLinks options
+    action is neither (default to add)
+    action = edit
+    action = delete
+  */
+  it('Should add a link', () => {
+    const links = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'}];
+    const link = {linkType: 'home', linkURL: 'www'};
+    const expectedResult = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'},{linkType: 'home', linkURL: 'www'}];
+    const index = 2;
+    const action = 'add'
+    expect(actionsUser.updateLinks(links, link, index, action)).toEqual(expectedResult);
+  });
 
-});
+  it('Should add a link (default)', () => {
+    const links = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'}];
+    const link = {linkType: 'home', linkURL: 'www'};
+    const expectedResult = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'},{linkType: 'home', linkURL: 'www'}];
+    const index = 2;
+    const action = undefined;
+    expect(actionsUser.updateLinks(links, link, index, action)).toEqual(expectedResult);
+  });
 
-describe('user action async precursor functions', () => {
+  it('Should edit a link', () => {
+    const links = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'}];
+    const link = {linkType: 'home', linkURL: 'www'};
+    const expectedResult = [{linkType:'home', linkURL: 'aaa'},{edit: false, linkType: 'home', linkURL: 'www'}];
+    const index = 1;
+    const action = 'edit'
+    expect(actionsUser.updateLinks(links, link, index, action)).toEqual(expectedResult);
+  });
 
-
-  it('Should ', () => {
-
-    manageLinks(user, link, index, action)
-
+  it('Should delete a link', () => {
+    const links = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'}];
+    const link = {linkType: 'home', linkURL: 'www'};
+    const expectedResult =[{linkType:'financial', linkURL: 'xxx'}];
+    const index = 0;
+    const action = 'delete'
+    expect(actionsUser.updateLinks(links, link, index, action)).toEqual(expectedResult);
   });
 
 });
 
 describe('user action async functions', () => {
 
+  const mockResponse = (status, statusText, response) => {
+    return new window.Response(response, {
+      status: status,
+      statusText: statusText,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+  };
+  let cumulativeActions = 0;
+
+  /* actionsUser.fetchUser options
+    stateLocation = 'user'
+    stateLocation = 'userViewed'
+    stateLocation is default
+    error is thrown
+  */
   it('should fetch 1 user from server and load user in state', () => {
     
+    cumulativeActions += 2;
     const userId = 5; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
     const stateLocation = 'user' // other option is 'orgs'
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
               
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(2);
+        expect(expectedActions.length).toBe(cumulativeActions);
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsUser.LOAD_USER, id: userId }
@@ -391,20 +427,10 @@ describe('user action async functions', () => {
   });
 
   it('should fetch 1 user from server and load user in state (argument default)', () => {
-    
+    cumulativeActions += 2;
     const userId = 8; // doesn't matter for testing
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
@@ -413,7 +439,7 @@ describe('user action async functions', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions user',expectedActions)
-        expect(expectedActions.length).toBe(4); // 2 this time, 2 prior run
+        expect(expectedActions.length).toBe(cumulativeActions); // 2 this time, 2 prior run
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsUser.LOAD_USER, id: userId }
@@ -421,32 +447,21 @@ describe('user action async functions', () => {
       })
   });
 
-  it('should fetch 1 user from server and loaas userViewed in state', () => {
-    
+  it('should fetch 1 user from server and load as userViewed in state', () => {
+    cumulativeActions += 2;
     const userId = 6; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
     const stateLocation = 'userViewed' // other option is 'orgs'
     const expectedResponse = {id: userId}; // this will be the response of the mock call
     const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
               
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions userViewed',expectedActions)
-        expect(expectedActions.length).toBe(6); // 3 from before, 3 from this time
+        expect(expectedActions.length).toBe(cumulativeActions); // 3 from before, 3 from this time
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'userProfile'},
@@ -456,31 +471,20 @@ describe('user action async functions', () => {
   });
 
   it('should fetch 1 user from server and toggle modal', () => {
-    
+    cumulativeActions += 2;
     const userId = 7; // doesn't matter for testing
-    const type = 'users' // other option is 'orgs'
     const stateLocation = 'user' // other option is 'orgs'
     const expectedResponse = {error: 'error'}; // this will be the response of the mock call
     const authToken = '';
-
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
     
     window.fetch = jest.fn().mockImplementation(() =>
       Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
               
-    return store.dispatch(actionsUser.fetchUser(userId, authToken, type, stateLocation))
+    return store.dispatch(actionsUser.fetchUser(userId, authToken, stateLocation))
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions fail user',expectedActions)
-        expect(expectedActions.length).toBe(8); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions.length).toBe(cumulativeActions); // 3 from 1st, 3 from 2nd, 2 from now
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
           {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
@@ -488,4 +492,220 @@ describe('user action async functions', () => {
       })
   });
 
+  /* actionsUser.login options
+    success
+    failure
+  */
+  it('should login 1 user and load user in state', () => {
+    cumulativeActions += 2;
+    const user = {username: 'username', password: 'password'};
+    const userId = 7;
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.login(user))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
+          {type: actionsUser.LOAD_USER, id: userId }
+        );
+      })
+  });
+
+  it('should login 1 user and toggle modal', () => {
+    cumulativeActions += 2;
+    const user = {username: 'username', password: 'password'};
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.login(user))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions fail user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
+        );
+      })
+  });
+
+  /* actionsUser.createOrEditUser options
+    isNew = true
+    isNew is undefined (defaults to true)
+    isNew = false
+    failure
+  */
+  it('should create 1 user, login, and load user in state', () => {
+    cumulativeActions += 3;
+    const user = {
+      username: 'username', 
+      password: 'password',
+      password2: 'password2',
+      firstName: 'firstName',
+      lastName: 'lastName',
+    };
+    const userId = 7;
+    const isNew = true;
+    const authToken = undefined;
+
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditUser(user, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at login
+          {type: actionsUser.LOAD_USER, id: userId } // in login
+        );
+      })
+  });
+
+  it('should create 1 user, login, (default argument) and load user in state', () => {
+    cumulativeActions += 3;
+    const user = {
+      username: 'username', 
+      password: 'password',
+      password2: 'password2',
+      firstName: 'firstName',
+      lastName: 'lastName',
+    };
+    const userId = 7;
+    const isNew = true;
+    const authToken = undefined;
+
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditUser(user, authToken))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at login
+          {type: actionsUser.LOAD_USER, id: userId } // in login
+        );
+      })
+  });
+
+  it('should edit 1 user and load user in state', () => {
+    cumulativeActions += 2;
+    const user = {
+      username: 'username', 
+      bio: 'bio',
+      firstName: 'firstName',
+      lastName: 'lastName',
+    };
+    const userId = 7;
+    const isNew = false;
+    const authToken = 'XXX';
+
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.createOrEditUser(user, authToken, isNew))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsUser.LOAD_USER, id: userId } // in login
+        );
+      })
+  });
+
+  it('should try to create 1 user and toggle modal', () => {
+    cumulativeActions += 2;
+    const user = {username: 'username', password: 'password'};
+    const expectedResponse = {error: 'error'}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.reject(mockResponse(500, 'ERROR', JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.login(user))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions fail user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
+          {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},
+        );
+      })
+  });
+
+  it('edit user\'s links, edit 1 user, and load user in state', () => {
+    cumulativeActions += 2;
+    const links = [{linkType:'home', linkURL: 'aaa'}, {linkType:'financial', linkURL: 'xxx'}];
+    const link = {linkType: 'home', linkURL: 'www'};
+    const user = {
+      username: 'username', 
+      password: 'password',
+      password2: 'password2',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      links,
+      authToken: '',
+    };
+    const userId = 7;
+    const index = 1;
+    const action = 'edit';
+
+    const expectedResponse = {id: userId}; // this will be the response of the mock call
+    
+    window.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+              
+    return store.dispatch(actionsUser.manageLinks(user, link, index, action))
+      .then(() => {
+        const expectedActions = store.getActions();
+        // console.log('expectedActions user',expectedActions)
+        expect(expectedActions.length).toBe(cumulativeActions);
+        expect(expectedActions).toContainEqual(
+          {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'}, // at create
+          {type: actionsUser.LOAD_USER, id: userId } // in login
+        );
+      })
+  });
+
 })
+
+describe('response action async functions', () => {
+
+  const mockResponse = (status, statusText, response) => {
+    return new window.Response(response, {
+      status: status,
+      statusText: statusText,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+  };
+  let cumulativeActions = 0;
+
+  /* actionsUser.fetchUser options
+    stateLocation = 'user'
+    stateLocation = 'userViewed'
+    stateLocation is default
+    error is thrown
+  */

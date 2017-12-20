@@ -65,8 +65,6 @@ describe('reducer - single opportunity', () => {
     const state = reducer(initialState, action);
     const expectedResponses = {...initialState.responses, [newResponse.id]: newResponse}
     const expectedResult = {...initialState, responses: expectedResponses};
-    console.log(state);
-    console.log(expectedResult);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
 

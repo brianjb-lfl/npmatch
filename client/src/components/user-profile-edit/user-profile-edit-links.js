@@ -25,7 +25,7 @@ export class UserEditLinksForm extends Component {
   render() {
 
     let myLinks;
-    if (typeof this.props.user.links === 'object' ) {
+    if (Array.isArray(this.props.user.links) ) {
       myLinks = this.props.user.links.map((link,index)=>{
         // console.log('link inside map',!link.edit, link.edit, link);
         if (link.edit && this.props.display.view === 'editLink') { // display.view invoked to cause React to re-render, as it is top-level, and re-render is shallow
