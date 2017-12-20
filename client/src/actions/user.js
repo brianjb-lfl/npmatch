@@ -245,7 +245,6 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
     title: 'title of opportunity, read from state at time of click'
     notes: 
   } */
-
   // console.log('response',response, authToken, isNew)
 
   dispatch(actionsDisplay.changeDisplay('loading'));
