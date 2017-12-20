@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 
-import { ContributorPreview } from './contributor-preview';
+import ContributorPreview from './contributor-preview';
 
-describe.skip('Contributor Preview component display functionality', () => {
+describe('Contributor Preview component display functionality', () => {
   const user = {
     logo: 'http://i0.kym-cdn.com/photos/images/original/000/692/145/49c.png',
     name: 'Ben Malin',
