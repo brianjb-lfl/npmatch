@@ -12,16 +12,16 @@ export class ExplorePage extends Component {
     let previews;
     if (this.props.display === 'exploreOrganizations') {
       previews = this.props.usersList.map((user, key) => (
-        <Link to={`/profiles/${user.id}`}>
-          <DetailedOrganizationPreview user={user} key={key} />
+        <Link to={`/profiles/${user.id}`} key={key}>
+          <DetailedOrganizationPreview user={user} />
         </Link>
       )
       )
     }
     else {
       previews = this.props.usersList.map((user, key) => (
-        <Link to={`/profiles/${user.id}`}>
-          <DetailedContributorPreview user={user} key={key} />
+        <Link to={`/profiles/${user.id}`} key={key}>
+          <DetailedContributorPreview user={user} />
         </Link>
       )
       )

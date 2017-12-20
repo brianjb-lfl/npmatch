@@ -1,5 +1,5 @@
 import { reducer } from '../reducers/user';
-import * as actions from '../actions/user';
+import * as actionsUser from '../actions/user';
 import {user as initialState} from '../reducers/potential-states';
 
 describe('reducer - single user', () => {
@@ -37,7 +37,7 @@ describe('reducer - single user', () => {
       opportunities: undefined,
       responses: undefined,
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -62,10 +62,10 @@ describe('reducer - single user', () => {
       adminOf: undefined,
       admins: undefined,
       following: undefined,
-      opportunities: [],
+      opportunities: {},
       responses: undefined,
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -93,12 +93,12 @@ describe('reducer - single user', () => {
       ],
       causes: ['sausage-making', 'sausage-eating'],
       skills: ['carpentry'],
-      adminOf: [
-        {
+      adminOf: {
+        1: {
           organization: 'SOME',
           id: 1,
         }
-      ],
+      },
       admins: [    
         {
           firstName: '', 
@@ -106,15 +106,15 @@ describe('reducer - single user', () => {
           id: '',
         }
       ],
-      following: [
-        {
+      following: {
+        2: {
           organization: 'Bookmobile',
           id: 2,
         }
-      ],
-      opportunities: [  
-        {
-          id: '',
+      },
+      opportunities: {  
+        88: {
+          id: 88,
           userId: '',
           organization: '',
           opportunityType: '',
@@ -129,10 +129,10 @@ describe('reducer - single user', () => {
           link: '',
           causes: [''],
         }
-      ],
-      responses: [   
-        {
-          id: '',
+      },
+      responses: {   
+        67: {
+          id: 67,
           idOpportunity: '',
           organization: '', 
           userId: '',
@@ -144,10 +144,79 @@ describe('reducer - single user', () => {
           timestampCreated: '',
           notes: '',
         }
-      ], 
+      }, 
     }
-    const action = {...expectedResult, type: actions.LOAD_USER};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
+  it('Should load user responses into state', () => {
+    const newResponse = {
+      id: 54,
+      idOpportunity: 88,
+      organization: 'Healthcare For The Homeless',
+      userId: 72,
+      firstName: 'Janet',
+      lastName: 'Smythe',
+      responseStatus: 'accepted',
+      timestamp_status_change: '2018-09-28 11:45:15',
+      timestamp_created: '2018-09-27 03:15:22',
+    }
+    const action = {type: actionsUser.LOAD_RESPONSE, response: newResponse};
+    const state = reducer(initialState, action);
+    const expectedResponses = {...initialState.responses, [newResponse.id]: newResponse}
+    const expectedResult = {...initialState, responses: expectedResponses};
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
+  it('Should load user admins into state', () => {
+    const newAdmin = {
+      id: 54,
+      firstName: 'Janet',
+      lastName: 'Smythe',
+    }
+    const action = {type: actionsUser.LOAD_ADMIN, admin: newAdmin};
+    const state = reducer(initialState, action);
+    const expectedAdmins = {...initialState.admins, [newAdmin.id]: newAdmin}
+    const expectedResult = {...initialState, admins: expectedAdmins};
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
+  it('Should load user following into state', () => {
+    const newFollowing = {
+      id: 54,
+      organization: 'ACME',
+    }
+    const action = {type: actionsUser.LOAD_FOLLOWING, following: newFollowing};
+    const state = reducer(initialState, action);
+    const expectedFollowing = {...initialState.following, [newFollowing.id]: newFollowing}
+    const expectedResult = {...initialState, following: expectedFollowing};
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
+  it('Should set form type in state', () => {
+    const action = {type: actionsUser.SET_FORM_TYPE, formType: 'testForm'};
+    const state = reducer(initialState, action);
+    const expectedResult = {...initialState, formType: 'testForm'};
+    expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
+  });
+
+  it('Should toggle edit link in state', () => {
+    const links = [      
+      {
+        edit: true,
+        linkType: 'home',
+        linkURL: 'www',
+      },
+      {
+        linkType: 'contribution',
+        linkURL: 'xxx',
+      },
+    ];
+    const action = {type: actionsUser.TOGGLE_EDIT_LINK, links};
+    const state = reducer(initialState, action);
+    const expectedResult = {...initialState, links};
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
 

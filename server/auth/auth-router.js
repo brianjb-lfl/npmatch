@@ -17,6 +17,7 @@ passport.use(jwtStrategy);
 const knex = require('../db');
 
 const createAuthToken = function (user){
+  console.log('user in create auth token');
   return jwt.sign({user}, JWT_SECRET, {
     subject: user.username,
     expiresIn: JWT_EXPIRY,
@@ -52,7 +53,8 @@ authRouter.post('/login', localAuth, (req, res) => {
             usrObj = Object.assign( {}, usrObj, {
               authToken: authToken
             });
-            res.json(usrObj);
+            let usrObjCC = epHelp.convertCase(usrObj, 'snakeToCC');
+            res.json(usrObjCC);
           }
           else {
             res.status(500).json({message: 'Error retrieving user data'});
@@ -67,4 +69,4 @@ authRouter.post('/refresh', jwtAuth, (req, res) => {
   res.json({ authToken });
 });
 
-module.exports = { authRouter };
+module.exports = { authRouter, createAuthToken };

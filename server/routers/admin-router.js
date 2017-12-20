@@ -41,6 +41,7 @@ adminRouter.get('/initialize', (req, res) => {
         .select(
           'id',
           'username', 
+          'organization',
           'location_city as locationCity', 
           'location_state as locationState',
           'location_country as locationCountry', 

@@ -28,4 +28,14 @@ describe('reducer - display', () => {
     
   });
 
+  it('Should toggle user in focus in state', () => {
+    const state = reducer(initialState, {type: actions.TOGGLE_USER, userId: 777});
+    expect(state.userId).toBe(777);    
+  });
+
+  it('Should toggle opportunity in focus in state', () => {
+    const state = reducer(initialState, {type: actions.TOGGLE_OPPORTUNITY, opportunityId: 333});
+    expect(state.opportunityId).toBe(333);    
+  });
+
 });

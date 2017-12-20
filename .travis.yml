@@ -9,3 +9,6 @@ deploy:
   app: arcane-journey-50164
   on:
     repo: brianjb-lfl/npmatch
+env:
+  - SERVER_DIR=server
+  - CLIENT_DIR=client

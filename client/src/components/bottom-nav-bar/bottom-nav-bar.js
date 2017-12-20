@@ -7,7 +7,7 @@ import * as actionsDisplay from '../../actions/display';
 import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
-  leftOnClick() {
+  clickLeftButton() {
     if (this.props.display === 'landingPage') {
       this.props.history.push('/login');
       this.props.dispatch(actionsDisplay.changeDisplay('login'));
@@ -22,7 +22,7 @@ export class BottomNavBar extends Component {
     }
   }
 
-  rightOnClick() {
+  clickRightButton() {
     if (this.props.display === 'landingPage') {
       this.props.history.push('/register');
       this.props.dispatch(actionsDisplay.changeDisplay('register'));
@@ -38,9 +38,9 @@ export class BottomNavBar extends Component {
   }
 
   render() {
-    let leftButton;
+    // let leftButton;
     let leftLabel;
-    let rightButton;
+    // let rightButton;
     let rightLabel;
     let homeButton;
     if (this.props.match.url !== '/') {
@@ -63,25 +63,33 @@ export class BottomNavBar extends Component {
       rightLabel = 'Contributors'
     }
 
-    if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
-      leftButton = <li className='leftBottomButton' onClick={() => this.leftOnClick()}>
-        <button>
-          {leftLabel}
-        </button>
-      </li>
-      rightButton = <li className='rightBottomButton' onClick={() => this.rightOnClick()}>
-        <button>
-          {rightLabel}
-        </button>
-      </li>
-    }
+    // if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
+    //   leftButton = <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
+    //     <button>
+    //       {leftLabel}
+    //     </button>
+    //   </li>
+    //   rightButton = <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
+    //     <button>
+    //       {rightLabel}
+    //     </button>
+    //   </li>
+    // }
 
     return (
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          {leftButton}
-          {rightButton}
+          <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
+            <button>
+              {leftLabel}
+            </button>
+          </li>
+          <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
+            <button>
+              {rightLabel}
+            </button>
+          </li>
         </ul>
       </div>
     )

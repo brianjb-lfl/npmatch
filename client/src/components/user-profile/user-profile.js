@@ -7,27 +7,42 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class UserProfile extends Component {
 
   render() {
-    let opportunityPreviews = typeof this.props.opportunities !== 'object' ? '' : this.props.opportunities.map((opp, key) => (
-      <OpportunityPreview opportunity={opp} key={key} />
-    )
-    );
+    const user = this.props.user;
+
+    let opportunityPreviews = [];
+    if (typeof user.opportunity === 'object') {
+      let key = 1
+      for (let prop in user.opportunities) {
+        opportunityPreviews.push(<OpportunityPreview opportunity={user.opportunities[prop]} key={key} />) 
+        key += 1;
+      }
+    }
 
     return (
       <main>
         <div className='userProfile'>
-          <img src={this.props.logo} alt={`${this.props.name} logo`}></img>
-          <h3>{this.props.name}NAME NAME</h3>
-          <h4>{this.props.locationCity} CITY STATE {this.props.locationState}</h4>
-          <p>{this.props.description}</p>
+          <img src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
+          <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
+          <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
+          <p className='bio'>{user.bio}</p>
+          <p className='availability'>{user.availability}</p>
+          <p className='links'>{user.links.join(', ')}</p>
+          <p className='causes'>{user.causes.join(', ')}</p>
+          <p className='skills'>{user.skills.join(', ')}</p>
         </div>
-        {opportunityPreviews}
+        <div className='opportunities'>
+          {opportunityPreviews}
+        </div>
       </main>
     );
   }
 }
 
-export const mapStateToProps = state => ({
-  userViewed: state.userViewed,
-  display: state.display
-})
+export const mapStateToProps = state => {
+  const user = state.display.view === 'selfProfile' || 'profileEdit' ? state.user : state.userViewed;
+  return {
+    user,
+    display: state.display
+  }
+}
 export default connect(mapStateToProps)(UserProfile);

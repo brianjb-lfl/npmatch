@@ -7,7 +7,7 @@ import {opportunity as initialState} from './potential-states'
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_OPPORTUNITY) {
-    return Object.assign({}, state, {
+    return {...state,
       id: action.id,
       userId: action.userId,
       organization: action.organization,
@@ -23,30 +23,13 @@ export const reducer = (state = initialState, action) => {
       link: action.link,
       causes: action.causes,
       responses: action.responses,
-    });
+    };
   }
 
-  else if (action.type === actions.LOAD_RESPONSE) {
-    let mutableResponses = Object.assign({}, state.responses); // responses is 1-level deep; no need for deep-assign
-
-    if (action.action === 'add') {
-      if (typeof mutableResponses === 'object') {
-        mutableResponses.unshift(action.response);
-      } else {
-        mutableResponses = action.response;
-      }
-    } else if (action.action === 'edit' && typeof mutableResponses === 'object') {
-      mutableResponses[action.index] = action.response;
-    } else if (action.action === 'delete' && typeof mutableResponses === 'object') {
-      mutableResponses.splice(action.index,1);
-    }
-    return Object.assign({}, state, {
-      responses: mutableResponses,
-    });
+  if (action.type === actions.LOAD_RESPONSE) {
+    const newResponses = {...state.responses, [action.response.id]: action.response};
+    return {...state, responses: newResponses };
   }
 
-  else {
-    return state;
-  }
-
+  return state;
 }

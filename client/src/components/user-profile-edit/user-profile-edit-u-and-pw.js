@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsUser from '../../actions/user';
+import * as actionsDisplay from '../../actions/display';
 import UandPwFields from '../fields/u-and-pw';
 
 export class UserEditUandPwForm extends Component {
@@ -13,8 +14,11 @@ export class UserEditUandPwForm extends Component {
     console.log('user',user)
     const isNew = false;
     
-    this.props.dispatch(actionsUser.createOrEditUser(user, isNew, this.props.initialValues.authToken))
-      .then(() => this.props.history.push(`/profiles/${this.props.initialValues.id}`))
+    this.props.dispatch(actionsUser.createOrEditUser(user, this.props.initialValues.authToken, isNew))
+    .then(() => {
+      this.props.history.push(`/profiles/${this.props.initialValues.id}`);
+      this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+    })
   }
 
   render() {

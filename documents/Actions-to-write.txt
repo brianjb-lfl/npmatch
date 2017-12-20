@@ -22,8 +22,7 @@ ACTIONS TO WRITE
       create role             CONFIRM
       delete role             CONFIRM
                         
-      user capabilities       MONDAY
-                              enhance roles to capabilities
+      user capabilities       MONDAY enhance roles to capabilities
 
  ************** REMAINING ************
   ORGANIZATION

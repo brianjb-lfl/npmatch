@@ -3,15 +3,14 @@ import { shallow } from 'enzyme';
 
 import { OpportunitiesPage } from './opportunities-page';
 import { mapStateToProps } from './opportunities-page';
-import { OrganizationPreview } from '../organization-preview/organization-preview';
+import { OpportunityPreview } from '../organization-preview/organization-preview';
 
-describe.skip('Opportunities Page component display functionality', () => {
-  const opportunitiesList = [{
-    main: {
-      id: 1,
-    }
-  }
-  ];
+describe('Opportunities Page component display functionality', () => {
+  const opportunitiesList = {
+    main: [{
+      id: 1
+    }]
+  };
   it('Smoke test - component should render', () => {
     shallow(<OpportunitiesPage opportunitiesList={opportunitiesList} />);
   });
@@ -24,23 +23,38 @@ describe.skip('Opportunities Page component display functionality', () => {
     )).toEqual(true);
   });
   it('Should render an empty unordered list without opportunities', () => {
-    const wrapper = shallow(<OpportunitiesPage />);
+    const opportunitiesList = {
+      main: [{
+        id: 1
+      }]
+    };
+    const wrapper = shallow(<OpportunitiesPage opportunitiesList={opportunitiesList} />);
     expect(wrapper.containsMatchingElement(
       <li></li>
     )).toEqual(false);
   });
-  it('Should display organizations', () => {
-    const wrapper = shallow(<OpportunitiesPage opportunitiesList={opportunitiesList} />)
-    expect(wrapper.containsMatchingElement(
-      <li>
-        <OpportunityPreview />
-      </li>
-    )).toEqual(true);
-});
-  // it('Should map state to props', () => {
-  //   const initialState = { display: '' };
-  //   const expectedProps = { display: '' };
-  //   const mockState = mapStateToProps(initialState);
-  //   expect(mockState).toEqual(expectedProps);
-  // })
+  it('Should map state to props', () => {
+    const initialState = {
+      user: {
+        id: 1
+      },
+      display: {
+        view: 'opportunitiesPage'
+      },
+      opportunitiesList: {
+        id: 1
+      }
+    };
+    const expectedProps = {
+      user: {
+        id: 1
+      },
+      display: 'opportunitiesPage',
+      opportunitiesList: {
+        id: 1
+      }
+    };
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  })
 });

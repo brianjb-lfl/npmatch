@@ -1,7 +1,6 @@
 import { reducer } from '../reducers/user-viewed';
-import * as actions from '../actions/user-viewed';
-import {user as initialState} from '../reducers/potential-states';
-delete initialState.authToken;
+import * as actionsUser from '../actions/user-viewed';
+import { user as initialState } from '../reducers/potential-states';
 
 describe('reducer - user viewed', () => {
   
@@ -28,6 +27,7 @@ describe('reducer - user viewed', () => {
       locationCountry: undefined,
       availability: 'tomorrow',
       bio: undefined,
+      authToken: 'XXX333',
       links: undefined,
       causes: undefined,
       skills: undefined,
@@ -36,8 +36,8 @@ describe('reducer - user viewed', () => {
       following: undefined,
       opportunities: undefined,
       responses: undefined,
-    }
-    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
+    };
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -55,16 +55,17 @@ describe('reducer - user viewed', () => {
       locationState: 'IL',
       locationCountry: 'USA',
       bio: 'Sausage-maker',
+      authToken: '756XTJ',
       links: undefined,
       causes: [],
       skills: [],
       adminOf: undefined,
       admins: undefined,
       following: undefined,
-      opportunities: [],
+      opportunities: {},
       responses: undefined,
     }
-    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });
@@ -83,6 +84,7 @@ describe('reducer - user viewed', () => {
       locationCountry: 'USA',
       availability: 'whenever',
       bio: 'Sausage-maker',
+      authToken: 'ABC876',
       links: [
         {
           linkType: 'home',
@@ -91,12 +93,12 @@ describe('reducer - user viewed', () => {
       ],
       causes: ['sausage-making', 'sausage-eating'],
       skills: ['carpentry'],
-      adminOf: [
-        {
+      adminOf: {
+        1: {
           organization: 'SOME',
           id: 1,
         }
-      ],
+      },
       admins: [    
         {
           firstName: '', 
@@ -104,15 +106,15 @@ describe('reducer - user viewed', () => {
           id: '',
         }
       ],
-      following: [
-        {
+      following: {
+        2: {
           organization: 'Bookmobile',
           id: 2,
         }
-      ],
-      opportunities: [  
-        {
-          id: '',
+      },
+      opportunities: {  
+        88: {
+          id: 88,
           userId: '',
           organization: '',
           opportunityType: '',
@@ -127,10 +129,10 @@ describe('reducer - user viewed', () => {
           link: '',
           causes: [''],
         }
-      ],
-      responses: [   
-        {
-          id: '',
+      },
+      responses: {   
+        67: {
+          id: 67,
           idOpportunity: '',
           organization: '', 
           userId: '',
@@ -142,9 +144,9 @@ describe('reducer - user viewed', () => {
           timestampCreated: '',
           notes: '',
         }
-      ], 
+      }, 
     }
-    const action = {...expectedResult, type: actions.LOAD_USER_VIEWED};
+    const action = {...expectedResult, type: actionsUser.LOAD_USER};
     const state = reducer(initialState, action);
     expect(JSON.stringify(state)).toBe(JSON.stringify(expectedResult));
   });

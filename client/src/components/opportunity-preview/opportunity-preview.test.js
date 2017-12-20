@@ -5,10 +5,11 @@ import { OpportunityPreview } from './opportunity-preview';
 
 describe('Opportunity Preview component display functionality', () => {
   const opportunity = {
+    id: 1,
     title: 'Facebook',
     requiredSkills: ['Fake news, Making people dumb and lifeless'],
-    timeframe: ['Time'],
-    description: ['Melting brains']
+    timeframe: 'Time',
+    description: 'Melting brains'
   }
 
   it('Smoke test - component should render', () => {
@@ -36,8 +37,17 @@ describe('Opportunity Preview component display functionality', () => {
   });
   it.skip('Should dispatch an actions when the component is clicked', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<OpportunityPreview opportunity={opportunity} dispatch={spy} />);
+    const historySpy = jest.fn();
+    const user = { authToken: '000' };
+    const wrapper = shallow(<OpportunityPreview
+      opportunity={opportunity}
+      dispatch={spy}
+      user={user}
+      match={{url: '/profiles/3'}}
+      history={{push: historySpy}}
+    />);
     expect(wrapper.find('button').simulate('click'));
-    expect(spy.mock.calls.length).toEqual(1);
+    expect(spy.mock.calls.length).toEqual(2);
+    expect(historySpy.mock.calls.length).toEqual(1);
   })
 });
