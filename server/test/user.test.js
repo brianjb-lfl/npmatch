@@ -28,10 +28,10 @@ describe('user', function() {
 
   after(function() {
     return (testSetup.tearDownDB())
-    .then( () => {
+      .then( () => {
       //restore .env DB_MODE to dev
-      setDbMode('dev');
-    });
+        setDbMode('dev');
+      });
   });
 
   beforeEach(function() {
