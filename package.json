@@ -33,9 +33,9 @@
     "test-console": "^1.1.0"
   },
   "scripts": {
-    "start": "run-p start:client start:server",
-    "start:client": "cd client && npm start",
-    "start:server": "nodemon ./server/server.js",
+    "dev": "run-p dev:client dev:server",
+    "dev:client": "cd client && npm start",
+    "dev:server": "nodemon ./server/server.js",
     "build": "run-p build:client build:server",
     "build:client": "cd client && npm run-script build",
     "build:server": "--ignore node_modules,build --out-dir server/build",
