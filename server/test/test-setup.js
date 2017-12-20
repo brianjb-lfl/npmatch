@@ -184,7 +184,7 @@ testSetup.setTestParams = function() {
       return knex('test_params')
         .del()
         .then( () => {
-          const tpObj = {}
+          const tpObj = {};
           return knex('test_params')
             .returning(['focus_user_id', 'focus_user_username', 
               'focus_org_id', 'focus_org_username'])

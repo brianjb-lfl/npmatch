@@ -18,7 +18,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('opp', function() {
+describe('response', function() {
 
   before(function() {
     return (testSetup.tearDownDB())
@@ -45,10 +45,10 @@ describe('opp', function() {
   });
 
   // ***** COMM TEST
-  describe('api/opportunities/testify GET comm check', function() {
+  describe('api/responses/testify GET comm check', function() {
     it('should demonstrate that comm to the endpoint is working', function() {
       return chai.request(app)
-        .get('/api/opportunities/testify')
+        .get('/api/responses/testify')
         .then(function(res) {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Good to go');
@@ -56,25 +56,25 @@ describe('opp', function() {
     });
   });
 
-  // ***** GET OPPORTUNITY LIST
-  describe('api/opportunities/list GET opportunities list', function() {
-    it('should return a list of opportunities', function() {
-      return chai.request(app)
-        .get('/api/opportunities/list')
-        .then(function(res) {
-          let oppStrings = testData.oppSeeds.map( item => item.narrative );
-          expect(res.body).to.be.an('array');
-          expect(res.body.length).to.equal(oppStrings.length);
-          for(let oCtr = 0; oCtr < res.body.length; oCtr += 1) {
-            expect(oppStrings).to.include(res.body[oCtr].narrative);
-          }
-          // expect(res.body[0].narrative).to.equal('out, out, damned spot!');    // failing test
-        });
-    });
-  });
+  // ***** GET RESPONSE LIST
+  // describe('api/responses/list GET opportunities list', function() {
+  //   it('should return a list of opportunities', function() {
+  //     return chai.request(app)
+  //       .get('/api/opportunities/list')
+  //       .then(function(res) {
+  //         let oppStrings = testData.oppSeeds.map( item => item.narrative );
+  //         expect(res.body).to.be.an('array');
+  //         expect(res.body.length).to.equal(oppStrings.length);
+  //         for(let oCtr = 0; oCtr < res.body.length; oCtr += 1) {
+  //           expect(oppStrings).to.include(res.body[oCtr].narrative);
+  //         }
+  //         // expect(res.body[0].narrative).to.equal('out, out, damned spot!');    // failing test
+  //       });
+  //   });
+  // });
 
-  // ***** POST A NEW ORG OPPORTUNITY
-  describe('api/opportunities POST new opportunity', function() {
+  // ***** POST A NEW RESPONSIBILITY
+  describe('api/responsibilities POST new responsibility', function() {
     let testOpp = testData.testOrgOpp;
 
     it('should reject a post with missing userId', function() {
