@@ -18,8 +18,9 @@ export class TopNavBar extends Component {
   }
 
   render() {
-    return (
-      <div>
+    let topNavButtons;
+    if (this.props.user.id) {
+      topNavButtons =
         <ul className='topNav'>
           <li className='inboxButton'>
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
@@ -45,6 +46,24 @@ export class TopNavBar extends Component {
             <i className="fa fa-bars" aria-hidden="true"></i>
           </li>
         </ul>
+    }
+
+    else {
+      topNavButtons = <ul className='topNav'>
+        <li className='searchBar'>
+          <form className="search">
+            <label htmlFor="userinput"></label>
+            <input type="text" className="userinput"></input>
+            <button type="submit" className="submit-button">
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </form>
+        </li>
+      </ul>
+    }
+    return (
+      <div>
+        {topNavButtons}
       </div>
     )
   }
