@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import OrganizationPreview from '../organization-preview/organization-preview';
 // import ContributorPreview from '../contributor-preview/contributor-preview';
 
+import './home-page.css';
 
 export class HomePage extends Component {
   render() {
@@ -16,7 +17,8 @@ export class HomePage extends Component {
       );
 
     return (
-      <div>
+      <div className='homePage'>
+        <h2 className='sectionTitle'>Explore those enrolled in NPM</h2>
         {previews}
       </div>
     )

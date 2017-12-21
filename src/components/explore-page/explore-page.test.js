@@ -13,16 +13,16 @@ describe('Explore Page component display functionality', () => {
     }
   }];
   it('Smoke test - component should render', () => {
-    shallow(<ExplorePage usersList={usersList} />);
+    shallow(<ExplorePage usersList={usersList} match={{url: '/organizations'}} />);
   });
   it('Should display organizations when display is for exploreOrganizations', () => {
-    const wrapper = shallow(<ExplorePage display='exploreOrganizations' usersList={usersList} />)
+    const wrapper = shallow(<ExplorePage display='exploreOrganizations' match={{url: '/organizations'}} usersList={usersList} />)
     expect(wrapper.containsMatchingElement(
       <DetailedOrganizationPreview />
     ));
   });
   it('Should display contributors when display is for exploreContributors', () => {
-    const wrapper = shallow(<ExplorePage display='exploreContributors' usersList={usersList} />)
+    const wrapper = shallow(<ExplorePage display='exploreContributors' match={{url: '/contributors'}} usersList={usersList} />)
     expect(wrapper.containsMatchingElement(
       <DetailedContributorPreview />
     ));

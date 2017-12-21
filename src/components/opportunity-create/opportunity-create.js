@@ -129,10 +129,10 @@ export class OpportunityCreate extends Component {
           <StartEndFields />
 
           <div>
-            <button
+            <button className='submitButton'
               type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
             </button>
-            <button
+            <button className='clearButton'
               type="button" disabled={this.props.pristine || this.props.submitting}
               onClick={this.props.reset}>Clear Form
             </button>

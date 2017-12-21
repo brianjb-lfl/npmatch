@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
 
+import './detailed-organization-preview.css';
+
 export class DetailedOrganizationPreview extends Component {
   handleClick(id) {
     this.props.dispatch(actionsUser.fetchUser(
@@ -13,7 +15,7 @@ export class DetailedOrganizationPreview extends Component {
 
   render() {
     return (
-      <div onClick={() => this.handleClick(this.props.user.id)}>
+      <div className='detailedOrganizationPreview' onClick={() => this.handleClick(this.props.user.id)}>
         <img className='logo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>
         <h3 className='name'>{this.props.user.name}</h3>
         <p className='bio'>{this.props.user.bio}</p>
