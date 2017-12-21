@@ -1,13 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { mapStateToProps } from './opportunity-preview';
 import { OpportunityPreview } from './opportunity-preview';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
 
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-const middlewares = [ thunk ];
+
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 // console.log('mockStore1',mockStore());
 
@@ -62,33 +64,49 @@ describe('Opportunity Preview component display functionality', () => {
     const expectedResponse = 'whatever you want back';
 
     window.fetch = jest.fn().mockImplementation(() =>
-    Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
+      Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
 
-    const spy = jest.fn(()=>Promis.resolve());
+    const spy = jest.fn(() => Promis.resolve());
     const historySpy = jest.fn();
     const user = { authToken: '000' };
     const wrapper = shallow(<OpportunityPreview
       opportunity={opportunity}
       dispatch={store.dispatch}
       user={user}
-      match={{url: '/profiles/3'}}
-      history={{push: historySpy}}
+      match={{ url: '/profiles/3' }}
+      history={{ push: historySpy }}
     />);
     const theButton = wrapper.first().shallow().first().shallow().find('.buttonClass');
-    console.log('theButton',JSON.stringify(theButton));
+    console.log('theButton', JSON.stringify(theButton));
     return new Promise((resolve, reject) => {
       console.log('inside promise')
       return theButton.simulate('click')
-    }) 
-    .then(()=>{
-      const expectedActions = store.getActions();
-      console.log('expectedActions',expectedActions)
-      expect(expectedActions.length).toBe(3);
-      expect(expectedActions).toContainEqual(
-        {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-        {type: actionsDisplay.CHANGE_DISPLAY, view: 'editOpportunity'},
-        {type: actionsOpportunity.LOAD_OPPORTUNITY, expectedResponse }
-      )
-    });
+    })
+      .then(() => {
+        const expectedActions = store.getActions();
+        console.log('expectedActions', expectedActions)
+        expect(expectedActions.length).toBe(3);
+        expect(expectedActions).toContainEqual(
+          { type: actionsDisplay.CHANGE_DISPLAY, view: 'loading' },
+          { type: actionsDisplay.CHANGE_DISPLAY, view: 'editOpportunity' },
+          { type: actionsOpportunity.LOAD_OPPORTUNITY, expectedResponse }
+        )
+      });
   });
+  it('Should map state to props', () => {
+    const initialState = {
+      user: {
+          id: 1
+      },
+      display: 'landingPage'
+    };
+    const expectedProps = {
+      user: {
+        id: 1
+      },
+      display: 'landingPage'
+    };
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+  })
 });

@@ -48,5 +48,5 @@ describe('Top Nav Bar component display functionality', () => {
     };
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
-  })
+  });
 });
