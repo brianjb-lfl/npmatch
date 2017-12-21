@@ -22,3 +22,10 @@ export const toggleUser = userId => ({
   type: TOGGLE_USER,
   userId
 });
+
+export const SET_FORM_STATUS = 'SET_FORM_STATUS';
+export const setFormStatus = formStatus => ({
+  type: SET_FORM_STATUS,
+  formStatus
+});
+

@@ -485,7 +485,7 @@ describe('user action async functions', () => {
       .then(() => {
         const expectedActions = store.getActions();
         // console.log('expectedActions fail user',expectedActions)
-        expect(expectedActions.length).toBe(cumulativeActions); // 3 from 1st, 3 from 2nd, 2 from now
+        expect(expectedActions.length).toBe(cumulativeActions); 
         expect(expectedActions).toContainEqual(
           {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},          
           {type: actionsDisplay.TOGGLE_MODAL, message: expectedResponse.error},

@@ -22,6 +22,10 @@ export const reducer = (state = initialState, action) => {
     return {...state, opportunityId: action.opportunityId };
   }
 
+  if (action.type === actions.SET_FORM_STATUS) {
+    return {...state, formStatus: action.formStatus };
+  }
+
   return state;
 
 }

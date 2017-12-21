@@ -236,7 +236,10 @@ export const manageLinks = (user, link, index, action) => dispatch => {
 
 // @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@
 
-export const createOrEditResponse = (response, authToken, isNew = true) => dispatch => {
+export const createOrEditResponse = (origResponse, authToken, isNew = true) => dispatch => {
+  const response = {...origResponse};
+  console.log('origResponse in createOrEditResponse', origResponse)
+  console.log('response in createOrEditResponse', response)
   /* response = {
     id: 0 // only is isNew !== true
     responseStatus: 'offered' || 'accepted' || 'denied' || 'deleted' // only if isNew !== true
@@ -247,7 +250,7 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
   } */
   // console.log('response',response, authToken, isNew)
 
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  // dispatch(actionsDisplay.changeDisplay('loading'));
 
   let action = 'edit' // action is used by reducer after response from server
   if (isNew) {
@@ -272,17 +275,18 @@ export const createOrEditResponse = (response, authToken, isNew = true) => dispa
     body: JSON.stringify(response),
     headers
   };
-  // console.log('init at response', init);
+  console.log('init at response', init);
   return fetch(url, init)
   .then(res=>{ 
-    // console.log(res);
+    console.log('res just after fetch',res);
     if (!res.ok) { 
+      console.log('not ok')
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedResponse => { 
-    // console.log('returnedResponse', returnedResponse)
+    console.log('returnedResponse', returnedResponse)
     if ( loadTo === 'user') {
       return dispatch(loadResponse(returnedResponse));
     } else {

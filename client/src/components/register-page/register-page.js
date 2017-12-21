@@ -13,7 +13,6 @@ export class RegisterPage extends Component {
 
   handleFormTypeChange(userType) {
     this.props.dispatch(actionsUser.setFormType(userType));
-
   }
 
   handleSubmitButton(input) {
