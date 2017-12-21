@@ -15,13 +15,14 @@ export class UserProfileEdit extends Component {
     
     return (
       <main>
+        <h3 className='sectionTitle'>Edit Profile</h3>
         <div className='editSection'>
-          <h3>Edit Profile</h3>
           <UserEditGeneralForm history={this.props.history}/>
           <UserEditLinksForm/>
         </div>
+        
+        <h3 className='sectionTitle'>Update Username and Password</h3>
         <div className='editSection'>
-          <h3>Update Username and Password</h3>
           <UserEditUandPwForm history={this.props.history}/>
         </div>
       </main>

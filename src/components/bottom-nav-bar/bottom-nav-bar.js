@@ -38,9 +38,9 @@ export class BottomNavBar extends Component {
   }
 
   render() {
-    // let leftButton;
+    let leftButton;
     let leftLabel;
-    // let rightButton;
+    let rightButton;
     let rightLabel;
     let homeButton;
     if (this.props.match.url !== '/') {
@@ -63,33 +63,25 @@ export class BottomNavBar extends Component {
       rightLabel = 'Contributors'
     }
 
-    // if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
-    //   leftButton = <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
-    //     <button>
-    //       {leftLabel}
-    //     </button>
-    //   </li>
-    //   rightButton = <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
-    //     <button>
-    //       {rightLabel}
-    //     </button>
-    //   </li>
-    // }
+    if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
+      leftButton = <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
+        <button>
+          {leftLabel}
+        </button>
+      </li>
+      rightButton = <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
+        <button>
+          {rightLabel}
+        </button>
+      </li>
+    }
 
     return (
       <div>
         <ul className='bottomNav'>
           {homeButton}
-          <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
-            <button>
-              {leftLabel}
-            </button>
-          </li>
-          <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
-            <button>
-              {rightLabel}
-            </button>
-          </li>
+          {leftButton}
+          {rightButton}
         </ul>
       </div>
     )

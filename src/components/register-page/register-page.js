@@ -27,10 +27,10 @@ export class RegisterPage extends Component {
 
     return (
       <main>
+        <h2 className='sectionTitle'>Register</h2>
         <form className='registerForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
-          <h2>Register</h2>
           <div className='individualOption'>
             <label className='inputLabel'
               style={{
