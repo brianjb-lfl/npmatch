@@ -23,7 +23,6 @@ export class App extends Component {
 
   componentDidMount() {
     if (this.props.general.causes.length < 1) {
-      console.log('called')
       this.props.dispatch(actionsGeneral.fetchInitialize());
     }
   }

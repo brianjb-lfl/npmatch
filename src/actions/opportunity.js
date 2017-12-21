@@ -99,14 +99,18 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
   //   opportunity.locationCountry = opportunity.locationCountry.code;
   // } 
   // if ( typeof opportunity.timestampStart === 'object' ) {
-    opportunity.timestampStart = "2017-12-07T18:53:52.960Z";
+    // opportunity.timestampStart = new Date(); // "2017-12-07T18:53:52.960Z";
   // } 
   // if ( typeof opportunity.timestampEnd === 'object' ) {
-    opportunity.timestampEnd = "2017-12-07T18:53:52.960Z";
+    // opportunity.timestampEnd = new Date();
   // } 
-  console.log(opportunity.timestampStart);
-  console.log(opportunity.timestampEnd);
-    
+  // console.log('start', typeof opportunity.timestampStart, opportunity.timestampStart);
+  // console.log('end', typeof opportunity.timestampEnd, opportunity.timestampEnd);
+  // const tryThis = opportunity.timestampEnd.toDate();
+  // console.log('toDate', typeof tryThis, tryThis);
+  // const formatted = tryThis.toGMTString();
+  // console.log('end toGMTString', typeof formatted, formatted);
+
   if (isNew) delete opportunity.id;
   const params = isNew ? '' : `/${opportunity.id}` ;
   const method = isNew ? 'POST' : 'PUT' ;
