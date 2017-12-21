@@ -17,6 +17,11 @@ export const loadSkills = skills => ({
   skills
 });
 
+export const FLATTEN_LOCATIONS = 'FLATTEN_LOCATIONS';
+export const flattenLocations = () => ({
+  type: FLATTEN_LOCATIONS,
+});
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchInitialize = () => dispatch => {
@@ -47,6 +52,7 @@ export const fetchInitialize = () => dispatch => {
       return res;
     })
     .then(res => {
+      dispatch(flattenLocations())
       return dispatch(loadCauses(res.causes));
     })
     .catch(error => {

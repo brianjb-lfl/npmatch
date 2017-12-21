@@ -270,12 +270,12 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
 
   // dispatch(actionsDisplay.changeDisplay('loading'));
 
-  let action = 'edit' // action is used by reducer after response from server
-  if (isNew) {
-    action = 'add';
-  } else if (response.responseStatus === 'deleted') {
-    action = 'delete';
-  }
+  // let action = 'edit' // action is used by reducer after response from server
+  // if (isNew) {
+  //   action = 'add';
+  // } else if (response.responseStatus === 'deleted') {
+  //   action = 'delete';
+  // }
   const loadTo = ( isNew || 
     response.responseStatus === 'offered' || 
     response.responseStatus === 'deleted' ) ? 'user' : 'opportunity' ;

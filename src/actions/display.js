@@ -29,3 +29,9 @@ export const setFormStatus = formStatus => ({
   formStatus
 });
 
+export const GET_DATE_TIME = 'GET_DATE-TIME';
+export const getDateTime = dateTime => ({
+  type: GET_DATE_TIME,
+  dateTime
+});
+

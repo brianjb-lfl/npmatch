@@ -92,18 +92,20 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
       opportunity.offer = false;
     }  
   }
-  if ( typeof opportunity.locationState === 'object' ) {
-    opportunity.locationState = opportunity.locationState.abbreviation;
-  } 
-  if ( typeof opportunity.locationCountry === 'object' ) {
-    opportunity.locationCountry = opportunity.locationCountry.code;
-  } 
+  // if ( typeof opportunity.locationState === 'object' ) {
+  //   opportunity.locationState = opportunity.locationState.abbreviation;
+  // } 
+  // if ( typeof opportunity.locationCountry === 'object' ) {
+  //   opportunity.locationCountry = opportunity.locationCountry.code;
+  // } 
   // if ( typeof opportunity.timestampStart === 'object' ) {
-  //   opportunity.timestampStart = JSON.stringify(opportunity.timestampStart);
+    opportunity.timestampStart = "2017-12-07T18:53:52.960Z";
   // } 
   // if ( typeof opportunity.timestampEnd === 'object' ) {
-  //   opportunity.timestampEnd = JSON.stringify(opportunity.timestampEnd);
+    opportunity.timestampEnd = "2017-12-07T18:53:52.960Z";
   // } 
+  console.log(opportunity.timestampStart);
+  console.log(opportunity.timestampEnd);
     
   if (isNew) delete opportunity.id;
   const params = isNew ? '' : `/${opportunity.id}` ;

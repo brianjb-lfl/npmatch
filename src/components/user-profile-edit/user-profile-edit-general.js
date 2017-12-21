@@ -17,9 +17,9 @@ export class UserEditGeneralForm extends Component {
   handleSubmitButton(input) {
     const user = {...input};
     user.id = this.props.user.id;
-    console.log('user id', user.id)
+    // console.log('user id', user.id)
     const isNew = false;
-    console.log('this.props.user id', this.props.user.id)
+    // console.log('this.props.user id', this.props.user.id)
 
     this.props.dispatch(actionsUser.createOrEditUser(user, this.props.user.authToken, isNew))
       .then(() => {

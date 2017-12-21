@@ -10,8 +10,8 @@ export class LocationFields extends Component {
     const renderDropdownList = ({ input, data, valueField, textField }) =>
       <DropdownList {...input}
         data={data}
-        valueField={valueField}
-        textField={textField}
+        // valueField={valueField}
+        // textField={textField}
         onChange={input.onChange} />
 
     return (
@@ -39,8 +39,6 @@ export class LocationFields extends Component {
             id='locationState'
             component={renderDropdownList}
             data={this.props.general.states}
-            textField='name'
-            valueField='abbreviation'
             className='inputField' />
         </div>
 
@@ -54,8 +52,6 @@ export class LocationFields extends Component {
             id='locationCountry'
             component={renderDropdownList}
             data={this.props.general.countries}
-            textField='name'
-            valueField='code'
             className='inputField' />
         </div>
       </div>

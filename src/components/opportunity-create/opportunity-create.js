@@ -16,7 +16,8 @@ import './opportunity-create.css'
 export class OpportunityCreate extends Component {
 
   handleSubmitButton(input, isNew) {
-    const opp = Object.assign({}, input);
+    console.log('input from redux form',input)
+    const opp = {...input};
     opp.userId = isNew ? this.props.user.id : opp.userId;
     // console.log('opp to submit', opp)
 

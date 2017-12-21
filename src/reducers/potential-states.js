@@ -104,9 +104,9 @@ export const opportunity = {
   timestampEnd: '',
   locationCity: '',
   locationState: '',
-  locationCountry: {name: 'United States', code: 'US'},
+  locationCountry: 'United States',
   link: '',
-  causes: null,  
+  causes: [],  
   responses: {     
     0: {
         id: '',

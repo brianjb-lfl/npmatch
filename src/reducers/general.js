@@ -13,6 +13,16 @@ export const reducer = (state = initialState, action) => {
     return {...state, skills: action.skills };
   }
 
+  if (action.type === actions.FLATTEN_LOCATIONS) {
+    const flatStates = state.states.map(state=>{
+      return state.name;
+    })
+    const flatCountries = state.countries.map(country=>{
+      return country.name;
+    })
+    return {...state, states: flatStates, countries: flatCountries};
+  }
+
   return state;
 
 }

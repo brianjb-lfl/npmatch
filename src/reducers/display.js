@@ -26,6 +26,10 @@ export const reducer = (state = initialState, action) => {
     return {...state, formStatus: action.formStatus };
   }
 
+  if (action.type === actions.GET_DATE_TIME) {
+    return {...state, dateTime: action.dateTime };
+  }
+
   return state;
 
 }

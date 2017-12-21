@@ -1,5 +1,3 @@
-'use strict';
-
 export const compareObjects = (expected, received) => {
   // console.log('received at compare',received);
   let message = [];
@@ -320,8 +318,8 @@ export const postOpportunities = {
   "offer": true,
   "title": "string",
   "narrative": "string",
-  "timestampStart": {},
-  "timestampEnd": {},
+  "timestampStart": "string",
+  "timestampEnd": "string",
   "locationCity": "string",
   "locationState": "string",
   "locationCountry": "string",
@@ -399,9 +397,6 @@ export const putOpportunitiesId = {
   "locationCountry": "string",
   "link": "string",
   "causes": [
-    "string"
-  ],
-  "skills": [
     "string"
   ]
 };
