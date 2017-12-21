@@ -18,7 +18,7 @@ export class OpportunityCreate extends Component {
   handleSubmitButton(input, isNew) {
     const opp = Object.assign({}, input);
     opp.userId = isNew ? this.props.user.id : opp.userId;
-    console.log('opp to submit', opp)
+    // console.log('opp to submit', opp)
 
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => this.props.history.push('/myopportunities'))

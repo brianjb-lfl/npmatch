@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 // import {SubmissionError} from 'redux-form';
 import  * as actionsDisplay from './display';
+import * as ck from './api-response-checks';
 
 // right now we have 1 'main' list of users; we can have as many lists as we want, each following identical format
 export const LOAD_USERS_LIST = 'LOAD_USERS_LIST';
@@ -33,9 +34,11 @@ export const fetchUsersList = (query, authToken) => dispatch => {
     .then(res=>{
       return res.json();
     })
-    .then(res=>{
-      console.log('response of users from fetch',res)
-      return dispatch(loadUsersList(res));      
+    .then(usersList=>{
+
+      ck.compareObjects(ck.getUsersListRes, usersList );
+
+      return dispatch(loadUsersList(usersList));      
     })
     .catch(error => {
       // console.log('error',error);

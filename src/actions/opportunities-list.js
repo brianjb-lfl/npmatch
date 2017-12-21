@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import * as actionsDisplay from './display';
+import * as ck from './api-response-checks';
 
 // right now we have 1 'main' list of opportunities; we can have as many lists as we want, each following identical format
 // if we add lists, each one should have an action and reducer; each one can populate 1 key, like "main" does
@@ -29,15 +30,16 @@ export const fetchOppsList = (query, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
-  console.log('init at fetchOppsList',init)
 
   return fetch(url, init)    
     .then(res=>{
       return res.json();
     })
-    .then(res=>{
-      console.log('response from opps list fetch',res)
-      return dispatch(loadOpportunitiesList(res));
+    .then(oppsList=>{
+
+      ck.compareObjects(ck.getOpportunitiesListRes, oppsList)
+      
+      return dispatch(loadOpportunitiesList(oppsList));
     })
     .catch(error => {
       // console.log('error',error);

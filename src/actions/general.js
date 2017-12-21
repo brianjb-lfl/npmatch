@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import * as actionsDisplay from './display';
 import * as actionsUsersList from './users-list';
+import * as ck from './api-response-checks';
 
 // library of all causes, loads once only on app load
 export const LOAD_CAUSES = 'LOAD_CAUSES';
@@ -34,7 +35,9 @@ export const fetchInitialize = () => dispatch => {
       return res.json();
     })
     .then(res => {
-      console.log('initialize',res)
+
+      ck.compareObjects(ck.getAdminInitializeRes, res)
+
       dispatch(actionsUsersList.loadUsersList(res.users));
       return res;
     })

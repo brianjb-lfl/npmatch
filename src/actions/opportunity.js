@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import  * as actionsDisplay from './display';
 import { arrayToObject } from './user';
+import * as ck from './api-response-checks';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -34,7 +35,11 @@ export const loadResponse = response => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 export const oppAPICall = (url, init) => dispatch => {
-  console.log('init oppAPICall', init)
+
+  if (init.method === 'GET') { } 
+  else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, init.body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, init.body) }
+  
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
@@ -43,8 +48,12 @@ export const oppAPICall = (url, init) => dispatch => {
     return opp.json();
   }) 
   .then(opportunity=>{
-    console.log('opp returned', opportunity)
-    if (typeof opportunity.responses === 'object') {
+
+    if (init.method === 'GET') { ck.compareObjects(ck.getOpportunitiesIdRes, opportunity) } 
+    else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunitiesRes, opportunity) } 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesIdRes, opportunity) }
+    
+    if (Array.isArray(opportunity.responses)) {
       // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
     }

@@ -124,7 +124,6 @@ export const userAPICall = (url, init, callback) => dispatch => {
 
   return fetch(url, init)   
   .then(user=>{ 
-    console.log('user returned', user)
     if (!user.ok) { 
       return Promise.reject(user.statusText);
     }
@@ -248,8 +247,8 @@ export const manageLinks = (user, link, index, action) => dispatch => {
 
 export const createOrEditResponse = (origResponse, authToken, isNew = true) => dispatch => {
   const response = {...origResponse};
-  console.log('origResponse in createOrEditResponse', origResponse)
-  console.log('response in createOrEditResponse', response)
+  // console.log('origResponse in createOrEditResponse', origResponse)
+  // console.log('response in createOrEditResponse', response)
   /* response = {
     id: 0 // only is isNew !== true
     responseStatus: 'offered' || 'accepted' || 'denied' || 'deleted' // only if isNew !== true
@@ -285,10 +284,14 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     body: JSON.stringify(response),
     headers
   };
-  console.log('init at response', init);
+
+  if (init.method === 'GET') { } 
+  else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, init.body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, init.body) }
+  
   return fetch(url, init)
   .then(res=>{ 
-    console.log('res just after fetch',res);
+
     if (!res.ok) { 
       console.log('not ok')
       return Promise.reject(res.statusText);
@@ -296,7 +299,11 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     return res.json();
   }) 
   .then(returnedResponse => { 
-    console.log('returnedResponse', returnedResponse)
+
+    if (init.method === 'GET') { } 
+    else if (init.method === 'POST') { ck.compareObjects(ck.postResponsesRes, returnedResponse) } 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesIdRes, returnedResponse) }
+
     if ( loadTo === 'user') {
       return dispatch(loadResponse(returnedResponse));
     } else {
@@ -370,7 +377,11 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     body: JSON.stringify(role),
     headers
   };
-  console.log('init at create or delete role', init);
+
+  if (init.method === 'GET') { } 
+  else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, init.body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, init.body) }
+      
   return fetch(url, init)
   .then(res=>{ 
     // console.log('role res',res);
@@ -380,7 +391,11 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     return res.json();
   }) 
   .then(returnedRole => { 
-    console.log('returnedRole', returnedRole)
+
+    if (init.method === 'GET') { } 
+    else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
+
     if ( isAdmin ) {
       return dispatch(loadAdmin(returnedRole, isNew));
     } else {
