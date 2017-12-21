@@ -25,7 +25,7 @@ export const user = {
   links: [      
     {
       linkType: '',
-      linkURL: '',
+      linkUrl: '',
     }
   ],
   causes: [''],

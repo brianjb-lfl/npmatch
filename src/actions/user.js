@@ -116,11 +116,12 @@ export const updateLinks = (links, link, index, action) => {
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
-export const userAPICall = (url, init, callback) => dispatch => {
+export const userAPICall = (url, init, body, callback) => dispatch => {
 
   if (init.method === 'GET') { } 
-  else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, init.body) } 
-  else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, init.body) }
+  else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.postAuthLogin, body)} 
+  else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, body) }
 
   return fetch(url, init)   
   .then(user=>{ 
@@ -130,7 +131,7 @@ export const userAPICall = (url, init, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-
+    // console.log('callback', callback)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
@@ -142,8 +143,8 @@ export const userAPICall = (url, init, callback) => dispatch => {
       return dispatch(actionsUserViewed.loadUser(user));   
     } 
     // console.log('returned user', user)
-    user.causes = stringArrayOfObjects(user.causes,        'cause');
-    user.skills = stringArrayOfObjects(user.skills,        'skill');
+    // user.causes = stringArrayOfObjects(user.causes,        'cause');
+    // user.skills = stringArrayOfObjects(user.skills,        'skill');
     user.following     = arrayToObject(user.following,     'id');    // id of org being followed
     user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
     user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
@@ -177,7 +178,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch
     stateLocation,
     originalUser: null,
   }
-  return dispatch(userAPICall(url, init,callback));
+  return dispatch(userAPICall(url, init, null, callback));
 }
 
 export const login = user => dispatch => {
@@ -204,7 +205,8 @@ export const login = user => dispatch => {
     stateLocation: 'user',
     originalUser: null,
   }
-  return dispatch(userAPICall(url, init,callback));}
+  // console.log(url, init, userObject, callback);
+  return dispatch(userAPICall(url, init, userObject, callback));}
 
 export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => {
   
@@ -212,8 +214,10 @@ export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => 
   const originalUser = {username: user.username, password: user.password};
   delete user.password2; // maybe set to null???
   delete user.authToken;
-  // DELETE THIS WHEN BRIAN ADDS TO DB
-  delete user.availability;
+  user.organization = user.organization ? user.organization : null ;
+  user.firstName = user.firstName ? user.firstName : null ;
+  user.lastName = user.lastName ? user.lastName : null ;
+
   const params = isNew ? 'register' : user.id ;
   const method = isNew ? 'POST' : 'PUT';
 
@@ -233,7 +237,7 @@ export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => 
     stateLocation: 'user',
     originalUser
   }
-  return dispatch(userAPICall(url, init, callback));}
+  return dispatch(userAPICall(url, init, user, callback));}
 
 export const manageLinks = (user, link, index, action) => dispatch => {
   // add, edit, or delete links in user array, then update user in db

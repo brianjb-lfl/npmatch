@@ -1,9 +1,11 @@
 'use strict';
 
 export const compareObjects = (expected, received) => {
+  // console.log('received at compare',received);
   let message = [];
-  
+
   const compare = (expected, received) => {
+
     if (Array.isArray(expected)) {
       if (Array.isArray(received)) {
         received.forEach((item,index)=>{
@@ -11,7 +13,7 @@ export const compareObjects = (expected, received) => {
         });
       } else {
         const typeReceived = typeof received;
-        message.push(`expected array but received ${typeReceived}`);
+        message.push(`expected array at ${expected} but received ${typeReceived}`);
       }
     } else if (typeof expected === 'object' && !Array.isArray(expected)) {
       if (typeof received === 'object' && !Array.isArray(received)) {
@@ -24,48 +26,47 @@ export const compareObjects = (expected, received) => {
         }
       } else {
         const typeReceived = typeof received;
-        message.push(`expected array but received ${typeReceived}`);
+        message.push(`expected array at ${expected[0]} but received ${typeReceived}`);
       }
     } else if (Array.isArray(received)) {
-      message.push('received an array where expecting a primitive data type');
-    } else if (typeof received === 'object') {
-      message.push('received an object where expecting a primitive data type');
+      message.push(`received an array ${received[0]} where expecting a primitive data type`);
+    } else if (typeof received === 'object' && received !== null) {
+      message.push(`received an object ${received} where expecting a primitive data type`);
   
     } else if (typeof expected === 'number' && typeof received === 'string') {
-      message.push('expected a number but received a string');
+      message.push(`expected a number but received a string ${received}`);
     } else if (typeof expected === 'number' && typeof received === 'boolean') {
-      message.push('expected a number but received a boolean');
+      message.push(`expected a number but received a boolean ${received}`);
       
     } else if (typeof expected === 'string' && typeof received === 'number') {
-      message.push('expected a string but received a number');
+      message.push(`expected a string but received a number ${received}`);
     } else if (typeof expected === 'string' && typeof received === 'boolean') {
-      message.push('expected a string but received a boolean');
+      message.push(`expected a string but received a boolean ${received}`);
 
     } else if (typeof expected === 'boolean' && typeof received === 'number') {
-      message.push('expected a boolean but received a number');
+      message.push(`expected a boolean but received a number ${received}`);
     } else if (typeof expected === 'boolean' && typeof received === 'string') {
-      message.push('expected a boolean but received a string');
+      message.push(`expected a boolean but received a string ${received}`);
 
     } else {
       return;
     }
   };
-
   compare(expected, received);
 
-  if (message.length) {
-    message = 'A-OK!' ;
+  if (message.length > 0) {
     console.log(message);
+    console.log(message.length);
+    console.log('');
+    console.log('expected');
+    console.log(expected);
+    console.log('received');
+    console.log(received);
+    console.log('');
     return message;
-  }
+  } 
+  message = 'A-OK!' ;
   console.log(message);
-  console.log('');
-  console.log('expected');
-  console.log(expected);
-  console.log('received');
-  console.log(received);
-  console.log('');
-
   return message;
 
 };
@@ -89,12 +90,11 @@ export const getAdminInitializeRes = {
       "locationCity": "string",
       "locationState": "string",
       "locationCountry": "string",
-      "availability": "string",
       "bio": "string",
       "links": [
         {
           "linkType": "string",
-          "linkURL": "string"
+          "linkUrl": "string"
         }
       ],
       "causes": [
@@ -124,7 +124,7 @@ export const getUsersListRes = [
     "links": [
       {
         "linkType": "string",
-        "linkURL": "string"
+        "linkUrl": "string"
       }
     ],
     "causes": [
@@ -135,6 +135,11 @@ export const getUsersListRes = [
     ]
   }
 ];
+
+export const postAuthLogin = {
+  "username": "string",
+  "password": "string",
+};
 
 export const postUsers = {
   "username": "string",
@@ -151,24 +156,6 @@ export const postUsersRes = {
   "firstName": "string",
   "lastName": "string",
   "organization": "string",
-  "logo": "string",
-  "locationCity": "string",
-  "locationState": "string",
-  "locationCountry": "string",
-  "availability": "string",
-  "bio": "string",
-  "links": [
-    {
-      "linkType": "string",
-      "linkURL": "string"
-    }
-  ],
-  "causes": [
-    "string"
-  ],
-  "skills": [
-    "string"
-  ]
 };
 
 export const getUsersIdRes = {
@@ -187,7 +174,7 @@ export const getUsersIdRes = {
   "links": [
     {
       "linkType": "string",
-      "linkURL": "string"
+      "linkUrl": "string"
     }
   ],
   "causes": [
@@ -268,7 +255,7 @@ export const putUsersId = {
   "links": [
     {
       "linkType": "string",
-      "linkURL": "string"
+      "linkUrl": "string"
     }
   ],
   "causes": [
@@ -295,7 +282,7 @@ export const putUsersIdRes = {
   "links": [
     {
       "linkType": "string",
-      "linkURL": "string"
+      "linkUrl": "string"
     }
   ],
   "causes": [
@@ -309,7 +296,7 @@ export const putUsersIdRes = {
 export const getOpportunitiesListRes = [
   {
     "id": 0,
-    "userId": "string",
+    "userId": 0,
     "organization": "string",
     "opportunityType": "string",
     "offer": true,
@@ -328,14 +315,13 @@ export const getOpportunitiesListRes = [
 ];
 
 export const postOpportunities = {
-  "userId": "string",
-  "organization": "string",
+  "userId": 0,
   "opportunityType": "string",
   "offer": true,
   "title": "string",
   "narrative": "string",
-  "timestampStart": "string",
-  "timestampEnd": "string",
+  "timestampStart": {},
+  "timestampEnd": {},
   "locationCity": "string",
   "locationState": "string",
   "locationCountry": "string",

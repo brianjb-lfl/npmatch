@@ -30,12 +30,13 @@ export const fetchInitialize = () => dispatch => {
     method: 'GET',
     headers,
   };
+  // console.log('init at initialize', init);
   return fetch(url, init)
     .then(res => {
       return res.json();
     })
     .then(res => {
-
+      // console.log('response at initialize', res);
       ck.compareObjects(ck.getAdminInitializeRes, res)
 
       dispatch(actionsUsersList.loadUsersList(res.users));

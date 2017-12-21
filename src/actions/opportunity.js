@@ -34,11 +34,11 @@ export const loadResponse = response => ({
 });
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
-export const oppAPICall = (url, init) => dispatch => {
+export const oppAPICall = (url, init, body) => dispatch => {
 
   if (init.method === 'GET') { } 
-  else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, init.body) } 
-  else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, init.body) }
+  else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, body) }
   
   return fetch(url, init)   
   .then(opp=>{
@@ -77,7 +77,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
-  return dispatch(oppAPICall(url, init));
+  return dispatch(oppAPICall(url, init, null));
 }
 
 export const createOpportunity = (opportunity, authToken, isNew) => dispatch => {
@@ -98,10 +98,14 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
   if ( typeof opportunity.locationCountry === 'object' ) {
     opportunity.locationCountry = opportunity.locationCountry.code;
   } 
+  // if ( typeof opportunity.timestampStart === 'object' ) {
+  //   opportunity.timestampStart = JSON.stringify(opportunity.timestampStart);
+  // } 
+  // if ( typeof opportunity.timestampEnd === 'object' ) {
+  //   opportunity.timestampEnd = JSON.stringify(opportunity.timestampEnd);
+  // } 
     
   if (isNew) delete opportunity.id;
-  // DELETE THIS WHEN BRIAN ADDS TO DB
-  delete opportunity.organization;
   const params = isNew ? '' : `/${opportunity.id}` ;
   const method = isNew ? 'POST' : 'PUT' ;
 
@@ -115,5 +119,5 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
     body: JSON.stringify(opportunity),
     headers
   };
-  return dispatch(oppAPICall(url, init));  
+  return dispatch(oppAPICall(url, init, opportunity));  
 }
