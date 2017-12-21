@@ -25,7 +25,7 @@ export class OpportunityPreview extends Component {
         <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
         <p className='timeframe'>{opportunity.timeframe}</p>
         <p className='description'>{opportunity.description}</p>
-        <button className='buttonClass' onClick={() => this.editOpportunity(opportunity.id)}>Edit</button>
+        <button className='editOpportunityButton' onClick={() => this.editOpportunity(opportunity.id)}>Edit</button>
         <OpportunityResponse opportunity={opportunity} />
       </div>
     )
