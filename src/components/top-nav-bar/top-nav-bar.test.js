@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 
 import { mapStateToProps } from './top-nav-bar';
 import { TopNavBar } from './top-nav-bar';
@@ -48,5 +49,37 @@ describe('Top Nav Bar component display functionality', () => {
     };
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
+  });
+  it('Should dispatch actions when clicking the opportunity button', () => {
+    const spy = jest.fn(() => {return Promise.resolve()});
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <TopNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+        user={{id: 1}}
+      />
+    </MemoryRouter>);
+    expect(wrapper.find('.opportunitiesButton i').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+  });
+  it('Should dispatch actions when clicking the edit profile button', () => {
+    const spy = jest.fn(() => {return Promise.resolve()});
+    const historySpy = jest.fn();
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <TopNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+        user={{id: 1}}
+      />
+    </MemoryRouter>);
+    expect(wrapper.find('.editProfileButton i').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
   });
 });
