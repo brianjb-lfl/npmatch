@@ -1,0 +1,37 @@
+ul.bottomNav {
+  margin: 0;
+  padding: 0;
+}
+
+.bottomNav {
+  list-style-type: none;
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+  background-color: #082E41;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;;
+}
+
+.bottomNav li {
+  justify-content: space-around;
+}
+
+.bottomNav button {
+  border: none;
+  background: none;
+  color: white;
+  font-weight: 700;
+  margin: 2px 5vw 2px 5vw;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.bottomNav button:hover {
+  cursor: pointer;
+}
