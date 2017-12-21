@@ -1,14 +1,20 @@
+auth-router
+56-57
+converted snake to CC before returning user
+
 user-router
 174-178
-added object type validation for arrays; splice was crashing the app if the arrays were undefined
+added array type validation for arrays; splice was crashing the app if the arrays were undefined
 
 router-helpers
 116
-added object type validation for filtered causes; an unlisted cause caused the app to crashing
+added array type validation for filtered causes; an unlisted cause caused the app to crashing
 
 opp-router
 70
-added object type validation for array, same splice issue as above
+changed data check for array to Array.isArray()
+88-101
+returning all needed fields
 
 starter.sql
 33-34
@@ -20,11 +26,5 @@ spelled out id_opportunity
 126-130
 added organization, firstName, lastName, title; copies of data to be saved at entry to minimize SQL joins (down the road, if the user edits their name or name of the event, we can find these and update them, but I think that will be many fewer fetches and joins than each time they are called up)
 
-@@@@@@@@@@@@@@
 
-opp router
-70
-changed data check for array to Array.isArray()
-88-101
-returning all needed fields
 
