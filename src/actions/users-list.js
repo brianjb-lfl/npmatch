@@ -28,12 +28,13 @@ export const fetchUsersList = (query, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
+  console.log('init at users list',init)
   return fetch(url, init)    
     .then(res=>{
       return res.json();
     })
     .then(res=>{
-      // console.log('response of users from fetch',res)
+      console.log('response of users from fetch',res)
       return dispatch(loadUsersList(res));      
     })
     .catch(error => {

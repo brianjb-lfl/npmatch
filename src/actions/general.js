@@ -34,7 +34,7 @@ export const fetchInitialize = () => dispatch => {
       return res.json();
     })
     .then(res => {
-      // console.log('res',res)
+      console.log('initialize',res)
       dispatch(actionsUsersList.loadUsersList(res.users));
       return res;
     })

@@ -29,13 +29,14 @@ export const fetchOppsList = (query, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
+  console.log('init at fetchOppsList',init)
 
   return fetch(url, init)    
     .then(res=>{
       return res.json();
     })
     .then(res=>{
-      // console.log('response from opps list fetch',res)
+      console.log('response from opps list fetch',res)
       return dispatch(loadOpportunitiesList(res));
     })
     .catch(error => {

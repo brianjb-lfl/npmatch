@@ -4,6 +4,7 @@ import { REACT_APP_BASE_URL } from '../config'
 import * as actionsDisplay from './display';
 import * as actionsUserViewed from './user-viewed';
 import * as actionsOpportunity from './opportunity';
+import * as ck from './api-response-checks';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when creating, editing, or viewing YOUR OWN profile
@@ -117,15 +118,24 @@ export const updateLinks = (links, link, index, action) => {
 
 export const userAPICall = (url, init, callback) => dispatch => {
 
+  if (init.method === 'GET') { } 
+  else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, init.body) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, init.body) }
+
   return fetch(url, init)   
   .then(user=>{ 
-    // console.log('user returned', user)
+    console.log('user returned', user)
     if (!user.ok) { 
       return Promise.reject(user.statusText);
     }
     return user.json();
   })
   .then(user=>{
+
+    if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
+    else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
+
     if (callback.isNew) {
       return dispatch(login(callback.originalUser))
     }
@@ -360,17 +370,17 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     body: JSON.stringify(role),
     headers
   };
-  // console.log('init', init);
+  console.log('init at create or delete role', init);
   return fetch(url, init)
   .then(res=>{ 
-    // console.log(res);
+    // console.log('role res',res);
     if (!res.ok) { 
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedRole => { 
-    // console.log('returnedRole', returnedRole)
+    console.log('returnedRole', returnedRole)
     if ( isAdmin ) {
       return dispatch(loadAdmin(returnedRole, isNew));
     } else {

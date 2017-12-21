@@ -34,7 +34,7 @@ export const loadResponse = response => ({
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 export const oppAPICall = (url, init) => dispatch => {
-  // console.log('init', init)
+  console.log('init oppAPICall', init)
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
@@ -43,7 +43,7 @@ export const oppAPICall = (url, init) => dispatch => {
     return opp.json();
   }) 
   .then(opportunity=>{
-    // console.log('opp returned', opportunity)
+    console.log('opp returned', opportunity)
     if (typeof opportunity.responses === 'object') {
       // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
