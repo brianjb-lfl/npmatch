@@ -136,7 +136,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    // console.log('callback', callback)
+    // console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }

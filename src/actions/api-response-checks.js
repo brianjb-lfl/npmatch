@@ -331,7 +331,7 @@ export const postOpportunities = {
 
 export const postOpportunitiesRes = {
   "id": 0,
-  "userId": "string",
+  "userId": 0,
   "organization": "string",
   "opportunityType": "string",
   "offer": true,
@@ -350,7 +350,7 @@ export const postOpportunitiesRes = {
 
 export const getOpportunitiesIdRes = {
   "id": 0,
-  "userId": "string",
+  "userId": 0,
   "organization": "string",
   "opportunityType": "string",
   "offer": true,

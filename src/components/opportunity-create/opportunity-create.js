@@ -12,6 +12,7 @@ import CausesFields from '../fields/causes';
 import StartEndFields from '../fields/start-end';
 
 import './opportunity-create.css'
+import { getAdminInitializeRes } from '../../actions/api-response-checks';
 
 export class OpportunityCreate extends Component {
 
@@ -164,9 +165,9 @@ export const mapStateToProps = state => {
 
   const initialForm = {...state.opportunity}
   delete initialForm.responses;
+  delete initialForm.organization;
   initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id;
   initialForm.causes = initialForm.causes ? initialForm.causes : null;
-  initialForm.organization = state.user.userType === 'organization' ? state.user.organization : `${state.user.firstName} ${state.user.lastName}` ;
 
   return {
     general: state.general,

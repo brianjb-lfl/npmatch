@@ -29,7 +29,7 @@ export const fetchUsersList = (query, authToken) => dispatch => {
     method: 'GET',
     headers,
   };
-  console.log('init at users list',init)
+  // console.log('init at users list',init)
   return fetch(url, init)    
     .then(res=>{
       return res.json();
