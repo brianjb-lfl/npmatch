@@ -24,7 +24,7 @@ export const compareObjects = (expected, received) => {
         }
       } else {
         const typeReceived = typeof received;
-        message.push(`expected array at ${expected[0]} but received ${typeReceived}`);
+        message.push(`expected object at ${expected[0]} but received ${typeReceived}`);
       }
     } else if (Array.isArray(received)) {
       message.push(`received an array ${received[0]} where expecting a primitive data type`);
@@ -463,12 +463,12 @@ export const postResponsesRes = {
   "userId": 0,
   "notes": "free-form text",
   "responseStatus": "string",
-  "timestampStatusChange": "string",
-  "timestampCreated": "string",
-  "organization": "SQL join at response",
-  "firstName": "SQL join at responsen",
-  "lastName": "SQL join at response",
-  "title": "SQL join at response"
+  // "timestampStatusChange": "string",
+  // "timestampCreated": "string",
+  // "organization": "SQL join at response",
+  // "firstName": "SQL join at responsen",
+  // "lastName": "SQL join at response",
+  // "title": "SQL join at response"
 };
 
 export const putResponsesId = {
@@ -485,10 +485,10 @@ export const putResponsesIdRes = {
   "userId": 0,
   "notes": "free-form text",
   "responseStatus": "offered || accepted || deleted || denied",
-  "timestampStatusChange": "string",
-  "timestampCreated": "string",
-  "organization": "SQL join at response",
-  "firstName": "SQL join at response",
-  "lastName": "SQL join at response",
-  "title": "SQL join at response"
+  // "timestampStatusChange": "string",
+  // "timestampCreated": "string",
+  // "organization": "SQL join at response",
+  // "firstName": "SQL join at response",
+  // "lastName": "SQL join at response",
+  // "title": "SQL join at response"
 };

@@ -40,7 +40,7 @@ export class OpportunityResponse extends Component {
     const id = opportunity.id;
     const isInFocus = this.props.display.opportunityId === id ? true : false;
 
-    let hasResponded = false;
+    let hasResponded = user.responses[id] ? true : false ;
     const isMyOpportunity = opportunity.userId === user.id ? true : false;
 
     let initialValues = opportunity;
@@ -52,12 +52,13 @@ export class OpportunityResponse extends Component {
     }
 
     const noteLabel = 'note';
-    const buttonLabel = hasResponded ? `You're signed up!` : 'Signup';
-    const submitLabel = hasResponded ? `Confirm change` : 'Confirm';
-    const positiveLabel = isMyOpportunity ? 'accept' : `I'm going!`;
-    const positiveAction = isMyOpportunity ? 'accepted' : 'offered';
-    const negativeLabel = isMyOpportunity ? 'decline' : `Sorry, I can't make it`;
-    const negativeAction = isMyOpportunity ? 'denied' : 'deleted';
+    const noteValue =      hasResponded    ? user.responses[id]  : '' ;
+    const buttonLabel =    hasResponded    ? `You're signed up!` : 'Signup';
+    const submitLabel =    hasResponded    ? `Confirm change`    : 'Confirm';
+    const positiveLabel =  isMyOpportunity ? 'accept'            : `I'm going!`;
+    const positiveAction = isMyOpportunity ? 'accepted'          : 'offered';
+    const negativeLabel =  isMyOpportunity ? 'decline'           : `Sorry, I can't make it`;
+    const negativeAction = isMyOpportunity ? 'denied'            : 'deleted';
 
     const notesField = <div>
       <Field
@@ -65,7 +66,7 @@ export class OpportunityResponse extends Component {
         id='notes'
         component='input'
         type='text'
-        initialValues={'initialValues.note'}
+        value={noteValue}
         className='inputField' />
       <label
         className='inputLabel'
@@ -165,5 +166,5 @@ export const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
-  reduxForm({ form: 'response', enableReinitialize: true, initialValues: { notes: 'test' } })
+  reduxForm({ form: 'response', enableReinitialize: true })
 )(OpportunityResponse);

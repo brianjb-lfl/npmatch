@@ -36,7 +36,7 @@ export const reducer = (state = initialState, action) => {
     return {...state, user: {} };
   }
   if (action.type === actions.LOAD_RESPONSE) {
-    const newResponses = {...state.responses, [action.response.id]: action.response};
+    const newResponses = {...state.responses, [action.response.idOpportunity]: action.response};
     return {...state, responses: newResponses };
   }
 

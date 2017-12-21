@@ -293,10 +293,10 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     body: JSON.stringify(response),
     headers
   };
-
+  console.log('init')
   if (init.method === 'GET') { } 
-  else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, init.body) } 
-  else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, init.body) }
+  else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, response) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, response) }
   
   return fetch(url, init)
   .then(res=>{ 
@@ -308,7 +308,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     return res.json();
   }) 
   .then(returnedResponse => { 
-
+    console.log('response', returnedResponse);
     if (init.method === 'GET') { } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postResponsesRes, returnedResponse) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesIdRes, returnedResponse) }
