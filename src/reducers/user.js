@@ -32,6 +32,9 @@ export const reducer = (state = initialState, action) => {
     };
   }
 
+  if (action.type === actions.LOGOUT) {
+    return {...state, user: {} };
+  }
   if (action.type === actions.LOAD_RESPONSE) {
     const newResponses = {...state.responses, [action.response.id]: action.response};
     return {...state, responses: newResponses };

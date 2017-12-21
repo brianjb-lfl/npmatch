@@ -34,6 +34,11 @@ export const loadUser = user => ({
   responses: user.responses,
 });
 
+export const LOGOUT = 'LOGOUT';
+export const logout = () => ({
+  type: LOGOUT,
+});
+
 export const LOAD_RESPONSE = 'LOAD_RESPONSE';
 export const loadResponse = response => ({
   type: LOAD_RESPONSE,
