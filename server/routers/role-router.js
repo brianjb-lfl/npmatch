@@ -31,9 +31,12 @@ roleRouter.post('/', jsonParser, (req, res) => {
   rolePostObj = epHelp.convertCase(req.body, 'ccToSnake');
   return knex('roles')
     .insert(rolePostObj)
-    .returning (['id', 'id_user_adding as idUserAdding', 'id_user_receiving as idUserReceiving', 'capabilities'])
+    .returning ([
+      'id',
+      'id_user_adding as idUserAdding',
+      'id_user_receiving as idUserReceiving',
+      'capabilities'])
     .then( results => {
-      console.log(results);
       res.json(results);
     })
     .catch( err => {
@@ -67,7 +70,6 @@ roleRouter.put('/:id', jsonParser, (req, res) => {
     .update(rolePostObj)
     .returning (['id', 'id_user_adding as idUserAdding', 'id_user_receiving as idUserReceiving', 'capabilities'])
     .then( results => {
-      console.log(results);
       res.json(results);
     })
     .catch( err => {

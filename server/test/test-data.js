@@ -116,6 +116,10 @@ testData.testIndOpp = {
   locationState: 'ks',
 };
 
+testData.testResponse = {
+  
+}
+
 testData.oppSeeds = [
   {
     opportunity_type: 'goods',

@@ -1,6 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
+import { mapStateToProps } from './opportunity-preview';
 import { OpportunityPreview } from './opportunity-preview';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
@@ -47,48 +51,33 @@ describe('Opportunity Preview component display functionality', () => {
     expect(wrapper.find('.timeframe').text()).toEqual('Time2');
     expect(wrapper.find('.description').text()).toEqual('Shrinking consciousness');
   });
-  it('Should dispatch an actions when the component is clicked', () => {
 
-    const mockResponse = (status, statusText, response) => {
-      return new window.Response(response, {
-        status: status,
-        statusText: statusText,
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-    };
-
-    const expectedResponse = 'whatever you want back';
-
-    window.fetch = jest.fn().mockImplementation(() =>
-    Promise.resolve(mockResponse(200, null, JSON.stringify(expectedResponse))));
-
-    const spy = jest.fn(()=>Promis.resolve());
+  it.skip('Should dispatch an actions when the component is clicked', () => {
+    const spy = jest.fn(async () => Promise.resolve({}));
     const historySpy = jest.fn();
-    const user = { authToken: '000' };
-    const wrapper = shallow(<OpportunityPreview
-      opportunity={opportunity}
-      dispatch={store.dispatch}
-      user={user}
-      match={{url: '/profiles/3'}}
-      history={{push: historySpy}}
-    />);
-    const theButton = wrapper.first().shallow().first().shallow().find('.buttonClass');
-    console.log('theButton',JSON.stringify(theButton));
-    return new Promise((resolve, reject) => {
-      console.log('inside promise')
-      return theButton.simulate('click')
-    }) 
-    .then(()=>{
-      const expectedActions = store.getActions();
-      console.log('expectedActions',expectedActions)
-      expect(expectedActions.length).toBe(3);
-      expect(expectedActions).toContainEqual(
-        {type: actionsDisplay.CHANGE_DISPLAY, view: 'loading'},
-        {type: actionsDisplay.CHANGE_DISPLAY, view: 'editOpportunity'},
-        {type: actionsOpportunity.LOAD_OPPORTUNITY, expectedResponse }
-      )
-    });
+    const wrapper = shallow(<MemoryRouter initialEntries={['/profiles/3']} initialIndex={0}>
+      <OpportunityPreview
+        opportunity={opportunity}
+        dispatch={spy}
+        user={{ authToken: 12345 }}
+        match={{ url: '/profiles/3' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.first().shallow().first().shallow().find('.editOpportunityButton').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+  });
+  it('Should map state to props', () => {
+    const initialState = {
+      display: 'homePage',
+      user: { id: 1 }
+    };
+    const expectedProps = { 
+      display: 'homePage',
+      user: { id: 1 }
+    };
+    const mockState = mapStateToProps(initialState);
+    expect(mockState).toEqual(expectedProps);
+
   });
 });

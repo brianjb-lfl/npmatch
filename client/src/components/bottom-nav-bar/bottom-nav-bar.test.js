@@ -75,7 +75,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     const expectedProps = { display: 'homePage' };
     const mockState = mapStateToProps(initialState);
     expect(mockState).toEqual(expectedProps);
-  })
+  });
   it('Should dispatch actions when clicking Organizations', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
@@ -111,7 +111,7 @@ describe('Bottom Nav Bar component display functionality', () => {
   it('Should dispatch actions when clicking Login', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
-    const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
       <BottomNavBar
         display='landingPage'
         dispatch={spy}
@@ -127,7 +127,7 @@ describe('Bottom Nav Bar component display functionality', () => {
   it('Should dispatch actions when clicking Sign Up', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
-    const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
+    const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
       <BottomNavBar
         display='landingPage'
         dispatch={spy}

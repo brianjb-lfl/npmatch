@@ -38,4 +38,12 @@ testF.getFocusOrg = function() {
     });
 };
 
+testF.getTestRole = function(inUsrArr) {
+  return {
+    idUserAdding: inUsrArr[0].id,
+    idUserReceiving: inUsrArr[1].id,
+    capabilities: 'following'
+  };
+};
+
 module.exports = { testF };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 
 import { mapStateToProps } from './top-nav-bar';
 import { TopNavBar } from './top-nav-bar';
@@ -31,6 +32,38 @@ describe('Top Nav Bar component display functionality', () => {
     expect(wrapper.find('.editProfileButton').exists()).toEqual(false);
     expect(wrapper.find('.settingsButton').exists()).toEqual(false);
   })
+  it.skip('Should dispatch actions when clicking the opportunities button', () => {
+    const spy = jest.fn(async () => Promise.resolve({}));
+    const historySpy = jest.fn();
+    const wrapper = shallow(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <TopNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345, id: 1 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.first().shallow().first().shallow().find('.opportunitiesButton i').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+    // expect(historySpy.mock.calls.length).toEqual(1);
+  });
+  it('Should dispatch actions when clicking the edit profile button', () => {
+    const spy = jest.fn(async () => Promise.resolve({}));
+    const historySpy = jest.fn();
+    const wrapper = shallow(<MemoryRouter initialEntries={['/']} initialIndex={0}>
+      <TopNavBar
+        display='homePage'
+        dispatch={spy}
+        user={{ authToken: 12345, id: 1 }}
+        match={{ url: '/' }}
+        history={{ push: historySpy }}
+      />
+    </MemoryRouter>);
+    expect(wrapper.first().shallow().first().shallow().find('.editProfileButton i').simulate('click'));
+    expect(spy.mock.calls.length).toEqual(1);
+    expect(historySpy.mock.calls.length).toEqual(1);
+  });
   it('Should map state to props', () => {
     const initialState = {
       user: {
