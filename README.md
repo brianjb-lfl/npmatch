@@ -43,16 +43,17 @@ list all
 
 Refer to API documentation...
 
+```
 Two primary tables
   user                the user who is logged in
     links             join tables...
     causes
     skills
-    adminOf
-    admins
-    following
-    opportunities
-    responses
+    adminOf           hashmap format (key is id of organization)
+    admins            hashmap format (key is id of organization)
+    following         hashmap format (key is id of organization)
+    opportunities     hashmap format (key is id of organization)
+    responses         hashmap format (key is id of opportunity)
   
   userViewed          a single user that is in focus; same structure as user
   
@@ -65,14 +66,15 @@ Two primary tables
   opportunitiesList   lists of opportunities; used anytime a list is needed
     main              main list of opportunities (additional lists may be added via additional keys)
   
-  display
-    view
-    modal
-    modalMessage
-    userId
-    opportunityId
+  display             used for general display variables; NOT for overall navigation
+    view              variables related to current view settings
+    latestResponse    id of latest response (used as temporary container after response is created or edited)
+    modal             boolean: modal showing or hidden
+    modalMessage      message in modal; used to relay error messages to user
+    userId            id of user who is in focus (used to create reliable way to find this id)
+    opportunityId     id of opportunity in focus (used to create reliable way to find this id)
   
-  general
+  general             non-variable items; used for static value lists
     causes
     skills
     offerTypes
@@ -80,3 +82,4 @@ Two primary tables
     linkTypes
     states
     countries
+```
