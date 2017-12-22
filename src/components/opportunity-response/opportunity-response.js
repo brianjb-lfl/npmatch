@@ -75,7 +75,7 @@ export class OpportunityResponse extends Component {
       <Field
         name='notes'
         id='notes'
-        component='input'
+        component='textarea'
         type='text'
         value={this.response.notes}
         className='inputField' />
