@@ -1,4 +1,5 @@
 export const compareObjects = (expected, received) => {
+  // console.log('expected at compare',expected);
   // console.log('received at compare',received);
   let message = [];
 
@@ -53,14 +54,13 @@ export const compareObjects = (expected, received) => {
   compare(expected, received);
 
   if (message.length > 0) {
-    console.log(message);
-    console.log(message.length);
-    console.log('');
-    console.log('expected');
-    console.log(expected);
-    console.log('received');
-    console.log(received);
-    console.log('');
+    console.log('***', message);
+    console.log('***');
+    console.log('*** expected');
+    console.log('***', expected);
+    console.log('*** received');
+    console.log('***', received);
+    console.log('************');
     return message;
   } 
   message = 'A-OK!' ;
@@ -229,10 +229,10 @@ export const getUsersIdRes = {
       "responseStatus": "offered || accepted || deleted || denied",
       "timestampStatusChange": "string",
       "timestampCreated": "string",
-      "organization": "copy from state at creation",
-      "firstName": "copy from state at creation",
-      "lastName": "copy from state at creation",
-      "title": "copy from state at creation"
+      "organization": "SQL join",
+      "firstName": "SQL join",
+      "lastName": "SQL join",
+      "title": "SQL join"
     }
   ]
 };

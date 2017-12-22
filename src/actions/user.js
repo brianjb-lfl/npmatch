@@ -136,8 +136,9 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    // console.log('user returned', user)
+    console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
+    else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
 
@@ -256,26 +257,7 @@ export const manageLinks = (user, link, index, action) => dispatch => {
 
 export const createOrEditResponse = (origResponse, authToken, isNew = true) => dispatch => {
   const response = {...origResponse};
-  // console.log('origResponse in createOrEditResponse', origResponse)
-  // console.log('response in createOrEditResponse', response)
-  /* response = {
-    id: 0 // only is isNew !== true
-    responseStatus: 'offered' || 'accepted' || 'denied' || 'deleted' // only if isNew !== true
-    idOpportunity: 0,
-    idUser: 0,
-    title: 'title of opportunity, read from state at time of click'
-    notes: 
-  } */
-  // console.log('response',response, authToken, isNew)
 
-  // dispatch(actionsDisplay.changeDisplay('loading'));
-
-  // let action = 'edit' // action is used by reducer after response from server
-  // if (isNew) {
-  //   action = 'add';
-  // } else if (response.responseStatus === 'deleted') {
-  //   action = 'delete';
-  // }
   const loadTo = ( isNew || 
     response.responseStatus === 'offered' || 
     response.responseStatus === 'deleted' ) ? 'user' : 'opportunity' ;
@@ -287,13 +269,12 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
-  // console.log('response transmitted', response)
   const init = { 
     method,
     body: JSON.stringify(response),
     headers
   };
-  console.log('init')
+  // console.log('init')
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, response) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, response) }
@@ -308,11 +289,14 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     return res.json();
   }) 
   .then(returnedResponse => { 
-    console.log('response', returnedResponse);
+    // console.log('response', returnedResponse);
     if (init.method === 'GET') { } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postResponsesRes, returnedResponse) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesIdRes, returnedResponse) }
 
+    if (init.method === 'POST') {
+      dispatch(actionsDisplay.saveLatestResponse(returnedResponse.id))
+    }
     if ( loadTo === 'user') {
       return dispatch(loadResponse(returnedResponse));
     } else {

@@ -29,9 +29,9 @@ export const setFormStatus = formStatus => ({
   formStatus
 });
 
-export const GET_DATE_TIME = 'GET_DATE-TIME';
-export const getDateTime = dateTime => ({
-  type: GET_DATE_TIME,
-  dateTime
+export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE-TIME';
+export const saveLatestResponse = id => ({
+  type: SAVE_LATEST_RESPONSE,
+  latestResponse: id
 });
 

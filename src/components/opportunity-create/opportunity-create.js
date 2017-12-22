@@ -12,7 +12,6 @@ import CausesFields from '../fields/causes';
 import StartEndFields from '../fields/start-end';
 
 import './opportunity-create.css'
-import { getAdminInitializeRes } from '../../actions/api-response-checks';
 
 export class OpportunityCreate extends Component {
 
@@ -23,13 +22,6 @@ export class OpportunityCreate extends Component {
   }
 
   handleSubmitButton(input, isNew) {
-    // console.log('raw input from redux form',input)
-  //   const startDate = input.timestampStart;
-  //   console.log(startDate instanceof Date)
-  //   console.log(typeof startDate, startDate)
-  // console.log(timeStamp);
-  //   console.log(typeof startDate.toGMTString(),startDate.toGMTString())
-  //   // console.log(startDate instanceof Moment)
     const opp = {...input};
     opp.timestampStart = this.convertToTimeStamp(opp.timestampStart)
     opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd)

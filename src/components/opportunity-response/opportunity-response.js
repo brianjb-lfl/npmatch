@@ -8,57 +8,68 @@ import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
 
 export class OpportunityResponse extends Component {
+  constructor(props) {
+    super(props);
+    this.oppId = this.props.opportunity.id;
+    this.hasResponded = this.props.user.responses[this.oppId] ? true : false ;
+    this.response = this.hasResponded ? {
+        id: this.props.user.responses[this.oppId].id,
+        idOpportunity: this.oppId,
+        userId: this.props.user.id,
+        notes: this.props.user.responses[this.oppId].notes,
+        responseStatus: this.props.user.responses[this.oppId].responseStatus
+       } : {
+        idOpportunity: this.oppId,
+        userId: this.props.user.id,
+        notes: '',
+        responseStatus: 'offered'
+       }
+    this.isMyOpportunity = this.props.opportunity.userId === this.props.user.id ? true : false;
+  };
 
   addResponse(formValues) {
-    const response = {
-      idOpportunity: this.props.opportunity.id,
-      userId: this.props.user.id,
-      notes: formValues.notes,
-    }
-    this.props.dispatch(actionsUser.createOrEditResponse(response, this.props.user.authToken, true))
-      .then(() => this.props.dispatch(actionsDisplay.toggleOpportunity(null)));
+    this.response = {...this.response, notes: formValues.notes };
+    this.props.dispatch(actionsUser.createOrEditResponse(this.response, this.props.user.authToken, true))
+      .then(() => {
+        this.props.dispatch(actionsDisplay.toggleOpportunity(null))
+        this.response.id = this.props.display.latestResponse;
+      });
   }
 
   editResponse(formValues, status) {
-    this.props.dispatch(actionsUser.createOrEditResponse(formValues, this.props.user.authToken, false))
+    this.response = {...this.response, notes: formValues.notes, responseStatus: formValues.status};
+    console.log('response in method', this.response);
+    this.props.dispatch(actionsUser.createOrEditResponse(this.response, this.props.user.authToken, false))
       .then(() => this.props.dispatch(actionsDisplay.toggleOpportunity(null)));
   }
 
   handleFormStatusChange(formStatus) {
     this.props.dispatch(actionsDisplay.setFormStatus(formStatus));
+    // this.isInFocus = this.props.display.opportunityId === this.oppId ? true : false;
   }
 
   toggleOpportunity(id, formStatus) {
     this.props.dispatch(actionsDisplay.toggleOpportunity(id));
-    this.props.dispatch(actionsDisplay.setFormStatus(formStatus))
+    this.props.dispatch(actionsDisplay.setFormStatus(formStatus)); // 'positive' or 'negative'
   }
 
   render() {
-    // calculate whether user has responded
-    const user = this.props.user;
-    const opportunity = this.props.opportunity;
-    const id = opportunity.id;
-    const isInFocus = this.props.display.opportunityId === id ? true : false;
-
-    let hasResponded = user.responses[id] ? true : false ;
-    const isMyOpportunity = opportunity.userId === user.id ? true : false;
-
-    let initialValues = opportunity;
-    if (typeof user.responses === 'object') {
-      if (typeof user.responses[id] === 'object') {
-        hasResponded = true;
-        initialValues.note = user.responses[id].note;
-      }
-    }
+    const isInFocus = this.props.display.opportunityId === this.oppId ? true : false;
+    const hasResponded = this.props.user.responses[this.oppId] ? true : false ;
+    // console.log('id', this.oppId, 'hasres', this.hasResponded, 'focus', isInFocus, 'mine', this.isMyOpportunity)
 
     const noteLabel = 'note';
-    const noteValue =      hasResponded    ? user.responses[id]  : '' ;
-    const buttonLabel =    hasResponded    ? `You're signed up!` : 'Signup';
-    const submitLabel =    hasResponded    ? `Confirm change`    : 'Confirm';
-    const positiveLabel =  isMyOpportunity ? 'accept'            : `I'm going!`;
-    const positiveAction = isMyOpportunity ? 'accepted'          : 'offered';
-    const negativeLabel =  isMyOpportunity ? 'decline'           : `Sorry, I can't make it`;
-    const negativeAction = isMyOpportunity ? 'denied'            : 'deleted';
+    let buttonLabel = 'Signup';
+    if (hasResponded && !this.isMyOpportunity) {
+      buttonLabel =  `You're signed up!`;
+    } else if (this.isMyOpportunity) {
+      buttonLabel = 'This is your project!';
+    }
+    const submitLabel =    hasResponded         ? `Confirm change`    : 'Confirm';
+    const positiveLabel =  this.isMyOpportunity ? 'accept'            : `I'm going!`;
+    const positiveAction = this.isMyOpportunity ? 'accepted'          : 'offered';
+    const negativeLabel =  this.isMyOpportunity ? 'decline'           : `Sorry, I can't make it`;
+    const negativeAction = this.isMyOpportunity ? 'denied'            : 'deleted';
 
     const notesField = <div>
       <Field
@@ -66,7 +77,7 @@ export class OpportunityResponse extends Component {
         id='notes'
         component='input'
         type='text'
-        value={noteValue}
+        value={this.response.notes}
         className='inputField' />
       <label
         className='inputLabel'
@@ -114,7 +125,13 @@ export class OpportunityResponse extends Component {
       >{negativeLabel}</label>
     </div>;
 
+    const formHeader = <div>
+      <p>My opportunity: {this.isMyOpportunity.toString()} I have responded: {hasResponded.toString()}</p>
+      <p>My responses: {JSON.stringify(this.response)} isInFocus : {isInFocus.toString()}</p>
+    </div>
+
     const signUpForm = <div>
+      {formHeader}
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))}
       >
@@ -128,6 +145,7 @@ export class OpportunityResponse extends Component {
     </div>
 
     const editForm = <div>
+      {formHeader}
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues, positiveAction))}
       >
@@ -143,7 +161,9 @@ export class OpportunityResponse extends Component {
     </div>
 
     let theForm;
-    if (isInFocus && !hasResponded) {
+    if (isInFocus && this.isMyOpportunity) {
+      theForm = editForm;
+    } else if (isInFocus && !hasResponded) {
       theForm = signUpForm;
     } else if (isInFocus) {
       theForm = editForm;
@@ -151,13 +171,16 @@ export class OpportunityResponse extends Component {
 
     return (
       <div className='opportunityResponseBox'>
-        <button className='responseButton' onClick={() => this.toggleOpportunity(opportunity.id, initialValues.responseStatus)}>{buttonLabel}</button>
+        <button 
+          className='responseButton' 
+          onClick={() => this.toggleOpportunity(this.oppId, this.response.responseStatus)}>
+          {buttonLabel}
+        </button>
         {theForm}
       </div>
     );
   }
 }
-
 
 export const mapStateToProps = state => ({
   user: state.user,
