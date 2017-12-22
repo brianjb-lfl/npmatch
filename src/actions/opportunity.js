@@ -112,6 +112,8 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
   // console.log('end toGMTString', typeof formatted, formatted);
 
   if (isNew) delete opportunity.id;
+  // DELETE WHEN DB ACCEPTS LOGO
+  delete opportunity.logo;
   const params = isNew ? '' : `/${opportunity.id}` ;
   const method = isNew ? 'POST' : 'PUT' ;
 

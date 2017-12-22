@@ -299,6 +299,7 @@ export const getOpportunitiesListRes = [
     "opportunityType": "string",
     "offer": true,
     "title": "string",
+    // "logo": "http://mylogo.com",
     "narrative": "string",
     "timestampStart": "string",
     "timestampEnd": "string",
@@ -317,6 +318,7 @@ export const postOpportunities = {
   "opportunityType": "string",
   "offer": true,
   "title": "string",
+  // "logo":"http://mylogo.com"
   "narrative": "string",
   "timestampStart": "string",
   "timestampEnd": "string",
@@ -336,6 +338,7 @@ export const postOpportunitiesRes = {
   "opportunityType": "string",
   "offer": true,
   "title": "string",
+  // "logo":"http://mylogo.com"
   "narrative": "string",
   "timestampStart": "string",
   "timestampEnd": "string",
@@ -355,6 +358,7 @@ export const getOpportunitiesIdRes = {
   "opportunityType": "string",
   "offer": true,
   "title": "string",
+  // "logo":"http://mylogo.com"
   "narrative": "string",
   "timestampStart": "string",
   "timestampEnd": "string",
@@ -388,7 +392,7 @@ export const putOpportunitiesId = {
   "opportunityType": "string",
   "offer": true,
   "title": "string",
-  "logo": "string",
+  // "logo":"http://mylogo.com"
   "narrative": "string",
   "timestampStart": "string",
   "timestampEnd": "string",
@@ -408,7 +412,7 @@ export const putOpportunitiesIdRes = {
   "organization": "string",
   "offer": true,
   "title": "string",
-  "logo": "string",
+  // "logo": "string",
   "narrative": "string",
   "timestampStart": "string",
   "timestampEnd": "string",
@@ -419,9 +423,6 @@ export const putOpportunitiesIdRes = {
   "causes": [
     "string"
   ],
-  "skills": [
-    "string"
-  ]
 };
 
 export const postRoles = {
