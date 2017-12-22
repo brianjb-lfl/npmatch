@@ -7,3 +7,7 @@
 .userProfile p {
   text-align: left;
 }
+
+.logo {
+  max-height: 100px;
+}

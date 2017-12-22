@@ -77,6 +77,7 @@ export class OpportunityResponse extends Component {
         id='notes'
         component='textarea'
         type='text'
+        placeholder='...send a note to the host'
         value={this.response.notes}
         className='inputField' />
       <label
@@ -125,13 +126,12 @@ export class OpportunityResponse extends Component {
       >{negativeLabel}</label>
     </div>;
 
-    const formHeader = <div>
-      <p>My opportunity: {this.isMyOpportunity.toString()} I have responded: {hasResponded.toString()}</p>
-      <p>My responses: {JSON.stringify(this.response)} isInFocus : {isInFocus.toString()}</p>
-    </div>
+    // const formHeader = <div>
+    //   <p>My opportunity: {this.isMyOpportunity.toString()} I have responded: {hasResponded.toString()}</p>
+    //   <p>My responses: {JSON.stringify(this.response)} isInFocus : {isInFocus.toString()}</p>
+    // </div>
 
     const signUpForm = <div>
-      {formHeader}
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))}
       >
@@ -145,7 +145,6 @@ export class OpportunityResponse extends Component {
     </div>
 
     const editForm = <div>
-      {formHeader}
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues, positiveAction))}
       >

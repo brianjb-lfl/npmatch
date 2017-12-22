@@ -18,13 +18,16 @@ export class OpportunityCreate extends Component {
   convertToTimeStamp(timeStamp) {
     // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
     // is desired format "2017-12-21T16:26:48-05:00"
-    return `${timeStamp.getFullYear()}-${timeStamp.getMonth()}-${timeStamp.getDate()}T${timeStamp.getHours()}:${timeStamp.getMinutes()}:${timeStamp.getSeconds()}-05:00`;
+    if (timeStamp instanceof Date ) {
+      return `${timeStamp.getFullYear()}-${timeStamp.getMonth()}-${timeStamp.getDate()}T${timeStamp.getHours()}:${timeStamp.getMinutes()}:${timeStamp.getSeconds()}-05:00`;
+    }
+    return '';
   }
 
   handleSubmitButton(input, isNew) {
     const opp = {...input};
-    opp.timestampStart = this.convertToTimeStamp(opp.timestampStart)
-    opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd)
+    opp.timestampStart = this.convertToTimeStamp(opp.timestampStart);
+    opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
     // console.log('opp to submit', opp)
 

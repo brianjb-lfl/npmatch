@@ -12,22 +12,29 @@ export class ExplorePage extends Component {
   render() {
     let previews;
     let title;
+
     if (this.props.match.url === '/organizations') {
-      previews = this.props.usersList.map((user, key) => (
-        <Link to={`/profiles/${user.id}`} key={key}>
-          <DetailedOrganizationPreview user={user} />
-        </Link>
-      )
-      )
-      title = 'Explore Organizations'
-    }
-    else {
-      previews = this.props.usersList.map((user, key) => (
-        <Link to={`/profiles/${user.id}`} key={key}>
-          <DetailedContributorPreview user={user} />
-        </Link>
-      )
-      )
+      previews = Array.isArray(this.props.usersList) ?
+        this.props.usersList.map((user, key) => {
+        if (user.userType === 'organization') {
+          return <Link to={`/profiles/${user.id}`} key={key} >
+          <DetailedOrganizationPreview user={user} /> 
+        </Link> } else {
+          return;
+        }
+      }) : '' ;
+      title = 'Explore Organizations' 
+
+    } else {
+      previews = Array.isArray(this.props.usersList) ?
+        this.props.usersList.map((user, key) => {
+        if (user.userType === 'individual') {
+          return <Link to={`/profiles/${user.id}`} key={key} >
+          <DetailedContributorPreview user={user} /> 
+        </Link> } else {
+          return;
+        }
+      }) : '' ;
       title = 'Explore Contributors'
     }
 

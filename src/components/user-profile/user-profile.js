@@ -18,15 +18,21 @@ export class UserProfile extends Component {
       }
     }
 
+    const links = user.links.map((link,index)=>{
+      return <a href={link.linkUrl} key={index} target={'_blank'}>
+        <i className="fa fa-globe" aria-hidden="true"></i>
+        </a>
+    })
+
     return (
       <main>
         <div className='userProfile'>
-          <img src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
+          <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
           <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
           <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
           <p className='bio'>{user.bio}</p>
           <p className='availability'>{user.availability}</p>
-          <p className='links'>{user.links.join(', ')}</p>
+          {links}
           <p className='causes'>{user.causes.join(', ')}</p>
           <p className='skills'>{user.skills.join(', ')}</p>
         </div>

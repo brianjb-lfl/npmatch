@@ -13,12 +13,15 @@ export class LandingPage extends Component {
   }
 
   render() {
-    let previews = typeof this.props.usersList !== 'object' ? '' : this.props.usersList.map((user, key) => (
-      <Link to={`/profiles/${user.id}`} key={key} >
+    let previews = Array.isArray(this.props.usersList) ?
+      this.props.usersList.map((user, key) => {
+      if (user.userType === 'organization') {
+        return <Link to={`/profiles/${user.id}`} key={key} >
         <OrganizationPreview user={user} /> 
-      </Link>
-    )
-    );
+      </Link> } else {
+        return;
+      }
+      }) : '' ;
 
     return (
       <div className='landingPage'>

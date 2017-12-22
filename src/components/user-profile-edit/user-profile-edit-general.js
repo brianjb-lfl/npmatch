@@ -35,7 +35,7 @@ export class UserEditGeneralForm extends Component {
 
     return (
       <form className='userProfile'
-        onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
+        onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))}
       >
 
         {nameForm}

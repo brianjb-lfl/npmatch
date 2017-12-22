@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { Field, reduxForm } from 'redux-form';
+
 import './top-nav-bar.css'
 import * as actionsOpportunitiesList from '../../actions/opportunities-list';
 import * as actionsDisplay from '../../actions/display';
@@ -10,6 +13,15 @@ export class TopNavBar extends Component {
     // console.log('list opps query', query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
       .then(() => this.props.history.push('/myopportunities'))
+  }
+
+  queryOpportunities(query) {
+    console.log('list opps query', query)
+    this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
+      .then(() => {
+        this.props.history.push('/myopportunities')
+        this.props.reset();
+      })
   }
 
   editProfile() {
@@ -30,9 +42,15 @@ export class TopNavBar extends Component {
               onClick={() => this.listOpportunities({ userId: this.props.user.id })}></i>
           </li>
           <li className='searchBar'>
-            <form className="search">
+            <form className="search" onSubmit={this.props.handleSubmit(values =>this.queryOpportunities(values))}>
               <label htmlFor="userinput"></label>
-              <input type="text" className="userinput"></input>
+              <Field
+                className="userinput"
+                type="text"
+                component="input"
+                id="userinput"
+                name="title"
+              />
               <button type="submit" className="submit-button">
                 <i className="fa fa-search" aria-hidden="true"></i>
               </button>
@@ -73,4 +91,7 @@ export const mapStateToProps = state => ({
   display: state.display.view,
   user: state.user
 })
-export default connect(mapStateToProps)(TopNavBar);
+export default compose(
+  connect(mapStateToProps),
+  reduxForm({form:'searchOpps'}),
+)(TopNavBar);

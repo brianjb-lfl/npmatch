@@ -16,10 +16,16 @@ export class OrganizationPreview extends Component {
   // also available: locationCity, locationState, links, causes
 
   render() {
+
     return (
       <div className='organizationPreview' onClick={() => this.handleClick(this.props.user.id)}>
-        <img className='logo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        <h3 className='organization'>{this.props.user.organization}</h3>
-        <p className='bio'>{this.props.user.bio}</p>
+        <img className='logo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        
+        <div className='organizationText'>
+          <h3 className='organization'>{this.props.user.organization}</h3>
+          <p className='bio'>{this.props.user.bio}</p>
+          <p className='bio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
+          <p className='bio'>{this.props.user.causes.join(', ')}</p>
+        </div>
       </div>
     )
   }

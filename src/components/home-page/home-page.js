@@ -9,12 +9,15 @@ import './home-page.css';
 
 export class HomePage extends Component {
   render() {
-    let previews = typeof this.props.usersList !== 'object' ? '' : this.props.usersList.map((user, key) => (
-      <Link to={`/profiles/${user.id}`} key={key} >
-        <OrganizationPreview user={user} />
-      </Link>
-        )
-      );
+    let previews = Array.isArray(this.props.usersList) ?
+      this.props.usersList.map((user, key) => {
+      if (user.userType === 'organization') {
+        return <Link to={`/profiles/${user.id}`} key={key} >
+        <OrganizationPreview user={user} /> 
+      </Link> } else {
+        return;
+      }
+      }) : '' ;
 
     return (
       <div className='homePage'>
