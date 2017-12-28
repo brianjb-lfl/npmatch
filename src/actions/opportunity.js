@@ -84,33 +84,6 @@ export const createOpportunity = (opportunity, authToken, isNew) => dispatch => 
   
   dispatch(actionsDisplay.changeDisplay('loading'));
 
-  // conform data format
-  if (typeof opportunity.offer === 'string') {
-    if ( opportunity.offer.substring(0,5) === 'offer' ) {
-      opportunity.offer = true;
-    } else {
-      opportunity.offer = false;
-    }  
-  }
-  // if ( typeof opportunity.locationState === 'object' ) {
-  //   opportunity.locationState = opportunity.locationState.abbreviation;
-  // } 
-  // if ( typeof opportunity.locationCountry === 'object' ) {
-  //   opportunity.locationCountry = opportunity.locationCountry.code;
-  // } 
-  // if ( typeof opportunity.timestampStart === 'object' ) {
-    // opportunity.timestampStart = new Date(); // "2017-12-07T18:53:52.960Z";
-  // } 
-  // if ( typeof opportunity.timestampEnd === 'object' ) {
-    // opportunity.timestampEnd = new Date();
-  // } 
-  // console.log('start', typeof opportunity.timestampStart, opportunity.timestampStart);
-  // console.log('end', typeof opportunity.timestampEnd, opportunity.timestampEnd);
-  // const tryThis = opportunity.timestampEnd.toDate();
-  // console.log('toDate', typeof tryThis, tryThis);
-  // const formatted = tryThis.toGMTString();
-  // console.log('end toGMTString', typeof formatted, formatted);
-
   if (isNew) delete opportunity.id;
   // DELETE WHEN DB ACCEPTS LOGO
   delete opportunity.logo;

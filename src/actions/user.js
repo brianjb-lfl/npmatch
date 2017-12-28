@@ -34,6 +34,32 @@ export const loadUser = user => ({
   responses: user.responses,
 });
 
+export const UPDATE_USER = 'UPDATE_USER';
+export const updateUser = user => ({
+  type: UPDATE_USER,
+  id: user.id,
+  username: user.username,
+  userType: user.userType,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  organization: user.organization,
+  logo: user.logo,
+  locationCity: user.locationCity,
+  locationState: user.locationState,
+  locationCountry: user.locationCountry,
+  availability: user.availability,
+  bio: user.bio,
+  links: user.links, // array of objects
+  causes: user.causes,
+  skills: user.skills,
+});
+
+// export const UPDATE_USER_LINKS = 'UPDATE_USER_LINKS';
+// export const updateUserLinks = user => ({
+//   type: UPDATE_USER_LINKS,
+//   links: user.links, // array of objects
+// });
+
 export const LOGOUT = 'LOGOUT';
 export const logout = () => ({
   type: LOGOUT,
@@ -66,7 +92,6 @@ export const setFormType = formType => ({
 export const TOGGLE_EDIT_LINK = 'TOGGLE_EDIT_LINK';
 export const toggleEditLink = (index, edit = false, links) => {
   links[index].edit = edit;
-  // console.log('edited links', links)
   return {
     type: TOGGLE_EDIT_LINK,
     links,
@@ -84,8 +109,8 @@ export const stringArrayOfObjects=(array,key)=>{
 }
 
 export const arrayToObject=(array,key='id')=>{
-  const newObject = {};
   // input: [ {id:0}, {id:1} ]      output {0:{},1:{}}
+  const newObject = {};
   if (Array.isArray(array)) {
     array.forEach(item=>newObject[item[key]] = item);
     return newObject;
@@ -94,8 +119,8 @@ export const arrayToObject=(array,key='id')=>{
 }
 
 export const objectToArray=(object)=>{
-  const newArray = [];
   // input {0:{},1:{}}         output: [ {}, {} ]      
+  const newArray = [];
   if (typeof object === 'object' && !Array.isArray(object)) {
     for (let prop in object) {
       newArray.push(object[prop]);
@@ -106,8 +131,8 @@ export const objectToArray=(object)=>{
 }
 
 export const updateLinks = (links, link, index, action) => {
+  // updates a single link in an array
   const newLinks = [...links];
-  // console.log('links in manage links',newLinks)
   if ( action === 'edit') {
     newLinks[index] = link;
     newLinks[index].edit = false;
@@ -148,15 +173,26 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     if (callback.stateLocation === 'userViewed') {
       return dispatch(actionsUserViewed.loadUser(user));   
     } 
-    // console.log('returned user', user)
-    // user.causes = stringArrayOfObjects(user.causes,        'cause');
-    // user.skills = stringArrayOfObjects(user.skills,        'skill');
-    user.following     = arrayToObject(user.following,     'id');    // id of org being followed
-    user.admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
-    user.adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
-    user.opportunities = arrayToObject(user.opportunities, 'id');
-    user.responses     = arrayToObject(user.responses,     'idOpportunity');
-    return dispatch(loadUser(user));
+    if (callback.loadTo === 'loadUser') {
+      const following     = arrayToObject(user.following,     'id');    // id of org being followed
+      const admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
+      const adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
+      const opportunities = arrayToObject(user.opportunities, 'id');
+      const responses     = arrayToObject(user.responses,     'idOpportunity');
+      
+      const formattedUser = {...user, following, admins, adminOf, opportunities, responses}
+      return dispatch(loadUser(formattedUser));
+    }
+    // if (callback.loadTo === 'links') {
+    //   return dispatch(updateUserLinks(formattedUser));
+
+    // }
+    if (callback.loadTo === 'updateUser') {
+      return dispatch(updateUser(user));
+
+    }
+   return;
+
   })
   .catch(error => {
     // console.log('error',error);
@@ -166,7 +202,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
 
 // @@@@@@@@@@@@@@@ ASYNC HEADER/URL FORMATTING @@@@@@@@@@@@@@@@@
 
-export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch => {   // state location options = 'user' and 'userViewed'
+export const fetchUser = (userId, authToken, stateLocation = 'user', loadTo = 'updateUser') => dispatch => {   // state location options = 'user' and 'userViewed'
 
   dispatch(actionsDisplay.changeDisplay('loading'));
   
@@ -183,6 +219,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user') => dispatch
     isNew: false,
     stateLocation,
     originalUser: null,
+    loadTo,
   }
   return dispatch(userAPICall(url, init, null, callback));
 }
@@ -210,11 +247,12 @@ export const login = user => dispatch => {
     isNew: false,
     stateLocation: 'user',
     originalUser: null,
+    loadTo: 'loadUser',
   }
   // console.log(url, init, userObject, callback);
   return dispatch(userAPICall(url, init, userObject, callback));}
 
-export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => {
+export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'updateUser' ) => dispatch => {
   
   dispatch(actionsDisplay.changeDisplay('loading'));
   const originalUser = {username: user.username, password: user.password};
@@ -241,7 +279,8 @@ export const createOrEditUser = (user, authToken, isNew = true ) => dispatch => 
   const callback = {
     isNew,
     stateLocation: 'user',
-    originalUser
+    originalUser,
+    loadTo,
   }
   return dispatch(userAPICall(url, init, user, callback));}
 
@@ -250,7 +289,8 @@ export const manageLinks = (user, link, index, action) => dispatch => {
   const newLinks = updateLinks(user.links, link, index, action);
   const newUser = {...user, links: newLinks};
   const isNew = false; // user is not new
-  return dispatch(createOrEditUser(newUser, user.authToken, isNew))
+  const loadTo = 'updateUser';
+  return dispatch(createOrEditUser(newUser, user.authToken, isNew, loadTo))
 }
 
 // @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@

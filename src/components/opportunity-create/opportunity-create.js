@@ -14,6 +14,18 @@ import StartEndFields from '../fields/start-end';
 import './opportunity-create.css'
 
 export class OpportunityCreate extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      offer: props.opportunity.offer,
+    }
+  }
+
+  handleOfferTypeChange(value) {
+    this.setState({
+      offer: value,
+    })
+  }
 
   convertToTimeStamp(timeStamp) {
     // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
@@ -110,15 +122,45 @@ export class OpportunityCreate extends Component {
           <div>
             <label
               className='inputLabel'
-              htmlFor={'offer'}>Give or Receive
+              htmlFor={'offerTrue'}
+              style={{
+                backgroundColor: this.state.offer === true ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                color: this.state.offer === true ? 'white' : '#082E41'
+              }}
+            >Offer to contribute
             </label>
             <Field
               name='offer'
-              id='offer'
-              component={renderSelectList}
-              data={this.props.general.offerTypes}
+              id='offerTrue'
+              style={{ display: 'none', margin: 'auto' }}
+              component='input'
+              type='radio'
+              value={true}
               className='inputField'
-              required />
+              onChange={() => this.handleOfferTypeChange(true)}
+            />
+          </div>
+
+          <div>
+            <label
+              className='inputLabel'
+              htmlFor={'offerFalse'}
+              style={{
+                backgroundColor: this.state.offer === false ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                color: this.state.offer === false ? 'white' : '#082E41'
+              }}
+            >Request for volunteers
+            </label>
+            <Field
+              name='offer'
+              id='offerFalse'
+              style={{ display: 'none', margin: 'auto' }}
+              component='input'
+              type='radio'
+              value={false}
+              className='inputField'
+              onChange={() => this.handleOfferTypeChange(false)}
+            />
           </div>
 
           <LocationFields />

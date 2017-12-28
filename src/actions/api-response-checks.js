@@ -3,55 +3,66 @@ export const compareObjects = (expected, received) => {
   // console.log('received at compare',received);
   let message = [];
 
-  const compare = (expected, received) => {
+  const compare = (expected, received, levelCounter) => {
 
     if (Array.isArray(expected)) {
       if (Array.isArray(received)) {
         received.forEach((item,index)=>{
-          compare(expected[0], item, index);
+          compare(expected[0], item, levelCounter + 1);
         });
       } else {
         const typeReceived = typeof received;
-        message.push(`expected array at ${expected} but received ${typeReceived}`);
+        if (!(message.includes(feedback))) { message.push( feedback )};
+        let feedback = `expected array at ${expected} at level ${levelCounter} but received ${typeReceived}`;
       }
     } else if (typeof expected === 'object' && !Array.isArray(expected)) {
       if (typeof received === 'object' && !Array.isArray(received)) {
         for (let key in expected) {
           if (received.hasOwnProperty(key)) {
-            compare(expected[key], received[key], key);
+            compare(expected[key], received[key], levelCounter + 1);
           } else {
-            message.push( `expected key of ${key}`);
+            let feedback = `expected key of ${key} at level ${levelCounter}`
+            if (!(message.includes(feedback))) { message.push( feedback )};
           }
         }
       } else {
         const typeReceived = typeof received;
-        message.push(`expected object at ${expected[0]} but received ${typeReceived}`);
+        let feedback = `expected object at ${expected[0]} at level ${levelCounter} but received ${typeReceived}`;
+        if (!(message.includes(feedback))) { message.push( feedback )};
       }
     } else if (Array.isArray(received)) {
-      message.push(`received an array ${received[0]} where expecting a primitive data type`);
+      let feedback = `received an array ${received[0]} at level ${levelCounter} where expecting a primitive data type`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
     } else if (typeof received === 'object' && received !== null) {
-      message.push(`received an object ${received} where expecting a primitive data type`);
+      let feedback = `received an object ${received} at level ${levelCounter} where expecting a primitive data type`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
   
     } else if (typeof expected === 'number' && typeof received === 'string') {
-      message.push(`expected a number but received a string ${received}`);
+      let feedback = `expected a number at level ${levelCounter} but received a string ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
     } else if (typeof expected === 'number' && typeof received === 'boolean') {
-      message.push(`expected a number but received a boolean ${received}`);
+      let feedback = `expected a number at level ${levelCounter} but received a boolean ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
       
     } else if (typeof expected === 'string' && typeof received === 'number') {
-      message.push(`expected a string but received a number ${received}`);
+      let feedback = `expected a string at level ${levelCounter} but received a number ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
     } else if (typeof expected === 'string' && typeof received === 'boolean') {
-      message.push(`expected a string but received a boolean ${received}`);
+      let feedback = `expected a string at level ${levelCounter} but received a boolean ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
 
     } else if (typeof expected === 'boolean' && typeof received === 'number') {
-      message.push(`expected a boolean but received a number ${received}`);
+      let feedback = `expected a boolean at level ${levelCounter} but received a number ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
     } else if (typeof expected === 'boolean' && typeof received === 'string') {
-      message.push(`expected a boolean but received a string ${received}`);
+      let feedback = `expected a boolean at level ${levelCounter} but received a string ${received}`;
+      if (!(message.includes(feedback))) { message.push( feedback )};
 
     } else {
       return;
     }
   };
-  compare(expected, received);
+  compare(expected, received, 1);
 
   if (message.length > 0) {
     console.log('***', message);
@@ -71,14 +82,14 @@ export const compareObjects = (expected, received) => {
 
 export const getAdminInitializeRes = {
   "skills": [
-    "string"
+    "response"
   ],
   "causes": [
     "string"
   ],
   "users": [
     {
-      "id": 0,
+      "id": 1,
       "username": "string",
       "userType": "string",
       "firstName": "string",
@@ -107,8 +118,8 @@ export const getAdminInitializeRes = {
 
 export const getUsersListRes = [
   {
-    "id": 0,
-    "username": "string",
+    "id": 1,
+    "username": "response",
     "userType": "string",
     "firstName": "string",
     "lastName": "string",
@@ -135,12 +146,12 @@ export const getUsersListRes = [
 ];
 
 export const postAuthLogin = {
-  "username": "string",
+  "username": "request",
   "password": "string",
 };
 
 export const postUsers = {
-  "username": "string",
+  "username": "request",
   "userType": "string",
   "firstName": "string",
   "lastName": "string",
@@ -148,8 +159,8 @@ export const postUsers = {
 };
 
 export const postUsersRes = {
-  "id": 0,
-  "username": "string",
+  "id": 1,
+  "username": "response",
   "userType": "string",
   "firstName": "string",
   "lastName": "string",
@@ -157,8 +168,8 @@ export const postUsersRes = {
 };
 
 export const getUsersIdRes = {
-  "id": 0,
-  "username": "string",
+  "id": 1,
+  "username": "response",
   "userType": "string",
   "firstName": "string",
   "lastName": "string",
@@ -239,7 +250,7 @@ export const getUsersIdRes = {
 
 export const putUsersId = {
   "id": 0,
-  "username": "string",
+  "username": "request",
   "userType": "string",
   "firstName": "string",
   "lastName": "string",
@@ -265,8 +276,8 @@ export const putUsersId = {
 }
 
 export const putUsersIdRes = {
-  "id": 0,
-  "username": "string",
+  "id": 1,
+  "username": "response",
   "userType": "string",
   "firstName": "string",
   "lastName": "string",
@@ -293,9 +304,9 @@ export const putUsersIdRes = {
 
 export const getOpportunitiesListRes = [
   {
-    "id": 0,
-    "userId": 0,
-    "organization": "string",
+    "id": 1,
+    "userId": 1,
+    "organization": "response",
     "opportunityType": "string",
     "offer": true,
     "title": "string",
@@ -315,7 +326,7 @@ export const getOpportunitiesListRes = [
 
 export const postOpportunities = {
   "userId": 0,
-  "opportunityType": "string",
+  "opportunityType": "request",
   "offer": true,
   "title": "string",
   // "logo":"http://mylogo.com"
@@ -332,9 +343,9 @@ export const postOpportunities = {
 };
 
 export const postOpportunitiesRes = {
-  "id": 0,
-  "userId": 0,
-  "organization": "string",
+  "id": 1,
+  "userId": 1,
+  "organization": "response",
   "opportunityType": "string",
   "offer": true,
   "title": "string",
@@ -352,9 +363,9 @@ export const postOpportunitiesRes = {
 };
 
 export const getOpportunitiesIdRes = {
-  "id": 0,
-  "userId": 0,
-  "organization": "string",
+  "id": 1,
+  "userId": 1,
+  "organization": "response",
   "opportunityType": "string",
   "offer": true,
   "title": "string",
@@ -389,7 +400,7 @@ export const getOpportunitiesIdRes = {
 export const putOpportunitiesId = {
   "id": 0,
   "userId": 0,
-  "opportunityType": "string",
+  "opportunityType": "request",
   "offer": true,
   "title": "string",
   // "logo":"http://mylogo.com"
@@ -406,9 +417,9 @@ export const putOpportunitiesId = {
 };
 
 export const putOpportunitiesIdRes = {
-  "id": 0,
-  "userId": 0,
-  "opportunityType": "string",
+  "id": 1,
+  "userId": 1,
+  "opportunityType": "response",
   "organization": "string",
   "offer": true,
   "title": "string",
@@ -432,7 +443,7 @@ export const postRoles = {
 };
 
 export const postRolesRes = {
-  "idUserAdding": 0,
+  "idUserAdding": 1,
   "idUserReceiving": 0,
   "organization": "SQL join at response",
   "capabilities": "string"
@@ -445,9 +456,9 @@ export const putRolesId = {
 };
 
 export const putRolesIdRes = {
-  "id": 0,
-  "idUserAdding": 0,
-  "idUserReceiving": 0,
+  "id": 1,
+  "idUserAdding": 1,
+  "idUserReceiving": 1,
   "organization": "SQL join at response",
   "capabilities": "string"
 };
@@ -455,14 +466,14 @@ export const putRolesIdRes = {
 export const postResponses = {
   "idOpportunity": 0,
   "userId": 0,
-  "notes": "free-form text"
+  "notes": "request free-form text"
 };
 
 export const postResponsesRes = {
-  "id": 0,
-  "idOpportunity": 0,
+  "id": 1,
+  "idOpportunity": 1,
   "userId": 0,
-  "notes": "free-form text",
+  "notes": "response free-form text",
   "responseStatus": "string",
   // "timestampStatusChange": "string",
   // "timestampCreated": "string",
@@ -476,15 +487,15 @@ export const putResponsesId = {
   "id": 0,
   "idOpportunity": 0,
   "userId": 0,
-  "notes": "free-form text",
+  "notes": "request free-form text",
   "responseStatus": "offered || accepted || deleted || denied"
 };
 
 export const putResponsesIdRes = {
-  "id": 0,
-  "idOpportunity": 0,
-  "userId": 0,
-  "notes": "free-form text",
+  "id": 1,
+  "idOpportunity": 1,
+  "userId": 1,
+  "notes": "response free-form text",
   "responseStatus": "offered || accepted || deleted || denied",
   // "timestampStatusChange": "string",
   // "timestampCreated": "string",
