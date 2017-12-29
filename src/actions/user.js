@@ -413,32 +413,32 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
   };
 
   if (init.method === 'GET') { } 
-  else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, init.body) } 
-  else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, init.body) }
+  else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, role) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
   console.log('role before fetch', url,init)
 
-  // return fetch(url, init)
-  // .then(res=>{ 
-  //   // console.log('role res',res);
-  //   if (!res.ok) { 
-  //     console.log('not ok');
-  //     return Promise.reject(res.statusText);
-  //   }
-  //   return res.json();
-  // }) 
-  // .then(returnedRole => { 
-  //   console.log('returnedRole', returnedRole)
-  //   if (init.method === 'GET') { } 
-  //   else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
-  //   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
+  return fetch(url, init)
+  .then(res=>{ 
+    // console.log('role res',res);
+    if (!res.ok) { 
+      console.log('not ok');
+      return Promise.reject(res.statusText);
+    }
+    return res.json();
+  }) 
+  .then(returnedRole => { 
+    console.log('returnedRole', returnedRole)
+    if (init.method === 'GET') { } 
+    else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
 
-  //   if ( isAdmin ) {
-  //     return dispatch(loadAdmin(returnedRole, isNew));
-  //   } else {
-  //     return dispatch(loadFollowing(returnedRole, isNew));
-  //   }
-  // })
-  // .catch(error => {
+    if ( isAdmin ) {
+      return dispatch(loadAdmin(returnedRole, isNew));
+    } else {
+      return dispatch(loadFollowing(returnedRole, isNew));
+    }
+  })
+  .catch(error => {
     dispatch(actionsDisplay.toggleModal('error'));
-  // });
+  });
 }
