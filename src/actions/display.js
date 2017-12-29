@@ -12,9 +12,9 @@ export const toggleModal = message => ({
 });
 
 export const TOGGLE_OPPORTUNITY = 'TOGGLE_OPPORTUNITY';
-export const toggleOpportunity = opportunityId => ({
+export const toggleOpportunity = idOpportunity => ({
   type: TOGGLE_OPPORTUNITY,
-  opportunityId
+  idOpportunity
 });
 
 export const TOGGLE_USER = 'TOGGLE_USER';
@@ -22,12 +22,6 @@ export const toggleUser = userId => ({
   type: TOGGLE_USER,
   userId
 });
-
-// export const SET_FORM_STATUS = 'SET_FORM_STATUS';
-// export const setFormStatus = formStatus => ({
-//   type: SET_FORM_STATUS,
-//   formStatus
-// });
 
 export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE-TIME';
 export const saveLatestResponse = id => ({

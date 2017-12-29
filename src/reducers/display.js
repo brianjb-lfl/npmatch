@@ -19,8 +19,8 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.TOGGLE_OPPORTUNITY) {
-    const opportunityId = state.opportunityId === action.opportunityId ? null : action.opportunityId ;
-    return {...state, opportunityId };
+    const idOpportunity = state.idOpportunity === action.idOpportunity ? null : action.idOpportunity ;
+    return {...state, idOpportunity };
   }
 
   // if (action.type === actions.SET_FORM_STATUS) {

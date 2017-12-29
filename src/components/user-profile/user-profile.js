@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import './user-profile.css';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
-import OpportunityResponse from '../opportunity-response/opportunity-response';
+// import OpportunityResponse from '../opportunity-response/opportunity-response';
 
 export class UserProfile extends Component {
 

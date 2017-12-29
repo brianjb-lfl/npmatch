@@ -135,7 +135,7 @@ export const display = {
   modal: false,
   modalMessage: '',
   userId: '',
-  opportunityId: '',
+  idOpportunity: '',
 };
 
 export const general = {
