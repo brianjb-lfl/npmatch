@@ -152,7 +152,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
   else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.postAuthLogin, body)} 
   else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, body) }
-console.log('just before',init)
+  // console.log('just before',init)
   return fetch(url, init)   
   .then(user=>{ 
     if (!user.ok) { 
@@ -161,22 +161,19 @@ console.log('just before',init)
     return user.json();
   })
   .then(user=>{
-    console.log('user returned', user)
+    // console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
 
     if (callback.isNew) {
-      console.log('isNew')
       return dispatch(login(callback.originalUser))
     }
     if (callback.stateLocation === 'userViewed') {
-      console.log('userViewed')
       return dispatch(actionsUserViewed.loadUserViewed(user));   
     } 
     if (callback.loadTo === 'loadUser') {
-      console.log('loadUser')
       const following     = arrayToObject(user.following,     'id');    // id of org being followed
       const admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
       const adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
@@ -191,7 +188,6 @@ console.log('just before',init)
 
     // }
     if (callback.loadTo === 'updateUser') {
-      console.log('updateUser')
       return dispatch(updateUser(user));
 
     }
