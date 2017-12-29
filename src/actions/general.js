@@ -35,7 +35,6 @@ export const fetchInitialize = () => dispatch => {
     method: 'GET',
     headers,
   };
-  console.log('url, init at initialize', url, init);
   return fetch(url, init)
     .then(res => {
       return res.json();

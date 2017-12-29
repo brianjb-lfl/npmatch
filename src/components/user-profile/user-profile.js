@@ -25,6 +25,7 @@ export class UserProfile extends Component {
     if (typeof user.opportunities === 'object') {
       let key = 1
       for (let prop in user.opportunities) {
+        // self = true if user owns opportunities
         opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history}/>) 
         key += 1;
       }
@@ -35,6 +36,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.responses) {
         let opportunity = {...user.responses[prop], id: user.responses[prop].idOpportunity}
+        // self should always be false for responses, even if user owns opportunity
         responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history}/>) 
         key += 1;
       }

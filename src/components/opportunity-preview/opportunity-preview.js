@@ -7,6 +7,7 @@ import './opportunity-preview.css'
 import OpportunityResponse from '../opportunity-response/opportunity-response';
 
 export class OpportunityPreview extends Component {
+  // props from parent: self(boolean for in context of user viewing own opportunities), response, opportunity, history
 
   editOpportunity(id) {
     console.log('edit opp id', id)
@@ -16,7 +17,6 @@ export class OpportunityPreview extends Component {
         this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
       });
   }
-
 
   render() {
     const opportunity = this.props.opportunity;
@@ -32,7 +32,18 @@ export class OpportunityPreview extends Component {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
     }
-
+    let listOfResponses = '';
+    if(this.props.self && Array.isArray(opportunity.responses)) {
+      listOfResponses = opportunity.responses.map((response, index)=>{
+        return  <p>{response.id} {response.idOpportunity} {response.userId} {response.notes} {response.responseStatus}
+       {response.timestampStatusChange}
+        {response.timestampCreated}
+        {response.organization}
+        {response.firstName}
+        {response.lastName}
+        {response.title}</p>
+      });
+    }
 
     return (
       <div className='opportunityPreview'>
@@ -41,6 +52,7 @@ export class OpportunityPreview extends Component {
         <p className='timeframe'>{opportunity.timeframe}</p>
         <p className='description'>{opportunity.description}</p>
         {editOrRespond}
+        {listOfResponses}
       </div>
     )
   }
