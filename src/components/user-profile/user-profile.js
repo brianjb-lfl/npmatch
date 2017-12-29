@@ -26,6 +26,7 @@ export class UserProfile extends Component {
         key += 1;
       }
     }
+    opportunityHeader = opportunityPreviews.length > 0 ? opportunityHeader : '' ;
 
     const links = user.links.map((link,index)=>{
       return <a href={link.linkUrl} key={index} target={'_blank'}>
