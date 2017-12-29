@@ -21,10 +21,13 @@ export class OpportunityPreview extends Component {
   render() {
     const opportunity = this.props.opportunity;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
-    const editOrRespond = isMyOpportunity ?
-      <button className='editOpportunityButton' 
-        onClick={() => this.editOpportunity(opportunity.id)}>Edit</button> :
-      <OpportunityResponse opportunity={opportunity} /> ;
+    let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
+    if (isMyOpportunity) {
+      editOrRespond = <button className='editOpportunityButton' 
+      onClick={() => this.editOpportunity(opportunity.id)}>Edit</button> ;
+    } else if (this.props.user.id) {
+      editOrRespond = <OpportunityResponse opportunity={opportunity} /> ;
+    }
 
 
     return (
