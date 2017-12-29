@@ -16,9 +16,8 @@ export class LandingPage extends Component {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
       if (user.userType === 'organization') {
-        return <Link to={`/profiles/${user.id}`} key={key} >
-        <OrganizationPreview user={user} /> 
-      </Link> } else {
+        return <OrganizationPreview user={user} key={key} history={this.props.history}/> 
+      } else {
         return;
       }
       }) : '' ;

@@ -79,7 +79,6 @@ export class OpportunityResponse extends Component {
   addResponse(formValues) {
     const newResponse = {...this.state.response, notes: formValues.notes };
     const isNew = true;
-    console.log('addResponse', newResponse, isNew)
     this.props.dispatch(actionsUser.createOrEditResponse(newResponse, this.props.user.authToken, isNew))
       .then(() => {
         this.props.dispatch(actionsDisplay.toggleOpportunity(null))
@@ -96,15 +95,11 @@ export class OpportunityResponse extends Component {
     const responseStatus = this.state.formStatus === 'positive' ? this.state.positiveResponse : this.setState.negativeResponse ;
     const newResponse = {...this.state.response, notes: formValues.notes, responseStatus};
     const isNew = false;
-    console.log('editResponse', newResponse, isNew)
-    // const formStatus = (responseStatus === 'accepted' || responseStatus === 'offered') ? 'positive' : 'negative' ;
-    console.log('response in method', this.state.response);
     this.props.dispatch(actionsUser.createOrEditResponse(newResponse, this.props.user.authToken, isNew))
       .then(() => {
         this.props.dispatch(actionsDisplay.toggleOpportunity(null));
         this.setState({
           response: newResponse,
-          // formStatus
         });      
       });
   }
@@ -184,8 +179,7 @@ export class OpportunityResponse extends Component {
 
     const signUpForm = <div>
       <form className='opportunityResponse'
-        onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))}
-      >
+        onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))} >
         {notesField}
         <div>
           <button className='submitButton'
@@ -197,8 +191,7 @@ export class OpportunityResponse extends Component {
 
     const editForm = <div>
       <form className='opportunityResponse'
-        onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues))}
-      >
+        onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues))} >
         {notesField}
         {statusFieldNegative}
         {statusFieldPositive}
@@ -210,14 +203,10 @@ export class OpportunityResponse extends Component {
       </form>
     </div>
 
-    let theForm;
-    if (isInFocus && this.state.isMyOpp) {
-      theForm = editForm;
-    } else if (isInFocus && !this.state.hasResponded) {
-      theForm = signUpForm;
-    } else if (isInFocus) {
-      theForm = editForm;
-    }
+    const theForm = (isInFocus && this.state.isMyOpp) ? editForm :
+    ( (isInFocus && !this.state.hasResponded) ? signUpForm :
+      (isInFocus ? editForm : '' )
+    );
 
     return (
       <div>

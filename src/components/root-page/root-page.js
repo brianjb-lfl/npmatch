@@ -6,11 +6,8 @@ import HomePage from '../home-page/home-page';
 
 export class RootPage extends Component {
   render() {
-    let renderPage;
-    if (!this.props.user.id) {
-      renderPage = <LandingPage />
-    }
-    else renderPage = <HomePage />
+    const renderPage = (!this.props.user.id) ? <LandingPage history={this.props.history}/> :
+     <HomePage history={this.props.history}/> ;
 
     return (
       <main>
