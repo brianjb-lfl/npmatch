@@ -22,11 +22,14 @@ export class OpportunityPreview extends Component {
     const opportunity = this.props.opportunity;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
-    if (isMyOpportunity) {
+    if(this.props.response){
+      editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity} /> ;
+    } else if (isMyOpportunity) {
       editOrRespond = <button className='editOpportunityButton' 
       onClick={() => this.editOpportunity(opportunity.id)}>Edit</button> ;
     } else if (this.props.user.id) {
-      editOrRespond = <OpportunityResponse opportunity={opportunity} /> ;
+      // this.props.response is passed down from the user profile. in other cases, it is undefined.
+      editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity} /> ;
     }
 
 

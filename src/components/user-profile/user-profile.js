@@ -25,7 +25,7 @@ export class UserProfile extends Component {
     if (typeof user.opportunities === 'object') {
       let key = 1
       for (let prop in user.opportunities) {
-        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} />) 
+        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history}/>) 
         key += 1;
       }
     }
@@ -34,7 +34,8 @@ export class UserProfile extends Component {
     if (typeof user.responses === 'object' && self) {
       let key = 1
       for (let prop in user.responses) {
-        responsePreviews.push(<OpportunityResponse self={false} response={user.responses[prop]} key={key} />) 
+        let opportunity = {...user.responses[prop], id: user.responses[prop].idOpportunity}
+        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history}/>) 
         key += 1;
       }
     }
