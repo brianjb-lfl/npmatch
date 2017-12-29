@@ -5,7 +5,8 @@ import {user as initialState} from './potential-states'
 // this would be used when viewing someone else's profile
 export const reducer = (state = initialState, action) => {
 
-  if (action.type === actions.LOAD_USER) {
+  if (action.type === actions.LOAD_USER_VIEWED) {
+    console.log('load userViewed')
     return {...state,
       id: action.id,
       username: action.username,

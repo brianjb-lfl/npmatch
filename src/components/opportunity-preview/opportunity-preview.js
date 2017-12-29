@@ -18,10 +18,9 @@ export class OpportunityPreview extends Component {
   }
 
 
-
   render() {
     const opportunity = this.props.opportunity;
-    const isMyOpportunity = opportunity.userId === this.props.user.id ? true : false;
+    const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     const editOrRespond = isMyOpportunity ?
       <button className='editOpportunityButton' 
         onClick={() => this.editOpportunity(opportunity.id)}>Edit</button> :

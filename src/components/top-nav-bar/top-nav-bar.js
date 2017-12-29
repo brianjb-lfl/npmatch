@@ -25,8 +25,13 @@ export class TopNavBar extends Component {
   }
 
   editProfile() {
-    this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
-    this.props.history.push(`/profiles/${this.props.user.id}/edit`)
+    if (this.props.display.view === 'selfProfile') {
+      this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
+      this.props.history.push(`/profiles/${this.props.user.id}/edit`)  
+    } else {
+      this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+      this.props.history.push(`/profiles/${this.props.user.id}/`)
+    }
   }
 
   render() {
@@ -88,7 +93,7 @@ export class TopNavBar extends Component {
 }
 
 export const mapStateToProps = state => ({
-  display: state.display.view,
+  display: state.display,
   user: state.user
 })
 export default compose(

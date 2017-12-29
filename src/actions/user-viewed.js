@@ -1,8 +1,8 @@
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
 // this would be used when creating, editing, or viewing a profile
-export const LOAD_USER = 'LOAD_USER';
-export const loadUser = user => ({
-  type: LOAD_USER,
+export const LOAD_USER_VIEWED = 'LOAD_USER_VIEWED';
+export const loadUserViewed = user => ({
+  type: LOAD_USER_VIEWED,
   id: user.id,
   username: user.username,
   userType: user.userType,

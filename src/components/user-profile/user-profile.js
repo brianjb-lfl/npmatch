@@ -7,13 +7,22 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 export class UserProfile extends Component {
 
   render() {
-    const user = this.props.user;
+    let self, user, opportunityHeader;
+    if (this.props.display.view === 'selfProfile' || this.props.display.view === 'profileEdit' ) {
+      self = true;
+      user = this.props.user;
+      opportunityHeader = 'My Opportunities';
+    } else {
+      self = false;
+      user = this.props.userViewed;
+      opportunityHeader = `${user.organization || user.firstName}'s Opportunities`;
+    }
 
     let opportunityPreviews = [];
-    if (typeof user.opportunity === 'object') {
+    if (typeof user.opportunities === 'object') {
       let key = 1
       for (let prop in user.opportunities) {
-        opportunityPreviews.push(<OpportunityPreview opportunity={user.opportunities[prop]} key={key} />) 
+        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} />) 
         key += 1;
       }
     }
@@ -37,6 +46,7 @@ export class UserProfile extends Component {
           <p className='skills'>{user.skills.join(', ')}</p>
         </div>
         <div className='opportunities'>
+        <h3>{opportunityHeader}</h3>
           {opportunityPreviews}
         </div>
       </main>
@@ -44,11 +54,9 @@ export class UserProfile extends Component {
   }
 }
 
-export const mapStateToProps = state => {
-  const user = state.display.view === 'selfProfile' || 'profileEdit' ? state.user : state.userViewed;
-  return {
-    user,
-    display: state.display
-  }
-}
+export const mapStateToProps = state => ({
+  user: state.user,
+  userViewed: state.userViewed,
+  display: state.display,
+})
 export default connect(mapStateToProps)(UserProfile);
