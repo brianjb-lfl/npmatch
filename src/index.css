@@ -4,3 +4,8 @@ body {
   font-family: sans-serif;
   color: #082E41;
 }
+
+main {
+  margin-bottom: 40px;
+  /* bottom nav is 27 px */
+}

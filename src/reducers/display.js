@@ -19,12 +19,13 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.TOGGLE_OPPORTUNITY) {
-    return {...state, opportunityId: action.opportunityId };
+    const opportunityId = state.opportunityId === action.opportunityId ? null : action.opportunityId ;
+    return {...state, opportunityId };
   }
 
-  if (action.type === actions.SET_FORM_STATUS) {
-    return {...state, formStatus: action.formStatus };
-  }
+  // if (action.type === actions.SET_FORM_STATUS) {
+  //   return {...state, formStatus: action.formStatus };
+  // }
 
   if (action.type === actions.SAVE_LATEST_RESPONSE) {
     return {...state, latestResponse: action.latestResponse };

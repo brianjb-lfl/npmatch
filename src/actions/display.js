@@ -23,11 +23,11 @@ export const toggleUser = userId => ({
   userId
 });
 
-export const SET_FORM_STATUS = 'SET_FORM_STATUS';
-export const setFormStatus = formStatus => ({
-  type: SET_FORM_STATUS,
-  formStatus
-});
+// export const SET_FORM_STATUS = 'SET_FORM_STATUS';
+// export const setFormStatus = formStatus => ({
+//   type: SET_FORM_STATUS,
+//   formStatus
+// });
 
 export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE-TIME';
 export const saveLatestResponse = id => ({

@@ -18,7 +18,9 @@ export class OpportunityResponse extends Component {
         this.props.opportunity.userId === this.props.user.id ? true : false ),
       response: {},
     }
+  };
 
+  componentDidMount() {
     if (this.props.response) { // response is injected from UserProfile
       this.setState({ response: this.props.response })
     }
@@ -43,7 +45,7 @@ export class OpportunityResponse extends Component {
         }
       })
     }
-  };
+  }
 
   addResponse(formValues) {
     const newResponse = {...this.response, notes: formValues.notes };
@@ -83,6 +85,8 @@ export class OpportunityResponse extends Component {
   }
 
   render() {
+    const containerDivClass = this.props.response ? 'responsePreview' : 'responseButton' ; // preview class if formatted like a preview
+    const opportunityPreview = this.props.response ? this.props.response.title : '' ; // preview for user profile
     const isInFocus = this.props.display.opportunityId === this.state.oppId ? true : false; // using store, so that we only ever have 1 in focus
     const hasResponded = this.props.response || this.props.user.responses[this.state.oppId] ? true : false ;
     // console.log('id', this.state.oppId, 'hasres', this.state.hasResponded, 'focus', isInFocus, 'mine', this.state.isMyOpp)
@@ -199,13 +203,15 @@ export class OpportunityResponse extends Component {
       theForm = editForm;
     }
 
+    // add to return a preview format
     return (
-      <div className='opportunityResponseBox'>
+      <div className={containerDivClass}>
         <button 
           className='responseButton' 
           onClick={() => this.toggleOpportunity(this.state.oppId, this.state.response.responseStatus)}>
           {buttonLabel}
         </button>
+        {opportunityPreview}
         {theForm}
       </div>
     );

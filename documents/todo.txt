@@ -1,0 +1,15 @@
+on user profile
+  make sure responses edit correctly
+  allow to click and go to opportunity detail
+
+from user profile
+  click on opportunity
+  go to opportunity detail
+
+on opportunity detail
+  if my opportunity
+  show responses
+    allow accept, deny, etc.
+  if my response
+    show response and allow to edit
+
