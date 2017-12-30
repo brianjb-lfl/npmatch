@@ -66,7 +66,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
 
 export const fetchOpp = (oppId, authToken) => dispatch => {
   
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   
   const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
   const headers = {
@@ -82,7 +82,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
 
 export const createOpportunity = (opportunity, authToken, isNew) => dispatch => {
   
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
   if (isNew) delete opportunity.id;
   // DELETE WHEN DB ACCEPTS LOGO

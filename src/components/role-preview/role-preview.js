@@ -5,6 +5,7 @@ import * as actionsUser from '../../actions/user';
 import './role-preview.css';
 
 export class RolePreview extends Component {
+  // props from parent: self (true if these roles are roles of the user logged in), role, history
   constructor(props){
     super(props);
     this.state={
@@ -37,8 +38,10 @@ export class RolePreview extends Component {
 
   render() {
     return (
-      <div className='rolePreview' onClick={() => this.goToUser()}>
-        <h3 className='name'>{this.props.role.organization} {this.props.role.firstName} {this.props.role.LastName}</h3>
+      <div className='rolePreview'>
+        <div className='rolePreviewInner' onClick={() => this.goToUser()}>
+          <h3 className='name'>{this.props.role.organization} {this.props.role.firstName} {this.props.role.LastName}</h3>
+        </div>
         <button onClick={()=>this.editRole('delete')}>{this.state.capabilities}</button>
       </div>
     )

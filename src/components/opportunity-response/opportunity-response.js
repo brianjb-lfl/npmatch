@@ -129,7 +129,6 @@ export class OpportunityResponse extends Component {
         component='textarea'
         type='text'
         placeholder='...send a note to the host'
-        value='notes'
         className='inputField' />
       <label
         className='inputLabel'

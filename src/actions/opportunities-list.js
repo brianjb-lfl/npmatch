@@ -15,7 +15,7 @@ export const loadOpportunitiesList = array => ({
 
 export const fetchOppsList = (query, authToken) => dispatch => {
   
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
   const url = new URL(`${REACT_APP_BASE_URL}/api/opportunities/list`);
   Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));

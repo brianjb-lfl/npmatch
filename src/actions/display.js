@@ -2,7 +2,13 @@
 export const CHANGE_DISPLAY = 'CHANGE_DISPLAY';
 export const changeDisplay = view => ({
   type: CHANGE_DISPLAY,
-  view: view
+  view
+});
+
+export const CHANGE_DISPLAY_STATUS = 'CHANGE_DISPLAY_STATUS';
+export const changeDisplayStatus = status => ({
+  type: CHANGE_DISPLAY_STATUS,
+  status
 });
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';

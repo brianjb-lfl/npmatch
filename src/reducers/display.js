@@ -10,6 +10,10 @@ export const reducer = (state = initialState, action) => {
     return {...state, view: action.view};
   }
 
+  if (action.type === actions.CHANGE_DISPLAY_STATUS) {
+    return {...state, status: action.status};
+  }
+
   if (action.type === actions.TOGGLE_MODAL) {
     return {...state, modal: !state.modal, modalMessage: action.message };
   }

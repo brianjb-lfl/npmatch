@@ -204,7 +204,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
 
 export const fetchUser = (userId, authToken, stateLocation = 'user', loadTo = 'updateUser') => dispatch => {   // state location options = 'user' and 'userViewed'
 
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   
   const url = `${REACT_APP_BASE_URL}/api/users/${userId}`;
   const headers = {
@@ -227,7 +227,7 @@ export const fetchUser = (userId, authToken, stateLocation = 'user', loadTo = 'u
 export const login = user => dispatch => {
   // console.log('user at login',{user})
 
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   
   const url = `${REACT_APP_BASE_URL}/api/auth/login`;
   const userObject = {
@@ -254,7 +254,7 @@ export const login = user => dispatch => {
 
 export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'updateUser' ) => dispatch => {
   
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   const originalUser = {username: user.username, password: user.password};
   delete user.password2; // maybe set to null???
   delete user.authToken;
@@ -358,7 +358,7 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     capabilities:
   } */
 
-  dispatch(actionsDisplay.changeDisplay('loading'));
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
   const params = isNew ? '' : role.id ;
   const method = isNew ? 'POST' : 'DELETE';

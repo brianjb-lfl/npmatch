@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './user-profile.css';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 import RolePreview from '../role-preview/role-preview';
+import AdminAdd from '../admin-add/admin-add';
 
 export class UserProfile extends Component {
 
@@ -97,6 +98,8 @@ export class UserProfile extends Component {
         </a>
     })
 
+    const addAdmin = user.userType !== 'organization' ? <AdminAdd/> : '' ;
+
     return (
       <main>
         <div className='userProfile'>
@@ -111,8 +114,9 @@ export class UserProfile extends Component {
         </div>
         {opportunities}
         {responses}
-        {followingPreviews}
-        {adminPreviews}
+        {following}
+        {admins}
+        {addAdmin}
       </main>
     );
   }

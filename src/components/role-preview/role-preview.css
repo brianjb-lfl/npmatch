@@ -8,3 +8,8 @@
   background-color: rgb(248, 248, 248);
   box-shadow: 0 2px 10px rgba(0,0,0,0.19), 0 2px 2px rgba(0,0,0,0.23);
 }
+
+.rolePreviewInner { /*inside role preview; should consume 100% of space, holds content and is clickable*/
+  width: 100%;
+  height: 100%;
+}
