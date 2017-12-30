@@ -5,7 +5,6 @@ import 'react-widgets/dist/css/react-widgets.css'
 
 import UserEditGeneralForm from './user-profile-edit-general';
 import UserEditUandPwForm from './user-profile-edit-u-and-pw';
-import UserEditLinksForm from './user-profile-edit-links';
 
 import './user-profile-edit.css';
 
@@ -18,7 +17,6 @@ export class UserProfileEdit extends Component {
         <h3 className='sectionTitle'>Edit Profile</h3>
         <div className='editSection'>
           <UserEditGeneralForm history={this.props.history}/>
-          <UserEditLinksForm/>
         </div>
         
         <h3 className='sectionTitle'>Update Username and Password</h3>

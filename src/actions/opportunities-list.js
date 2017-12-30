@@ -36,13 +36,13 @@ export const fetchOppsList = (query, authToken) => dispatch => {
       return res.json();
     })
     .then(oppsList=>{
-
       ck.compareObjects(ck.getOpportunitiesListRes, oppsList)
-      
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(loadOpportunitiesList(oppsList));
     })
     .catch(error => {
       // console.log('error',error);
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

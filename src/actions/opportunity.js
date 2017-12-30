@@ -60,6 +60,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
     return dispatch(loadOpportunity(opportunity));      
   })
   .catch(error => {
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
     return dispatch(actionsDisplay.toggleModal(error));
   })
 }

@@ -11,16 +11,49 @@ import OrgNameFields from '../fields/name-org';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
 import SkillsFields from '../fields/skills';
+import LinkFields from '../fields/links';
 
 export class UserEditGeneralForm extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      links: Array.isArray(this.props.user.links) ?
+        ( this.props.user.links.length > 0 ? this.props.user.links : [{linkType:'',linkUrl:''}] ) :
+        [{linkType:'',linkUrl:''}],
+    }
+  }
+
+  addLink() {
+    const newLink = {linkType: '', linkUrl: ''}; 
+    this.setState({
+      links: [...this.state.links, newLink ]
+    });
+  }
+
+  removeLink(index) {
+    const newLinks = [...this.state.links];
+    newLinks.splice(index,1); 
+    this.setState({
+      links: newLinks
+    });
+  }
 
   handleSubmitButton(input) {
-    const user = {...input};
-    user.id = this.props.user.id;
-    // console.log('user id', user.id)
+    let links = [];
+    let index = 0;
+    while(index < 99){
+      if (input[`linkType${index}`]) {
+        links.push({
+          linkType: input[`linkType${index}`],
+          linkUrl: input[`linkUrl${index}`]
+        })
+        index += 1;
+      } else {
+        index = 99;
+      }
+    }
+    const user = {...input, links, id: this.props.user.id};
     const isNew = false;
-    // console.log('this.props.user id', this.props.user.id)
-
     this.props.dispatch(actionsUser.createOrEditUser(user, this.props.user.authToken, isNew))
       .then(() => {
         this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
@@ -33,10 +66,21 @@ export class UserEditGeneralForm extends Component {
     const nameForm = this.props.user.userType === 'individual' ?
       <IndivNameFields /> : <OrgNameFields />;
 
+    let myLinks;
+      if (this.state.links.length >0) {
+        myLinks = this.state.links.map((link,index)=>{
+          return <div key={index} >
+            <LinkFields initialValues={link} index={index}/>
+            <button type='button' onClick={()=>this.removeLink(index)}>remove</button>
+          </div>
+        })
+      } else {
+        myLinks = <LinkFields index={0}/>
+      }
+
     return (
       <form className='userProfile'
-        onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))}
-      >
+        onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))} >
 
         {nameForm}
 
@@ -83,6 +127,10 @@ export class UserEditGeneralForm extends Component {
             className='inputField' />
         </div>
 
+        <h6>My Links</h6>
+        {myLinks}
+        <button type='button' onClick={()=>this.addLink()}>add link</button>
+
         <div>
           <button className='submitButton'
             type="submit" disabled={this.props.pristine || this.props.submitting}>Save
@@ -94,24 +142,26 @@ export class UserEditGeneralForm extends Component {
         </div>
 
       </form>
-
     );
   }
 }
 
-
 export const mapStateToProps = state => {
-
-  const initialForm = Object.assign({}, state.user)
-  initialForm.causes = initialForm.causes ? initialForm.causes : null;
-  initialForm.skills = initialForm.skills ? initialForm.skills : null;
-
+  const causes = state.user.causes ? state.user.causes : null; // so the form doesn't show [x]
+  const skills = state.user.skills ? state.user.skills : null; 
+  const linkObject = {}; // convert array of links to object keys to initialize variable length form
+  state.user.links.forEach((link,index)=>{
+    linkObject[`linkType${index}`] = link.linkType;
+    linkObject[`linkUrl${index}`] = link.linkUrl;
+  })
+  const initialUser = {...state.user, causes, skills, ...linkObject};
   return {
     general: state.general,
     user: state.user,
     opportunity: state.opportunity,
     display: state.display.view,
-    initialValues: initialForm
+    initialValues: initialUser,
+    enableReinitialize: true,
   }
 };
 

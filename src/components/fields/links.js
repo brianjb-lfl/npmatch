@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 
 export class LinkFields extends Component {
+  // if chaining multiple linkFields on a form, pass prop index to this component, then upon form submission, convert linkType0, linkType1, etc. into an array [{linkType, linkUrl}]
 
   render() {
-
+    const index = typeof this.props.index === 'number' ? this.props.index : ''; // allows chaining of multiple link fields on one form
+    const linkType = `linkType${index}`;
+    const linkUrl = `linkUrl${index}`;
+    
     const renderDropdownList = ({ input, data, valueField, textField }) =>
       <DropdownList {...input}
         data={data}
@@ -19,11 +23,11 @@ export class LinkFields extends Component {
         <div>
           <label
             className='inputLabel'
-            htmlFor={'linkType'}>Link Type
+            htmlFor={linkType}>Link Type
           </label>
           <Field
-            name='linkType'
-            id='linkType'
+            name={linkType}
+            id={linkType}
             component={renderDropdownList}
             data={this.props.general.linkTypes}
             className='inputField' />
@@ -31,14 +35,14 @@ export class LinkFields extends Component {
 
         <div>
           <Field
-            name='linkURL'
-            id='linkURL'
+            name={linkUrl}
+            id={linkUrl}
             component='input'
             type='text'
             className='inputField' />
           <label
             className='inputLabel'
-            htmlFor={'linkURL'}>Link
+            htmlFor={linkUrl}>Link
           </label>
         </div>
 

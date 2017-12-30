@@ -32,6 +32,27 @@ export const reducer = (state = initialState, action) => {
     };
   }
 
+  if (action.type === actions.UPDATE_USER) {
+    return {...state, 
+      id: action.id,
+      username: action.username,
+      userType: action.userType,
+      firstName: action.firstName,
+      lastName: action.lastName,
+      organization: action.organization,
+      logo: action.logo,
+      locationCity: action.locationCity,
+      locationState: action.locationState,
+      locationCountry: action.locationCountry,
+      availability: action.availability,
+      bio: action.bio,
+      authToken: action.authToken,
+      links: action.links,
+      causes: action.causes,
+      skills: action.skills,
+    };
+  }
+
   if (action.type === actions.LOGOUT) {
     return {...state, user: {} };
   }
@@ -52,10 +73,6 @@ export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.SET_FORM_TYPE) {
     return {...state, formType: action.formType};
-  }
-
-  if (action.type === actions.TOGGLE_EDIT_LINK) {
-    return {...state, links: action.links };
   }
   
   return state;

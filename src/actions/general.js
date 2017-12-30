@@ -26,6 +26,7 @@ export const flattenLocations = () => ({
 
 export const fetchInitialize = () => dispatch => {
 
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   const url = `${REACT_APP_BASE_URL}/api/admin/initialize`;
   const headers = {
     'content-type': 'application/json',
@@ -56,6 +57,7 @@ export const fetchInitialize = () => dispatch => {
     })
     .catch(error => {
       // console.log('error', error);
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

@@ -54,12 +54,6 @@ export const updateUser = user => ({
   skills: user.skills,
 });
 
-// export const UPDATE_USER_LINKS = 'UPDATE_USER_LINKS';
-// export const updateUserLinks = user => ({
-//   type: UPDATE_USER_LINKS,
-//   links: user.links, // array of objects
-// });
-
 export const LOGOUT = 'LOGOUT';
 export const logout = () => ({
   type: LOGOUT,
@@ -88,15 +82,6 @@ export const setFormType = formType => ({
   type: SET_FORM_TYPE,
   formType: formType,
 });
-
-export const TOGGLE_EDIT_LINK = 'TOGGLE_EDIT_LINK';
-export const toggleEditLink = (index, edit = false, links) => {
-  links[index].edit = edit;
-  return {
-    type: TOGGLE_EDIT_LINK,
-    links,
-  }
-};
 
 // @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
 
@@ -130,20 +115,6 @@ export const objectToArray=(object)=>{
   return [];
 }
 
-export const updateLinks = (links, link, index, action) => {
-  // updates a single link in an array
-  const newLinks = [...links];
-  if ( action === 'edit') {
-    newLinks[index] = link;
-    newLinks[index].edit = false;
-  } else if ( action === 'delete') {
-    newLinks.splice(index,1);
-  } else { // assume action === add
-    newLinks.push(link);
-  }
-  return newLinks;
-}
-
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const userAPICall = (url, init, body, callback) => dispatch => {
@@ -152,7 +123,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
   else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.postAuthLogin, body)} 
   else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, body) }
-  // console.log('just before',init)
+  console.log('just before',init)
   return fetch(url, init)   
   .then(user=>{ 
     if (!user.ok) { 
@@ -161,7 +132,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    // console.log('user returned', user)
+    console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
@@ -183,19 +154,16 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       const formattedUser = {...user, following, admins, adminOf, opportunities, responses}
       return dispatch(loadUser(formattedUser));
     }
-    // if (callback.loadTo === 'links') {
-    //   return dispatch(updateUserLinks(formattedUser));
-
-    // }
     if (callback.loadTo === 'updateUser') {
+      console.log('updateUser',user);
       return dispatch(updateUser(user));
-
     }
-   return;
-
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
+    return;
   })
   .catch(error => {
     // console.log('error',error);
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
     return dispatch(actionsDisplay.toggleModal(error));
   })
 }
@@ -284,18 +252,10 @@ export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'update
   }
   return dispatch(userAPICall(url, init, user, callback));}
 
-export const manageLinks = (user, link, index, action) => dispatch => {
-  // add, edit, or delete links in user array, then update user in db
-  const newLinks = updateLinks(user.links, link, index, action);
-  const newUser = {...user, links: newLinks};
-  const isNew = false; // user is not new
-  const loadTo = 'updateUser';
-  return dispatch(createOrEditUser(newUser, user.authToken, isNew, loadTo))
-}
-
 // @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@
 
 export const createOrEditResponse = (origResponse, authToken, isNew = true) => dispatch => {
+  dispatch(actionsDisplay.changeDisplayStatus('loading'));
   const response = {...origResponse};
 
   const loadTo = ( isNew || 
@@ -342,8 +302,10 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     } else {
       return dispatch(actionsOpportunity.loadResponse(returnedResponse));
     }
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
     dispatch(actionsDisplay.toggleModal(error));
   });
 }
@@ -411,8 +373,10 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     } else {
       return dispatch(loadFollowing(returnedRole, isNew));
     }
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
     dispatch(actionsDisplay.toggleModal('error'));
   });
 }
