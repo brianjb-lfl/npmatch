@@ -1,6 +1,6 @@
 export const compareObjects = (expected, received) => {
-  console.log('expected at compare',expected);
-  console.log('received at compare',received);
+  // console.log('expected at compare',expected);
+  // console.log('received at compare',received);
   let message = [];
 
   const compare = (expected, received, levelCounter) => {
@@ -16,7 +16,6 @@ export const compareObjects = (expected, received) => {
         let feedback = `expected array at ${expected} at level ${levelCounter} but received ${typeReceived}`;
       }
     } else if (typeof expected === 'object' && !Array.isArray(expected)) {
-      console.log('######## object')
       if (typeof received === 'object' && !Array.isArray(received)) {
         for (let key in expected) {
           if (received.hasOwnProperty(key)) {

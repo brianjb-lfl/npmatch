@@ -348,42 +348,6 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   });
 }
 
-/*
-
-#######################
-
-user is logged in, can be used anywhere another user is shown
-onClick={()=>{addRole(this.props.user.id, this.props.organization.id, 'following')}
-
-org is logged in, to be used on org profile page
-use menu or search to load userViewed, then enable button
-onClick={()=>{addRole(this.props.userViewed.id, this.props.organization.id, 'admin')}
-
-const addRole = (id, organization, capabilities) {
-  const role = {
-    idUserAdding: this.props.user.id,
-    idUserReceiving: id,
-    organization,
-    capabilities,
-  }
-  this.props.dispatch(actionsUser.createOrDeleteRole(role, -1, this.props.user.authToken, true));
-    .then(() => this.props.dispatch(actionsDisplay.changeDisplay('normal')) )
-}
-
-#######################
-
-// when user is logged in, enable 'un-follow' for all users followed
-  // track who is followed by comparing userList.id against user.following.idUserReceiving when ul is populated
-// from org profile, show list of admins, enable on each admin
-onClick={()=>{deleteRole(role, index)}
-
-const deleteRole = (role, index) {
-  this.props.dispatch(actionsUser.createOrDeleteRole(role, index, this.props.user.authToken, false));
-    .then(() => this.props.dispatch(actionsDisplay.changeDisplay('normal')) )
-}
-
-*/
-
 export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch => {
   console.log('enter role', role, isNew)
   /* role = {
@@ -417,6 +381,16 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
   console.log('role before fetch', url,init)
 
+  // %%%%%%%%%%%%%%%%%%%
+
+  if ( isAdmin ) {
+    return dispatch(loadAdmin({...role, id: 7, organization: 'ACME'}, isNew));
+  } else {
+    return dispatch(loadFollowing({...role, id: 8,  organization: 'ACME'}, isNew));
+  }
+  console.log('WE SHOULD NOT GET HERE')
+
+  // %%%%%%%%%%%%%%%%%%%
   return fetch(url, init)
   .then(res=>{ 
     // console.log('role res',res);

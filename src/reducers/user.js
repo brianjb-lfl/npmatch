@@ -46,7 +46,7 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.LOAD_FOLLOWING) {
-    const newFollowing = {...state.following, [action.following.id]: action.following}
+    const newFollowing = {...state.following, [action.following.idUserReceiving]: action.following}
     return {...state, following: newFollowing };
   }
 
