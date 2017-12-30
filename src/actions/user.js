@@ -263,6 +263,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     response.responseStatus === 'deleted' ) ? 'user' : 'opportunity' ;
   const params = isNew ? '' : response.id ;
   const method = isNew ? 'POST' : 'PUT';
+  if (isNew) delete response.id;
 
   const url = `${REACT_APP_BASE_URL}/api/responses/${params}`;
   const headers = { 
@@ -312,13 +313,6 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
 
 export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch => {
   console.log('enter role', role, isNew)
-  /* role = {
-    id: for delete only
-    idUserAdding:
-    idUserReceiving:
-    organization:
-    capabilities:
-  } */
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
@@ -326,33 +320,25 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
   const method = isNew ? 'POST' : 'DELETE';
   const isAdmin = role.capabilities === 'admin' ? true : false ;
 
-  const url = `${REACT_APP_BASE_URL}/api/users/${params}`;
+  const url = `${REACT_APP_BASE_URL}/api/roles/${params}`;
   const headers = { 
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
+  const newRole = {...role};
+  if(isNew) delete newRole.id;
 
   const init = { 
     method,
-    body: JSON.stringify(role),
+    body: JSON.stringify(newRole),
     headers
   };
 
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, role) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
-  console.log('role before fetch', url,init)
+  console.log('role before fetch', url, init)
 
-  // %%%%%%%%%%%%%%%%%%%
-
-  if ( isAdmin ) {
-    return dispatch(loadAdmin({...role, id: 7, organization: 'ACME'}, isNew));
-  } else {
-    return dispatch(loadFollowing({...role, id: 8,  organization: 'ACME'}, isNew));
-  }
-  console.log('WE SHOULD NOT GET HERE')
-
-  // %%%%%%%%%%%%%%%%%%%
   return fetch(url, init)
   .then(res=>{ 
     // console.log('role res',res);
@@ -368,6 +354,9 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
 
+    if (returnedRole.message === 'Role deleted') {
+        returnedRole = {...role};
+    }
     if ( isAdmin ) {
       return dispatch(loadAdmin(returnedRole, isNew));
     } else {

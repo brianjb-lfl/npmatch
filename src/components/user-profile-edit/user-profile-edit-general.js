@@ -39,6 +39,8 @@ export class UserEditGeneralForm extends Component {
   }
 
   handleSubmitButton(input) {
+    console.log('raw input',input)    
+    const user = {...input, id: this.props.user.id};
     let links = [];
     let index = 0;
     while(index < 99){
@@ -47,12 +49,16 @@ export class UserEditGeneralForm extends Component {
           linkType: input[`linkType${index}`],
           linkUrl: input[`linkUrl${index}`]
         })
+        delete user[`linkType${index}`];
+        delete user[`linkUrl${index}`];
         index += 1;
+        console.log(index, links)
       } else {
         index = 99;
       }
     }
-    const user = {...input, links, id: this.props.user.id};
+    user.links = links;
+    console.log('after fixing links', user)
     const isNew = false;
     this.props.dispatch(actionsUser.createOrEditUser(user, this.props.user.authToken, isNew))
       .then(() => {
@@ -147,6 +153,7 @@ export class UserEditGeneralForm extends Component {
 }
 
 export const mapStateToProps = state => {
+  const {id, username, userType, firstName, lastName, organization, logo, locationCity, locationState, locationCountry, availability, bio} = state.user;
   const causes = state.user.causes ? state.user.causes : null; // so the form doesn't show [x]
   const skills = state.user.skills ? state.user.skills : null; 
   const linkObject = {}; // convert array of links to object keys to initialize variable length form
@@ -154,7 +161,7 @@ export const mapStateToProps = state => {
     linkObject[`linkType${index}`] = link.linkType;
     linkObject[`linkUrl${index}`] = link.linkUrl;
   })
-  const initialUser = {...state.user, causes, skills, ...linkObject};
+  const initialUser = {id, username, userType, firstName, lastName, organization, logo, locationCity, locationState, locationCountry, availability, bio, causes, skills, ...linkObject};
   return {
     general: state.general,
     user: state.user,

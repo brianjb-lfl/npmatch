@@ -37,7 +37,7 @@ export class AdminAdd extends Component {
             </label>
           </div>;
           <button className='submitButton'
-            type="submit" disabled={this.props.submitting}>search
+            type="submit" disabled={this.props.submitting}>search users
           </button>
         </form>
       </div>

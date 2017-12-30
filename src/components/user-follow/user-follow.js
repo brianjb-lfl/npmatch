@@ -30,10 +30,8 @@ export class UserFollow extends Component {
   render() {
     let isFollowing = false;
     if(this.props.user.following){
-      if(this.props.user.following[this.props.id]) {
-        if(this.props.user.following[this.props.id].capabilities === 'following') {
-          isFollowing = true;
-        }
+      if(this.props.user.following[this.props.id] && this.props.user.following[this.props.id].capabilities !== 'delete') {
+        isFollowing = true;
       }
     }
     const buttonLabel  = isFollowing ? 'un-Follow' : 'Follow' ;

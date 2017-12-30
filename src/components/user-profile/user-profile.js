@@ -20,7 +20,7 @@ export class UserProfile extends Component {
     } else {
       self = false;
       user = this.props.userViewed;
-      opportunityHeader = `${user.organization || user.firstName}'s Opportunities`;
+      opportunityHeader = this.props.user.userType === 'organization' ? `${user.organization}'s Opportunities` : `${user.firstName}'s Opportunities`;
       responseHeader = '';
       followingHeader = '';
       adminHeader = '';
@@ -90,7 +90,7 @@ export class UserProfile extends Component {
       <div className='admins'>
         <h3>{adminHeader}</h3>
         {adminPreviews}
-      </div> : '' ;
+      </div> : 'There are no site admins. You can add an admin by searching users below.' ;
 
     const links = user.links.map((link,index)=>{
       return <a href={link.linkUrl} key={index} target={'_blank'}>
@@ -98,7 +98,7 @@ export class UserProfile extends Component {
         </a>
     })
 
-    const addAdmin = user.userType !== 'organization' ? <AdminAdd/> : '' ;
+    const adminAdd = user.userType === 'organization' ? <AdminAdd/> : '' ;
 
     return (
       <main>
@@ -116,7 +116,7 @@ export class UserProfile extends Component {
         {responses}
         {following}
         {admins}
-        {addAdmin}
+        {adminAdd}
       </main>
     );
   }

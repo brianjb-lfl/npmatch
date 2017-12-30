@@ -41,7 +41,6 @@ export const fetchInitialize = () => dispatch => {
       return res.json();
     })
     .then(res => {
-      // console.log('response at initialize', res);
       ck.compareObjects(ck.getAdminInitializeRes, res)
 
       dispatch(actionsUsersList.loadUsersList(res.users));
@@ -56,7 +55,6 @@ export const fetchInitialize = () => dispatch => {
       return dispatch(loadCauses(res.causes));
     })
     .catch(error => {
-      // console.log('error', error);
       dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(actionsDisplay.toggleModal(error));
     })
