@@ -44,3 +44,24 @@
   text-align: center;
   padding-top: 20px;
 }
+
+.inputField {
+  width: 150px;
+  font-size: 14px;
+}
+
+.rw-widget {
+  margin: auto;
+  width: 150px;
+  font-size: 12px;
+}
+
+.rw-multiselect {
+  width: 60%;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+#linkUrl0 {
+  margin-top: 5px;
+}

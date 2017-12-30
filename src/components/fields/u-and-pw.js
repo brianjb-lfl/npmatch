@@ -7,7 +7,7 @@ export default class UandPFields extends Component {
     const confirmPw = this.props.confirm ?
       <div>
         <label className='inputLabel' htmlFor={'password2'}>Confirm Password</label>
-      <Field className='inputField' name='password2' id='password2'
+      <Field className='confirmPasswordInput' name='password2' id='password2'
         component='input' type='password' placeholder='Confirm Password' required
       />
       </div>
