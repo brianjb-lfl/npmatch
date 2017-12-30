@@ -10,7 +10,7 @@ export class UserProfile extends Component {
 
   render() {
     let self, user, opportunityHeader, responseHeader, followingHeader, adminHeader;
-    if (this.props.display.view === 'selfProfile' || this.props.display.view === 'profileEdit' ) {
+    if (this.props.display.view === 'selfProfile' || this.props.display.view === 'profileEdit') {
       self = true;
       user = this.props.user;
       opportunityHeader = 'My Opportunities';
@@ -31,7 +31,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.opportunities) {
         // self = true if user owns opportunities
-        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history}/>) 
+        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history} />)
         key += 1;
       }
     }
@@ -40,9 +40,9 @@ export class UserProfile extends Component {
     if (typeof user.responses === 'object' && self) {
       let key = 1
       for (let prop in user.responses) {
-        let opportunity = {...user.responses[prop], id: user.responses[prop].idOpportunity}
+        let opportunity = { ...user.responses[prop], id: user.responses[prop].idOpportunity }
         // self should always be false for responses, even if user owns opportunity
-        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history}/>) 
+        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history} />)
         key += 1;
       }
     }
@@ -52,7 +52,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.following) {
         // self should always be true for following
-        followingPreviews.push(<RolePreview self={true} role={user.following[prop]} key={key} history={this.props.history}/>) 
+        followingPreviews.push(<RolePreview self={true} role={user.following[prop]} key={key} history={this.props.history} />)
         key += 1;
       }
     }
@@ -62,55 +62,57 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.admins) {
         // self should always be true for following
-        adminPreviews.push(<RolePreview self={true} role={user.admin[prop]} key={key} history={this.props.history}/>) 
+        adminPreviews.push(<RolePreview self={true} role={user.admin[prop]} key={key} history={this.props.history} />)
         key += 1;
       }
     }
-    
+
     const opportunities = opportunityPreviews.length > 0 ?
       <div className='opportunities'>
         <h3>{opportunityHeader}</h3>
         {opportunityPreviews}
-      </div> : '' ;
+      </div> : '';
 
     const responses = responsePreviews.length > 0 ?
       <div className='responses'>
-      <h3>{responseHeader}</h3>
+        <h3>{responseHeader}</h3>
         {responsePreviews}
-      </div> : '' ;
+      </div> : '';
 
 
     const following = followingPreviews.length > 0 ?
       <div className='following'>
         <h3>{followingHeader}</h3>
         {followingPreviews}
-      </div> : '' ;
+      </div> : '';
 
     const admins = adminPreviews.length > 0 ?
       <div className='admins'>
         <h3>{adminHeader}</h3>
         {adminPreviews}
-      </div> : 'There are no site admins. You can add an admin by searching users below.' ;
+      </div> : <p className='noAdminText'>There are no site admins. You can add an admin by searching users below.</p>;
 
-    const links = user.links.map((link,index)=>{
+    const links = user.links.map((link, index) => {
       return <a href={link.linkUrl} key={index} target={'_blank'}>
         <i className="fa fa-globe" aria-hidden="true"></i>
-        </a>
+      </a>
     })
 
-    const adminAdd = user.userType === 'organization' ? <AdminAdd/> : '' ;
+    const adminAdd = user.userType === 'organization' ? <AdminAdd /> : '';
 
     return (
       <main>
         <div className='userProfile'>
           <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
           <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
-          <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
-          <p className='bio'>{user.bio}</p>
-          <p className='availability'>{user.availability}</p>
-          {links}
-          <p className='causes'>{user.causes.join(', ')}</p>
-          <p className='skills'>{user.skills.join(', ')}</p>
+          <div className='profileCard'>
+            <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
+            <p className='bio'>{user.bio}</p>
+            <p className='availability'>{user.availability}</p>
+            {links}
+            <p className='causes'>{user.causes.join(', ')}</p>
+            <p className='skills'>{user.skills.join(', ')}</p>
+          </div>
         </div>
         {opportunities}
         {responses}
