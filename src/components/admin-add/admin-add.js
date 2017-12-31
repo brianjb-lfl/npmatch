@@ -11,7 +11,10 @@ import * as actionsDisplay from '../../actions/display';
 export class AdminAdd extends Component {
 
   searchUsers(formValues) {
-    this.props.dispatch(actionsUsersList.fetchUsersList(formValues));
+    this.props.dispatch(actionsUsersList.fetchUsersList(formValues))
+    .then(()=>{
+      this.props.dispatch(actionsDisplay.changeDisplay('addAdmin'))
+    })
     // toggle so that list of potential admins show
     // each potential admin to have a preview that allows selecting as an admin
   }
@@ -35,7 +38,7 @@ export class AdminAdd extends Component {
               className='inputLabel'
               htmlFor={'user'}>user's first and/or last name
             </label>
-          </div>;
+          </div>
           <button className='submitButton'
             type="submit" disabled={this.props.submitting}>search users
           </button>

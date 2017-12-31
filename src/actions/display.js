@@ -23,6 +23,12 @@ export const toggleOpportunity = idOpportunity => ({
   idOpportunity
 });
 
+export const TOGGLE_ROLE = 'TOGGLE_ROLE';
+export const toggleRole = idRole => ({
+  type: TOGGLE_ROLE,
+  idRole
+});
+
 export const TOGGLE_USER = 'TOGGLE_USER';
 export const toggleUser = userId => ({
   type: TOGGLE_USER,

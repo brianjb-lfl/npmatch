@@ -1,3 +1,15 @@
+user profile
+  follow
+    hide button
+  existing admins
+    show user's names
+    toggle button label
+    remove from focus
+  new admins
+    remove from focus
+    toggle button label
+
+@@@@@@@@@@@@@@@@@@
 on user profile
   make sure responses edit correctly
   allow to click and go to opportunity detail

@@ -27,6 +27,11 @@ export const reducer = (state = initialState, action) => {
     return {...state, idOpportunity };
   }
 
+  if (action.type === actions.TOGGLE_ROLE) {
+    const idRole = state.idRole === action.idRole ? null : action.idRole ;
+    return {...state, idRole };
+  }
+
   // if (action.type === actions.SET_FORM_STATUS) {
   //   return {...state, formStatus: action.formStatus };
   // }

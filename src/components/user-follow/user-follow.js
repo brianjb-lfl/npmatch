@@ -24,7 +24,8 @@ export class UserFollow extends Component {
       idUserReceiving: this.props.id,
       capabilities,
     };
-    this.props.dispatch(actionsUser.createOrDeleteRole(role, this.props.user.authToken, isNew));
+    const roleType = 'following';
+    this.props.dispatch(actionsUser.createOrEditRole(role, roleType, this.props.user.authToken));
   }
 
   render() {

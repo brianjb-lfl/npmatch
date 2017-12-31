@@ -29,8 +29,7 @@ export class RegisterPage extends Component {
       <main>
         <h2 className='sectionTitle'>Register</h2>
         <form className='registerForm'
-          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
-        >
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))} >
           <div className='individualOption'>
             <label className='inputLabel'
               style={{
@@ -40,8 +39,7 @@ export class RegisterPage extends Component {
               htmlFor={'userTypeI'}>Individual</label>
             <Field className='userTypeInput' name='userType' id='userTypeI'
               style={{ display: 'none', margin: 'auto' }}
-              component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')}
-            />
+              component='input' type='radio' value='individual' onChange={() => this.handleFormTypeChange('individual')} />
           </div>
 
           <div className='organizationOption'>

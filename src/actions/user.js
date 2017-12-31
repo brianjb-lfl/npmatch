@@ -311,14 +311,14 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   });
 }
 
-export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch => {
+export const createOrEditRole = (role, roleType, authToken) => dispatch => {
   console.log('enter role', role, isNew)
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
+  const isNew = role.id ? false : true ;
   const params = isNew ? '' : role.id ;
-  const method = isNew ? 'POST' : 'DELETE';
-  const isAdmin = role.capabilities === 'admin' ? true : false ;
+  const method = isNew ? 'POST' : 'PUT';
 
   const url = `${REACT_APP_BASE_URL}/api/roles/${params}`;
   const headers = { 
@@ -357,7 +357,7 @@ export const createOrDeleteRole = (role, authToken, isNew = true) => dispatch =>
     if (returnedRole.message === 'Role deleted') {
         returnedRole = {...role};
     }
-    if ( isAdmin ) {
+    if ( roleType === 'admin' ) {
       return dispatch(loadAdmin(returnedRole, isNew));
     } else {
       return dispatch(loadFollowing(returnedRole, isNew));

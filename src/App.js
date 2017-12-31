@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'react-widgets/dist/css/react-widgets.css'
 import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
 // import * as actionsDisplay from './actions/display';

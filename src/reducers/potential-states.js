@@ -131,7 +131,8 @@ export const opportunitiesList = {
 };
 
 export const display = {
-  view: 'homePage',    // options: 'homePage', 'explorePage', 'editOpportunity'
+  view: 'homePage',    // options: 'homePage', 'explorePage', 'editOpportunity', 'addAdmin', 'selfProfile', 'profileEdit'
+  status: 'normal',    // loading
   modal: false,
   modalMessage: '',
   userId: '',
@@ -147,6 +148,7 @@ export const general = {
   ],
   oppTypes: ['financial','goods','services'],
   linkTypes: ['home', 'contribution'],
+  roleTypes: ['admin', 'delete'],
   states: [
     {
         name: 'Alabama',
