@@ -31,7 +31,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.opportunities) {
         // self = true if user owns opportunities
-        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history}/>) 
+        opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history} />)
         key += 1;
       }
     }
@@ -46,9 +46,9 @@ export class UserProfile extends Component {
     if (typeof user.responses === 'object' && self) {
       let key = 1
       for (let prop in user.responses) {
-        let opportunity = {...user.responses[prop], id: user.responses[prop].idOpportunity}
+        let opportunity = { ...user.responses[prop], id: user.responses[prop].idOpportunity }
         // self should always be false for responses, even if user owns opportunity
-        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history}/>) 
+        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history} />)
         key += 1;
       }
     }
@@ -64,7 +64,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.following) {
         // self should always be true for following
-        followingPreviews.push(<RolePreview form='following' role={user.following[prop]} roleType='following' key={key} index={key} history={this.props.history}/>) 
+        followingPreviews.push(<RolePreview role={user.following[prop]} roleType='following' key={key} index={key} history={this.props.history}/>) 
         key += 1;
       }
     }
@@ -81,7 +81,7 @@ export class UserProfile extends Component {
       let key = 1
       for (let prop in user.admins) {
         // self should always be true for following
-        adminPreviews.push(<RolePreview form='admin' role={user.admins[prop]} roleType='admin' initialValues={user.admins[prop]} key={key} index={key} history={this.props.history}/>) 
+        adminPreviews.push(<RolePreview role={user.admins[prop]} roleType='admin' initialValues={user.admins[prop]} key={key} index={key} history={this.props.history}/>) 
         key += 1;
       }
     }
@@ -109,10 +109,10 @@ export class UserProfile extends Component {
       {userSearchPreviews}
     </div> : '' ;
 
-    const links = user.links.map((link,index)=>{
+    const links = user.links.map((link, index) => {
       return <a href={link.linkUrl} key={index} target={'_blank'}>
         <i className="fa fa-globe" aria-hidden="true"></i>
-        </a>
+      </a>
     })
 
     return (
@@ -120,12 +120,14 @@ export class UserProfile extends Component {
         <div className='userProfile'>
           <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
           <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
-          <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
-          <p className='bio'>{user.bio}</p>
-          <p className='availability'>{user.availability}</p>
-          {links}
-          <p className='causes'>{user.causes.join(', ')}</p>
-          <p className='skills'>{user.skills.join(', ')}</p>
+          <div className='profileCard'>
+            <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
+            <p className='bio'>{user.bio}</p>
+            <p className='availability'>{user.availability}</p>
+            {links}
+            <p className='causes'>{user.causes.join(', ')}</p>
+            <p className='skills'>{user.skills.join(', ')}</p>
+          </div>
         </div>
         {opportunities}
         {responses}

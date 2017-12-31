@@ -24,8 +24,8 @@ export class LandingPage extends Component {
 
     return (
       <div className='landingPage'>
-        <h2>Non-Profit Match</h2>
-        <p>
+        <h2>Causeway</h2>
+        <p className='appDescription'>
           Welcome to our amazing web application! 
           This will likely be the best experience you ever have using an app. Get ready...
         </p>

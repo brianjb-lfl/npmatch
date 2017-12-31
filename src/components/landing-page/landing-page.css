@@ -10,3 +10,7 @@
 .landingPage h2 {
   text-align: center;
 }
+
+.landingPage .appDescription {
+  margin-bottom: 25px;
+}
