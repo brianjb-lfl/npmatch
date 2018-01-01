@@ -24,15 +24,10 @@ export class TopNavBar extends Component {
       })
   }
 
-  editProfile() {
+  goToProfile() {
     this.props.dispatch(actionsDisplay.setUser(this.props.user.id));
-    if (this.props.display.view === 'selfProfile') {
-      this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
-      this.props.history.push(`/profiles/${this.props.user.id}/edit`)  
-    } else {
-      this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
-      this.props.history.push(`/profiles/${this.props.user.id}/`)
-    }
+    this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
+    this.props.history.push(`/profiles/${this.props.user.id}/`)
   }
 
   render() {
@@ -64,7 +59,7 @@ export class TopNavBar extends Component {
           </li>
           <li className='editProfileButton'>
             <i className="fa fa-user-circle-o" aria-hidden="true"
-              onClick={() => this.editProfile()}></i>
+              onClick={() => this.goToProfile()}></i>
           </li>
           <li className='settingsButton'>
             <i className="fa fa-bars" aria-hidden="true"></i>

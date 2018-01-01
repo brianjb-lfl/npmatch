@@ -51,7 +51,7 @@ export class RolePreview extends Component {
   }
 
   setRole(formValues) {
-    console.log('formValues',formValues);
+    // console.log('formValues',formValues);
     const role = {
       id: this.state.role.id,
       idUserAdding: this.props.userInState.id,
@@ -60,8 +60,12 @@ export class RolePreview extends Component {
     }    
     this.props.dispatch(actionsUser.createOrEditRole(role, this.props.roleType, this.props.userInState.authToken))
     .then(()=>{
-      this.setState({capabilities: role.capabilities})
-      // we need to get the new id back! !!!!!!!
+      if (!role.id) {
+        // if no id, role is new, get id from store (put there by fetch upon create)
+        this.setState({capabilities: role.capabilities, id: this.props.display.latestRole})
+      } else {
+        this.setState({capabilities: role.capabilities})
+      }
     })
   }
 

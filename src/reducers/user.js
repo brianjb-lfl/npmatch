@@ -7,6 +7,8 @@ import {user as initialState} from './potential-states'
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_USER) {
+    const displayName = action.userType === 'organization' ? action.organization :`${action.firstName} ${action.lastName}`;
+
     return {...state, 
       id: action.id,
       username: action.username,
@@ -14,6 +16,7 @@ export const reducer = (state = initialState, action) => {
       firstName: action.firstName,
       lastName: action.lastName,
       organization: action.organization,
+      displayName,
       logo: action.logo,
       locationCity: action.locationCity,
       locationState: action.locationState,
@@ -33,6 +36,8 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.UPDATE_USER) {
+    const displayName = action.userType === 'organization' ? action.organization :`${action.firstName} ${action.lastName}`;
+
     return {...state, 
       id: action.id,
       username: action.username,
@@ -40,6 +45,7 @@ export const reducer = (state = initialState, action) => {
       firstName: action.firstName,
       lastName: action.lastName,
       organization: action.organization,
+      displayName,
       logo: action.logo,
       locationCity: action.locationCity,
       locationState: action.locationState,

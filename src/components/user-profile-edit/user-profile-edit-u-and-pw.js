@@ -11,9 +11,7 @@ import UandPwFields from '../fields/u-and-pw';
 export class UserEditUandPwForm extends Component {
   
   handleSubmitButton(user) {
-    console.log('user',user)
     const isNew = false;
-    
     this.props.dispatch(actionsUser.createOrEditUser(user, this.props.initialValues.authToken, isNew))
     .then(() => {
       this.props.history.push(`/profiles/${this.props.initialValues.id}`);
@@ -25,8 +23,8 @@ export class UserEditUandPwForm extends Component {
     
     return (
       <form className='userProfile'
-        onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
-      >
+        onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}>
+        
         <UandPwFields confirm={true}/>
 
         <div>
@@ -35,7 +33,7 @@ export class UserEditUandPwForm extends Component {
           </button>
           <button className='clearFormButton'
             type="button" disabled={this.props.pristine || this.props.submitting} 
-            onClick={this.props.reset}>Clear Form
+            onClick={this.props.reset}>Reset Form
           </button>
         </div>
       </form>

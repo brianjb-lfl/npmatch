@@ -17,7 +17,9 @@ export class RegisterPage extends Component {
 
   handleSubmitButton(input) {
     this.props.dispatch(actionsUser.createOrEditUser(input))
-      .then(() => this.props.history.push(`/profiles/${this.props.user.id}`))
+      .then(() => {
+        this.props.history.push(`/profiles/${this.props.display.userId}`)
+      })
   }
 
 
@@ -68,7 +70,7 @@ export class RegisterPage extends Component {
 
 export const mapStateToProps = state => ({
   user: state.user,
-  display: state.display.view
+  display: state.display
 });
 
 export default compose(

@@ -15,6 +15,7 @@ export const user = {
   firstName: '',
   lastName: '',
   organization: '',
+  displayName: '',
   logo: '',
   locationCity: '',
   locationState: '',
@@ -140,6 +141,7 @@ export const display = {
   idRole: '',          // role in focus
   idOpportunity: '',
   latestResponse: '',  // on create response, get new id from server, capture here, then component can grab it (prevents edge case of duplication if user tries to edit a newly created response)
+  latestRole: '',      // same as above
 };
 
 export const general = {

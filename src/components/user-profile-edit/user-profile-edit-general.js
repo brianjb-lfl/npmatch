@@ -147,7 +147,7 @@ export class UserEditGeneralForm extends Component {
           </button>
           <button className='clearFormButton'
             type="button" disabled={this.props.pristine || this.props.submitting}
-            onClick={this.props.reset}>Clear Form
+            onClick={this.props.reset}>Reset Form
           </button>
         </div>
 

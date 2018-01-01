@@ -6,7 +6,6 @@ import {user as initialState} from './potential-states'
 export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.LOAD_USER_VIEWED) {
-    console.log('load userViewed')
     return {...state,
       id: action.id,
       username: action.username,

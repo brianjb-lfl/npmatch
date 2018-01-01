@@ -7,12 +7,19 @@ import RolePreview from '../role-preview/role-preview';
 import AdminAdd from '../admin-add/admin-add';
 import UserFollow from '../user-follow/user-follow';
 import * as actionsOpportunity from '../../actions/opportunity';
+import * as actionsDisplay from '../../actions/display';
+import * as actionsUser from '../../actions/user';
 
 export class UserProfile extends Component {
 
   createOpportunity(){
     this.props.dispatch(actionsOpportunity.loadOpportunity({}));
     this.props.history.push('/opportunities/create');
+  }
+
+  editProfile() {
+    this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
+    this.props.history.push(`/profiles/${this.props.user.id}/edit`)
   }
 
   render() {
@@ -35,6 +42,8 @@ export class UserProfile extends Component {
       adminsHeader = '';
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
+
+    let editProfileButton = self ? <button onClick={()=>this.editProfile()}>Edit</button> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {
@@ -135,10 +144,11 @@ export class UserProfile extends Component {
 
     const userProfile = user.id ? 
       <div className='userProfile'>
+        {editProfileButton}
         <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
-        <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
+        <h3 className='name'>{user.displayName}</h3>
         <div className='profileCard'>
-          <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
+          <h4 className='location'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
           <p className='bio'>{user.bio}</p>
           <p className='availability'>{user.availability}</p>
           {links}

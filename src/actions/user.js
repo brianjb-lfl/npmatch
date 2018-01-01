@@ -115,6 +115,26 @@ export const objectToArray=(object)=>{
   return [];
 }
 
+export const formattedLocation = (city, state, country) => {
+  let cityState;
+  if (city && state) {
+    cityState = `${city}, ${state}`;
+  } else if (city) {
+    cityState = city;
+  } else if (state) {
+    cityState = state;
+  }
+  let cityStateCountry;
+  if (cityState && country) {
+    cityStateCountry = `${cityState}, ${country}`;
+  } else if (cityState) {
+    cityStateCountry = cityState;
+  } else if (country) {
+    cityStateCountry = country;
+  }
+  return cityStateCountry;
+}
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const userAPICall = (url, init, body, callback) => dispatch => {
@@ -123,7 +143,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
   else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.postAuthLogin, body)} 
   else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, body) }
-  console.log('just before',init)
+  // console.log('just before',init)
   return fetch(url, init)   
   .then(user=>{ 
     if (!user.ok) { 
@@ -139,6 +159,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
 
     if (callback.isNew) {
+      dispatch(actionsDisplay.setUser(user.id))
       dispatch(login(callback.originalUser))
     } else if (callback.stateLocation === 'userViewed') {
       dispatch(actionsUserViewed.loadUserViewed(user));   
@@ -150,6 +171,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       const responses     = arrayToObject(user.responses,     'idOpportunity');
       
       const formattedUser = {...user, following, admins, adminOf, opportunities, responses}
+      dispatch(actionsDisplay.setUser(formattedUser.id))
       dispatch(loadUser(formattedUser));
     } else if (callback.loadTo === 'updateUser') {
       dispatch(updateUser(user));
@@ -212,7 +234,7 @@ export const login = user => dispatch => {
     originalUser: null,
     loadTo: 'loadUser',
   }
-  // console.log(url, init, userObject, callback);
+  // console.log('login', url, init, userObject, callback);
   return dispatch(userAPICall(url, init, userObject, callback));}
 
 export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'updateUser' ) => dispatch => {
@@ -245,6 +267,7 @@ export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'update
     originalUser,
     loadTo,
   }
+  // console.log('login dispatch')
   return dispatch(userAPICall(url, init, user, callback));}
 
 // @@@@@@@@@@@@@@@ USER RESPONSES TO OPPORTUNITIES @@@@@@@@@@@@@@@@@
@@ -279,7 +302,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   .then(res=>{ 
 
     if (!res.ok) { 
-      console.log('not ok')
+      // console.log('not ok')
       return Promise.reject(res.statusText);
     }
     return res.json();
@@ -308,7 +331,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
 }
 
 export const createOrEditRole = (role, roleType, authToken) => dispatch => {
-  console.log('enter role', role)
+  // console.log('enter role', role)
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
@@ -333,19 +356,19 @@ export const createOrEditRole = (role, roleType, authToken) => dispatch => {
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, role) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
-  console.log('role before fetch', url, init)
+  // console.log('role before fetch', url, init)
 
   return fetch(url, init)
   .then(res=>{ 
     // console.log('role res',res);
     if (!res.ok) { 
-      console.log('not ok');
+      // console.log('not ok');
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
   .then(returnedRole => { 
-    console.log('returnedRole', returnedRole)
+    // console.log('returnedRole', returnedRole)
     if (init.method === 'GET') { } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
@@ -358,6 +381,7 @@ export const createOrEditRole = (role, roleType, authToken) => dispatch => {
     } else {
       dispatch(loadFollowing(returnedRole, isNew));
     }
+    dispatch(actionsDisplay.saveLatestRole(returnedRole.id));
     return dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {

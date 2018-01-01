@@ -36,9 +36,15 @@ export const setUser = userId => ({
   userId
 });
 
-export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE-TIME';
+export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE';
 export const saveLatestResponse = id => ({
   type: SAVE_LATEST_RESPONSE,
   latestResponse: id
+});
+
+export const SAVE_LATEST_ROLE = 'SAVE_LATEST_ROLE';
+export const saveLatestRole = id => ({
+  type: SAVE_LATEST_ROLE,
+  latestRole: id
 });
 

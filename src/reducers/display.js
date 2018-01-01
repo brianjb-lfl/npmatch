@@ -33,12 +33,12 @@ export const reducer = (state = initialState, action) => {
     return {...state, idRole, roleUserId };
   }
 
-  // if (action.type === actions.SET_FORM_STATUS) {
-  //   return {...state, formStatus: action.formStatus };
-  // }
-
   if (action.type === actions.SAVE_LATEST_RESPONSE) {
     return {...state, latestResponse: action.latestResponse };
+  }
+
+  if (action.type === actions.SAVE_LATEST_ROLE) {
+    return {...state, latestRole: action.latestRole };
   }
 
   return state;
