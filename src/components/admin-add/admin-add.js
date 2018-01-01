@@ -11,12 +11,16 @@ import * as actionsDisplay from '../../actions/display';
 export class AdminAdd extends Component {
 
   searchUsers(formValues) {
+    console.log('window',window)
     this.props.dispatch(actionsUsersList.fetchUsersList(formValues))
     .then(()=>{
-      this.props.dispatch(actionsDisplay.changeDisplay('addAdmin'))
+      this.props.dispatch(actionsDisplay.changeDisplay('addAdmin')) // using store as affects parent component
+      window.scrollTo(0,this.state.searchBoxY -40)
     })
-    // toggle so that list of potential admins show
-    // each potential admin to have a preview that allows selecting as an admin
+  }
+
+  getCoords(event){
+    this.setState({searchBoxY: event.target.offsetTop})
   }
 
   render() {
@@ -33,7 +37,8 @@ export class AdminAdd extends Component {
               component='input'
               type='text'
               placeholder='first and/or last name'
-              className='inputField' />
+              className='inputField'
+              onChange={event=>this.getCoords(event)} />
             <label
               className='inputLabel'
               htmlFor={'user'}>user's first and/or last name

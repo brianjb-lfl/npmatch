@@ -42,7 +42,10 @@ export class OpportunityCreate extends Component {
     opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
-      .then(() => this.props.history.push('/myopportunities'))
+      .then(() => {
+        this.props.history.push('/myopportunities');
+        window.scrollTo(0,0);
+      });
   }
 
   render() {

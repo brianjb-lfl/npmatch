@@ -19,6 +19,7 @@ export class BottomNavBar extends Component {
       ));
       this.props.dispatch(actionsDisplay.changeDisplay('exploreOrganizations'));
       this.props.history.push('/organizations');
+      window.scrollTo(0,0);
     }
   }
 
@@ -34,6 +35,8 @@ export class BottomNavBar extends Component {
       ));
       this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors'));
       this.props.history.push('/contributors');
+      window.scrollTo(0,0);
+
     }
   }
 

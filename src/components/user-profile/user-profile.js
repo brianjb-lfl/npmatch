@@ -6,8 +6,14 @@ import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 import RolePreview from '../role-preview/role-preview';
 import AdminAdd from '../admin-add/admin-add';
 import UserFollow from '../user-follow/user-follow';
+import * as actionsOpportunity from '../../actions/opportunity';
 
 export class UserProfile extends Component {
+
+  createOpportunity(){
+    this.props.dispatch(actionsOpportunity.loadOpportunity({}));
+    this.props.history.push('/opportunities/create');
+  }
 
   render() {
 
@@ -27,7 +33,7 @@ export class UserProfile extends Component {
       responseHeader = '';
       followingHeader = '';
       adminsHeader = '';
-      userFollow = user.id ? <UserFollow id={user.id} /> : '' ;
+      userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
     let opportunityPreviews = [];
@@ -135,6 +141,7 @@ export class UserProfile extends Component {
           {userFollow}
         </div>
         {opportunities}
+        <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button>
         {responses}
         {following}
         {admins}

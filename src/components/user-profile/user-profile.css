@@ -35,3 +35,16 @@ main .opportunities h3 {
   margin-top: 50px;
   margin-bottom: 10px;
 }
+
+.addOpportunity {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-decoration: none;
+  background-color: #DA2536;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  font-weight: 700;
+  padding: 8px;
+}

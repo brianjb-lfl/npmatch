@@ -17,7 +17,7 @@ export class OpportunityPreview extends Component {
       });
   }
 
-  goToOpportunity(id) {
+  focusOpportunity(id) {
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
         this.props.dispatch(actionsDisplay.toggleOpportunity(id));
@@ -55,7 +55,7 @@ export class OpportunityPreview extends Component {
 
     return (
       <div className='opportunityPreview'>
-        <div className='opportunityPreviewInner' onClick={()=>this.goToOpportunity(opportunity.id)}>
+        <div className='opportunityPreviewInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
           <h3 className='opportunityTitle'>{opportunity.title}</h3>
           <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
           <p className='timeframe'>{opportunity.timeframe}</p>

@@ -58,7 +58,9 @@ export const oppAPICall = (url, init, body) => dispatch => {
       // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
     }
-    dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));      
+    if (init.method === 'POST') {
+      dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));  
+    }    
     return dispatch(loadOpportunity(opportunity));      
   })
   .catch(error => {

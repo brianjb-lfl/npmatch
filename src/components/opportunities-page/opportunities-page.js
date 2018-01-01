@@ -25,7 +25,6 @@ export class OpportunitiesPage extends Component {
         <h2>Opportunities</h2>
         <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button>
 
-
         <ul>
           {listOfOpps}
         </ul>
