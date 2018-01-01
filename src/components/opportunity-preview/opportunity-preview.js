@@ -17,6 +17,14 @@ export class OpportunityPreview extends Component {
       });
   }
 
+  goToOpportunity(id) {
+    this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
+      .then(() => {
+        this.props.history.push(`/opportunities/${id}`);
+        this.props.dispatch(actionsDisplay.changeDisplay('viewOpportunity'));
+      });
+  }
+
   render() {
     const opportunity = this.props.opportunity;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
@@ -46,10 +54,12 @@ export class OpportunityPreview extends Component {
 
     return (
       <div className='opportunityPreview'>
-        <h3 className='opportunityTitle'>{opportunity.title}</h3>
-        <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
-        <p className='timeframe'>{opportunity.timeframe}</p>
-        <p className='description'>{opportunity.description}</p>
+        <div className='opportunityPreviewInner' onClick={()=>this.goToOpportunity(opportunity.id)}>
+          <h3 className='opportunityTitle'>{opportunity.title}</h3>
+          <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
+          <p className='timeframe'>{opportunity.timeframe}</p>
+          <p className='description'>{opportunity.description}</p>
+        </div>
         {editOrRespond}
         {listOfResponses}
       </div>
