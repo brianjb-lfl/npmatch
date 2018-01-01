@@ -5,11 +5,13 @@ import './user-profile.css';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 import RolePreview from '../role-preview/role-preview';
 import AdminAdd from '../admin-add/admin-add';
+import UserFollow from '../user-follow/user-follow';
 
 export class UserProfile extends Component {
 
   render() {
-    let self, user, opportunityHeader, responseHeader, followingHeader, adminsHeader;
+
+    let self, user, opportunityHeader, responseHeader, followingHeader, adminsHeader, userFollow;
     if (this.props.display.view === 'selfProfile' || this.props.display.view === 'profileEdit' || this.props.display.view === 'addAdmin' ) {
       self = true;
       user = this.props.user;
@@ -17,13 +19,15 @@ export class UserProfile extends Component {
       responseHeader = 'My Responses';
       followingHeader = 'I Am Following';
       adminsHeader = 'Site Admins';
+      userFollow = '';
     } else {
       self = false;
       user = this.props.userViewed;
-      opportunityHeader = this.props.user.userType === 'organization' ? `${user.organization}'s Opportunities` : `${user.firstName}'s Opportunities`;
+      opportunityHeader = user.userType === 'organization' ? `${user.organization}'s Opportunities` : `${user.firstName}'s Opportunities`;
       responseHeader = '';
       followingHeader = '';
       adminsHeader = '';
+      userFollow = user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
     let opportunityPreviews = [];
@@ -128,6 +132,7 @@ export class UserProfile extends Component {
             <p className='causes'>{user.causes.join(', ')}</p>
             <p className='skills'>{user.skills.join(', ')}</p>
           </div>
+          {userFollow}
         </div>
         {opportunities}
         {responses}
