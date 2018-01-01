@@ -11,6 +11,12 @@ export const loadOpportunitiesList = array => ({
   main: array
 })
 
+export const PREPEND_OPPORTUNITIES_LIST = 'PREPEND_OPPORTUNITIES_LIST';
+export const prependOpportunitiesList = opp => ({
+  type: PREPEND_OPPORTUNITIES_LIST,
+  opp
+})
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOppsList = (query, authToken) => dispatch => {

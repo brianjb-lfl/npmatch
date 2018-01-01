@@ -41,8 +41,6 @@ export class OpportunityCreate extends Component {
     opp.timestampStart = this.convertToTimeStamp(opp.timestampStart);
     opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
-    // console.log('opp to submit', opp)
-
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => this.props.history.push('/myopportunities'))
   }
@@ -196,7 +194,6 @@ export class OpportunityCreate extends Component {
     );
   }
 }
-
 
 export const mapStateToProps = state => {
 

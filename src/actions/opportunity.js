@@ -3,6 +3,7 @@ import { REACT_APP_BASE_URL } from '../config'
 import  * as actionsDisplay from './display';
 import { arrayToObject } from './user';
 import * as ck from './api-response-checks';
+import * as actionsOpportunitiesList from './opportunities-list';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -57,6 +58,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
       // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
     }
+    dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));      
     return dispatch(loadOpportunity(opportunity));      
   })
   .catch(error => {

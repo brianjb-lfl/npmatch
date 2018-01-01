@@ -9,6 +9,11 @@ export const reducer = (state = initialState, action) => {
     return {...state, main: action.main };
   }
 
+  if (action.type === actions.PREPEND_OPPORTUNITIES_LIST) {
+    const opps = [action.opp, ...state.main]
+    return {...state, main: opps };
+  }
+
   return state;
 
 }
