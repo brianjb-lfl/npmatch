@@ -137,6 +137,7 @@ export const display = {
   modalMessage: '',
   userId: '',
   idOpportunity: '',
+  latestResponse: '',  // on create response, get new id from server, capture here, then component can grab it (prevents edge case of duplication if user tries to edit a newly created response)
 };
 
 export const general = {

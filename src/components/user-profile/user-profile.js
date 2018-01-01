@@ -114,7 +114,9 @@ export class UserProfile extends Component {
     if (this.props.display.view === 'addAdmin' && self) {
       if(Array.isArray(this.props.usersList.main)) {
         this.props.usersList.main.forEach((user,index)=>{
-          userSearchPreviews.push(<RolePreview user={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
+          if (!(this.props.user.admins[user.id])){
+            userSearchPreviews.push(<RolePreview user={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
+          }
         })
       }
     }

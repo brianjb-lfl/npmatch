@@ -28,8 +28,10 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.TOGGLE_ROLE) {
+    console.log('role', action)
     const idRole = state.idRole === action.idRole ? null : action.idRole ;
-    return {...state, idRole };
+    const userId = state.userId === action.userId ? null : action.userId ;
+    return {...state, idRole, userId };
   }
 
   // if (action.type === actions.SET_FORM_STATUS) {

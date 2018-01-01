@@ -143,9 +143,9 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     } else if (callback.stateLocation === 'userViewed') {
       dispatch(actionsUserViewed.loadUserViewed(user));   
     } else if (callback.loadTo === 'loadUser') {
-      const following     = arrayToObject(user.following,     'id');    // id of org being followed
-      const admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
-      const adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
+      const following     = arrayToObject(user.following,     'idUserReceiving');    // id of org being followed
+      const admins        = arrayToObject(user.admins,        'idUserReceiving');    // id of user who is admin
+      const adminOf       = arrayToObject(user.adminOf,       'idUserAdding');    // id of org user is admin of
       const opportunities = arrayToObject(user.opportunities, 'id');
       const responses     = arrayToObject(user.responses,     'idOpportunity');
       
@@ -291,7 +291,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesIdRes, returnedResponse) }
 
     if (init.method === 'POST') {
-      console.log('WHY ARE WE USING THIS?')
+      // this saves the id of the lastest response, which is then available to the component; this prevents duplication of responses in the event that a user creates a response, then tries to edit it before refreshing the parent component
       dispatch(actionsDisplay.saveLatestResponse(returnedResponse.id))
     }
     if ( loadTo === 'user') {

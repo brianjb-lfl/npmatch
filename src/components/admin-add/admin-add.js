@@ -32,7 +32,7 @@ export class AdminAdd extends Component {
           <div>
             <Field
               name='user'
-              id='iser'
+              id='user'
               component='input'
               type='text'
               placeholder='first and/or last name'
@@ -44,7 +44,7 @@ export class AdminAdd extends Component {
             </label>
           </div>
           <button className='submitButton'
-            type="submit" disabled={this.props.submitting}>search users
+            type="submit" disabled={this.props.pristine || this.props.submitting}>search users
           </button>
         </form>
       </div>

@@ -9,11 +9,6 @@ import * as actionsDisplay from '../../actions/display';
 import './role-preview.css';
 
 export class RolePreview extends Component {
-  // props from parent: role, user (converted to role below), roleType (admin, following), index, history
-  // constructor(props){
-  //   super(props);
-
-  // }
 
   componentWillMount() {
     let role;
@@ -42,8 +37,8 @@ export class RolePreview extends Component {
     })
   }
 
-  toggleVisibility(id) {
-    this.props.dispatch(actionsDisplay.toggleRole(id));
+  toggleVisibility(id, userId) {
+    this.props.dispatch(actionsDisplay.toggleRole(id, userId));
     this.props.reset();
   }
 
@@ -86,7 +81,6 @@ export class RolePreview extends Component {
       const buttonLabel = this.state.capabilities === 'following' ? 'un-Follow' : 'Follow' ;
       selector = <button onClick={()=>this.setRole(capabilities)}>{buttonLabel}</button>
     } else if (this.props.roleType === 'admin'  && isInFocus) {
-      // const capabilities = `capabilities${this.props.index}`;
       selector = <form className='selectAdmin'
         onSubmit={this.props.handleSubmit((values) => this.setRole(values))}>
         <div>
@@ -115,7 +109,7 @@ export class RolePreview extends Component {
         </div>
         <button 
           className='responseButton' 
-          onClick={() => this.toggleVisibility(this.state.idRole)}>
+          onClick={() => this.toggleVisibility(this.state.idRole, this.state.role.idUserReceiving)}>
           {this.state.buttonLabel}
         </button>
         {selector}
@@ -129,6 +123,7 @@ export const mapStateToProps = state => ({
   general: state.general,
   display: state.display,
   enableReinitialize: true,
+  initialValues: state.user.admins[state.display.userId]
 })
 
 export default compose(
