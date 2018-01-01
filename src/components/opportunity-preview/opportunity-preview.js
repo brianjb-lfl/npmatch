@@ -20,13 +20,13 @@ export class OpportunityPreview extends Component {
   goToOpportunity(id) {
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
-        this.props.history.push(`/opportunities/${id}`);
-        this.props.dispatch(actionsDisplay.changeDisplay('viewOpportunity'));
+        this.props.dispatch(actionsDisplay.toggleOpportunity(id));
       });
   }
 
   render() {
     const opportunity = this.props.opportunity;
+    const isInFocus = this.props.display.idOpportunity === opportunity.id ? true : false ;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
     let notes = '';
@@ -51,6 +51,7 @@ export class OpportunityPreview extends Component {
         {response.title}</p>
       });
     }
+    const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
     return (
       <div className='opportunityPreview'>
@@ -61,7 +62,7 @@ export class OpportunityPreview extends Component {
           <p className='description'>{opportunity.description}</p>
         </div>
         {editOrRespond}
-        {listOfResponses}
+        {responses}
       </div>
     )
   }
