@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
-import SelectList from 'react-widgets/lib/SelectList'
 import 'react-widgets/dist/css/react-widgets.css'
 
 import * as actionsOpportunity from '../../actions/opportunity';
@@ -63,11 +62,6 @@ export class OpportunityCreate extends Component {
         valueField={valueField}
         textField={textField}
         onChange={input.onChange} />
-
-    const renderSelectList = ({ input, data }) =>
-      <SelectList {...input}
-        onBlur={() => input.onBlur()}
-        data={data} />
 
     return (
       <main className='createOpportunity'>

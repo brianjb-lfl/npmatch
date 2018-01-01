@@ -29,7 +29,6 @@ export class OpportunityPreview extends Component {
     const isInFocus = this.props.display.idOpportunity === opportunity.id ? true : false ;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
-    let notes = '';
     if(this.props.response){
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
     } else if (isMyOpportunity) {

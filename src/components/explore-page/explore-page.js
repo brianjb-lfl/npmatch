@@ -23,7 +23,7 @@ export class ExplorePage extends Component {
           return <Link to={`/profiles/${user.id}`} key={key} >
           <DetailedOrganizationPreview user={user} /> 
         </Link> } else {
-          return;
+          return null;
         }
       }) : '' ;
       title = 'Explore Organizations' 
@@ -35,7 +35,7 @@ export class ExplorePage extends Component {
           return <Link to={`/profiles/${user.id}`} key={key} >
           <DetailedContributorPreview user={user} /> 
         </Link> } else {
-          return;
+          return null;
         }
       }) : '' ;
       title = 'Explore Contributors'

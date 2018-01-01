@@ -57,7 +57,6 @@ export class RolePreview extends Component {
 
   setRole(formValues) {
     console.log('formValues',formValues);
-    const isNew = this.state.role.id ? false : true ;
     const role = {
       id: this.state.role.id,
       idUserAdding: this.props.userInState.id,

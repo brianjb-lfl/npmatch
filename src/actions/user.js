@@ -291,14 +291,15 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesIdRes, returnedResponse) }
 
     if (init.method === 'POST') {
+      console.log('WHY ARE WE USING THIS?')
       dispatch(actionsDisplay.saveLatestResponse(returnedResponse.id))
     }
     if ( loadTo === 'user') {
-      return dispatch(loadResponse(returnedResponse));
+      dispatch(loadResponse(returnedResponse));
     } else {
-      return dispatch(actionsOpportunity.loadResponse(returnedResponse));
+      dispatch(actionsOpportunity.loadResponse(returnedResponse));
     }
-    dispatch(actionsDisplay.changeDisplayStatus('normal'));
+    return dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {
     dispatch(actionsDisplay.changeDisplayStatus('normal'));
@@ -307,7 +308,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
 }
 
 export const createOrEditRole = (role, roleType, authToken) => dispatch => {
-  console.log('enter role', role, isNew)
+  console.log('enter role', role)
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
@@ -353,11 +354,11 @@ export const createOrEditRole = (role, roleType, authToken) => dispatch => {
         returnedRole = {...role};
     }
     if ( roleType === 'admin' ) {
-      return dispatch(loadAdmin(returnedRole, isNew));
+      dispatch(loadAdmin(returnedRole, isNew));
     } else {
-      return dispatch(loadFollowing(returnedRole, isNew));
+      dispatch(loadFollowing(returnedRole, isNew));
     }
-    dispatch(actionsDisplay.changeDisplayStatus('normal'));
+    return dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {
     dispatch(actionsDisplay.changeDisplayStatus('normal'));

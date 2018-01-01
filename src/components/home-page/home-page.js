@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import OrganizationPreview from '../organization-preview/organization-preview';
 // import ContributorPreview from '../contributor-preview/contributor-preview';
@@ -14,7 +13,7 @@ export class HomePage extends Component {
       if (user.userType === 'organization') {
         return  <OrganizationPreview user={user} key={key} history={this.props.history}/> 
        } else {
-        return;
+        return null;
       }
       }) : '' ;
 

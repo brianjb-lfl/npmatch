@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actionsDisplay from '../../actions/display';
 
 import './landing-page.css'
@@ -18,7 +17,7 @@ export class LandingPage extends Component {
       if (user.userType === 'organization') {
         return <OrganizationPreview user={user} key={key} history={this.props.history}/> 
       } else {
-        return;
+        return null;
       }
       }) : '' ;
 

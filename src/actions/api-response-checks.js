@@ -12,8 +12,8 @@ export const compareObjects = (expected, received) => {
         });
       } else {
         const typeReceived = typeof received;
-        if (!(message.includes(feedback))) { message.push( feedback )};
         let feedback = `expected array at ${expected} at level ${levelCounter} but received ${typeReceived}`;
+        if (!(message.includes(feedback))) { message.push( feedback )};
       }
     } else if (typeof expected === 'object' && !Array.isArray(expected)) {
       if (typeof received === 'object' && !Array.isArray(received)) {

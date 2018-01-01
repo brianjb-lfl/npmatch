@@ -105,7 +105,7 @@ export class UserProfile extends Component {
       {adminPreviews}
     </div>
     } else if (self) {
-      'There are no site admins. You can add an admin by searching users below.' ;
+      admins = 'There are no site admins. You can add an admin by searching users below.' ;
     }
 
     const adminAdd = (user.userType === 'organization' && self) ? <AdminAdd/> : '' ;

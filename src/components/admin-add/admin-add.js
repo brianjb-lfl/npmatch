@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 import './admin-add.css';
-import * as actionsUser from '../../actions/user';
 import * as actionsUsersList from '../../actions/users-list';
 import * as actionsDisplay from '../../actions/display';
 

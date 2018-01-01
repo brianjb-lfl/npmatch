@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 
 import * as actionsUser from '../../actions/user';
-import * as actionsDisplay from '../../actions/display';
 
 export class UserFollow extends Component {
   // Props from parent: id is id of user to be followed
 
   toggleFollow(capabilities) {
     let id = null;
-    let isNew = true;
     if(this.props.user.following){ // user who is logged in
       if(this.props.user.following[this.props.id]) { // this.props.id is user to be followed
         id = this.props.user.following[this.props.id].id; // id of the roles join table
-        isNew = false;
       }
     }
     const role = {

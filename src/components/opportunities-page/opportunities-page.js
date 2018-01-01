@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 // import * as actionsUser from '../../actions/user';
 import * as actionsOpportunity from '../../actions/opportunity';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 
 import './opportunities-page.css';
-import { createOpportunity } from '../../actions/opportunity';
 
 export class OpportunitiesPage extends Component {
 
