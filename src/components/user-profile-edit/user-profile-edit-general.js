@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -69,6 +70,9 @@ export class UserEditGeneralForm extends Component {
 
   render() {
 
+    const redirect = this.props.user.id ? '' :
+    <Switch><Redirect from='*' to='/' /></Switch>
+
     const nameForm = this.props.user.userType === 'individual' ?
       <IndivNameFields /> : <OrgNameFields />;
 
@@ -87,7 +91,7 @@ export class UserEditGeneralForm extends Component {
     return (
       <form className='userProfile'
         onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))} >
-
+        {redirect}
         {nameForm}
 
         <div>

@@ -29,23 +29,23 @@ export class App extends Component {
   }
 
   render() {
+    // NOTE: individual components include a redirect if users are not signed in: ExplorePage, OpportunityCreae, OpportunitiesPage, UserProfileEdit
     return (
       <Router>
         <div>
           <Switch>
-          <Route exact path="/" component={RootPage} />
-          <Route exact path="/profiles/:id" component={UserProfile} />
-          <Route exact path="/profiles/:id/edit" component={UserProfileEdit} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/organizations" component={ExplorePage} />
-          <Route exact path="/contributors" component={ExplorePage} />
-          <Route exact path="/opportunities/create" component={OpportunityCreate} />
-          <Route exact path="/myopportunities" component={OpportunitiesPage} />
-          
-          {/* <Route path="/inbox" component={InboxPage} />
-          <Route path="/settings" component={SettingsPage} /> */}
-          <Redirect from='*' to='/' />
+            <Route exact path="/" component={RootPage} />
+            <Route exact path="/profiles/:id" component={UserProfile} />
+            <Route exact path="/profiles/:id/edit" component={UserProfileEdit} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/organizations" component={ExplorePage} />
+            <Route exact path="/contributors" component={ExplorePage} />
+            <Route exact path="/opportunities/create" component={OpportunityCreate} />
+            <Route exact path="/myopportunities" component={OpportunitiesPage} />
+            {/* <Route path="/inbox" component={InboxPage} />
+            <Route path="/settings" component={SettingsPage} /> */}
+            <Redirect from='*' to='/' />
           </Switch>
           <Route path='/*' component={TopNavBar}/>
           <Route path='/*' component={BottomNavBar} />
@@ -56,12 +56,12 @@ export class App extends Component {
 }
 
 export const mapStateToProps = state => ({
-  user: state.user,
-  userViewed: state.userViewed,
-  usersList: state.usersList,
-  opportunity: state.opportunity,
-  opportunitiesList: state.opportunitiesList,
-  display: state.display,
+  // user: state.user,
+  // userViewed: state.userViewed,
+  // usersList: state.usersList,
+  // opportunity: state.opportunity,
+  // opportunitiesList: state.opportunitiesList,
+  // display: state.display,
   general: state.general
 })
 export default connect(mapStateToProps)(App);

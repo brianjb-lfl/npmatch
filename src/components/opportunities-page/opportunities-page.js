@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Redirect } from 'react-router-dom';
 // import * as actionsUser from '../../actions/user';
 import * as actionsOpportunity from '../../actions/opportunity';
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 
 import './opportunities-page.css';
+import { createOpportunity } from '../../actions/opportunity';
 
 export class OpportunitiesPage extends Component {
 
@@ -15,20 +16,25 @@ export class OpportunitiesPage extends Component {
   }
 
   render() {
-    // console.log('this.props.opportunitiesList.main',this.props.opportunitiesList.main)
+
+    const redirect = this.props.user.id ? '' :
+    <Switch><Redirect from='*' to='/' /></Switch>
+
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
       return <li key={index}><OpportunityPreview opportunity={opp} history={this.props.history} index={index}/></li>
     });
 
+    const createOppButton = this.props.user.id ? 
+      <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
+
     return (
       <main className='opportunitiesPage'>
+        {redirect}
         <h2>Opportunities</h2>
-        <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button>
-
+        {createOppButton}
         <ul>
           {listOfOpps}
         </ul>
-      
       </main>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -50,6 +51,9 @@ export class OpportunityCreate extends Component {
 
   render() {
 
+    const redirect = this.props.user.id ? '' :
+    <Switch><Redirect from='*' to='/' /></Switch>
+
     const isNew = this.props.display.view === 'editOpportunity' ? false : true;
     const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity';
 
@@ -65,14 +69,13 @@ export class OpportunityCreate extends Component {
         onBlur={() => input.onBlur()}
         data={data} />
 
-
     return (
       <main className='createOpportunity'>
+        {redirect}
         <h2>Opportunity</h2>
 
         <form className='opportunityForm'
-          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}
-        >
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}>
 
           <div>
             <label

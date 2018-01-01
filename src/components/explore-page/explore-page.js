@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Redirect } from 'react-router-dom';
 
 import './explore-page.css'
 import DetailedOrganizationPreview from '../detailed-organization-preview/detailed-organization-preview';
 import DetailedContributorPreview from '../detailed-contributor-preview/detailed-contributor-preview';
 
-
 export class ExplorePage extends Component {
 
   render() {
+
+    const redirect = this.props.user.id ? '' :
+    <Switch><Redirect from='*' to='/' /></Switch>
+
     let previews;
     let title;
 
@@ -40,6 +43,7 @@ export class ExplorePage extends Component {
 
     return (
       <main className='explorePage'>
+        {redirect}
         <h2 className='sectionTitle'>{title}</h2>
         {previews}
       </main>
