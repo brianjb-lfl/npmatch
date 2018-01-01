@@ -55,12 +55,12 @@ export const oppAPICall = (url, init, body) => dispatch => {
     else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesIdRes, opportunity) }
     
     if (Array.isArray(opportunity.responses)) {
-      // console.log('start formatting opp',opportunity.responses);
       opportunity.responses = arrayToObject(opportunity.responses, 'id');
     }
     if (init.method === 'POST') {
       dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));  
-    }    
+    }      
+    dispatch(actionsDisplay.changeDisplayStatus('normal'));
     return dispatch(loadOpportunity(opportunity));      
   })
   .catch(error => {

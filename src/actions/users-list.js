@@ -35,13 +35,12 @@ export const fetchUsersList = (query, authToken) => dispatch => {
       return res.json();
     })
     .then(usersList=>{
-
       ck.compareObjects(ck.getUsersListRes, usersList );
-
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(loadUsersList(usersList));      
     })
     .catch(error => {
-      // console.log('error',error);
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(actionsDisplay.toggleModal(error));
     })
 }

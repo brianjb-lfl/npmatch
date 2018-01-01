@@ -42,7 +42,6 @@ export const fetchInitialize = () => dispatch => {
     })
     .then(res => {
       ck.compareObjects(ck.getAdminInitializeRes, res)
-
       dispatch(actionsUsersList.loadUsersList(res.users));
       return res;
     })
@@ -52,6 +51,7 @@ export const fetchInitialize = () => dispatch => {
     })
     .then(res => {
       dispatch(flattenLocations())
+      dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(loadCauses(res.causes));
     })
     .catch(error => {

@@ -132,19 +132,17 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    console.log('user returned', user)
+    // console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersIdRes, user) }
 
     if (callback.isNew) {
-      return dispatch(login(callback.originalUser))
-    }
-    if (callback.stateLocation === 'userViewed') {
-      return dispatch(actionsUserViewed.loadUserViewed(user));   
-    } 
-    if (callback.loadTo === 'loadUser') {
+      dispatch(login(callback.originalUser))
+    } else if (callback.stateLocation === 'userViewed') {
+      dispatch(actionsUserViewed.loadUserViewed(user));   
+    } else if (callback.loadTo === 'loadUser') {
       const following     = arrayToObject(user.following,     'id');    // id of org being followed
       const admins        = arrayToObject(user.admins,        'id');    // id of user who is admin
       const adminOf       = arrayToObject(user.adminOf,       'id');    // id of org user is admin of
@@ -152,14 +150,11 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       const responses     = arrayToObject(user.responses,     'idOpportunity');
       
       const formattedUser = {...user, following, admins, adminOf, opportunities, responses}
-      return dispatch(loadUser(formattedUser));
+      dispatch(loadUser(formattedUser));
+    } else if (callback.loadTo === 'updateUser') {
+      dispatch(updateUser(user));
     }
-    if (callback.loadTo === 'updateUser') {
-      console.log('updateUser',user);
-      return dispatch(updateUser(user));
-    }
-    dispatch(actionsDisplay.changeDisplayStatus('normal'));
-    return;
+    return dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
   .catch(error => {
     // console.log('error',error);

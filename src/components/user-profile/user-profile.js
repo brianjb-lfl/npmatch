@@ -46,11 +46,13 @@ export class UserProfile extends Component {
       }
     }
 
-    const opportunities = opportunityPreviews.length > 0 ?
+    const opportunities = opportunityPreviews.length > 0 && user.id ?
     <div className='opportunities'>
       <h3>{opportunityHeader}</h3>
       {opportunityPreviews}
     </div> : '' ;
+
+    const addOpportunityButton = self ? <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
 
     let responsePreviews = [];
     if (typeof user.responses === 'object' && self) {
@@ -96,16 +98,20 @@ export class UserProfile extends Component {
       }
     }
 
-    const admins = adminPreviews.length > 0 ?
-    <div className='admins'>
+    let admins = '';
+    if (adminPreviews.length > 0){
+      admins = <div className='admins'>
       <h3>{adminsHeader}</h3>
       {adminPreviews}
-    </div> : 'There are no site admins. You can add an admin by searching users below.' ;
+    </div>
+    } else if (self) {
+      'There are no site admins. You can add an admin by searching users below.' ;
+    }
 
-    const adminAdd = user.userType === 'organization' ? <AdminAdd/> : '' ;
+    const adminAdd = (user.userType === 'organization' && self) ? <AdminAdd/> : '' ;
 
     let userSearchPreviews = [];
-    if (this.props.display.view === 'addAdmin') {
+    if (this.props.display.view === 'addAdmin' && self) {
       if(Array.isArray(this.props.usersList.main)) {
         this.props.usersList.main.forEach((user,index)=>{
           userSearchPreviews.push(<RolePreview user={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
@@ -125,23 +131,27 @@ export class UserProfile extends Component {
       </a>
     })
 
+    const userProfile = user.id ? 
+      <div className='userProfile'>
+        <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
+        <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
+        <div className='profileCard'>
+          <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
+          <p className='bio'>{user.bio}</p>
+          <p className='availability'>{user.availability}</p>
+          {links}
+          <p className='causes'>{user.causes.join(', ')}</p>
+          <p className='skills'>{user.skills.join(', ')}</p>
+        </div>
+        {userFollow}
+      </div> :
+      <h3>Sorry, user not found</h3>;
+
     return (
       <main>
-        <div className='userProfile'>
-          <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
-          <h3 className='name'>{user.username}{user.firstName}{user.lastName}{user.organization}</h3>
-          <div className='profileCard'>
-            <h4 className='location'>{user.locationCity}, {user.locationState}, {user.locationCountry}</h4>
-            <p className='bio'>{user.bio}</p>
-            <p className='availability'>{user.availability}</p>
-            {links}
-            <p className='causes'>{user.causes.join(', ')}</p>
-            <p className='skills'>{user.skills.join(', ')}</p>
-          </div>
-          {userFollow}
-        </div>
+        {userProfile}
         {opportunities}
-        <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button>
+        {addOpportunityButton}
         {responses}
         {following}
         {admins}

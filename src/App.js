@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
 // import * as actionsDisplay from './actions/display';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LoginPage from './components/login-page/login-page';
 import RegisterPage from './components/register-page/register-page'
 // import HomePage from './components/home-page/home-page';
@@ -32,6 +32,7 @@ export class App extends Component {
     return (
       <Router>
         <div>
+          <Switch>
           <Route exact path="/" component={RootPage} />
           <Route exact path="/profiles/:id" component={UserProfile} />
           <Route exact path="/profiles/:id/edit" component={UserProfileEdit} />
@@ -44,8 +45,9 @@ export class App extends Component {
           
           {/* <Route path="/inbox" component={InboxPage} />
           <Route path="/settings" component={SettingsPage} /> */}
-          {/* <Redirect from='*' to='/' /> */}
-          <Route path='/*' component={TopNavBar} />
+          <Redirect from='*' to='/' />
+          </Switch>
+          <Route path='/*' component={TopNavBar}/>
           <Route path='/*' component={BottomNavBar} />
         </div>
       </Router>
