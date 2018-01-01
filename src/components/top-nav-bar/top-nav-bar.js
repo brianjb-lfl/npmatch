@@ -25,6 +25,7 @@ export class TopNavBar extends Component {
   }
 
   editProfile() {
+    this.props.dispatch(actionsDisplay.setUser(this.props.user.id));
     if (this.props.display.view === 'selfProfile') {
       this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
       this.props.history.push(`/profiles/${this.props.user.id}/edit`)  

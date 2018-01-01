@@ -18,7 +18,7 @@ export class UserProfile extends Component {
   render() {
 
     let self, user, opportunityHeader, responseHeader, followingHeader, adminsHeader, userFollow;
-    if (this.props.display.view === 'selfProfile' || this.props.display.view === 'profileEdit' || this.props.display.view === 'addAdmin' ) {
+    if (this.props.display.userId === this.props.user.id) {
       self = true;
       user = this.props.user;
       opportunityHeader = 'My Opportunities';

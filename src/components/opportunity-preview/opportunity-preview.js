@@ -13,7 +13,8 @@ export class OpportunityPreview extends Component {
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
         this.props.history.push('/opportunities/create');
-        this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
+        // this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
+        window.scrollTo(0,0);
       });
   }
 

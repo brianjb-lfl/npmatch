@@ -17,7 +17,7 @@ export class RolePreview extends Component {
     if(this.props.role){
       role = this.props.role;
       idRole = this.props.role.id;
-      capabilities = this.props.role.capabilities;
+      capabilities = this.props.role.capabilities || this.props.roleType;
     } else if (this.props.user) {
       role = {
         firstName: this.props.user.firstName,
@@ -123,7 +123,7 @@ export const mapStateToProps = state => ({
   general: state.general,
   display: state.display,
   enableReinitialize: true,
-  initialValues: state.user.admins[state.display.userId]
+  initialValues: state.user.admins[state.display.roleUserId]
 })
 
 export default compose(

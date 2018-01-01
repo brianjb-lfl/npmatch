@@ -135,7 +135,9 @@ export const display = {
   status: 'normal',    // loading
   modal: false,
   modalMessage: '',
-  userId: '',
+  userId: '',          // user in focus
+  roleUserId: '',      // user whose role is in focus
+  idRole: '',          // role in focus
   idOpportunity: '',
   latestResponse: '',  // on create response, get new id from server, capture here, then component can grab it (prevents edge case of duplication if user tries to edit a newly created response)
 };
