@@ -152,7 +152,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    // console.log('user returned', user)
+    console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
@@ -164,8 +164,8 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     } else if (callback.stateLocation === 'userViewed') {
       dispatch(actionsUserViewed.loadUserViewed(user));   
     } else if (callback.loadTo === 'loadUser') {
-      const following     = arrayToObject(user.following,     'idUserReceiving');    // id of org being followed
-      const admins        = arrayToObject(user.admins,        'idUserReceiving');    // id of user who is admin
+      const following     = arrayToObject(user.following,     'idUserReceiving'); // id of org being followed
+      const admins        = arrayToObject(user.admins,        'idUserReceiving'); // id of user who is admin
       const adminOf       = arrayToObject(user.adminOf,       'idUserAdding');    // id of org user is admin of
       const opportunities = arrayToObject(user.opportunities, 'id');
       const responses     = arrayToObject(user.responses,     'idOpportunity');
@@ -330,8 +330,8 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   });
 }
 
-export const createOrEditRole = (role, roleType, authToken) => dispatch => {
-  // console.log('enter role', role)
+export const createOrEditRole = (role, roleType, authToken, roleNameFields) => dispatch => {
+  console.log('enter role', role, roleNameFields)
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
@@ -356,27 +356,31 @@ export const createOrEditRole = (role, roleType, authToken) => dispatch => {
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, role) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
-  // console.log('role before fetch', url, init)
+  console.log('role before fetch', url, init)
 
   return fetch(url, init)
   .then(res=>{ 
-    // console.log('role res',res);
+    console.log('role res',res);
     if (!res.ok) { 
       // console.log('not ok');
       return Promise.reject(res.statusText);
     }
     return res.json();
   }) 
-  .then(returnedRole => { 
-    // console.log('returnedRole', returnedRole)
+  .then(rawReturnedRole => { 
+    console.log('returnedRole', rawReturnedRole)
     if (init.method === 'GET') { } 
-    else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, returnedRole) } 
-    else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, returnedRole) }
+    else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, rawReturnedRole) } 
+    else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, rawReturnedRole) }
+    
+    let returnedRole = {...rawReturnedRole, ...roleNameFields}; // server isn't sending back name, organization, etc., so we hold on, and add them back here
 
-    if (returnedRole.message === 'Role deleted') {
-        returnedRole = {...role};
+    if (rawReturnedRole.message === 'Role deleted') {
+        returnedRole = {...role, ...roleNameFields};
     }
+    console.log('returnedRole hydrated',returnedRole)
     if ( roleType === 'admin' ) {
+      // if (returnedRole.capabilities === 'admin') // vs 'delete'
       dispatch(loadAdmin(returnedRole, isNew));
     } else {
       dispatch(loadFollowing(returnedRole, isNew));

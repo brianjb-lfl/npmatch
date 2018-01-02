@@ -20,6 +20,7 @@ export class RolePreview extends Component {
       capabilities = this.props.role.capabilities || this.props.roleType;
     } else if (this.props.user) {
       role = {
+        idUserAdding: this.props.userInState.id,
         firstName: this.props.user.firstName,
         lastName: this.props.user.lastName,
         organization: this.props.user.organization,
@@ -34,6 +35,7 @@ export class RolePreview extends Component {
       capabilities,
       idRole,  // need this to be unique, including potential roles
       buttonLabel: 'edit',
+      message: '',
     })
   }
 
@@ -56,22 +58,31 @@ export class RolePreview extends Component {
       id: this.state.role.id,
       idUserAdding: this.props.userInState.id,
       idUserReceiving: this.state.role.idUserReceiving,
-      capabilities: formValues.capabilities
-    }    
-    this.props.dispatch(actionsUser.createOrEditRole(role, this.props.roleType, this.props.userInState.authToken))
+      capabilities: this.props.roleType === 'following' ? formValues : formValues.capabilities,
+    }
+    const nameFields = {
+      firstName: this.state.role.firstName,
+      lastName: this.state.role.lastName,
+      organization: this.state.role.organization,
+    }
+    const message = (this.props.roleType === 'admin' && formValues.capabilities === 'delete') ? 'admin role has been removed' : null ;
+
+    this.props.dispatch(actionsUser.createOrEditRole(role, this.props.roleType, this.props.userInState.authToken, nameFields))
     .then(()=>{
       if (!role.id) {
         // if no id, role is new, get id from store (put there by fetch upon create)
-        this.setState({capabilities: role.capabilities, id: this.props.display.latestRole})
+        this.setState({capabilities: role.capabilities, message, id: this.props.display.latestRole})
       } else {
-        this.setState({capabilities: role.capabilities})
+        this.setState({capabilities: role.capabilities, message})
       }
+      this.toggleVisibility(null, null);
     })
   }
 
   render() {
 
     const isInFocus = this.props.display.idRole === this.state.idRole ? true : false; // using store, so that we only ever have 1 in focus
+    const message = this.state.message ? <p>{this.state.message}</p> : null ;
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>
     <DropdownList {...input}
@@ -116,6 +127,7 @@ export class RolePreview extends Component {
           onClick={() => this.toggleVisibility(this.state.idRole, this.state.role.idUserReceiving)}>
           {this.state.buttonLabel}
         </button>
+        {message}
         {selector}
       </div>
     )

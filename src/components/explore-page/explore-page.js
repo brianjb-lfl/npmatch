@@ -25,7 +25,7 @@ export class ExplorePage extends Component {
         </Link> } else {
           return null;
         }
-      }) : '' ;
+      }) : null ;
       title = 'Explore Organizations' 
 
     } else {
@@ -37,7 +37,7 @@ export class ExplorePage extends Component {
         </Link> } else {
           return null;
         }
-      }) : '' ;
+      }) : null ;
       title = 'Explore Contributors'
     }
 

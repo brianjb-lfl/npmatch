@@ -9,8 +9,6 @@ import * as actionsGeneral from './actions/general';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LoginPage from './components/login-page/login-page';
 import RegisterPage from './components/register-page/register-page'
-// import HomePage from './components/home-page/home-page';
-// import LandingPage from './components/landing-page/landing-page';
 import UserProfile from './components/user-profile/user-profile';
 import UserProfileEdit from './components/user-profile-edit/user-profile-edit';
 import ExplorePage from './components/explore-page/explore-page';

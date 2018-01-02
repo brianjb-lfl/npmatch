@@ -10,7 +10,6 @@ import * as actionsDisplay from '../../actions/display';
 export class AdminAdd extends Component {
 
   searchUsers(formValues) {
-    console.log('window',window)
     this.props.dispatch(actionsUsersList.fetchUsersList(formValues))
     .then(()=>{
       this.props.dispatch(actionsDisplay.changeDisplay('addAdmin')) // using store as affects parent component

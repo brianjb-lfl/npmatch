@@ -145,7 +145,7 @@ export class UserProfile extends Component {
     const userProfile = user.id ? 
       <div className='userProfile'>
         {editProfileButton}
-        <img className='logo' src={user.logo} alt={`${user.firstName}${user.lastName}${user.organization}`}></img>
+        <img className='logo' src={user.logo} alt={`${user.displayName}`}></img>
         <h3 className='name'>{user.displayName}</h3>
         <div className='profileCard'>
           <h4 className='location'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
