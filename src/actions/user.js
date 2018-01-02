@@ -71,6 +71,12 @@ export const loadAdmin = admin => ({
   admin,
 });
 
+export const LOAD_USER_OPPORTUNITY = 'LOAD_USER_OPPORTUNITY';
+export const loadUserOpportunity = opportunity => ({
+  type: LOAD_USER_OPPORTUNITY,
+  opportunity,
+});
+
 export const LOAD_FOLLOWING = 'LOAD_FOLLOWING';
 export const loadFollowing = following => ({
   type: LOAD_FOLLOWING,
@@ -281,8 +287,15 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     response.responseStatus === 'deleted' ) ? 'user' : 'opportunity' ;
   const params = isNew ? '' : response.id ;
   const method = isNew ? 'POST' : 'PUT';
+
+  const {id, idOpportunity, userId, notes, responseStatus} = response; // send back only keys that server expects
+  const newResponse = {id, idOpportunity, userId, notes, responseStatus};
   if (isNew) delete response.id;
 
+  console.log('orig', origResponse)
+  console.log('response', response)
+  console.log('newResponse', newResponse)
+  
   const url = `${REACT_APP_BASE_URL}/api/responses/${params}`;
   const headers = { 
     'Content-Type': 'application/json',
@@ -290,13 +303,13 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   };
   const init = { 
     method,
-    body: JSON.stringify(response),
+    body: JSON.stringify(newResponse),
     headers
   };
-  // console.log('init')
+  console.log('init', init)
   if (init.method === 'GET') { } 
-  else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, response) } 
-  else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, response) }
+  else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, newResponse) } 
+  else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, newResponse) }
   
   return fetch(url, init)
   .then(res=>{ 
@@ -318,9 +331,9 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
       dispatch(actionsDisplay.saveLatestResponse(returnedResponse.id))
     }
     if ( loadTo === 'user') {
-      dispatch(loadResponse(returnedResponse));
+      dispatch(loadResponse(returnedResponse)); // if user is logged in, update them (they will be updated when logging in otherwise)
     } else {
-      dispatch(actionsOpportunity.loadResponse(returnedResponse));
+      dispatch(actionsOpportunity.loadOppResponse(returnedResponse)); // otherwise, update the opportunity in focus
     }
     return dispatch(actionsDisplay.changeDisplayStatus('normal'));
   })
@@ -329,6 +342,8 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     dispatch(actionsDisplay.toggleModal(error));
   });
 }
+
+// @@@@@@@@@@@@@@@ ROLES @@@@@@@@@@@@@@@@@
 
 export const createOrEditRole = (role, roleType, authToken, roleNameFields) => dispatch => {
   console.log('enter role', role, roleNameFields)
@@ -344,7 +359,8 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
     'Content-Type': 'application/json',
     Authorization: `Bearer ${authToken}`
   };
-  const newRole = {...role};
+  const {id, idUserAdding, idUserReceiving, capabilities} = role; // send back only keys that server expects
+  const newRole = {id, idUserAdding, idUserReceiving, capabilities};
   if(isNew) delete newRole.id;
 
   const init = { 
@@ -360,7 +376,7 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
 
   return fetch(url, init)
   .then(res=>{ 
-    console.log('role res',res);
+    // console.log('role res',res);
     if (!res.ok) { 
       // console.log('not ok');
       return Promise.reject(res.statusText);
@@ -368,7 +384,7 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
     return res.json();
   }) 
   .then(rawReturnedRole => { 
-    console.log('returnedRole', rawReturnedRole)
+    // console.log('returnedRole', rawReturnedRole)
     if (init.method === 'GET') { } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postRolesRes, rawReturnedRole) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesIdRes, rawReturnedRole) }
@@ -378,7 +394,7 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
     if (rawReturnedRole.message === 'Role deleted') {
         returnedRole = {...role, ...roleNameFields};
     }
-    console.log('returnedRole hydrated',returnedRole)
+    // console.log('returnedRole hydrated',returnedRole)
     if ( roleType === 'admin' ) {
       // if (returnedRole.capabilities === 'admin') // vs 'delete'
       dispatch(loadAdmin(returnedRole, isNew));

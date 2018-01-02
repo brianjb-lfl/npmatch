@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actionsUsersList from '../../actions/users-list';
 import * as actionsDisplay from '../../actions/display';
-
 import './bottom-nav-bar.css'
 
 export class BottomNavBar extends Component {
@@ -36,35 +34,23 @@ export class BottomNavBar extends Component {
       this.props.dispatch(actionsDisplay.changeDisplay('exploreContributors'));
       this.props.history.push('/contributors');
       window.scrollTo(0,0);
-
     }
+  }
+
+  homeButton() {
+    this.props.history.push('/');
+    window.scrollTo(0,0);
   }
 
   render() {
     let leftButton;
-    let leftLabel;
+    const leftLabel  = this.props.display === 'landingPage' ? 'Sign In' : 'Organizations' ;
     let rightButton;
-    let rightLabel;
-    let homeButton;
-    if (this.props.match.url !== '/') {
-      homeButton = <Link to='/'>
-        <li className='homeBottomButton'>
-          <button>
-            Home
-        </button>
-        </li>
-      </Link>
-    }
-
-    if (this.props.display === 'landingPage') {
-      leftLabel = 'Sign In'
-      rightLabel = 'Sign Up'
-
-    }
-    else {
-      leftLabel = 'Organizations'
-      rightLabel = 'Contributors'
-    }
+    const rightLabel = this.props.display === 'landingPage' ? 'Sign Up' : 'Contributors' ;
+    const homeButton = (this.props.match.url !== '/') ?
+      <li onClick={()=>this.homeButton()} className='homeBottomButton'>
+        <button>Home</button>
+      </li> : null ;
 
     if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
       leftButton = <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>

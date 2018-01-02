@@ -26,7 +26,7 @@ export const reducer = (state = initialState, action) => {
     };
   }
 
-  if (action.type === actions.LOAD_RESPONSE) {
+  if (action.type === actions.LOAD_OPP_RESPONSE) {
     const newResponses = {...state.responses, [action.response.id]: action.response};
     return {...state, responses: newResponses };
   }

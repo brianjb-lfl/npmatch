@@ -34,14 +34,18 @@ export class RolePreview extends Component {
       role,
       capabilities,
       idRole,  // need this to be unique, including potential roles
-      buttonLabel: 'edit',
+      buttonLabel: this.props.roleType === 'adminOf' ? 'use site as' : 'edit',
       message: '',
     })
   }
 
-  toggleVisibility(id, userId) {
-    this.props.dispatch(actionsDisplay.toggleRole(id, userId));
-    this.props.reset();
+  selectRole(id, userId) {
+    if (this.props.roleType === 'adminOf') {
+      alert('coming soon!')
+    } else {
+      this.props.dispatch(actionsDisplay.toggleRole(id, userId));
+      this.props.reset();
+    }
   }
 
   goToUser() {
@@ -69,13 +73,13 @@ export class RolePreview extends Component {
 
     this.props.dispatch(actionsUser.createOrEditRole(role, this.props.roleType, this.props.userInState.authToken, nameFields))
     .then(()=>{
-      if (!role.id) {
+      if (!role.id && role.capabilities !== 'admin') { // new admins unmount before this occurs
         // if no id, role is new, get id from store (put there by fetch upon create)
         this.setState({capabilities: role.capabilities, message, id: this.props.display.latestRole})
       } else {
         this.setState({capabilities: role.capabilities, message})
       }
-      this.toggleVisibility(null, null);
+      this.selectRole(null, null);
     })
   }
 
@@ -120,11 +124,11 @@ export class RolePreview extends Component {
     return (
       <div className='rolePreview'>
         <div className='rolePreviewInner' onClick={() => this.goToUser()}>
-          <h3 className='name'>{this.state.role.organization} {this.state.role.firstName} {this.state.role.LastName}</h3>
+          <h3 className='name'>{this.state.role.organization} {this.state.role.firstName} {this.state.role.lastName}</h3>
         </div>
         <button 
           className='responseButton' 
-          onClick={() => this.toggleVisibility(this.state.idRole, this.state.role.idUserReceiving)}>
+          onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
           {this.state.buttonLabel}
         </button>
         {message}

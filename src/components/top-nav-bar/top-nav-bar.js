@@ -12,22 +12,27 @@ export class TopNavBar extends Component {
   listOpportunities(query) {
     // console.log('list opps query', query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
-      .then(() => this.props.history.push('/myopportunities'))
+      .then(() => {
+        this.props.history.push('/myopportunities');
+        window.scrollTo(0,0);
+      })
   }
 
   queryOpportunities(query) {
     console.log('list opps query', query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
       .then(() => {
-        this.props.history.push('/myopportunities')
+        this.props.history.push('/myopportunities');
         this.props.reset();
+        window.scrollTo(0,0);
       })
   }
 
   goToProfile() {
     this.props.dispatch(actionsDisplay.setUser(this.props.user.id));
     this.props.dispatch(actionsDisplay.changeDisplay('selfProfile'));
-    this.props.history.push(`/profiles/${this.props.user.id}/`)
+    this.props.history.push(`/profiles/${this.props.user.id}/`);
+    window.scrollTo(0,0);
   }
 
   render() {

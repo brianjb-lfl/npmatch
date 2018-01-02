@@ -24,7 +24,7 @@ export class UserProfile extends Component {
 
   render() {
 
-    let self, user, opportunityHeader, responseHeader, followingHeader, adminsHeader, userFollow;
+    let self, user, opportunityHeader, responseHeader, followingHeader, adminsHeader, adminOfHeader, userFollow;
     if (this.props.display.userId === this.props.user.id) {
       self = true;
       user = this.props.user;
@@ -69,8 +69,10 @@ export class UserProfile extends Component {
       for (let prop in user.responses) {
         let opportunity = { ...user.responses[prop], id: user.responses[prop].idOpportunity }
         // self should always be false for responses, even if user owns opportunity
-        responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history} />)
-        key += 1;
+        if (user.responses[prop].responseStatus !== 'deleted') {
+          responsePreviews.push(<OpportunityPreview self={false} response={user.responses[prop]} opportunity={opportunity} key={key} history={this.props.history} />)
+          key += 1;
+        }
       }
     }
 
@@ -79,6 +81,25 @@ export class UserProfile extends Component {
     <h3>{responseHeader}</h3>
       {responsePreviews}
     </div> : '' ;
+
+    let adminOfPreviews = [];
+    if (typeof user.adminOf === 'object' && self) {
+      let key = 1
+      for (let prop in user.adminOf) {
+        // self should always be true for following
+        adminOfPreviews.push(<RolePreview role={user.adminOf[prop]} roleType='adminOf' key={key} index={key} history={this.props.history}/>) 
+        key += 1;
+      }
+    }
+
+    let adminOf = '';
+      if (adminOfPreviews.length > 0){
+      adminOfHeader = 'I am an Admin of'
+      adminOf = <div className='admins'>
+      <h3>{adminOfHeader}</h3>
+      {adminOfPreviews}
+    </div>
+    }
 
     let followingPreviews = [];
     if (typeof user.following === 'object' && self) {
@@ -162,6 +183,7 @@ export class UserProfile extends Component {
     return (
       <main>
         {userProfile}
+        {adminOf}
         {opportunities}
         {addOpportunityButton}
         {responses}

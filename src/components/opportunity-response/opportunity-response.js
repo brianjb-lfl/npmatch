@@ -92,7 +92,7 @@ export class OpportunityResponse extends Component {
 
   editResponse(formValues) {
     // formStatus of positive or negative is maintained in state in advance of submission
-    const responseStatus = this.state.formStatus === 'positive' ? this.state.positiveResponse : this.setState.negativeResponse ;
+    const responseStatus = this.state.formStatus === 'positive' ? this.state.positiveResponse : this.state.negativeResponse ;
     const newResponse = {...this.state.response, notes: formValues.notes, responseStatus};
     const isNew = false;
     this.props.dispatch(actionsUser.createOrEditResponse(newResponse, this.props.user.authToken, isNew))

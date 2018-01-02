@@ -72,6 +72,11 @@ export const reducer = (state = initialState, action) => {
     return {...state, admins: newAdmins };
   }
 
+  if (action.type === actions.LOAD_USER_OPPORTUNITY) {
+    const newOpps = {...state.opportunities, [action.opportunity.id]: action.opportunity}
+    return {...state, opportunities: newOpps };
+  }
+
   if (action.type === actions.LOAD_FOLLOWING) {
     const newFollowing = {...state.following, [action.following.idUserReceiving]: action.following}
     return {...state, following: newFollowing };

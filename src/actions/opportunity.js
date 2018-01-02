@@ -4,6 +4,7 @@ import  * as actionsDisplay from './display';
 import { arrayToObject } from './user';
 import * as ck from './api-response-checks';
 import * as actionsOpportunitiesList from './opportunities-list';
+import * as actionsUser from './user';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -28,9 +29,9 @@ export const loadOpportunity = action => ({
 });
 
 
-export const LOAD_RESPONSE = 'LOAD_RESPONSE';
-export const loadResponse = response => ({
-  type: LOAD_RESPONSE,
+export const LOAD_OPP_RESPONSE = 'LOAD_OPP_RESPONSE';
+export const loadOppResponse = response => ({
+  type: LOAD_OPP_RESPONSE,
   response,
 });
 
@@ -59,6 +60,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
     }
     if (init.method === 'POST') {
       dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));  
+      dispatch(actionsUser.loadUserOpportunity(opportunity));  
     }      
     dispatch(actionsDisplay.changeDisplayStatus('normal'));
     return dispatch(loadOpportunity(opportunity));      

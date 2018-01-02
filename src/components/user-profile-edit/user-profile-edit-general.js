@@ -40,7 +40,7 @@ export class UserEditGeneralForm extends Component {
   }
 
   handleSubmitButton(input) {
-    console.log('raw input',input)    
+    // console.log('raw input',input)    
     const user = {...input, id: this.props.user.id};
     let links = [];
     let index = 0;
@@ -53,13 +53,13 @@ export class UserEditGeneralForm extends Component {
         delete user[`linkType${index}`];
         delete user[`linkUrl${index}`];
         index += 1;
-        console.log(index, links)
+        // console.log(index, links)
       } else {
         index = 99;
       }
     }
     user.links = links;
-    console.log('after fixing links', user)
+    // console.log('after fixing links', user)
     const isNew = false;
     this.props.dispatch(actionsUser.createOrEditUser(user, this.props.user.authToken, isNew))
       .then(() => {
@@ -70,11 +70,9 @@ export class UserEditGeneralForm extends Component {
 
   render() {
 
-    const redirect = this.props.user.id ? '' :
-    <Switch><Redirect from='*' to='/' /></Switch>
+    const redirect = this.props.user.id ? '' : <Switch><Redirect from='*' to='/' /></Switch>
 
-    const nameForm = this.props.user.userType === 'individual' ?
-      <IndivNameFields /> : <OrgNameFields />;
+    const nameForm = this.props.user.userType === 'individual' ? <IndivNameFields /> : <OrgNameFields />;
 
     let myLinks;
       if (this.state.links.length >0) {
