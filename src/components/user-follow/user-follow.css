@@ -1,0 +1,10 @@
+.followButton {
+  display: block;
+  text-decoration: none;
+  background-color: #DA2536;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  font-weight: 700;
+  padding: 5px;
+}
