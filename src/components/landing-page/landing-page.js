@@ -14,19 +14,25 @@ export class LandingPage extends Component {
   render() {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
-      if (user.userType === 'organization') {
-        return <OrganizationPreview user={user} key={key} history={this.props.history}/> 
-      } else {
-        return null;
-      }
-      }) : '' ;
+        if (user.userType === 'organization') {
+          return <OrganizationPreview user={user} key={key} history={this.props.history} />
+        } else {
+          return null;
+        }
+      }) : '';
 
     return (
       <div className='landingPage'>
         <h2>Causeway</h2>
         <p className='appDescription'>
-          Welcome to our amazing web application! 
-          This will likely be the best experience you ever have using an app. Get ready...
+          Welcome to CauseWay!
+        </p>
+        <p className='appDescription'>
+          With this app, non-profit organizations can connect with volunteers and vice-versa.
+          Organizations are able to post information about the causes they supporting and
+          upcoming projects that they're looking for support on. Individuals who sign up, listed
+          as "contributors" can post their own skills and apply to or volunteer for the projects
+          that organizations are posting.
         </p>
         {previews}
       </div>

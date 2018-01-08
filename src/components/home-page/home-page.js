@@ -19,7 +19,7 @@ export class HomePage extends Component {
 
     return (
       <div className='homePage'>
-        <h2 className='sectionTitle'>Explore those enrolled in NPM</h2>
+        <h2 className='sectionTitle'>Explore those enrolled in CauseWay</h2>
         {previews}
       </div>
     )
