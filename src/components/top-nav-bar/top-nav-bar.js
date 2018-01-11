@@ -66,8 +66,11 @@ export class TopNavBar extends Component {
             <i className="fa fa-user-circle-o" aria-hidden="true"
               onClick={() => this.goToProfile()}></i>
           </li>
-          <li className='settingsButton'>
+          <li className='settingsButton bars'>
             <i className="fa fa-bars" aria-hidden="true"></i>
+          </li>
+          <li className='settingsButton cog'>
+            <i className="fa fa-cog" aria-hidden="true"></i>
           </li>
         </ul>
     }

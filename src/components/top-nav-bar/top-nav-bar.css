@@ -53,3 +53,22 @@ ul.topNav {
 .inboxButton:hover, .opportunitiesButton:hover, .editProfileButton:hover, .settingsButton:hover, .searchBar button:hover {
   cursor: pointer;
 }
+
+.cog {
+  display: none;;
+}
+
+@media (min-width: 767px) { 
+  .searchBar input {
+    width: 250px;
+  }
+
+  .bars {
+    display: none;;
+  }
+
+  .cog {
+    display: inline;
+  }
+
+}

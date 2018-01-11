@@ -23,17 +23,19 @@ export class LandingPage extends Component {
 
     return (
       <div className='landingPage'>
-        <h2>Causeway</h2>
-        <p className='appDescription'>
-          Welcome to CauseWay!
-        </p>
-        <p className='appDescription'>
-          With this app, non-profit organizations can connect with volunteers and vice-versa.
+        <h2 className='sectionTitle'>Causeway</h2>
+        <div className='descriptionContainer'>
+          <p>
+            Welcome to CauseWay!
+          </p>
+          <p className='appDescription'>
+            With this app, non-profit organizations can connect with volunteers and vice-versa.
           Organizations are able to post information about the causes they supporting and
           upcoming projects that they're looking for support on. Individuals who sign up, listed
           as "contributors" can post their own skills and apply to or volunteer for the projects
           that organizations are posting.
         </p>
+        </div>
         {previews}
       </div>
     )
