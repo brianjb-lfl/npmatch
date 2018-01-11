@@ -60,14 +60,14 @@ a {
   align-items: baseline;
   padding: 0;
 }
-.causesList {
+.causesList, .skillsList {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: baseline;
   padding: 0;
 }
-.causeIcon {
+.causeIcon, .skillIcon {
   list-style: none;
   display: flex;
   padding: 5px 7px;

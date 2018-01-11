@@ -43,7 +43,7 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
-    let editProfileButton = self ? <button onClick={()=>this.editProfile()}>Edit</button> : null ;
+    let editProfileButton = self ? <i onClick={()=>this.editProfile()} class="fa fa-pencil editProfilePencil" aria-hidden="true"></i> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {
@@ -164,6 +164,13 @@ export class UserProfile extends Component {
       </a>
     })
 
+    const causes = Array.isArray(user.causes) ? user.causes.map((cause, index)=>{
+      return <li key={index} className='causeIcon'>{cause}</li>
+    }) : '' ;
+    const skills = Array.isArray(user.skills) ? user.skills.map((skill, index)=>{
+      return <li key={index} className='skillIcon'>{skill}</li>
+    }) : '' ;
+
     const userProfile = user.id ? 
       <div className='userProfile'>
         {editProfileButton}
@@ -174,8 +181,8 @@ export class UserProfile extends Component {
           <p className='bio'>{user.bio}</p>
           <p className='availability'>{user.availability}</p>
           {links}
-          <p className='causes'>{user.causes.join(', ')}</p>
-          <p className='skills'>{user.skills.join(', ')}</p>
+          <ul className='causesList'>{causes}</ul>
+          <ul className='skillsList'>{skills}</ul>
         </div>
         {userFollow}
       </div> :
