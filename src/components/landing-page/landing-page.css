@@ -13,4 +13,16 @@
 
 .landingPage .appDescription {
   margin-bottom: 25px;
+  text-align: justify;
+}
+
+.landingPage sectionTitle {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.landingPage .descriptionContainer {
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
 }
