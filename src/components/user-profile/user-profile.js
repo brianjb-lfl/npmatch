@@ -52,12 +52,13 @@ export class UserProfile extends Component {
         // self = true if user owns opportunities
         opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history} />)
         key += 1;
+        console.log('HYDRATEOPP', user.opportunities[prop])
       }
     }
 
     const opportunities = opportunityPreviews.length > 0 && user.id ?
     <div className='opportunities'>
-      <h3>{opportunityHeader}</h3>
+      <h3 className='profileSectionHeaders'>{opportunityHeader}</h3>
       {opportunityPreviews}
     </div> : '' ;
 
@@ -78,7 +79,7 @@ export class UserProfile extends Component {
 
     const responses = responsePreviews.length > 0 ?
     <div className='responses'>
-    <h3>{responseHeader}</h3>
+    <h3 className='profileSectionHeaders'>{responseHeader}</h3>
       {responsePreviews}
     </div> : '' ;
 
@@ -96,7 +97,7 @@ export class UserProfile extends Component {
       if (adminOfPreviews.length > 0){
       adminOfHeader = 'I am an Admin of'
       adminOf = <div className='admins'>
-      <h3>{adminOfHeader}</h3>
+      <h3 className='profileSectionHeaders'>{adminOfHeader}</h3>
       {adminOfPreviews}
     </div>
     }
@@ -113,7 +114,7 @@ export class UserProfile extends Component {
 
     const following = followingPreviews.length > 0 ?
     <div className='following'>
-      <h3>{followingHeader}</h3>
+      <h3 className='profileSectionHeaders'>{followingHeader}</h3>
       {followingPreviews}
     </div> : '' ;
 
@@ -131,7 +132,7 @@ export class UserProfile extends Component {
     let admins = '';
     if (adminPreviews.length > 0){
       admins = <div className='admins'>
-      <h3>{adminsHeader}</h3>
+      <h3 className='profileSectionHeaders'>{adminsHeader}</h3>
       {adminPreviews}
     </div>
     } else if (self) {
@@ -153,7 +154,7 @@ export class UserProfile extends Component {
     
     const userSearches = userSearchPreviews.length > 0 ?
     <div className='admins'>
-      <h3>Search Results</h3>
+      <h3 className='profileSectionHeaders'>Search Results</h3>
       {userSearchPreviews}
     </div> : '' ;
 
@@ -178,7 +179,7 @@ export class UserProfile extends Component {
         </div>
         {userFollow}
       </div> :
-      <h3>Sorry, user not found</h3>;
+      <h3 className='profileSectionHeaders'>Sorry, user not found</h3>;
 
     return (
       <main>
