@@ -34,8 +34,8 @@ export class RolePreview extends Component {
       role,
       capabilities,
       idRole,  // need this to be unique, including potential roles
-      buttonLabel: this.props.roleType === 'adminOf' ? 'use site as' : 'edit',
-      message: '',
+      adminButtonLabel: this.props.roleType === 'adminOf' ? 'use site as' : 'edit',
+      roleMessage: '',
     })
   }
 
@@ -69,15 +69,15 @@ export class RolePreview extends Component {
       lastName: this.state.role.lastName,
       organization: this.state.role.organization,
     }
-    const message = (this.props.roleType === 'admin' && formValues.capabilities === 'delete') ? 'admin role has been removed' : null ;
+    const roleMessage = (this.props.roleType === 'admin' && formValues.capabilities === 'delete') ? 'admin role has been removed' : null ;
 
     this.props.dispatch(actionsUser.createOrEditRole(role, this.props.roleType, this.props.userInState.authToken, nameFields))
     .then(()=>{
       if (!role.id && role.capabilities !== 'admin') { // new admins unmount before this occurs
         // if no id, role is new, get id from store (put there by fetch upon create)
-        this.setState({capabilities: role.capabilities, message, id: this.props.display.latestRole})
+        this.setState({capabilities: role.capabilities, roleMessage, id: this.props.display.latestRole})
       } else {
-        this.setState({capabilities: role.capabilities, message})
+        this.setState({capabilities: role.capabilities, roleMessage})
       }
       this.selectRole(null, null);
     })
@@ -86,7 +86,7 @@ export class RolePreview extends Component {
   render() {
 
     const isInFocus = this.props.display.idRole === this.state.idRole ? true : false; // using store, so that we only ever have 1 in focus
-    const message = this.state.message ? <p>{this.state.message}</p> : null ;
+    const roleMessage = this.state.roleMessage ? <p>{this.state.roleMessage}</p> : null ;
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>
     <DropdownList {...input}
@@ -97,8 +97,8 @@ export class RolePreview extends Component {
     
     if (this.props.roleType === 'following') {
       const capabilities = this.state.capabilities === 'following' ? 'delete' : 'following' ;
-      const buttonLabel = this.state.capabilities === 'following' ? 'un-Follow' : 'Follow' ;
-      selector = <button onClick={()=>this.setRole(capabilities)}>{buttonLabel}</button>
+      const followButtonLabel = this.state.capabilities === 'following' ? 'un-Follow' : 'Follow' ;
+      selector = <button className='followButton' onClick={()=>this.setRole(capabilities)}>{followButtonLabel}</button>
     } else if (this.props.roleType === 'admin'  && isInFocus) {
       selector = <form className='selectAdmin'
         onSubmit={this.props.handleSubmit((values) => this.setRole(values))}>
@@ -121,18 +121,22 @@ export class RolePreview extends Component {
       </form>
     }
 
+    const adminSelector = this.state.capabilities.includes('admin') ? <button 
+      className='responseButton' 
+      onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
+      {this.state.adminButtonLabel}
+    </button> : <div></div> ;
+
     return (
       <div className='rolePreview'>
         <div className='rolePreviewInner' onClick={() => this.goToUser()}>
           <h3 className='name'>{this.state.role.organization} {this.state.role.firstName} {this.state.role.lastName}</h3>
         </div>
-        <button 
-          className='responseButton' 
-          onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
-          {this.state.buttonLabel}
-        </button>
-        {message}
-        {selector}
+        <div className='previewBottomBar'>
+          {adminSelector}
+          {selector}
+          {roleMessage}
+        </div>
       </div>
     )
   }

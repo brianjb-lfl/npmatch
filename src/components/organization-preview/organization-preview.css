@@ -52,3 +52,27 @@ a {
 .bio {
   font-size: 14px;
 }
+
+.previewBottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0;
+}
+.causesList, .skillsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding: 0;
+}
+.causeIcon, .skillIcon {
+  list-style: none;
+  display: flex;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background-color: rgb(228, 222, 222);
+  margin-right: 8px;
+  border: 0.5px solid #ccc;
+}

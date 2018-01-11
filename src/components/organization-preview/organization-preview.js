@@ -23,6 +23,10 @@ export class OrganizationPreview extends Component {
     const userFollow = (this.props.userInState.id && this.props.userInState.id !== this.props.user.id) ?
        <UserFollow id={this.props.user.id} /> : '' ;
 
+    const causes = Array.isArray(this.props.user.causes) ? this.props.user.causes.map((cause, index)=>{
+      return <li key={index} className='causeIcon'>{cause}</li>
+    }) : '' ;
+
     return (
       <div className='organizationPreview' >
         <div className='organizationPreviewInner'onClick={() => this.handleClick(this.props.user.id)}>
@@ -31,10 +35,12 @@ export class OrganizationPreview extends Component {
             <h3 className='organization'>{this.props.user.organization}</h3>
             <p className='bio'>{this.props.user.bio}</p>
             <p className='bio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
-            <p className='bio'>{this.props.user.causes.join(', ')}</p>
           </div>
         </div>
-        {userFollow}
+        <div className='previewBottomBar'>
+          <ul className='causesList'>{causes}</ul>
+          {userFollow}
+        </div>
       </div>
     )
   }

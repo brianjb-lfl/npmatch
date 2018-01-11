@@ -27,6 +27,9 @@ export class OpportunityPreview extends Component {
 
   render() {
     const opportunity = this.props.opportunity;
+    const causes = Array.isArray(opportunity.causes) ? opportunity.causes.map((cause, index)=>{
+      return <li key={index} className='causeIcon'>{cause}</li>
+    }) : '' ;
     const isInFocus = this.props.display.idOpportunity === opportunity.id ? true : false ;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
@@ -61,7 +64,10 @@ export class OpportunityPreview extends Component {
           <p className='timeframe'>{opportunity.timeframe}</p>
           <p className='description'>{opportunity.description}</p>
         </div>
-        {editOrRespond}
+        <div className='previewBottomBar'>
+          <ul className='causesList'>{causes}</ul>
+          {editOrRespond}
+        </div>
         {responses}
       </div>
     )
