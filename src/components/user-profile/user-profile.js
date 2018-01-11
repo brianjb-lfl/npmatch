@@ -179,7 +179,7 @@ export class UserProfile extends Component {
         <div className='profileCard'>
           <h4 className='location'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
           <p className='bio'>{user.bio}</p>
-          <p className='availability'>{user.availability}</p>
+          <p className='availability'>Availability: {user.availability}</p>
           {links}
           <ul className='causesList'>{causes}</ul>
           <ul className='skillsList'>{skills}</ul>
