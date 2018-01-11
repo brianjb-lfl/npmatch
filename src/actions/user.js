@@ -241,7 +241,8 @@ export const login = user => dispatch => {
     loadTo: 'loadUser',
   }
   // console.log('login', url, init, userObject, callback);
-  return dispatch(userAPICall(url, init, userObject, callback));}
+  return dispatch(userAPICall(url, init, userObject, callback));
+}
 
 export const createOrEditUser = (user, authToken, isNew = true, loadTo = 'updateUser' ) => dispatch => {
   

@@ -1,0 +1,47 @@
+ORGANIZATION
+
+  BASICS - ORG POSTS, CONTRIBUTOR RESPONDS
+    1 I can create an account - and log in to that account
+
+    3 I can tell the world about my organization and what we do
+    
+    4 I can post/manage specific needs / opportunities - ADD KEYWORD
+    4 I can solicit financial contributions for specific causes that we are working on
+    4 I can confine the above activities to a specified geographic region - ADD LOCATION
+    
+    7 I can accept services, goods, money from contributors
+
+  REVERSE - CONTRIBUTOR POSTS, ORG CAN FIND    
+    8 I can search the services / offerings that contributors have posted
+
+  NETWORK 1: PAST HISTORY TOGETHER
+    9 I can provide recommendations/feedback on contributors that I've worked with
+    9 I CAN LIST PAST CONTRIBUTORS, WHICH WILL SHOW ON THEIR PROFILES
+    9 I can share a "gold list" of contributors - w contributors' consent
+  
+  NETWORK 2: ONGOING CONNECTION
+    12 I can send information and reach out to my subscribers
+    
+CONTRIBUTORS
+
+  BASICS - ORG POSTS, CONTRIBUTOR RESPONDS
+    2 I can create an account - and log in to that account
+    
+    5 I can do a general search for ways that I can be involved by region, cause, organization name
+
+    6 I can sign up for specific causes
+
+  REVERSE - CONTRIBUTOR POSTS, ORG CAN FIND    
+    7 I can manage my profile, including blocking/removing organization-placed content
+    7 I can list skills, goods that I will contribute
+    7 I can tell the world about my qualifications
+  
+  NETWORK 1: PAST HISTORY TOGETHER
+    10 I can provide feedback on organizations that I've worked with
+    10 I can share my history of involvement - must be verified by organization
+    
+  NETWORK 2: ONGOING CONNECTION
+    11 I can subscribe to organizations
+
+  NETWORK 3: SHARE
+    13 I can "send" opportunities to friends
