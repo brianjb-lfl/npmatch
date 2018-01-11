@@ -37,8 +37,10 @@ export class OrganizationPreview extends Component {
             <p className='bio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
           </div>
         </div>
-        <ul className='causesList'>{causes}</ul>
-        {userFollow}
+        <div className='previewBottomBar'>
+          <ul className='causesList'>{causes}</ul>
+          {userFollow}
+        </div>
       </div>
     )
   }

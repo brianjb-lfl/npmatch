@@ -53,6 +53,13 @@ a {
   font-size: 14px;
 }
 
+.previewBottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0;
+}
 .causesList {
   display: flex;
   flex-direction: row;
