@@ -19,7 +19,7 @@
   background-color: #DA2536;
   color: white;
   border: none;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 8px;
 }
 .opportunityResponse .submitButton {
@@ -29,6 +29,6 @@
   background-color: #DA2536;
   color: white;
   border: none;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 8px;
 }

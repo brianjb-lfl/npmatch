@@ -14,7 +14,7 @@ import StartEndFields from '../fields/start-end';
 import './opportunity-create.css'
 
 export class OpportunityCreate extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       offer: props.opportunity.offer,
@@ -30,28 +30,28 @@ export class OpportunityCreate extends Component {
   convertToTimeStamp(timeStamp) {
     // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
     // is desired format "2017-12-21T16:26:48-05:00"
-    if (timeStamp instanceof Date ) {
+    if (timeStamp instanceof Date) {
       return `${timeStamp.getFullYear()}-${timeStamp.getMonth()}-${timeStamp.getDate()}T${timeStamp.getHours()}:${timeStamp.getMinutes()}:${timeStamp.getSeconds()}-05:00`;
     }
     return '';
   }
 
   handleSubmitButton(input, isNew) {
-    const opp = {...input};
+    const opp = { ...input };
     opp.timestampStart = this.convertToTimeStamp(opp.timestampStart);
     opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
         this.props.history.push('/myopportunities');
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       });
   }
 
   render() {
 
     const redirect = this.props.user.id ? '' :
-    <Switch><Redirect from='*' to='/' /></Switch>
+      <Switch><Redirect from='*' to='/' /></Switch>
 
     const isNew = this.props.display.view === 'editOpportunity' ? false : true;
     const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity';
@@ -64,131 +64,132 @@ export class OpportunityCreate extends Component {
         onChange={input.onChange} />
 
     return (
-      <main className='createOpportunity'>
+      <main>
         {redirect}
-        <h2>Opportunity</h2>
+        <h2 className='sectionTitle'>Opportunity</h2>
+        <div className='createOpportunity'>
+          <form className='opportunityForm'
+            onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}>
 
-        <form className='opportunityForm'
-          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}>
-
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'title'}>Opportunity Title
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'title'}>Opportunity Title
             </label>
-            <Field
-              name='title'
-              id='title'
-              component='input'
-              type='text'
-              className='inputField'
-              required />
-          </div>
+              <Field
+                name='title'
+                id='title'
+                component='input'
+                type='text'
+                className='inputField'
+                required />
+            </div>
 
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'narrative'}>Describe This Opportunity
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'narrative'}>Describe This Opportunity
             </label>
-            <Field
-              name='narrative'
-              id='narrative'
-              component='input'
-              type='text'
-              className='inputField'
-              required />
-          </div>
+              <Field
+                name='narrative'
+                id='narrative'
+                component='input'
+                type='text'
+                className='inputField'
+                required />
+            </div>
 
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'opportunityType'}>Opportunity Type
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'opportunityType'}>Opportunity Type
             </label>
-            <Field
-              name='opportunityType'
-              id='opportunityType'
-              component={renderDropdownList}
-              data={this.props.general.oppTypes}
-              textField='type'
-              valueField='type'
-              className='inputField'
-              required />
-          </div>
+              <Field
+                name='opportunityType'
+                id='opportunityType'
+                component={renderDropdownList}
+                data={this.props.general.oppTypes}
+                textField='type'
+                valueField='type'
+                className='inputField'
+                required />
+            </div>
 
-          <CausesFields />
+            <CausesFields />
 
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'offerTrue'}
-              style={{
-                backgroundColor: this.state.offer === true ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-                color: this.state.offer === true ? 'white' : '#082E41'
-              }}
-            >Offer to contribute
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'offerTrue'}
+                style={{
+                  backgroundColor: this.state.offer === true ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                  color: this.state.offer === true ? 'white' : '#082E41'
+                }}
+              >Offer to contribute
             </label>
-            <Field
-              name='offer'
-              id='offerTrue'
-              style={{ display: 'none', margin: 'auto' }}
-              component='input'
-              type='radio'
-              value={true}
-              className='inputField'
-              onChange={() => this.handleOfferTypeChange(true)}
-            />
-          </div>
+              <Field
+                name='offer'
+                id='offerTrue'
+                style={{ display: 'none', margin: 'auto' }}
+                component='input'
+                type='radio'
+                value={true}
+                className='inputField'
+                onChange={() => this.handleOfferTypeChange(true)}
+              />
+            </div>
 
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'offerFalse'}
-              style={{
-                backgroundColor: this.state.offer === false ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-                color: this.state.offer === false ? 'white' : '#082E41'
-              }}
-            >Request for volunteers
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'offerFalse'}
+                style={{
+                  backgroundColor: this.state.offer === false ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
+                  color: this.state.offer === false ? 'white' : '#082E41'
+                }}
+              >Request for volunteers
             </label>
-            <Field
-              name='offer'
-              id='offerFalse'
-              style={{ display: 'none', margin: 'auto' }}
-              component='input'
-              type='radio'
-              value={false}
-              className='inputField'
-              onChange={() => this.handleOfferTypeChange(false)}
-            />
-          </div>
+              <Field
+                name='offer'
+                id='offerFalse'
+                style={{ display: 'none', margin: 'auto' }}
+                component='input'
+                type='radio'
+                value={false}
+                className='inputField'
+                onChange={() => this.handleOfferTypeChange(false)}
+              />
+            </div>
 
-          <LocationFields />
+            <LocationFields />
 
-          <div>
-            <label
-              className='inputLabel'
-              htmlFor={'link'}>Opportunity-Specific URL
+            <div>
+              <label
+                className='inputLabel'
+                htmlFor={'link'}>Opportunity-Specific URL
             </label>
-            <Field
-              name='link'
-              id='link'
-              component='input'
-              type='text'
-              className='inputField' />
-          </div>
+              <Field
+                name='link'
+                id='link'
+                component='input'
+                type='text'
+                className='inputField' />
+            </div>
 
-          <StartEndFields />
+            <StartEndFields />
 
-          <div>
-            <button className='submitButton'
-              type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
+            <div>
+              <button className='submitButton'
+                type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
+              </button>
+              <button className='clearButton'
+                type="button" disabled={this.props.pristine || this.props.submitting}
+                onClick={this.props.reset}>Reset
             </button>
-            <button className='clearButton'
-              type="button" disabled={this.props.pristine || this.props.submitting}
-              onClick={this.props.reset}>Reset
-            </button>
-          </div>
+            </div>
 
-        </form>
+          </form>
+        </div>
 
       </main>
     );
@@ -197,7 +198,7 @@ export class OpportunityCreate extends Component {
 
 export const mapStateToProps = state => {
 
-  const initialForm = {...state.opportunity}
+  const initialForm = { ...state.opportunity }
   delete initialForm.responses;
   delete initialForm.organization;
   initialForm.userId = initialForm.userId ? initialForm.userId : state.user.id;
