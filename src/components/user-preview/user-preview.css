@@ -1,0 +1,78 @@
+.userPreview { /*outer div, NOT activated with link*/
+  width: 90%;
+  max-width: 600px;
+  min-height: 100px;
+  max-height: 100vh;
+  border-radius: 3px;
+  margin: auto auto 5px auto;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.19), 0 2px 2px rgba(0,0,0,0.23);
+}
+.userPreviewInner { /*inner div, activated link, holds all content*/
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  cursor: pointer;
+}
+.userText {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 10px;
+  max-height: 90%;
+}
+
+.logo {
+  max-height: inherit;
+  max-width: 120px;
+  margin-right: 25px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.user, .bio {
+  text-decoration: none;
+  color: #222;
+  margin-top: 0;
+}
+
+.user:hover, .bio:hover {
+  color: #777;
+}
+
+.bio {
+  font-size: 14px;
+}
+
+.previewBottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0;
+}
+.causesList, .skillsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding: 0;
+}
+.causeIcon, .skillIcon {
+  list-style: none;
+  display: flex;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background-color: rgb(228, 222, 222);
+  margin-right: 8px;
+  border: 0.5px solid #ccc;
+}

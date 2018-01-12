@@ -186,7 +186,7 @@ export class UserProfile extends Component {
         </div>
         {userFollow}
       </div> :
-      <h3 className='profileSectionHeaders'>Sorry, user not found</h3>;
+      <h3 className='profileSectionHeaderss'>Sorry, user not found</h3>;
 
     return (
       <main>

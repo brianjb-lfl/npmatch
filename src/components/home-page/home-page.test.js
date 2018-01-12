@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import { HomePage } from './home-page';
 import { mapStateToProps } from './home-page';
-import { OrganizationPreview } from '../organization-preview/organization-preview';
+import { UserPreview } from '../user-preview/user-preview';
 
 describe('Home Page component display functionality', () => {
   const usersList = [{
@@ -17,7 +17,7 @@ describe('Home Page component display functionality', () => {
   it('Should display organizations', () => {
     const wrapper = shallow(<HomePage usersList={usersList} />)
     expect(wrapper.containsMatchingElement(
-      <OrganizationPreview />
+      <UserPreview />
     ));
   });
   it('Should map state to props', () => {

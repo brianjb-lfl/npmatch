@@ -4,7 +4,7 @@ import * as actionsDisplay from '../../actions/display';
 
 import './landing-page.css'
 
-import OrganizationPreview from '../organization-preview/organization-preview';
+import UserPreview from '../user-preview/user-preview';
 
 export class LandingPage extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ export class LandingPage extends Component {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
-          return <OrganizationPreview user={user} key={key} history={this.props.history} />
+          return <UserPreview user={user} key={key} history={this.props.history} />
         } else {
           return null;
         }
