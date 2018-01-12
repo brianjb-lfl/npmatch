@@ -1,4 +1,10 @@
-.opportunityResponse .inputField {
+.opportunityResponseContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.responseNotesInput {
   border: 1px solid lightgrey;
   border-radius: 12px;
   padding: 5px 10px;
@@ -8,24 +14,26 @@
   display: block;
   margin: auto;
 }
-
-.opportunityResponse .inputField:focus {
+.responseNotesInput:focus {
   outline: none;
 }
-
-.responseButton {
-  font-weight: 700;
-  margin-bottom: 10px;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 8px;
+.responseButtonContainer, .responseSubmitButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
 }
-.opportunityResponse .submitButton {
+.responseStatusOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.responseStatus {
   display: block;
   font-weight: 700;
-  margin: auto auto 10px auto;
+  margin: 0;
   background-color: #DA2536;
   color: white;
   border: none;

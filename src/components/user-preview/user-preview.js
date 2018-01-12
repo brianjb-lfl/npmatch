@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
 import UserFollow from '../user-follow/user-follow';
-import '../styles//previewCard.css';
 
 export class UserPreview extends Component {
   handleClick(id) {
@@ -29,7 +28,6 @@ export class UserPreview extends Component {
     const causes = Array.isArray(this.props.user.causes) ? this.props.user.causes.map((cause, index)=>{
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
-
     const causesList = this.props.showDetail ? <ul className='causesList'>{causes}</ul> : <div></div> ;
 
     return (

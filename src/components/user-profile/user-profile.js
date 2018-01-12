@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './user-profile.css';
-import '../opportunities-page/opportunities-page.css'; // for opportunityAddButton
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 import RolePreview from '../role-preview/role-preview';
 import AdminAdd from '../admin-add/admin-add';

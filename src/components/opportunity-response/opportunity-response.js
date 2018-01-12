@@ -122,21 +122,21 @@ export class OpportunityResponse extends Component {
   render() {
     const isInFocus = this.props.display.idOpportunity === this.state.oppId ? true : false; // using store, so that we only ever have 1 in focus
 
-    const notesField = <div>
+    const notesField = <div className='responseNotes'>
       <Field
         name='notes'
         id='notes'
         component='textarea'
         type='text'
         placeholder='...send a note to the host'
-        className='inputField' />
+        className='responseNotesInput inputField' />
       <label
         className='inputLabel'
         htmlFor={'notes'}>{this.state.noteLabel}
       </label>
     </div>;
 
-    const statusFieldPositive = <div>
+    const statusFieldPositive = <div className='responseStatus'>
       <Field
         name='status'
         id='statusPositive'
@@ -156,7 +156,7 @@ export class OpportunityResponse extends Component {
       >{this.state.positiveLabel}</label>
     </div>;
 
-    const statusFieldNegative = <div>
+    const statusFieldNegative = <div className='responseStatus'>
       <Field
         name='status'
         id='statusNegative'
@@ -176,11 +176,11 @@ export class OpportunityResponse extends Component {
       >{this.state.negativeLabel}</label>
     </div>;
 
-    const signUpForm = <div>
+    const signUpForm = <div className='responseSignup'>
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))} >
         {notesField}
-        <div>
+        <div className='responseOptions'>
           <button className='submitButton'
             type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
           </button>
@@ -192,9 +192,11 @@ export class OpportunityResponse extends Component {
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues))} >
         {notesField}
-        {statusFieldNegative}
-        {statusFieldPositive}
-        <div>
+        <div className='responseStatusOptions'>
+          {statusFieldNegative}
+          {statusFieldPositive}
+        </div>
+        <div className='responseSubmitButtonContainer'>
           <button className='submitButton'
             type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
           </button>
@@ -208,12 +210,14 @@ export class OpportunityResponse extends Component {
     );
 
     return (
-      <div>
-        <button 
-          className='responseButton' 
-          onClick={() => this.toggleOpportunity(this.state.oppId)}>
-          {this.state.buttonLabel}
-        </button>
+      <div className='opportunityResponseContainer'>
+        <div className='responseButtonContainer'>
+          <button 
+            className='submitButton' 
+            onClick={() => this.toggleOpportunity(this.state.oppId)}>
+            {this.state.buttonLabel}
+          </button>
+        </div>
         {theForm}
       </div>
     );

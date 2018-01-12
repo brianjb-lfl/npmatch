@@ -1,34 +1,3 @@
-.opportunityResponse .inputField {
-  border: 1px solid lightgrey;
-  border-radius: 12px;
-  padding: 5px 10px;
-  width: calc(80% - 20px);
-  min-width: 280px;
-  height: 12px;
-  display: block;
-  margin: auto;
-}
-
-.opportunityResponse .inputField:focus {
+.adminInputField:focus {
   outline: none;
-}
-
-.responseButton {
-  font-weight: 700;
-  margin-bottom: 10px;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 2px;
-  padding: 8px;
-}
-.opportunityResponse .submitButton {
-  display: block;
-  font-weight: 700;
-  margin: auto auto 10px auto;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 2px;
-  padding: 8px;
 }
