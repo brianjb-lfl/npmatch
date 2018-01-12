@@ -20,7 +20,7 @@ export class ExplorePage extends Component {
         this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
           return <Link to={`/profiles/${user.id}`} key={key} >
-          <UserPreview user={user} /> 
+          <UserPreview user={user}  showDetail={true}/> 
         </Link> } else {
           return null;
         }
@@ -32,7 +32,7 @@ export class ExplorePage extends Component {
         this.props.usersList.map((user, key) => {
         if (user.userType === 'individual') {
           return <Link to={`/profiles/${user.id}`} key={key} >
-          <UserPreview user={user} /> 
+          <UserPreview user={user} showDetail={true}/> 
         </Link> } else {
           return null;
         }

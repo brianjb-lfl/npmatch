@@ -15,7 +15,7 @@ export class LandingPage extends Component {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
-          return <UserPreview user={user} key={key} history={this.props.history} />
+          return <UserPreview user={user} key={key} history={this.props.history} showDetail={false}/>
         } else {
           return null;
         }

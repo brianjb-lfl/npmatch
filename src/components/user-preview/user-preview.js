@@ -20,6 +20,9 @@ export class UserPreview extends Component {
 
   render() {
 
+    const bio = this.props.showDetail ? <p className='previewCardBio'>{this.props.user.bio}</p> : null ;
+    const location = this.props.showDetail ? <p className='previewCardBio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p> : null ;
+
     const userFollow = (this.props.userInState.id && this.props.userInState.id !== this.props.user.id) ?
        <UserFollow id={this.props.user.id} /> : '' ;
 
@@ -27,18 +30,20 @@ export class UserPreview extends Component {
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
 
+    const causesList = this.props.showDetail ? <ul className='causesList'>{causes}</ul> : <div></div> ;
+
     return (
       <div className='previewCard' >
         <div className='previewCardInner'onClick={() => this.handleClick(this.props.user.id)}>
           <img className='previewCardLogo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        
           <div className='previewCardText'>
             <h3 className='previewCardUser'>{this.props.user.organization}</h3>
-            <p className='previewCardBio'>{this.props.user.bio}</p>
-            <p className='previewCardBio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
+            {bio}
+            {location}
           </div>
         </div>
         <div className='previewBottomBar'>
-          <ul className='causesList'>{causes}</ul>
+          {causesList}
           {userFollow}
         </div>
       </div>
