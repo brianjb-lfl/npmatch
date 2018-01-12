@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Switch, Redirect } from 'react-router-dom';
 
 import './explore-page.css'
-import DetailedOrganizationPreview from '../detailed-organization-preview/detailed-organization-preview';
-import DetailedContributorPreview from '../detailed-contributor-preview/detailed-contributor-preview';
+import UserPreview from '../user-preview/user-preview';
 
 export class ExplorePage extends Component {
 
@@ -21,7 +20,7 @@ export class ExplorePage extends Component {
         this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
           return <Link to={`/profiles/${user.id}`} key={key} >
-          <DetailedOrganizationPreview user={user} /> 
+          <UserPreview user={user} /> 
         </Link> } else {
           return null;
         }
@@ -33,7 +32,7 @@ export class ExplorePage extends Component {
         this.props.usersList.map((user, key) => {
         if (user.userType === 'individual') {
           return <Link to={`/profiles/${user.id}`} key={key} >
-          <DetailedContributorPreview user={user} /> 
+          <UserPreview user={user} /> 
         </Link> } else {
           return null;
         }

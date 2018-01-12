@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrganizationPreview from '../organization-preview/organization-preview';
+import UserPreview from '../user-preview/user-preview';
 // import ContributorPreview from '../contributor-preview/contributor-preview';
 
 import './home-page.css';
@@ -11,7 +11,7 @@ export class HomePage extends Component {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
       if (user.userType === 'organization') {
-        return  <OrganizationPreview user={user} key={key} history={this.props.history}/> 
+        return  <UserPreview user={user} key={key} history={this.props.history}/> 
        } else {
         return null;
       }

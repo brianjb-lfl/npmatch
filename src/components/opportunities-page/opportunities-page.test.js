@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import { OpportunitiesPage } from './opportunities-page';
 import { mapStateToProps } from './opportunities-page';
-import { OpportunityPreview } from '../organization-preview/organization-preview';
+import { OpportunityPreview } from '../opportunity-preview/opportunity-preview';
 
 describe('Opportunities Page component display functionality', () => {
   const opportunitiesList = {

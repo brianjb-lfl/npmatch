@@ -3,8 +3,7 @@ import { shallow } from 'enzyme';
 
 import { ExplorePage } from './explore-page';
 import { mapStateToProps } from './explore-page';
-import { DetailedOrganizationPreview } from '../detailed-organization-preview/detailed-organization-preview';
-import { DetailedContributorPreview } from '../detailed-contributor-preview/detailed-contributor-preview';
+import { UserPreview } from '../user-preview/user-preview';
 
 describe('Explore Page component display functionality', () => {
   const usersList = [{
