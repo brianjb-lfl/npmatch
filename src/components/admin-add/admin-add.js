@@ -3,7 +3,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import './admin-add.css';
 import * as actionsUsersList from '../../actions/users-list';
 import * as actionsDisplay from '../../actions/display';
 
@@ -35,7 +34,7 @@ export class AdminAdd extends Component {
               component='input'
               type='text'
               placeholder='first and/or last name'
-              className='inputField'
+              className='adminInputField inputField'
               onChange={event=>this.getCoords(event)} />
             <label
               className='inputLabel'

@@ -23,7 +23,7 @@ export class OpportunityResponse extends Component {
       positiveResponse: 'offered',
       negativeLabel: `Sorry, I can't make it`,
       negativeResponse: 'deleted',
-      noteLabel: 'note',
+      noteLabel: '',
       buttonLabel: 'Sign up',  
     }
   };
@@ -121,7 +121,9 @@ export class OpportunityResponse extends Component {
 
   render() {
     const isInFocus = this.props.display.idOpportunity === this.state.oppId ? true : false; // using store, so that we only ever have 1 in focus
-
+    const positiveInputLabel = this.state.formStatus === 'positive' ? 'selectedResponseLabel' : 'deSelectedResponseLabel' ;
+    const negativeInputLabel = this.state.formStatus === 'negative' ? 'selectedResponseLabel' : 'deSelectedResponseLabel' ;
+  
     const notesField = <div className='responseNotes'>
       <Field
         name='notes'
@@ -147,12 +149,8 @@ export class OpportunityResponse extends Component {
         style={{ display: 'none', margin: 'auto' }}
         onChange={() => this.handleFormStatusChange('positive')} />
       <label
-        className='inputLabel'
+        className={positiveInputLabel}
         htmlFor={'statusPositive'}
-        style={{
-          backgroundColor: this.state.formStatus === 'positive' ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-          color: this.state.formStatus === 'positive' ? 'white' : '#082E41'
-        }}
       >{this.state.positiveLabel}</label>
     </div>;
 
@@ -167,12 +165,8 @@ export class OpportunityResponse extends Component {
         style={{ display: 'none', margin: 'auto' }}
         onChange={() => this.handleFormStatusChange('negative')} />
       <label
-        className='inputLabel'
+        className={negativeInputLabel}
         htmlFor={'statusNegative'}
-        style={{
-          backgroundColor: this.state.formStatus === 'negative' ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-          color: this.state.formStatus === 'negative' ? 'white' : '#082E41'
-        }}
       >{this.state.negativeLabel}</label>
     </div>;
 

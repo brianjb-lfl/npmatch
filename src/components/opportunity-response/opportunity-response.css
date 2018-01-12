@@ -4,6 +4,9 @@
   justify-content: flex-start;
   align-items: flex-end;
 }
+.responseNotes {
+  margin-bottom: 10px;
+}
 .responseNotesInput {
   border: 1px solid lightgrey;
   border-radius: 12px;
@@ -23,6 +26,9 @@
   justify-content: flex-end;
   align-items: baseline;
 }
+.responseButtonContainer {
+  margin-bottom: 10px;
+}
 .responseStatusOptions {
   display: flex;
   flex-direction: row;
@@ -30,7 +36,7 @@
   align-items: baseline;
   margin-bottom: 10px;
 }
-.responseStatus {
+/* .responseStatus {
   display: block;
   font-weight: 700;
   margin: 0;
@@ -39,4 +45,16 @@
   border: none;
   border-radius: 3px;
   padding: 8px;
+} */
+.selectedResponseLabel, .deSelectedResponseLabel {
+  padding: 5px;
+  border-radius: 3px;
+}
+.selectedResponseLabel{
+  background-color: #DA2536;
+  color: white;
+}
+.deSelectedResponseLabel {
+  background-color: rgba(8, 46, 65, 0.1);
+  color: #082E41;
 }
