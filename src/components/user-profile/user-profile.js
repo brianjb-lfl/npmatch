@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import './user-profile.css';
+import '../opportunities-page/opportunities-page.css'; // for opportunityAddButton
 import OpportunityPreview from '../opportunity-preview/opportunity-preview';
 import RolePreview from '../role-preview/role-preview';
 import AdminAdd from '../admin-add/admin-add';
@@ -43,7 +43,7 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
-    let editProfileButton = self ? <i onClick={()=>this.editProfile()} class="fa fa-pencil editProfilePencil" aria-hidden="true"></i> : null ;
+    let editProfileButton = self ? <i onClick={()=>this.editProfile()} class="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {
@@ -57,12 +57,12 @@ export class UserProfile extends Component {
     }
 
     const opportunities = opportunityPreviews.length > 0 && user.id ?
-    <div className='opportunities'>
+    <div className='opportunitiesContainer'>
       <h3 className='profileSectionHeaders'>{opportunityHeader}</h3>
       {opportunityPreviews}
     </div> : '' ;
 
-    const addOpportunityButton = self ? <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
+    const addOpportunityButton = self ? <button className='addOpportunityButton' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
 
     let responsePreviews = [];
     if (typeof user.responses === 'object' && self) {
@@ -172,14 +172,16 @@ export class UserProfile extends Component {
     }) : '' ;
 
     const userProfile = user.id ? 
-      <div className='userProfile'>
-        {editProfileButton}
-        <img className='logo' src={user.logo} alt={`${user.displayName}`}></img>
-        <h3 className='name'>{user.displayName}</h3>
-        <div className='profileCard'>
-          <h4 className='location'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
-          <p className='bio'>{user.bio}</p>
-          <p className='availability'>Availability: {user.availability}</p>
+      <div className='previewCard'>
+        <div className='userProfileHeader'>
+          <img className='userProfileLogo' src={user.logo} alt={`${user.displayName}`}></img>
+          <h3 className='userProfileName'>{user.displayName}</h3>
+        </div>
+        <div className='userProfileInner'>
+          {editProfileButton}
+          <h4 className='previewCardText'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
+          <p className='previewCardText'>{user.bio}</p>
+          <p className='previewCardText'>Availability: {user.availability}</p>
           {links}
           <ul className='causesList'>{causes}</ul>
           <ul className='skillsList'>{skills}</ul>

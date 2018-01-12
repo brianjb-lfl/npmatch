@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
 import UserFollow from '../user-follow/user-follow';
-import './user-preview.css';
+import '../styles//previewCard.css';
 
 export class UserPreview extends Component {
   handleClick(id) {
@@ -28,13 +28,13 @@ export class UserPreview extends Component {
     }) : '' ;
 
     return (
-      <div className='userPreview' >
-        <div className='userPreviewInner'onClick={() => this.handleClick(this.props.user.id)}>
-          <img className='logo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        
-          <div className='userText'>
-            <h3 className='user'>{this.props.user.organization}</h3>
-            <p className='bio'>{this.props.user.bio}</p>
-            <p className='bio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
+      <div className='previewCard' >
+        <div className='previewCardInner'onClick={() => this.handleClick(this.props.user.id)}>
+          <img className='previewCardLogo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        
+          <div className='previewCardText'>
+            <h3 className='previewCardUser'>{this.props.user.organization}</h3>
+            <p className='previewCardBio'>{this.props.user.bio}</p>
+            <p className='previewCardBio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p>
           </div>
         </div>
         <div className='previewBottomBar'>

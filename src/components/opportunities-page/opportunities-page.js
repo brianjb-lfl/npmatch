@@ -24,7 +24,7 @@ export class OpportunitiesPage extends Component {
     });
 
     const createOppButton = this.props.user.id ? 
-      <button className='addOpportunity' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
+      <button className='addOpportunityButton' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
 
     return (
       <main className='opportunitiesPage'>

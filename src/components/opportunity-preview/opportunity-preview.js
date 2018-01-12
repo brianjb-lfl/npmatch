@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 // import { Redirect } from 'react-router-dom';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
-import './opportunity-preview.css'
 import OpportunityResponse from '../opportunity-response/opportunity-response';
 
 export class OpportunityPreview extends Component {
@@ -36,8 +35,7 @@ export class OpportunityPreview extends Component {
     if(this.props.response){
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
     } else if (isMyOpportunity) {
-      editOrRespond = <button className='editOpportunityButton' 
-      onClick={() => this.editOpportunity(opportunity.id)}>Edit</button> ;
+      editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} class="fa fa-pencil editPencil" aria-hidden="true"></i>;
     } else if (this.props.user.id) {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
@@ -57,8 +55,8 @@ export class OpportunityPreview extends Component {
     const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
     return (
-      <div className='opportunityPreview'>
-        <div className='opportunityPreviewInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
+      <div className='previewCard'>
+        <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
           <h3 className='opportunityTitle'>{opportunity.title}</h3>
           <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
           <p className='timeframe'>{opportunity.timeframe}</p>
