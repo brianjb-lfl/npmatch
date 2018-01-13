@@ -27,7 +27,7 @@ export class AdminAdd extends Component {
         <form className='opportunityResponse'
           onSubmit={this.props.handleSubmit(formValues => this.searchUsers(formValues))} >
 
-          <div>
+          <div className='labelInputPair'>
             <Field
               name='user'
               id='user'

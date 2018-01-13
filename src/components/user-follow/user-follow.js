@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './user-follow.css';
-
 import * as actionsUser from '../../actions/user';
 
 export class UserFollow extends Component {

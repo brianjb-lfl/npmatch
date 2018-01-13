@@ -1,19 +1,18 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-
-import { mapStateToProps } from './top-nav-bar';
-import { TopNavBar } from './top-nav-bar';
+import { NavBarTop } from './nav-bar-top';
+import { mapStateToProps } from './nav-bar-top';
 
 describe('Top Nav Bar component display functionality', () => {
   const user = {
     id: 1
   };
   it('Smoke test - component should render', () => {
-    shallow(<TopNavBar user={user} />);
+    shallow(<NavBarTop user={user} />);
   });
   it('Should render a messages icon, opportunities icon, search bar, profile icon and settings icon when there is a user', () => {
-    const wrapper = shallow(<TopNavBar user={user} />);
+    const wrapper = shallow(<NavBarTop user={user} />);
     expect(wrapper.find('.inboxButton i').prop('className')).toEqual('fa fa-envelope-o');
     expect(wrapper.find('.opportunitiesButton i').prop('className')).toEqual('fa fa-briefcase');
     expect(wrapper.find('.searchBar i').prop('className')).toEqual('fa fa-search');
@@ -24,7 +23,7 @@ describe('Top Nav Bar component display functionality', () => {
     const user = {
       id: null
     };
-    const wrapper = shallow(<TopNavBar user={user} />);
+    const wrapper = shallow(<NavBarTop user={user} />);
     expect(wrapper.find('.inboxButton').exists()).toEqual(false);
     expect(wrapper.find('.opportunitiesButton').exists()).toEqual(false);
     expect(wrapper.find('.searchBar').exists()).toEqual(true);
@@ -54,7 +53,7 @@ describe('Top Nav Bar component display functionality', () => {
     const spy = jest.fn(() => {return Promise.resolve()});
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
-      <TopNavBar
+      <NavBarTop
         display='homePage'
         dispatch={spy}
         user={{ authToken: 12345 }}
@@ -70,7 +69,7 @@ describe('Top Nav Bar component display functionality', () => {
     const spy = jest.fn(() => {return Promise.resolve()});
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
-      <TopNavBar
+      <NavBarTop
         display='homePage'
         dispatch={spy}
         user={{ authToken: 12345 }}

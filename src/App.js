@@ -15,8 +15,8 @@ import UserProfile from './components/user-profile/user-profile';
 import UserProfileEdit from './components/user-profile-edit/user-profile-edit';
 import ExplorePage from './components/explore-page/explore-page';
 import OpportunityCreate from './components/opportunity-create/opportunity-create';
-import TopNavBar from './components/top-nav-bar/top-nav-bar';
-import BottomNavBar from './components/bottom-nav-bar/bottom-nav-bar';
+import NavBarTop from './components/nav-bar-top/nav-bar-top';
+import NavBarBottom from './components/nav-bar-bottom/nav-bar-bottom';
 import RootPage from './components/root-page/root-page';
 import OpportunitiesPage from './components/opportunities-page/opportunities-page';
 
@@ -47,8 +47,8 @@ export class App extends Component {
             <Route path="/settings" component={SettingsPage} /> */}
             <Redirect from='*' to='/' />
           </Switch>
-          <Route path='/*' component={TopNavBar}/>
-          <Route path='/*' component={BottomNavBar} />
+          <Route path='/*' component={NavBarTop}/>
+          <Route path='/*' component={NavBarBottom} />
         </div>
       </Router>
     );

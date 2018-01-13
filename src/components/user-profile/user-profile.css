@@ -1,4 +1,4 @@
-.userProfileHeader {
+.userProfileHeaderContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,10 +19,10 @@
     align-items: flex-start;
     overflow: hidden;
 }
-.opportunitiesContainer {
-  margin-left: auto;
-  margin-right: auto;
-}
 .profileSectionHeaders {
   text-align: center;
+}
+.addAdminMessage{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

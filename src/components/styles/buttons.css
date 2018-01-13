@@ -1,24 +1,41 @@
-.submitButton, .responseButton, .clearFormButton {
+.submitButton, 
+.responseButton, 
+.clearFormButton,
+.searchBarSubmitButton,
+.addOpportunityButton,
+.followButton {
   display: flex;
-  font-weight: 700;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background-color: #DA2536;
   color: white;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
+}
+.submitButton, 
+.responseButton, 
+.clearFormButton,
+.addOpportunityButton,
+.followButton {
+  font-weight: 700;
   padding: 8px;
+}
+.addOpportunityButton {
+  text-decoration: none;
+}
+.submitButton:hover, 
+.responseButton:hover, 
+.clearFormButton:hover,
+.searchBarSubmitButton:hover,
+.addOpportunityButton:hover,
+.followButton:hover,
+.fa-search:hover {
+  background-color: #eb293c;
+  color: #eee;
 }
 .responseButton {
   margin-bottom: 10px;
 }
-.addOpportunityButton {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-decoration: none;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 2px;
-  font-weight: 700;
-  padding: 8px;
-}
+

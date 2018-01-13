@@ -27,12 +27,15 @@ export class OpportunityPreview extends Component {
   render() {
     const opportunity = this.props.opportunity;
     const displayName = this.props.opportunity.organization ? this.props.opportunity.organization : `${this.props.opportunity.firstName} ${this.props.opportunity.lastName}`;
-
+    
     const causes = Array.isArray(opportunity.causes) ? opportunity.causes.map((cause, index)=>{
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
     const isInFocus = this.props.display.idOpportunity === opportunity.id ? true : false ;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
+    
+    const displayNameTitle = isMyOpportunity ? null : <h3 className='previewCardTitle'>{displayName}</h3>
+    
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
     if(this.props.response){
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
@@ -68,7 +71,7 @@ export class OpportunityPreview extends Component {
         <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
           <div className='previewCardTextContainer'>
             <h3 className='previewCardTitle'>{opportunity.title}</h3>
-            <h3 className='previewCardTitle'>{displayName}</h3>
+            {displayNameTitle}
             {requiredSkills}
             {timeframe}
             {description}

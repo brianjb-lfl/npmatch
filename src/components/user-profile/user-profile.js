@@ -127,14 +127,16 @@ export class UserProfile extends Component {
       }
     }
 
-    let admins = '';
+    let admins = null;
     if (adminPreviews.length > 0){
       admins = <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{adminsHeader}</h3>
       {adminPreviews}
     </div>
-    } else if (self) {
-      admins = 'There are no site admins. You can add an admin by searching users below.' ;
+    } else if (user.userType === 'organization' && self) {
+      admins = <div className='addAdminMessage'>
+        There are no site admins. You can add an admin by searching users below.
+      </div>;
     }
 
     const adminAdd = (user.userType === 'organization' && self) ? <AdminAdd/> : '' ;
@@ -157,7 +159,7 @@ export class UserProfile extends Component {
     </div> : '' ;
 
     const links = user.links.map((link, index) => {
-      return <a href={link.linkUrl} key={index} target={'_blank'}>
+      return <a className='linkIcon' href={link.linkUrl} key={index} target={'_blank'}>
         <i className="fa fa-globe" aria-hidden="true"></i>
       </a>
     })
@@ -171,7 +173,7 @@ export class UserProfile extends Component {
 
     const userProfile = user.id ? 
       <div className='previewCard'>
-        <div className='userProfileHeader'>
+        <div className='userProfileHeaderContainer'>
           <img className='userProfileLogo' src={user.logo} alt={`${user.displayName}`}></img>
           <h3 className='userProfileName'>{user.displayName}</h3>
         </div>
