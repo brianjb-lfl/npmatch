@@ -31,7 +31,7 @@ export class App extends Component {
     // NOTE: individual components include a redirect if users are not signed in: ExplorePage, OpportunityCreae, OpportunitiesPage, UserProfileEdit
     return (
       <Router>
-        <div>
+        <div className='outerContainer'>
           <Switch>
             <Route exact path="/" component={RootPage} />
             <Route exact path="/profiles/:id" component={UserProfile} />

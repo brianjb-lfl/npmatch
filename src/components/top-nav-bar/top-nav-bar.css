@@ -1,9 +1,10 @@
-ul.topNav {
-  margin: 0;
-  padding: 0;
+.topNavContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
-
-.topNav {
+.topNavUl {
   list-style-type: none;
   list-style-position:inside;
   margin:0;
@@ -11,14 +12,12 @@ ul.topNav {
   background-color: #082E41;
   font-size: 16px;
   text-align: center;
-  position: fixed;
-  top: 0px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: baseline;
 }
-
 .inboxButton, .opportunitiesButton, .editProfileButton, .settingsButton, .searchBar {
   z-index: 1000;
   color: white;
@@ -28,32 +27,26 @@ ul.topNav {
   font-size: 18px;
   align-self: center;
 }
-
 .searchBar form {
   margin: 0;
   padding-bottom: 2px;
 }
-
 .searchBar input, .searchBar button {
   margin: 0px 0.5vw 0 0.5vw;
   height: 20px;
 }
-
 .searchBar input, .searchBar button {
   border: none;
   vertical-align: center;
   border-radius: 2px;
 }
-
 .searchBar button {
   background-color: #EF525B;
   color: white;
 }
-
 .inboxButton:hover, .opportunitiesButton:hover, .editProfileButton:hover, .settingsButton:hover, .searchBar button:hover {
   cursor: pointer;
 }
-
 .cog {
   display: none;;
 }

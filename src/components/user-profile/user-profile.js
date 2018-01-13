@@ -51,12 +51,11 @@ export class UserProfile extends Component {
         // self = true if user owns opportunities
         opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history} />)
         key += 1;
-        console.log('HYDRATEOPP', user.opportunities[prop])
       }
     }
 
     const opportunities = opportunityPreviews.length > 0 && user.id ?
-    <div className='opportunitiesContainer'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{opportunityHeader}</h3>
       {opportunityPreviews}
     </div> : '' ;
@@ -77,7 +76,7 @@ export class UserProfile extends Component {
     }
 
     const responses = responsePreviews.length > 0 ?
-    <div className='responses'>
+    <div className='previewCardListContainer'>
     <h3 className='profileSectionHeaders'>{responseHeader}</h3>
       {responsePreviews}
     </div> : '' ;
@@ -95,7 +94,7 @@ export class UserProfile extends Component {
     let adminOf = '';
       if (adminOfPreviews.length > 0){
       adminOfHeader = 'I am an Admin of'
-      adminOf = <div className='admins'>
+      adminOf = <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{adminOfHeader}</h3>
       {adminOfPreviews}
     </div>
@@ -112,7 +111,7 @@ export class UserProfile extends Component {
     }
 
     const following = followingPreviews.length > 0 ?
-    <div className='following'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{followingHeader}</h3>
       {followingPreviews}
     </div> : '' ;
@@ -130,7 +129,7 @@ export class UserProfile extends Component {
 
     let admins = '';
     if (adminPreviews.length > 0){
-      admins = <div className='admins'>
+      admins = <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{adminsHeader}</h3>
       {adminPreviews}
     </div>
@@ -152,7 +151,7 @@ export class UserProfile extends Component {
     }
     
     const userSearches = userSearchPreviews.length > 0 ?
-    <div className='admins'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>Search Results</h3>
       {userSearchPreviews}
     </div> : '' ;
@@ -162,7 +161,7 @@ export class UserProfile extends Component {
         <i className="fa fa-globe" aria-hidden="true"></i>
       </a>
     })
-
+    const linksList = <div className='linksList'>{links}</div>
     const causes = Array.isArray(user.causes) ? user.causes.map((cause, index)=>{
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
@@ -181,9 +180,9 @@ export class UserProfile extends Component {
           <h4 className='previewCardText'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
           <p className='previewCardText'>{user.bio}</p>
           <p className='previewCardText'>Availability: {user.availability}</p>
-          {links}
+          {linksList}
           <ul className='causesList'>{causes}</ul>
-          <ul className='skillsList'>{skills}</ul>
+          <ul className='skillsList' style={{marginTop: '10px'}}>{skills}</ul>
         </div>
         {userFollow}
       </div> :

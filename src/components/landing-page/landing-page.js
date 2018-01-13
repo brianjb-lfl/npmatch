@@ -22,7 +22,7 @@ export class LandingPage extends Component {
       }) : '';
 
     return (
-      <div className='landingPage'>
+      <div className='landingPage mainColumn'>
         <h2 className='sectionTitle'>Causeway</h2>
         <div className='descriptionContainer'>
           <p>
@@ -36,7 +36,9 @@ export class LandingPage extends Component {
           that organizations are posting.
         </p>
         </div>
-        {previews}
+        <div className='previewCardListContainer'>
+          {previews}
+        </div>
       </div>
     )
   }

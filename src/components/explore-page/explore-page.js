@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Switch, Redirect } from 'react-router-dom';
-
-import './explore-page.css'
 import UserPreview from '../user-preview/user-preview';
 
 export class ExplorePage extends Component {
@@ -19,9 +17,8 @@ export class ExplorePage extends Component {
       previews = Array.isArray(this.props.usersList) ?
         this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
-          return <Link to={`/profiles/${user.id}`} key={key} >
-          <UserPreview user={user}  showDetail={true}/> 
-        </Link> } else {
+          return <UserPreview key={key} user={user}  showDetail={true}/> 
+        } else {
           return null;
         }
       }) : null ;
@@ -31,9 +28,8 @@ export class ExplorePage extends Component {
       previews = Array.isArray(this.props.usersList) ?
         this.props.usersList.map((user, key) => {
         if (user.userType === 'individual') {
-          return <Link to={`/profiles/${user.id}`} key={key} >
-          <UserPreview user={user} showDetail={true}/> 
-        </Link> } else {
+          return <UserPreview key={key} user={user} showDetail={true}/> 
+        } else {
           return null;
         }
       }) : null ;
@@ -44,7 +40,9 @@ export class ExplorePage extends Component {
       <main className='explorePage'>
         {redirect}
         <h2 className='sectionTitle'>{title}</h2>
-        {previews}
+        <div className='previewCardListContainer listOfAnchorTags'>
+          {previews}
+        </div>
       </main>
     )
   }

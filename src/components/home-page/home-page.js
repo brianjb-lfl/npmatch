@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import UserPreview from '../user-preview/user-preview';
-// import ContributorPreview from '../contributor-preview/contributor-preview';
-
-import './home-page.css';
 
 export class HomePage extends Component {
   render() {
@@ -18,9 +14,11 @@ export class HomePage extends Component {
       }) : '' ;
 
     return (
-      <div className='homePage'>
+      <div className='homePage mainColumn'>
         <h2 className='sectionTitle'>Explore those enrolled in CauseWay</h2>
-        {previews}
+        <div className='previewCardListContainer'>
+          {previews}
+        </div>
       </div>
     )
   }

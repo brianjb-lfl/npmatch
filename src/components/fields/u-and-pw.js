@@ -14,7 +14,7 @@ export default class UandPFields extends Component {
       : '' ;
 
     return (
-      <div>
+      <div className='uAndPFields'>
         <label className='inputLabel' htmlFor={'username'}>Username</label>
           <Field className='usernameInput' name='username' id='username'
             component='input' type='text' placeholder='Email Address' required

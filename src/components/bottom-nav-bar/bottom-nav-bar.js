@@ -66,8 +66,8 @@ export class BottomNavBar extends Component {
     }
 
     return (
-      <div>
-        <ul className='bottomNav'>
+      <div className='bottomNavContainer'>
+        <ul className='bottomNavUl'>
           {homeButton}
           {leftButton}
           {rightButton}

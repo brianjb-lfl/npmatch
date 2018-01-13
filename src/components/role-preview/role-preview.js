@@ -93,6 +93,10 @@ export class RolePreview extends Component {
       data={data}
       onChange={input.onChange} />
 
+    const location = <p className='previewCardText previewLocation hoverBlack'>{[this.props.role.locationCity, this.props.role.locationState].join(', ')}</p> ;
+    
+    const displayName = this.props.role.organization ? this.props.role.organization : `${this.props.role.firstName} ${this.props.role.lastName}`;
+
     let selector;
     
     if (this.props.roleType === 'following') {
@@ -127,10 +131,16 @@ export class RolePreview extends Component {
       {this.state.adminButtonLabel}
     </button> : <div></div> ;
 
+    const logo = this.props.role.logo ? this.props.role.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
+
     return (
-      <div className='rolePreview'>
-        <div className='rolePreviewInner' onClick={() => this.goToUser()}>
-          <h3 className='name'>{this.state.role.organization} {this.state.role.firstName} {this.state.role.lastName}</h3>
+      <div className='previewCard'>
+        <div className='previewCardInner' onClick={() => this.goToUser()}>
+          <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img> 
+          <div className='previewCardTextContainer'>
+            <h3 className='previewCardTitle hoverBlack'>{displayName}</h3>
+            {location}
+          </div>
         </div>
         <div className='previewBottomBar'>
           {adminSelector}

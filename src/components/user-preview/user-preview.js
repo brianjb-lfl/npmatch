@@ -15,12 +15,12 @@ export class UserPreview extends Component {
     })
   }
 
-  // also available: locationCity, locationState, links, causes
-
   render() {
 
-    const bio = this.props.showDetail ? <p className='previewCardBio'>{this.props.user.bio}</p> : null ;
-    const location = this.props.showDetail ? <p className='previewCardBio'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p> : null ;
+    const displayName = this.props.user.organization ? this.props.user.organization : `${this.props.user.firstName} ${this.props.user.lastName}`;
+
+    const bio = this.props.showDetail ? <p className='previewCardText previewBio hoverBlack'>{this.props.user.bio}</p> : null ;
+    const location = this.props.showDetail ? <p className='previewCardText previewLocation hoverBlack'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p> : null ;
 
     const userFollow = (this.props.userInState.id && this.props.userInState.id !== this.props.user.id) ?
        <UserFollow id={this.props.user.id} /> : '' ;
@@ -30,12 +30,14 @@ export class UserPreview extends Component {
     }) : '' ;
     const causesList = this.props.showDetail ? <ul className='causesList'>{causes}</ul> : <div></div> ;
 
+    const logo = this.props.user.logo ? this.props.user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
+
     return (
       <div className='previewCard' >
         <div className='previewCardInner'onClick={() => this.handleClick(this.props.user.id)}>
-          <img className='previewCardLogo' src={this.props.user.logo} alt={`${this.props.user.organization} logo`}></img>        
-          <div className='previewCardText'>
-            <h3 className='previewCardUser'>{this.props.user.organization}</h3>
+          <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
+          <div className='previewCardTextContainer'>
+            <h3 className='previewCardTitle hoverBlack'>{displayName}</h3>
             {bio}
             {location}
           </div>

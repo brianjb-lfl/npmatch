@@ -26,6 +26,8 @@ export class OpportunityPreview extends Component {
 
   render() {
     const opportunity = this.props.opportunity;
+    const displayName = this.props.opportunity.organization ? this.props.opportunity.organization : `${this.props.opportunity.firstName} ${this.props.opportunity.lastName}`;
+
     const causes = Array.isArray(opportunity.causes) ? opportunity.causes.map((cause, index)=>{
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
@@ -54,13 +56,23 @@ export class OpportunityPreview extends Component {
     }
     const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
+    const requiredSkills = opportunity.requiredSkills ? <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4> : null ;
+    const timeframe = opportunity.timeframe ? <p className='timeframe'>{opportunity.timeframe}</p> : null ;
+    const description = opportunity.description ? <p className='description'>{opportunity.description}</p> : null ;
+
+    const logo = opportunity.logo ? opportunity.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
+
     return (
       <div className='previewCard'>
         <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
-          <h3 className='opportunityTitle'>{opportunity.title}</h3>
-          <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4>
-          <p className='timeframe'>{opportunity.timeframe}</p>
-          <p className='description'>{opportunity.description}</p>
+        <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
+          <div className='previewCardTextContainer'>
+            <h3 className='previewCardTitle'>{opportunity.title}</h3>
+            <h3 className='previewCardTitle'>{displayName}</h3>
+            {requiredSkills}
+            {timeframe}
+            {description}
+          </div>
         </div>
         <div className='previewBottomBar'>
           <ul className='causesList'>{causes}</ul>

@@ -24,7 +24,7 @@ export class LoginPage extends Component {
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
         >
           <UandPFields/>
-          <button type='submit'>Sign In</button>
+          <button className='submitButton loginButton' type='submit'>Sign In</button>
         </form>
       </main>
     )
