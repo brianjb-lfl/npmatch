@@ -26,3 +26,18 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.addAdminSearchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.adminInputField {
+  display: flex;
+  flex: 1;
+  padding: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

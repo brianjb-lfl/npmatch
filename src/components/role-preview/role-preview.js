@@ -6,8 +6,6 @@ import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
 
-import './role-preview.css';
-
 export class RolePreview extends Component {
 
   componentWillMount() {
@@ -106,30 +104,37 @@ export class RolePreview extends Component {
     } else if (this.props.roleType === 'admin'  && isInFocus) {
       selector = <form className='selectAdmin'
         onSubmit={this.props.handleSubmit((values) => this.setRole(values))}>
-        <div>
-          <p>{this.state.role.firstName} {this.state.role.lastName} {this.state.role.organization}</p>
-          <label
-            className='inputLabel'
-            htmlFor='capabilities'>Role
-          </label>
-          <Field
-            name='capabilities'
-            id='capabilities'
-            component={renderDropdownList}
-            data={this.props.general.roleTypes}
-            className='inputField' />
-        </div>
+        {/* <p>{this.state.role.firstName} {this.state.role.lastName} {this.state.role.organization}</p> */}
+        <label
+          className='inputLabel'
+          htmlFor='capabilities'>Role
+        </label>
+        <Field
+          name='capabilities'
+          id='capabilities'
+          component={renderDropdownList}
+          data={this.props.general.roleTypes}
+          className='inputField roleInputField' />
         <button className='submitButton'
           type="submit" disabled={this.props.submitting}>Save
         </button>
       </form>
     }
 
-    const adminSelector = this.state.capabilities.includes('admin') ? <button 
-      className='responseButton' 
-      onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
-      {this.state.adminButtonLabel}
-    </button> : <div></div> ;
+    let adminSelector = <div></div>;
+    if (this.state.capabilities.includes('admin') && this.state.adminButtonLabel === 'edit') {
+      adminSelector = <i
+        onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}
+        className="fa fa-pencil editPencil" 
+        aria-hidden="true">
+      </i>;
+    } else if (this.state.capabilities.includes('admin')) {
+      adminSelector = <button 
+        className='responseButton' 
+        onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
+        {this.state.adminButtonLabel}
+      </button>;
+    }
 
     const logo = this.props.role.logo ? this.props.role.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
 

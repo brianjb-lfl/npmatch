@@ -39,14 +39,19 @@ main { /* set width here!*/
   width: 100%;
   margin-bottom: 50px;
 }
-a {
-  text-decoration: none;
-  color: inherit;
+.previewCardListContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
 }
 .sectionTitle {
   text-align: center;
   padding-top: 20px;
 }
-button:hover {
-  cursor: pointer;
+a {
+  text-decoration: none;
+  color: inherit;
 }

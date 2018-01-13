@@ -148,7 +148,7 @@ export class UserProfile extends Component {
       if(Array.isArray(this.props.usersList.main)) {
         this.props.usersList.main.forEach((user,index)=>{
           if (!(this.props.user.admins[user.id])){
-            userSearchPreviews.push(<RolePreview user={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
+            userSearchPreviews.push(<RolePreview role={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
           }
         })
       }

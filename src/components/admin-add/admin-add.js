@@ -23,29 +23,24 @@ export class AdminAdd extends Component {
   render() {
 
     return (
-      <div>
-        <form className='opportunityResponse'
-          onSubmit={this.props.handleSubmit(formValues => this.searchUsers(formValues))} >
-
-          <div className='labelInputPair'>
-            <Field
-              name='user'
-              id='user'
-              component='input'
-              type='text'
-              placeholder='first and/or last name'
-              className='adminInputField inputField'
-              onChange={event=>this.getCoords(event)} />
-            <label
-              className='inputLabel'
-              htmlFor={'user'}>user's first and/or last name
-            </label>
-          </div>
-          <button className='submitButton'
-            type="submit" disabled={this.props.pristine || this.props.submitting}>search users
-          </button>
-        </form>
-      </div>
+      <form className='addAdminSearchBar'
+        onSubmit={this.props.handleSubmit(formValues => this.searchUsers(formValues))} >
+        <label
+          className='inputLabel'
+          htmlFor={'user'}>add a site admin
+        </label>
+        <Field
+          name='user'
+          id='user'
+          component='input'
+          type='text'
+          placeholder='first and/or last name'
+          className='adminInputField inputField'
+          onChange={event=>this.getCoords(event)} />
+        <button className='submitButton'
+           type="submit" disabled={this.props.pristine || this.props.submitting}>search users
+        </button>
+      </form>
     );
   }
 }
