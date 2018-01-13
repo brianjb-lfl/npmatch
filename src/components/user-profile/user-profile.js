@@ -14,11 +14,13 @@ export class UserProfile extends Component {
   createOpportunity(){
     this.props.dispatch(actionsOpportunity.loadOpportunity({}));
     this.props.history.push('/opportunities/create');
+    window.scrollTo(0,0);
   }
 
   editProfile() {
     this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
     this.props.history.push(`/profiles/${this.props.user.id}/edit`)
+    window.scrollTo(0,0);
   }
 
   render() {

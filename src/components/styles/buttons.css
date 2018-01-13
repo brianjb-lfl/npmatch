@@ -23,7 +23,7 @@
   padding: 8px;
 }
 .addOpportunityButton {
-  text-decoration: none;
+  margin-bottom: 15px;
 }
 .submitButton:hover, 
 .responseButton:hover, 

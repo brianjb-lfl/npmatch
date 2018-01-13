@@ -170,11 +170,11 @@ export class OpportunityResponse extends Component {
       >{this.state.negativeLabel}</label>
     </div>;
 
-    const signUpForm = <div className='responseSignup'>
+    const signUpForm = <div className='responseSignup newResponse'>
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))} >
         {notesField}
-        <div className='responseOptions'>
+        <div className='responseSubmitButtonContainer'>
           <button className='submitButton'
             type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
           </button>
@@ -182,7 +182,7 @@ export class OpportunityResponse extends Component {
       </form>
     </div>
 
-    const editForm = <div>
+    const editForm = <div className='responseSignup editResponse'>
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues))} >
         {notesField}

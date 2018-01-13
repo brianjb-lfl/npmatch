@@ -20,7 +20,8 @@
 .responseNotesInput:focus {
   outline: none;
 }
-.responseButtonContainer, .responseSubmitButtonContainer {
+.responseButtonContainer, 
+.responseSubmitButtonContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
