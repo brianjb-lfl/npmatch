@@ -5,9 +5,11 @@ import UserFollow from '../user-follow/user-follow';
 
 export class UserPreview extends Component {
   handleClick(id) {
+    console.log('id clicked',id)
     this.props.dispatch(actionsUser.fetchUser(
       id,
-      this.props.user.authToken,
+      this.props.userInState.authToken,
+      'userViewed',
       'userViewed'
     ))
     .then(()=>{
@@ -31,7 +33,7 @@ export class UserPreview extends Component {
     const causesList = this.props.showDetail ? <ul className='causesList'>{causes}</ul> : <div></div> ;
 
     const logo = this.props.user.logo ? this.props.user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
-
+    
     return (
       <div className='previewCard' >
         <div className='previewCardInner'onClick={() => this.handleClick(this.props.user.id)}>

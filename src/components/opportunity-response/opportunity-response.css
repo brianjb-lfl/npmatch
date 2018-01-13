@@ -30,22 +30,3 @@
 .responseButtonContainer {
   margin-bottom: 10px;
 }
-.responseStatusOptions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 10px;
-}
-.selectedResponseLabel, .deSelectedResponseLabel {
-  padding: 5px;
-  border-radius: 3px;
-}
-.selectedResponseLabel{
-  background-color: #DA2536;
-  color: white;
-}
-.deSelectedResponseLabel {
-  background-color: rgba(8, 46, 65, 0.1);
-  color: #082E41;
-}

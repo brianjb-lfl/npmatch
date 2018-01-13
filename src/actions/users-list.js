@@ -35,7 +35,6 @@ export const fetchUsersList = (query, authToken) => dispatch => {
       return res.json();
     })
     .then(usersList=>{
-      console.log('usersList',usersList)
       ck.compareObjects(ck.getUsersListRes, usersList );
       dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(loadUsersList(usersList));      

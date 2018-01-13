@@ -121,8 +121,8 @@ export class OpportunityResponse extends Component {
 
   render() {
     const isInFocus = this.props.display.idOpportunity === this.state.oppId ? true : false; // using store, so that we only ever have 1 in focus
-    const positiveInputLabel = this.state.formStatus === 'positive' ? 'selectedResponseLabel' : 'deSelectedResponseLabel' ;
-    const negativeInputLabel = this.state.formStatus === 'negative' ? 'selectedResponseLabel' : 'deSelectedResponseLabel' ;
+    const positiveInputLabel = this.state.formStatus === 'positive' ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
+    const negativeInputLabel = this.state.formStatus === 'negative' ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
   
     const notesField = <div className='responseNotes'>
       <Field
@@ -186,7 +186,7 @@ export class OpportunityResponse extends Component {
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.editResponse(formValues))} >
         {notesField}
-        <div className='responseStatusOptions'>
+        <div className='selectOptionButtonContainer'>
           {statusFieldNegative}
           {statusFieldPositive}
         </div>

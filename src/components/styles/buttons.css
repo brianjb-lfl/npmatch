@@ -41,4 +41,22 @@ button:hover {
 .responseButton {
   margin-bottom: 10px;
 }
-
+.selectOptionButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.selectedOptionLabel, .deSelectedOptionLabel {
+  padding: 5px;
+  border-radius: 3px;
+}
+.selectedOptionLabel{
+  background-color: #DA2536;
+  color: white;
+}
+.deSelectedOptionLabel {
+  background-color: rgba(8, 46, 65, 0.1);
+  color: #082E41;
+}
