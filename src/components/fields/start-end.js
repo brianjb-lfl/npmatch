@@ -21,7 +21,7 @@ export class StartEndFields extends Component {
 
     return (
       <div>
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'timestampStart'}>Start

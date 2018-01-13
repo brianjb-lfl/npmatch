@@ -39,9 +39,6 @@ main { /* set width here!*/
   width: 100%;
   margin-bottom: 50px;
 }
-.inputField:focus {
-  outline: none;
-}
 a {
   text-decoration: none;
   color: inherit;

@@ -13,7 +13,7 @@
   padding: 5px 10px;
   width: calc(80% - 20px);
   min-width: 280px;
-  height: 12px;
+  min-height: 12px;
   display: block;
   margin: auto;
 }
@@ -36,16 +36,6 @@
   align-items: baseline;
   margin-bottom: 10px;
 }
-/* .responseStatus {
-  display: block;
-  font-weight: 700;
-  margin: 0;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 8px;
-} */
 .selectedResponseLabel, .deSelectedResponseLabel {
   padding: 5px;
   border-radius: 3px;

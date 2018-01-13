@@ -1,4 +1,5 @@
-.editSection {
+/* .editSection {
+  background-color: red;
   padding: 10px 15px 30px 15px;
   margin: auto;
   margin-bottom: 50px;
@@ -11,43 +12,11 @@
 }
 .editSection h2 {
   margin-top: 0;
-}
-.editSection label {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
+} */
+
 .editSection ul {
   padding: 0;
   list-style: none;
-}
-.editSection .submitButton, .editSection .clearFormButton {
-  /* display: block; */
-  font-weight: 700;
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 2px;
-  padding: 8px;
-}
-.inputField {
-  width: 150px;
-  font-size: 14px;
-}
-.rw-widget {
-  margin: auto;
-  width: 150px;
-  font-size: 12px;
-}
-.rw-multiselect {
-  width: 60%;
-  min-width: 200px;
-  max-width: 400px;
 }
 #linkUrl0 {
   margin-top: 5px;

@@ -20,7 +20,7 @@ export class LinkFields extends Component {
 
     return (
       <div>
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={linkType}>Link Type

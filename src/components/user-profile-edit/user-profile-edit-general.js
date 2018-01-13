@@ -87,12 +87,12 @@ export class UserEditGeneralForm extends Component {
       }
 
     return (
-      <form className='userProfile'
+      <form className='previewCard'
         onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))} >
         {redirect}
         {nameForm}
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'bio'}>Bio
@@ -109,7 +109,7 @@ export class UserEditGeneralForm extends Component {
         <CausesFields />
         <SkillsFields />
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'availability'}>Availability
@@ -122,7 +122,7 @@ export class UserEditGeneralForm extends Component {
             className='inputField' />
         </div>
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'logo'}>Logo URL
@@ -139,7 +139,7 @@ export class UserEditGeneralForm extends Component {
         {myLinks}
         <button type='button' onClick={()=>this.addLink()}>add link</button>
 
-        <div>
+        <div className='previewBottomBar'>
           <button className='submitButton'
             type="submit" disabled={this.props.pristine || this.props.submitting}>Save
           </button>

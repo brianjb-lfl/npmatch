@@ -22,12 +22,12 @@ export class UserEditUandPwForm extends Component {
   render() {
     
     return (
-      <form className='userProfile'
+      <form className='previewCard'
         onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}>
         
         <UandPwFields confirm={true}/>
 
-        <div>
+        <div className='previewBottomBar'>
           <button className='submitButton'
             type="submit" disabled={this.props.pristine || this.props.submitting}>Save
           </button>

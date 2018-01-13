@@ -42,7 +42,7 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
-    let editProfileButton = self ? <i onClick={()=>this.editProfile()} class="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
+    let editProfileButton = self ? <i onClick={()=>this.editProfile()} className="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {

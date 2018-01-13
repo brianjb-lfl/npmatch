@@ -37,7 +37,7 @@ export class OpportunityPreview extends Component {
     if(this.props.response){
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
     } else if (isMyOpportunity) {
-      editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} class="fa fa-pencil editPencil" aria-hidden="true"></i>;
+      editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} className="fa fa-pencil editPencil" aria-hidden="true"></i>;
     } else if (this.props.user.id) {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;

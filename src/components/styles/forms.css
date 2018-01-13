@@ -1,0 +1,37 @@
+.inputField {
+  width: 150px;
+  font-size: 14px;
+}
+.inputField:focus {
+  outline: none;
+}
+.rw-widget {
+  /* margin: auto;
+  width: 150px; */
+  font-size: 12px;
+}
+/* .rw-multiselect {
+  background-color: red;
+  min-width: 200px;
+  max-width: 400px;
+} */
+.labelInputPair {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.labelInputPair .inputLabel {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
+  width: 100px;
+  font-weight: 700;
+}
+.labelInputPair .inputField,
+.labelInputPair .rw-widget
+ {
+  display: flex;
+  flex: 1;
+  font-weight: 700;
+}

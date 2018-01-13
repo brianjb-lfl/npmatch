@@ -3,6 +3,7 @@ import './App.css';
 import 'react-widgets/dist/css/react-widgets.css';
 import './components/styles/buttons.css';
 import './components/styles/previewCard.css';
+import './components/styles/forms.css';
 import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
 // import * as actionsDisplay from './actions/display';

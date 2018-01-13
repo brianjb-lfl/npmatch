@@ -1,21 +1,14 @@
-.responseButton {
+.submitButton, .responseButton, .clearFormButton {
+  display: flex;
   font-weight: 700;
-  margin-bottom: 10px;
   background-color: #DA2536;
   color: white;
   border: none;
   border-radius: 3px;
   padding: 8px;
 }
-.submitButton {
-  display: flex;
-  font-weight: 700;
-  /* margin: auto auto 10px auto; */
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 8px;
+.responseButton {
+  margin-bottom: 10px;
 }
 .addOpportunityButton {
   display: block;
