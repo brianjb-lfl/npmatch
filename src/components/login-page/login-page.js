@@ -21,10 +21,9 @@ export class LoginPage extends Component {
       <main>
         <h2 className='sectionTitle'>Log In</h2>
         <form className='loginForm'
-          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}
-        >
+          onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))} >
           <UandPFields/>
-          <button type='submit'>Sign In</button>
+          <button className='submitButton loginButton fullWidth' type='submit'>Sign In</button>
         </form>
       </main>
     )

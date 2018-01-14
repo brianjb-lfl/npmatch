@@ -16,7 +16,7 @@ export class LocationFields extends Component {
 
     return (
       <div>
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'locationCity'}>City
@@ -29,7 +29,7 @@ export class LocationFields extends Component {
             className='inputField' />
         </div>
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'locationState'}>State
@@ -42,7 +42,7 @@ export class LocationFields extends Component {
             className='inputField' />
         </div>
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'locationCountry'}>Country

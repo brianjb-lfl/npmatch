@@ -19,11 +19,10 @@ export class LinkFields extends Component {
         onChange={input.onChange} />
 
     return (
-      <div>
-        <div>
+        <div className='labelInputPair linkFieldContainer'>
           <label
             className='inputLabel'
-            htmlFor={linkType}>Link Type
+            htmlFor={linkType}>Link
           </label>
           <Field
             name={linkType}
@@ -31,22 +30,13 @@ export class LinkFields extends Component {
             component={renderDropdownList}
             data={this.props.general.linkTypes}
             className='inputField' />
-        </div>
-
-        <div>
           <Field
             name={linkUrl}
             id={linkUrl}
             component='input'
             type='text'
             className='inputField' />
-          <label
-            className='inputLabel'
-            htmlFor={linkUrl}>Link
-          </label>
         </div>
-
-      </div>
     );
   }
 }

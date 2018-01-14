@@ -1,0 +1,57 @@
+.inputField, .rw-widget-container {
+  font-size: 12px;
+  font-weight: 400;
+  border-radius: 3px;
+  border: 1px solid #adbace;
+}
+.inputField { /* padding done to get to align with .rw-widgets... */
+  padding-top: 4.5px;
+  padding-bottom: 6.5px;
+  padding-right: 3px;
+  padding-left: 8px;
+}
+.inputField:focus {
+  outline: none;
+  border-color: rgb(99, 172, 241);
+  box-shadow: 0 0 2px rgb(99, 172, 241);
+}
+.rw-widget {
+  font-size: 12px;
+}
+.labelInputPair {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.labelInputPair .inputLabel {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
+  width: 100px;
+}
+.labelInputPair .inputField,
+.labelInputPair .rw-widget
+ {
+  display: flex;
+  flex: 1;
+}
+.spacedForm .labelInputPair {
+  margin-bottom: 10px;
+}
+.spacedForm .previewBottomBar {
+  margin-top: 20px;
+}
+.formGroupSubHeader {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+.linksContainer {
+  align-items: flex-end;
+}
+.editLinkButton {
+  margin-left: 10px;
+  padding-bottom: 15px;
+}

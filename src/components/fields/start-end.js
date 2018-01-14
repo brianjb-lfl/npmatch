@@ -21,7 +21,7 @@ export class StartEndFields extends Component {
 
     return (
       <div>
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'timestampStart'}>Start
@@ -33,7 +33,7 @@ export class StartEndFields extends Component {
             className='inputField' />
         </div>
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'timestampEnd'}>End

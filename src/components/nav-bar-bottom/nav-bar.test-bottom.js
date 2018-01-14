@@ -3,19 +3,19 @@ import { shallow, mount } from 'enzyme';
 import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
 
-import { BottomNavBar } from './bottom-nav-bar';
-import { mapStateToProps } from './bottom-nav-bar';
+import { NavBarBottom } from './nav-bar-bottom';
+import { mapStateToProps } from './nav-bar-bottom';
 
 describe('Bottom Nav Bar component display functionality', () => {
   it('Smoke test - component should render', () => {
-    shallow(<BottomNavBar
+    shallow(<NavBarBottom
       match={{
         url: '/'
       }}
     />);
   });
   it('Should render the component with the correct links passed down as props on Landing Page', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='landingPage'
       match={{
         url: '/'
@@ -25,7 +25,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     expect(wrapper.find('.rightBottomButton button').text()).toEqual('Sign Up');
   });
   it('Should render the component with the correct links passed down as props on other pages', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='explorePage'
       match={{
         url: '/organizations'
@@ -35,7 +35,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     expect(wrapper.find('.rightBottomButton button').text()).toEqual('Contributors');
   });
   it('Should render the Home Button when the display is NOT landingPage or homePage', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='explorePage'
       match={{
         url: '/contributors'
@@ -44,7 +44,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(true);
   });
   it('Should NOT render the Home Button when the display is homePage', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='homePage'
       match={{
         url: '/'
@@ -53,7 +53,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
   });
   it('Should NOT render the Home Button when the display is landingPage', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='landingPage'
       match={{
         url: '/'
@@ -62,7 +62,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     expect(wrapper.find('.homeBottomButton').exists()).toEqual(false);
   });
   it('Should render the Home Button correctly', () => {
-    const wrapper = shallow(<BottomNavBar
+    const wrapper = shallow(<NavBarBottom
       display='explorePage'
       match={{
         url: '/organizations'
@@ -80,7 +80,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
-      <BottomNavBar
+      <NavBarBottom
         display='homePage'
         dispatch={spy}
         user={{ authToken: 12345 }}
@@ -96,7 +96,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/']} initialIndex={0}>
-      <BottomNavBar
+      <NavBarBottom
         display='homePage'
         dispatch={spy}
         user={{ authToken: 12345 }}
@@ -112,7 +112,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
-      <BottomNavBar
+      <NavBarBottom
         display='landingPage'
         dispatch={spy}
         user={{ authToken: 12345 }}
@@ -128,7 +128,7 @@ describe('Bottom Nav Bar component display functionality', () => {
     const spy = jest.fn();
     const historySpy = jest.fn();
     const wrapper = mount(<MemoryRouter initialEntries={['/organizations']} initialIndex={0}>
-      <BottomNavBar
+      <NavBarBottom
         display='landingPage'
         dispatch={spy}
         user={{ authToken: 12345 }}

@@ -1,4 +1,4 @@
-.userProfileHeader {
+.userProfileHeaderContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,37 +19,25 @@
     align-items: flex-start;
     overflow: hidden;
 }
-.opportunitiesContainer {
-  margin-left: auto;
-  margin-right: auto;
-}
 .profileSectionHeaders {
   text-align: center;
 }
-/* .userProfile {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-bottom: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  position: relative;
-  margin-bottom: 25px;
-} */
-/* .noAdminText {
-  text-align: center;
-  margin-top: 50px;
+.addAdminMessage{
+  margin-top: 10px;
   margin-bottom: 10px;
 }
-.addOpportunityButton {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-decoration: none;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 2px;
-  font-weight: 700;
-  padding: 8px;
-} */
+.addAdminSearchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.adminInputField {
+  display: flex;
+  flex: 1;
+  padding: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

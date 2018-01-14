@@ -27,6 +27,11 @@ export const reducer = (state = initialState, action) => {
     return {...state, idOpportunity };
   }
 
+  if (action.type === actions.SET_OPPORTUNITY) {
+    const idOpportunity = action.idOpportunity ;
+    return {...state, idOpportunity };
+  }
+
   if (action.type === actions.TOGGLE_ROLE) {
     const idRole = state.idRole === action.idRole ? null : action.idRole ;
     const roleUserId = state.roleUserId === action.roleUserId ? null : action.roleUserId ;

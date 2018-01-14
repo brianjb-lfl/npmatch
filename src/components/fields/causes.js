@@ -16,7 +16,7 @@ export class CausesFields extends Component {
       textField={textField} />
 
     return (
-      <div>
+      <div className='labelInputPair'>
         <label 
           className='inputLabel' 
           htmlFor={'causes'}>Causes

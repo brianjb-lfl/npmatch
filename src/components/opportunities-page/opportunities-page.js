@@ -20,20 +20,20 @@ export class OpportunitiesPage extends Component {
     <Switch><Redirect from='*' to='/' /></Switch>
 
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
-      return <li key={index}><OpportunityPreview opportunity={opp} history={this.props.history} index={index}/></li>
+      return <OpportunityPreview key={index} opportunity={opp} history={this.props.history} index={index}/>
     });
 
     const createOppButton = this.props.user.id ? 
       <button className='addOpportunityButton' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;
 
     return (
-      <main className='opportunitiesPage'>
+      <main>
         {redirect}
         <h2>Opportunities</h2>
         {createOppButton}
-        <ul>
+        <div className='previewCardListContainer'>
           {listOfOpps}
-        </ul>
+        </div>
       </main>
     );
   }

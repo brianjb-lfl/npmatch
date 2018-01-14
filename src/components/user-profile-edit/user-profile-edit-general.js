@@ -71,15 +71,14 @@ export class UserEditGeneralForm extends Component {
   render() {
 
     const redirect = this.props.user.id ? '' : <Switch><Redirect from='*' to='/' /></Switch>
-
     const nameForm = this.props.user.userType === 'individual' ? <IndivNameFields /> : <OrgNameFields />;
 
     let myLinks;
       if (this.state.links.length >0) {
         myLinks = this.state.links.map((link,index)=>{
-          return <div key={index} >
+          return <div className='labelInputPair linksContainer' key={index} >
             <LinkFields initialValues={link} index={index}/>
-            <button type='button' onClick={()=>this.removeLink(index)}>remove</button>
+            <i className="fa fa-minus editLinkButton" aria-hidden="true" onClick={()=>this.removeLink(index)}></i>
           </div>
         })
       } else {
@@ -87,12 +86,12 @@ export class UserEditGeneralForm extends Component {
       }
 
     return (
-      <form className='userProfile'
+      <form className='previewCard spacedForm'
         onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))} >
         {redirect}
         {nameForm}
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'bio'}>Bio
@@ -100,7 +99,8 @@ export class UserEditGeneralForm extends Component {
           <Field
             name='bio'
             id='bio'
-            component='input'
+            component='textarea'
+            placeholder='tell us all about yourself!'
             type='text'
             className='inputField' />
         </div>
@@ -109,7 +109,7 @@ export class UserEditGeneralForm extends Component {
         <CausesFields />
         <SkillsFields />
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'availability'}>Availability
@@ -118,11 +118,12 @@ export class UserEditGeneralForm extends Component {
             name='availability'
             id='availability'
             component='input'
+            placeholder='your availability to help, e.g. "Mondays from 3-5pm"'
             type='text'
             className='inputField' />
         </div>
 
-        <div>
+        <div className='labelInputPair'>
           <label
             className='inputLabel'
             htmlFor={'logo'}>Logo URL
@@ -135,11 +136,14 @@ export class UserEditGeneralForm extends Component {
             className='inputField' />
         </div>
 
-        <h6>My Links</h6>
+        <div className='addLinkContainerWithHeader'>
+          <h6 className='formGroupSubHeader'>My Links</h6>
+          <i className="fa fa-plus editLinkButton absolutePosPlus" aria-hidden="true" onClick={()=>this.addLink()}></i>
+        </div>
         {myLinks}
-        <button type='button' onClick={()=>this.addLink()}>add link</button>
 
-        <div>
+
+        <div className='previewBottomBar'>
           <button className='submitButton'
             type="submit" disabled={this.props.pristine || this.props.submitting}>Save
           </button>

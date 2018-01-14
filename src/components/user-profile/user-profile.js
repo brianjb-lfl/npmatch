@@ -14,11 +14,13 @@ export class UserProfile extends Component {
   createOpportunity(){
     this.props.dispatch(actionsOpportunity.loadOpportunity({}));
     this.props.history.push('/opportunities/create');
+    window.scrollTo(0,0);
   }
 
   editProfile() {
     this.props.dispatch(actionsDisplay.changeDisplay('editProfile'));
     this.props.history.push(`/profiles/${this.props.user.id}/edit`)
+    window.scrollTo(0,0);
   }
 
   render() {
@@ -42,7 +44,9 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
-    let editProfileButton = self ? <i onClick={()=>this.editProfile()} class="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
+    const displayName = user.userType === 'organization' ? user.organization : `${user.firstName} ${user.lastName}`;
+
+    let editProfileButton = self ? <i onClick={()=>this.editProfile()} className="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {
@@ -51,12 +55,11 @@ export class UserProfile extends Component {
         // self = true if user owns opportunities
         opportunityPreviews.push(<OpportunityPreview self={self} opportunity={user.opportunities[prop]} key={key} history={this.props.history} />)
         key += 1;
-        console.log('HYDRATEOPP', user.opportunities[prop])
       }
     }
 
     const opportunities = opportunityPreviews.length > 0 && user.id ?
-    <div className='opportunitiesContainer'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{opportunityHeader}</h3>
       {opportunityPreviews}
     </div> : '' ;
@@ -77,7 +80,7 @@ export class UserProfile extends Component {
     }
 
     const responses = responsePreviews.length > 0 ?
-    <div className='responses'>
+    <div className='previewCardListContainer'>
     <h3 className='profileSectionHeaders'>{responseHeader}</h3>
       {responsePreviews}
     </div> : '' ;
@@ -95,7 +98,7 @@ export class UserProfile extends Component {
     let adminOf = '';
       if (adminOfPreviews.length > 0){
       adminOfHeader = 'I am an Admin of'
-      adminOf = <div className='admins'>
+      adminOf = <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{adminOfHeader}</h3>
       {adminOfPreviews}
     </div>
@@ -112,7 +115,7 @@ export class UserProfile extends Component {
     }
 
     const following = followingPreviews.length > 0 ?
-    <div className='following'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{followingHeader}</h3>
       {followingPreviews}
     </div> : '' ;
@@ -128,14 +131,16 @@ export class UserProfile extends Component {
       }
     }
 
-    let admins = '';
+    let admins = null;
     if (adminPreviews.length > 0){
-      admins = <div className='admins'>
+      admins = <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{adminsHeader}</h3>
       {adminPreviews}
     </div>
-    } else if (self) {
-      admins = 'There are no site admins. You can add an admin by searching users below.' ;
+    } else if (user.userType === 'organization' && self) {
+      admins = <div className='addAdminMessage'>
+        There are no site admins. You can add an admin by searching users below.
+      </div>;
     }
 
     const adminAdd = (user.userType === 'organization' && self) ? <AdminAdd/> : '' ;
@@ -145,24 +150,24 @@ export class UserProfile extends Component {
       if(Array.isArray(this.props.usersList.main)) {
         this.props.usersList.main.forEach((user,index)=>{
           if (!(this.props.user.admins[user.id])){
-            userSearchPreviews.push(<RolePreview user={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
+            userSearchPreviews.push(<RolePreview role={user} roleType='admin' key={index} index={index+100} history={this.props.history}/>) 
           }
         })
       }
     }
     
     const userSearches = userSearchPreviews.length > 0 ?
-    <div className='admins'>
+    <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>Search Results</h3>
       {userSearchPreviews}
     </div> : '' ;
 
     const links = user.links.map((link, index) => {
-      return <a href={link.linkUrl} key={index} target={'_blank'}>
+      return <a className='linkIcon' href={link.linkUrl} key={index} target={'_blank'}>
         <i className="fa fa-globe" aria-hidden="true"></i>
       </a>
     })
-
+    const linksList = <div className='linksList'>{links}</div>
     const causes = Array.isArray(user.causes) ? user.causes.map((cause, index)=>{
       return <li key={index} className='causeIcon'>{cause}</li>
     }) : '' ;
@@ -170,22 +175,28 @@ export class UserProfile extends Component {
       return <li key={index} className='skillIcon'>{skill}</li>
     }) : '' ;
 
+    const logo = user.logo ? user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
+
     const userProfile = user.id ? 
       <div className='previewCard'>
-        <div className='userProfileHeader'>
-          <img className='userProfileLogo' src={user.logo} alt={`${user.displayName}`}></img>
-          <h3 className='userProfileName'>{user.displayName}</h3>
+        <div className='userProfileHeaderContainer'>
+          <img className='userProfileLogo' src={logo} alt={`${displayName}`}></img>
+          <h3 className='userProfileName'>{displayName}</h3>
         </div>
         <div className='userProfileInner'>
           {editProfileButton}
           <h4 className='previewCardText'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
           <p className='previewCardText'>{user.bio}</p>
           <p className='previewCardText'>Availability: {user.availability}</p>
-          {links}
-          <ul className='causesList'>{causes}</ul>
-          <ul className='skillsList'>{skills}</ul>
         </div>
-        {userFollow}
+        {linksList}
+        <div className='previewBottomBar'>
+          <ul className='causesList'>{causes}</ul>
+          {userFollow}
+        </div>
+        <div className='previewBottomBar'>
+          <ul className='skillsList' style={{marginTop: '10px'}}>{skills}</ul>
+        </div>
       </div> :
       <h3 className='profileSectionHeaderss'>Sorry, user not found</h3>;
 

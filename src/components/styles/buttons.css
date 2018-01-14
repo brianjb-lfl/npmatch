@@ -1,31 +1,63 @@
-.responseButton {
-  font-weight: 700;
-  margin-bottom: 10px;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 8px;
+button:hover {
+  cursor: pointer;
 }
-.submitButton {
+.submitButton, 
+.responseButton, 
+.clearFormButton,
+.searchBarSubmitButton,
+.addOpportunityButton,
+.followButton {
   display: flex;
-  font-weight: 700;
-  /* margin: auto auto 10px auto; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background-color: #DA2536;
   color: white;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
+}
+.submitButton, 
+.responseButton, 
+.clearFormButton,
+.addOpportunityButton,
+.followButton {
+  font-weight: 700;
   padding: 8px;
 }
 .addOpportunityButton {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-decoration: none;
+  margin-bottom: 15px;
+}
+.submitButton:hover, 
+.responseButton:hover, 
+.clearFormButton:hover,
+.searchBarSubmitButton:hover,
+.addOpportunityButton:hover,
+.followButton:hover,
+.fa-search:hover {
+  background-color: #eb293c;
+  color: #eee;
+}
+.responseButton {
+  margin-bottom: 10px;
+}
+.selectOptionButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.selectedOptionLabel, .deSelectedOptionLabel {
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.selectedOptionLabel{
   background-color: #DA2536;
   color: white;
-  border: none;
-  border-radius: 2px;
-  font-weight: 700;
-  padding: 8px;
+}
+.deSelectedOptionLabel {
+  background-color: rgba(8, 46, 65, 0.1);
+  color: #082E41;
 }

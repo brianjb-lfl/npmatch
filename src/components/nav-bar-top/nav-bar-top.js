@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 
-import './top-nav-bar.css'
+import './nav-bar-top.css'
 import * as actionsOpportunitiesList from '../../actions/opportunities-list';
 import * as actionsDisplay from '../../actions/display';
 
-export class TopNavBar extends Component {
+export class NavBarTop extends Component {
 
   listOpportunities(query) {
     // console.log('list opps query', query)
@@ -37,59 +37,54 @@ export class TopNavBar extends Component {
 
   render() {
     let topNavButtons;
+
+    const searchBarForm = <li className='searchBar'>
+      <form className="searchBarForm" onSubmit={this.props.handleSubmit(values =>this.queryOpportunities(values))}>
+        <label htmlFor="userInput"></label>
+        <Field
+          className="userInput"
+          type="text"
+          component="input"
+          id="userInput"
+          name="title"
+        />
+        <button type="submit" className="searchBarSubmitButton">
+          <i className="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
+    </li>
+
     if (this.props.user.id) {
       topNavButtons =
-        <ul className='topNav'>
-          <li className='inboxButton'>
+        <ul className='topNavUl navUl'>
+          <li className='inboxButton navBarButton'>
             <i className="fa fa-envelope-o" aria-hidden="true"></i>
           </li>
-          <li className='opportunitiesButton'>
+          <li className='opportunitiesButton navBarButton'>
             <i className="fa fa-briefcase" aria-hidden="true"
               onClick={() => this.listOpportunities({ userId: this.props.user.id })}></i>
           </li>
-          <li className='searchBar'>
-            <form className="search" onSubmit={this.props.handleSubmit(values =>this.queryOpportunities(values))}>
-              <label htmlFor="userinput"></label>
-              <Field
-                className="userinput"
-                type="text"
-                component="input"
-                id="userinput"
-                name="title"
-              />
-              <button type="submit" className="submit-button">
-                <i className="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
-          </li>
-          <li className='editProfileButton'>
+          {searchBarForm}
+          <li className='editProfileButton navBarButton'>
             <i className="fa fa-user-circle-o" aria-hidden="true"
               onClick={() => this.goToProfile()}></i>
           </li>
-          <li className='settingsButton bars'>
+          <li className='settingsButton bars navBarButton'>
             <i className="fa fa-bars" aria-hidden="true"></i>
           </li>
-          <li className='settingsButton cog'>
+          <li className='settingsButton cog navBarButton'>
             <i className="fa fa-cog" aria-hidden="true"></i>
           </li>
         </ul>
     }
 
     else {
-      topNavButtons = <ul className='topNav'>
-        <li className='searchBar'>
-          <form className="search">
-            <label htmlFor="userinput"></label>
-            <input type="text" className="userinput"></input>
-            <button type="submit" className="submit-button">
-              <i className="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
-        </li>
+      topNavButtons = <ul className='topNavUl navUl'>
+        {searchBarForm}
       </ul>
     }
     return (
-      <div>
+      <div className='topNavContainer navContainer'>
         {topNavButtons}
       </div>
     )
@@ -103,4 +98,4 @@ export const mapStateToProps = state => ({
 export default compose(
   connect(mapStateToProps),
   reduxForm({form:'searchOpps'}),
-)(TopNavBar);
+)(NavBarTop);

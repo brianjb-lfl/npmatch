@@ -17,6 +17,12 @@ export const prependOpportunitiesList = opp => ({
   opp
 })
 
+export const UPDATE_OPPORTUNITIES_LIST = 'UPDATE_OPPORTUNITIES_LIST';
+export const updateOpportunitiesList = opp => ({
+  type: UPDATE_OPPORTUNITIES_LIST,
+  opp
+})
+
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const fetchOppsList = (query, authToken) => dispatch => {

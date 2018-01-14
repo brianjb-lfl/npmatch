@@ -6,8 +6,6 @@ import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
 
-import './role-preview.css';
-
 export class RolePreview extends Component {
 
   componentWillMount() {
@@ -49,11 +47,17 @@ export class RolePreview extends Component {
   }
 
   goToUser() {
+    console.log('id clicked',this.state.role.idUserReceiving)
     this.props.dispatch(actionsUser.fetchUser(
       this.state.role.idUserReceiving,
       this.props.userInState.authToken,
+      'userViewed',
       'userViewed'
     ))
+    .then(()=>{
+      this.props.history.push(`/profiles/${this.state.role.idUserReceiving}`)
+      window.scrollTo(0,0);
+    })
   }
 
   setRole(formValues) {
@@ -93,6 +97,10 @@ export class RolePreview extends Component {
       data={data}
       onChange={input.onChange} />
 
+    const location = <p className='previewCardText previewLocation hoverBlack'>{[this.props.role.locationCity, this.props.role.locationState].join(', ')}</p> ;
+    
+    const displayName = this.props.role.organization ? this.props.role.organization : `${this.props.role.firstName} ${this.props.role.lastName}`;
+
     let selector;
     
     if (this.props.roleType === 'following') {
@@ -102,35 +110,48 @@ export class RolePreview extends Component {
     } else if (this.props.roleType === 'admin'  && isInFocus) {
       selector = <form className='selectAdmin'
         onSubmit={this.props.handleSubmit((values) => this.setRole(values))}>
-        <div>
-          <p>{this.state.role.firstName} {this.state.role.lastName} {this.state.role.organization}</p>
-          <label
-            className='inputLabel'
-            htmlFor='capabilities'>Role
-          </label>
-          <Field
-            name='capabilities'
-            id='capabilities'
-            component={renderDropdownList}
-            data={this.props.general.roleTypes}
-            className='inputField' />
-        </div>
+        {/* <p>{this.state.role.firstName} {this.state.role.lastName} {this.state.role.organization}</p> */}
+        <label
+          className='inputLabel'
+          htmlFor='capabilities'>Role
+        </label>
+        <Field
+          name='capabilities'
+          id='capabilities'
+          component={renderDropdownList}
+          data={this.props.general.roleTypes}
+          className='inputField roleInputField' />
         <button className='submitButton'
           type="submit" disabled={this.props.submitting}>Save
         </button>
       </form>
     }
 
-    const adminSelector = this.state.capabilities.includes('admin') ? <button 
-      className='responseButton' 
-      onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
-      {this.state.adminButtonLabel}
-    </button> : <div></div> ;
+    let adminSelector = <div></div>;
+    if (this.state.capabilities.includes('admin') && this.state.adminButtonLabel === 'edit') {
+      adminSelector = <i
+        onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}
+        className="fa fa-pencil editPencil" 
+        aria-hidden="true">
+      </i>;
+    } else if (this.state.capabilities.includes('admin')) {
+      adminSelector = <button 
+        className='responseButton' 
+        onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}>
+        {this.state.adminButtonLabel}
+      </button>;
+    }
+
+    const logo = this.props.role.logo ? this.props.role.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
 
     return (
-      <div className='rolePreview'>
-        <div className='rolePreviewInner' onClick={() => this.goToUser()}>
-          <h3 className='name'>{this.state.role.organization} {this.state.role.firstName} {this.state.role.lastName}</h3>
+      <div className='previewCard'>
+        <div className='previewCardInner' onClick={() => this.goToUser()}>
+          <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img> 
+          <div className='previewCardTextContainer'>
+            <h3 className='previewCardTitle hoverBlack'>{displayName}</h3>
+            {location}
+          </div>
         </div>
         <div className='previewBottomBar'>
           {adminSelector}

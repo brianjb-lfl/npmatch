@@ -1,0 +1,17 @@
+.bottomNavContainer {
+  bottom: 0;
+}
+.bottomNavUl {
+}
+.bottomNavUl li {
+  justify-content: space-around;
+}
+.bottomNavUl button {
+  border: none;
+  background: none;
+  color: white;
+  font-weight: 700;
+  margin: 2px 5vw 2px 5vw;
+  padding: 5px;
+  font-size: 14px;
+}

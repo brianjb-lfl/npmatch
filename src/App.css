@@ -1,10 +1,60 @@
-main {
-  margin-top: 50px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+* {
+  box-sizing: border-box;
 }
-
-.inputField:focus {
-  outline: none;
+.outerContainer { /* div that wraps main */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 320px;
+}
+main { /* set width here!*/
+  margin-top: 50px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+@media (min-width: 600px) {
+  main {
+    width: 80%;
+  }
+}
+@media (min-width: 700px) {
+  main {
+    width: 70%;
+  }
+}
+@media (min-width: 900px) {
+  main {
+    width: 60%;
+  }
+}
+.mainColumn { /* div just inside main */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+.previewCardListContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.sectionTitle {
+  text-align: center;
+  padding-top: 20px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.fullWidth {
+  width: 100%;
 }

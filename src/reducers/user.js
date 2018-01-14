@@ -82,9 +82,9 @@ export const reducer = (state = initialState, action) => {
     return {...state, following: newFollowing };
   }
 
-  if (action.type === actions.SET_FORM_TYPE) {
-    return {...state, formType: action.formType};
-  }
+  // if (action.type === actions.SET_FORM_TYPE) {
+  //   return {...state, formType: action.formType};
+  // }
   
   return state;
 

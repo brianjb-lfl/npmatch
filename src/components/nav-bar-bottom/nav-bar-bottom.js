@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUsersList from '../../actions/users-list';
 import * as actionsDisplay from '../../actions/display';
-import './bottom-nav-bar.css'
+import './nav-bar-bottom.css'
 
-export class BottomNavBar extends Component {
+export class NavBarBottom extends Component {
   clickLeftButton() {
     if (this.props.display === 'landingPage') {
       this.props.history.push('/login');
@@ -49,25 +49,25 @@ export class BottomNavBar extends Component {
     const rightLabel = this.props.display === 'landingPage' ? 'Sign Up' : 'Contributors' ;
     const homeButton = (this.props.match.url !== '/') ?
       <li onClick={()=>this.homeButton()} className='homeBottomButton'>
-        <button>Home</button>
+        <button className='navBarButton'>Home</button>
       </li> : null ;
 
     if (this.props.match.url !== '/login' && this.props.match.url !== '/register') {
       leftButton = <li className='leftBottomButton' onClick={() => this.clickLeftButton()}>
-        <button>
-          {leftLabel}
+        <button className='navBarButton'>
+        {leftLabel}
         </button>
       </li>
       rightButton = <li className='rightBottomButton' onClick={() => this.clickRightButton()}>
-        <button>
+        <button className='navBarButton'>
           {rightLabel}
         </button>
       </li>
     }
 
     return (
-      <div>
-        <ul className='bottomNav'>
+      <div className='bottomNavContainer navContainer'>
+        <ul className='bottomNavUl navUl'>
           {homeButton}
           {leftButton}
           {rightButton}
@@ -81,4 +81,4 @@ export const mapStateToProps = state => ({
   user: state.user,
   display: state.display.view
 })
-export default connect(mapStateToProps)(BottomNavBar);
+export default connect(mapStateToProps)(NavBarBottom);

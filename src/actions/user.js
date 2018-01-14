@@ -83,12 +83,6 @@ export const loadFollowing = following => ({
   following,
 });
 
-export const SET_FORM_TYPE = 'SET_FORM_TYPE';
-export const setFormType = formType => ({
-  type: SET_FORM_TYPE,
-  formType: formType,
-});
-
 // @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
 
 export const stringArrayOfObjects=(array,key)=>{
@@ -149,7 +143,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
   else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.postAuthLogin, body)} 
   else if (init.method === 'POST') { ck.compareObjects(ck.postUsers, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putUsersId, body) }
-  // console.log('just before',init)
+  // console.log('just before user api call',init)
   return fetch(url, init)   
   .then(user=>{ 
     if (!user.ok) { 
@@ -158,7 +152,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
     return user.json();
   })
   .then(user=>{
-    console.log('user returned', user)
+    // console.log('user returned', user)
     if (init.method === 'GET') { ck.compareObjects(ck.getUsersIdRes, user) }
     else if (init.method === 'POST' && !callback.isNew) { ck.compareObjects(ck.getUsersIdRes, user)} 
     else if (init.method === 'POST') { ck.compareObjects(ck.postUsersRes, user)} 
@@ -168,6 +162,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       dispatch(actionsDisplay.setUser(user.id))
       dispatch(login(callback.originalUser))
     } else if (callback.stateLocation === 'userViewed') {
+      dispatch(actionsDisplay.setUser(user.id));   
       dispatch(actionsUserViewed.loadUserViewed(user));   
     } else if (callback.loadTo === 'loadUser') {
       const following     = arrayToObject(user.following,     'idUserReceiving'); // id of org being followed
@@ -180,6 +175,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       dispatch(actionsDisplay.setUser(formattedUser.id))
       dispatch(loadUser(formattedUser));
     } else if (callback.loadTo === 'updateUser') {
+      dispatch(actionsDisplay.setUser(user.id));   
       dispatch(updateUser(user));
     }
     return dispatch(actionsDisplay.changeDisplayStatus('normal'));
@@ -212,7 +208,8 @@ export const fetchUser = (userId, authToken, stateLocation = 'user', loadTo = 'u
     originalUser: null,
     loadTo,
   }
-  return dispatch(userAPICall(url, init, null, callback));
+  const body = null;
+  return dispatch(userAPICall(url, init, body, callback));
 }
 
 export const login = user => dispatch => {

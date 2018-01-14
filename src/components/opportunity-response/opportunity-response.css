@@ -5,22 +5,13 @@
   align-items: flex-end;
 }
 .responseNotes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
   margin-bottom: 10px;
 }
-.responseNotesInput {
-  border: 1px solid lightgrey;
-  border-radius: 12px;
-  padding: 5px 10px;
-  width: calc(80% - 20px);
-  min-width: 280px;
-  height: 12px;
-  display: block;
-  margin: auto;
-}
-.responseNotesInput:focus {
-  outline: none;
-}
-.responseButtonContainer, .responseSubmitButtonContainer {
+.responseButtonContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -29,32 +20,9 @@
 .responseButtonContainer {
   margin-bottom: 10px;
 }
-.responseStatusOptions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 10px;
+.responseNotes textarea {
+  width: 100%;
 }
-/* .responseStatus {
-  display: block;
-  font-weight: 700;
-  margin: 0;
-  background-color: #DA2536;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 8px;
-} */
-.selectedResponseLabel, .deSelectedResponseLabel {
-  padding: 5px;
-  border-radius: 3px;
-}
-.selectedResponseLabel{
-  background-color: #DA2536;
-  color: white;
-}
-.deSelectedResponseLabel {
-  background-color: rgba(8, 46, 65, 0.1);
-  color: #082E41;
+.opportunityResponse .selectOptionButtonContainer div:first-of-type {
+  margin-right: 10px;
 }
