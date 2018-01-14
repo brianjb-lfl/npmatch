@@ -71,7 +71,6 @@ export class UserEditGeneralForm extends Component {
   render() {
 
     const redirect = this.props.user.id ? '' : <Switch><Redirect from='*' to='/' /></Switch>
-
     const nameForm = this.props.user.userType === 'individual' ? <IndivNameFields /> : <OrgNameFields />;
 
     let myLinks;
@@ -87,7 +86,7 @@ export class UserEditGeneralForm extends Component {
       }
 
     return (
-      <form className='previewCard'
+      <form className='previewCard spacedForm'
         onSubmit={this.props.handleSubmit(values => this.handleSubmitButton(values))} >
         {redirect}
         {nameForm}

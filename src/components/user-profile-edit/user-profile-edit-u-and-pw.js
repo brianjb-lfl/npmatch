@@ -22,7 +22,7 @@ export class UserEditUandPwForm extends Component {
   render() {
     
     return (
-      <form className='previewCard'
+      <form className='previewCard spacedForm'
         onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))}>
         
         <UandPwFields confirm={true}/>

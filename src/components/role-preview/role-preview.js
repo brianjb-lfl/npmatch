@@ -47,11 +47,17 @@ export class RolePreview extends Component {
   }
 
   goToUser() {
+    console.log('id clicked',this.state.role.idUserReceiving)
     this.props.dispatch(actionsUser.fetchUser(
       this.state.role.idUserReceiving,
       this.props.userInState.authToken,
+      'userViewed',
       'userViewed'
     ))
+    .then(()=>{
+      this.props.history.push(`/profiles/${this.state.role.idUserReceiving}`)
+      window.scrollTo(0,0);
+    })
   }
 
   setRole(formValues) {

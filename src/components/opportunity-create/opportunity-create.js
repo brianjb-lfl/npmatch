@@ -4,14 +4,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
-import 'react-widgets/dist/css/react-widgets.css'
-
 import * as actionsOpportunity from '../../actions/opportunity';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
 import StartEndFields from '../fields/start-end';
-
-import './opportunity-create.css'
 
 export class OpportunityCreate extends Component {
   constructor(props) {
@@ -63,18 +59,56 @@ export class OpportunityCreate extends Component {
         textField={textField}
         onChange={input.onChange} />
 
+    const offerButtonClassName = this.state.offer ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
+    const requestButtonClassName = this.state.offer ? 'deSelectedOptionLabel' : 'selectedOptionLabel' ;
+
     return (
       <main>
         {redirect}
         <h2 className='sectionTitle'>Opportunity</h2>
-        <div className='createOpportunity'>
-          <form className='opportunityForm'
+          <form className='previewCard spacedForm'
             onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values, isNew))}>
+  
+            <div className='selectOptionButtonContainer'>
+              <div className='labelInputPair'>
+                <label
+                  className={offerButtonClassName}
+                  htmlFor={'offerTrue'}
+                >Offer to contribute
+                </label>
+                <Field
+                  name='offer'
+                  id='offerTrue'
+                  style={{ display: 'none', margin: 'auto' }}
+                  component='input'
+                  type='radio'
+                  value={true}
+                  className='inputField'
+                  onChange={() => this.handleOfferTypeChange(true)} />
+              </div>
 
-            <div>
+              <div className='labelInputPair'>
+                <label
+                  className={requestButtonClassName}
+                  htmlFor={'offerFalse'}
+                >Request for volunteers
+              </label>
+                <Field
+                  name='offer'
+                  id='offerFalse'
+                  style={{ display: 'none', margin: 'auto' }}
+                  component='input'
+                  type='radio'
+                  value={false}
+                  className='inputField'
+                  onChange={() => this.handleOfferTypeChange(false)} />
+              </div>
+            </div>
+
+            <div className='labelInputPair'>
               <label
                 className='inputLabel'
-                htmlFor={'title'}>Opportunity Title
+                htmlFor={'title'}>Title
             </label>
               <Field
                 name='title'
@@ -82,13 +116,14 @@ export class OpportunityCreate extends Component {
                 component='input'
                 type='text'
                 className='inputField'
+                placeholder='name of event'
                 required />
             </div>
 
-            <div>
+            <div className='labelInputPair'>
               <label
                 className='inputLabel'
-                htmlFor={'narrative'}>Describe This Opportunity
+                htmlFor={'narrative'}>Description
             </label>
               <Field
                 name='narrative'
@@ -96,13 +131,14 @@ export class OpportunityCreate extends Component {
                 component='input'
                 type='text'
                 className='inputField'
+                placeholder='tell us all about your opportunity'
                 required />
             </div>
 
-            <div>
+            <div className='labelInputPair'>
               <label
                 className='inputLabel'
-                htmlFor={'opportunityType'}>Opportunity Type
+                htmlFor={'opportunityType'}>Type
             </label>
               <Field
                 name='opportunityType'
@@ -116,69 +152,25 @@ export class OpportunityCreate extends Component {
             </div>
 
             <CausesFields />
-
-            <div>
-              <label
-                className='inputLabel'
-                htmlFor={'offerTrue'}
-                style={{
-                  backgroundColor: this.state.offer === true ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-                  color: this.state.offer === true ? 'white' : '#082E41'
-                }}
-              >Offer to contribute
-            </label>
-              <Field
-                name='offer'
-                id='offerTrue'
-                style={{ display: 'none', margin: 'auto' }}
-                component='input'
-                type='radio'
-                value={true}
-                className='inputField'
-                onChange={() => this.handleOfferTypeChange(true)}
-              />
-            </div>
-
-            <div>
-              <label
-                className='inputLabel'
-                htmlFor={'offerFalse'}
-                style={{
-                  backgroundColor: this.state.offer === false ? '#DA2536' : 'rgba(8, 46, 65, 0.1)',
-                  color: this.state.offer === false ? 'white' : '#082E41'
-                }}
-              >Request for volunteers
-            </label>
-              <Field
-                name='offer'
-                id='offerFalse'
-                style={{ display: 'none', margin: 'auto' }}
-                component='input'
-                type='radio'
-                value={false}
-                className='inputField'
-                onChange={() => this.handleOfferTypeChange(false)}
-              />
-            </div>
-
             <LocationFields />
 
-            <div>
+            <div className='labelInputPair'>
               <label
                 className='inputLabel'
-                htmlFor={'link'}>Opportunity-Specific URL
+                htmlFor={'link'}>URL
             </label>
               <Field
                 name='link'
                 id='link'
                 component='input'
                 type='text'
+                placeholder='opportunity-specific URL (if any)'
                 className='inputField' />
             </div>
 
             <StartEndFields />
 
-            <div>
+            <div className='labelInputPair'>
               <button className='submitButton'
                 type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
               </button>
@@ -189,8 +181,6 @@ export class OpportunityCreate extends Component {
             </div>
 
           </form>
-        </div>
-
       </main>
     );
   }

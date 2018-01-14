@@ -6,7 +6,6 @@ import './components/styles/previewCard.css';
 import './components/styles/forms.css';
 import { connect } from 'react-redux';
 import * as actionsGeneral from './actions/general';
-// import * as actionsDisplay from './actions/display';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LoginPage from './components/login-page/login-page';

@@ -44,6 +44,8 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
+    const displayName = user.userType === 'organization' ? user.organization : `${user.firstName} ${user.lastName}`;
+
     let editProfileButton = self ? <i onClick={()=>this.editProfile()} className="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
 
     let opportunityPreviews = [];
@@ -176,19 +178,23 @@ export class UserProfile extends Component {
     const userProfile = user.id ? 
       <div className='previewCard'>
         <div className='userProfileHeaderContainer'>
-          <img className='userProfileLogo' src={user.logo} alt={`${user.displayName}`}></img>
-          <h3 className='userProfileName'>{user.displayName}</h3>
+          <img className='userProfileLogo' src={user.logo} alt={`${displayName}`}></img>
+          <h3 className='userProfileName'>{displayName}</h3>
         </div>
         <div className='userProfileInner'>
           {editProfileButton}
           <h4 className='previewCardText'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
           <p className='previewCardText'>{user.bio}</p>
           <p className='previewCardText'>Availability: {user.availability}</p>
-          {linksList}
+        </div>
+        {linksList}
+        <div className='previewBottomBar'>
           <ul className='causesList'>{causes}</ul>
+          {userFollow}
+        </div>
+        <div className='previewBottomBar'>
           <ul className='skillsList' style={{marginTop: '10px'}}>{skills}</ul>
         </div>
-        {userFollow}
       </div> :
       <h3 className='profileSectionHeaderss'>Sorry, user not found</h3>;
 

@@ -69,7 +69,7 @@ export class OpportunityPreview extends Component {
       <div className='previewCard'>
         <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
         <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
-          <div className='previewCardTextContainer'>
+          <div className='previewCardTextContainer hoverBlack'>
             <h3 className='previewCardTitle'>{opportunity.title}</h3>
             {displayNameTitle}
             {requiredSkills}

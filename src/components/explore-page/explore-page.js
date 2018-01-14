@@ -17,7 +17,7 @@ export class ExplorePage extends Component {
       previews = Array.isArray(this.props.usersList) ?
         this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
-          return <UserPreview key={key} user={user}  showDetail={true}/> 
+          return <UserPreview key={key} user={user}  showDetail={true} history={this.props.history}/> 
         } else {
           return null;
         }
@@ -28,7 +28,7 @@ export class ExplorePage extends Component {
       previews = Array.isArray(this.props.usersList) ?
         this.props.usersList.map((user, key) => {
         if (user.userType === 'individual') {
-          return <UserPreview key={key} user={user} showDetail={true}/> 
+          return <UserPreview key={key} user={user} showDetail={true} history={this.props.history}/> 
         } else {
           return null;
         }

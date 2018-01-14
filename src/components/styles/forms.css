@@ -1,6 +1,11 @@
 .inputField {
   width: 150px;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 3px;
+  padding-left: 8px;
+  border-radius: 3px;
+  border: 1px solid #082E41;
 }
 .inputField:focus {
   outline: none;
@@ -11,7 +16,6 @@
   font-size: 12px;
 }
 /* .rw-multiselect {
-  background-color: red;
   min-width: 200px;
   max-width: 400px;
 } */
@@ -26,12 +30,13 @@
   justify-content: flex-end;
   margin-right: 5px;
   width: 100px;
-  font-weight: 700;
 }
 .labelInputPair .inputField,
 .labelInputPair .rw-widget
  {
   display: flex;
   flex: 1;
-  font-weight: 700;
+}
+.spacedForm .labelInputPair {
+  margin-bottom: 10px;
 }
