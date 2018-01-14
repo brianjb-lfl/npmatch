@@ -12,16 +12,12 @@ export class OpportunityPreview extends Component {
     this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
       .then(() => {
         this.props.history.push('/opportunities/create');
-        // this.props.dispatch(actionsDisplay.changeDisplay('editOpportunity'));
         window.scrollTo(0,0);
       });
   }
 
   focusOpportunity(id) {
-    this.props.dispatch(actionsOpportunity.fetchOpp(id, this.props.user.authToken))
-      .then(() => {
-        this.props.dispatch(actionsDisplay.toggleOpportunity(id));
-      });
+    this.props.dispatch(actionsDisplay.toggleOpportunity(id));
   }
 
   render() {
@@ -59,9 +55,18 @@ export class OpportunityPreview extends Component {
     }
     const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
-    const requiredSkills = opportunity.requiredSkills ? <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4> : null ;
-    const timeframe = opportunity.timeframe ? <p className='timeframe'>{opportunity.timeframe}</p> : null ;
-    const description = opportunity.description ? <p className='description'>{opportunity.description}</p> : null ;
+    const requiredSkills = (isInFocus && opportunity.requiredSkills) ? <h4 className='requiredSkills'>{opportunity.requiredSkills}</h4> : null ;
+    const timeframe = (isInFocus && opportunity.timeframe) ? <p className='timeframe'>{opportunity.timeframe}</p> : null ;
+    let narrative = null;
+    if (isInFocus && opportunity.narrative) {
+      narrative = <p className='narrative'>{opportunity.narrative}</p>;
+    } else if (opportunity.narrative) {
+      if (opportunity.narrative.length > 100) {
+        narrative = <p className='narrative'>{opportunity.narrative.substring(0,90)}...</p>;
+      } else {
+      narrative = <p className='narrative'>{opportunity.narrative}</p>;
+      }
+    }
 
     const logo = opportunity.logo ? opportunity.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
 
@@ -72,9 +77,9 @@ export class OpportunityPreview extends Component {
           <div className='previewCardTextContainer hoverBlack'>
             <h3 className='previewCardTitle'>{opportunity.title}</h3>
             {displayNameTitle}
+            {narrative}
             {requiredSkills}
             {timeframe}
-            {description}
           </div>
         </div>
         <div className='previewBottomBar'>

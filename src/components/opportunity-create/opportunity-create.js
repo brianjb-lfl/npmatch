@@ -49,7 +49,7 @@ export class OpportunityCreate extends Component {
     const redirect = this.props.user.id ? '' :
       <Switch><Redirect from='*' to='/' /></Switch>
 
-    const isNew = this.props.display.view === 'editOpportunity' ? false : true;
+    const isNew = this.props.opportunity.id ? false : true;
     const submitLabel = isNew ? 'Post Opportunity' : 'Update Opportunity';
 
     const renderDropdownList = ({ input, data, valueField, textField }) =>

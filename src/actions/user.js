@@ -83,12 +83,6 @@ export const loadFollowing = following => ({
   following,
 });
 
-// export const SET_FORM_TYPE = 'SET_FORM_TYPE';
-// export const setFormType = formType => ({
-//   type: SET_FORM_TYPE,
-//   formType: formType,
-// });
-
 // @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
 
 export const stringArrayOfObjects=(array,key)=>{

@@ -28,7 +28,6 @@ export const loadOpportunity = action => ({
   responses: action.responses,
 });
 
-
 export const LOAD_OPP_RESPONSE = 'LOAD_OPP_RESPONSE';
 export const loadOppResponse = response => ({
   type: LOAD_OPP_RESPONSE,
@@ -41,15 +40,17 @@ export const oppAPICall = (url, init, body) => dispatch => {
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, body) }
-  
+
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
+      console.log('!ok')
       return Promise.reject(opp.statusText);
     }
     return opp.json();
   }) 
   .then(opportunity=>{
+    console.log('opp returned', opportunity)
 
     if (init.method === 'GET') { ck.compareObjects(ck.getOpportunitiesIdRes, opportunity) } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunitiesRes, opportunity) } 
@@ -63,6 +64,10 @@ export const oppAPICall = (url, init, body) => dispatch => {
       dispatch(actionsUser.loadUserOpportunity(opportunity));  
     }      
     dispatch(actionsDisplay.changeDisplayStatus('normal'));
+    if (init.method === 'PUT') {
+      dispatch(actionsOpportunitiesList.updateOpportunitiesList(opportunity));
+    }
+    dispatch(actionsDisplay.setOpportunity(opportunity.id));
     return dispatch(loadOpportunity(opportunity));      
   })
   .catch(error => {

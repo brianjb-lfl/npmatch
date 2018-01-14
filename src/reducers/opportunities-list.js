@@ -14,6 +14,31 @@ export const reducer = (state = initialState, action) => {
     return {...state, main: opps };
   }
 
-  return state;
+  if (action.type === actions.UPDATE_OPPORTUNITIES_LIST) {
+    let index = 0;
+    let found = -1;
+    let newList = [...state.main];
+    while (found < 0) {
+      if(state.main[index].id === action.opp.id) {
+        found = index;
+      } else {
+        index += 1;
+      }
+    }
+    if (found >= 0 && index === 0) {
+      newList = [
+        action.opp,
+        ...state.main.slice(index+1,state.main.length)
+      ]
+    } else if (found > 0 ){
+      newList = [
+        ...state.main.slice(0,index), 
+        action.opp,
+        ...state.main.slice(index+1,state.main.length)
+      ]
+    } 
+    return {...state, main: newList };
+  }
 
+  return state;
 }
