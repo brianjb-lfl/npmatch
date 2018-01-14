@@ -20,7 +20,7 @@ export class OpportunitiesPage extends Component {
     <Switch><Redirect from='*' to='/' /></Switch>
 
     const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
-      return <OpportunityPreview key={index} opportunity={opp} history={this.props.history} index={index}/>
+      return <OpportunityPreview response={this.props.user.responses[opp.id]} key={index} opportunity={opp} history={this.props.history} index={index}/>
     });
 
     const createOppButton = this.props.user.id ? 

@@ -50,8 +50,14 @@
 }
 .linksContainer {
   align-items: flex-end;
+  margin-bottom: 0px;
 }
+.spacedForm .linksContainer,
+.spacedForm .linkFieldContainer {
+  margin-bottom: 0px;
+}
+
 .editLinkButton {
   margin-left: 10px;
-  padding-bottom: 15px;
+  padding-bottom: 8px;
 }
