@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsOpportunity from '../../actions/opportunity';
+import * as actionsDisplay from '../../actions/display';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
 import StartEndFields from '../fields/start-end';
@@ -39,6 +40,7 @@ export class OpportunityCreate extends Component {
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
+        this.props.dispatch(actionsDisplay.setOpportunity(null));
         this.props.history.push('/myopportunities');
         window.scrollTo(0, 0);
       });

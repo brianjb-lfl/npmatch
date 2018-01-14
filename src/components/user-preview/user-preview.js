@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
+import * as actionsDisplay from '../../actions/display';
 import UserFollow from '../user-follow/user-follow';
 
 export class UserPreview extends Component {
@@ -14,6 +15,7 @@ export class UserPreview extends Component {
     ))
     .then(()=>{
       this.props.history.push(`/profiles/${this.props.user.id}`)
+      this.props.dispatch(actionsDisplay.setOpportunity(null));
     })
   }
 

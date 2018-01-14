@@ -5,10 +5,13 @@
   align-items: flex-end;
 }
 .responseNotes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
   margin-bottom: 10px;
 }
-.responseButtonContainer, 
-.responseSubmitButtonContainer {
+.responseButtonContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -16,4 +19,10 @@
 }
 .responseButtonContainer {
   margin-bottom: 10px;
+}
+.responseNotes textarea {
+  width: 100%;
+}
+.opportunityResponse .selectOptionButtonContainer div:first-of-type {
+  margin-right: 10px;
 }

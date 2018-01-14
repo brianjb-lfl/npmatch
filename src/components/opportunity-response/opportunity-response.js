@@ -174,11 +174,9 @@ export class OpportunityResponse extends Component {
       <form className='opportunityResponse'
         onSubmit={this.props.handleSubmit(formValues => this.addResponse(formValues))} >
         {notesField}
-        <div className='responseSubmitButtonContainer'>
-          <button className='submitButton'
-            type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
-          </button>
-        </div>
+        <button className='submitButton fullWidth'
+          type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
+        </button>
       </form>
     </div>
 
@@ -190,11 +188,9 @@ export class OpportunityResponse extends Component {
           {statusFieldNegative}
           {statusFieldPositive}
         </div>
-        <div className='responseSubmitButtonContainer'>
-          <button className='submitButton'
-            type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
-          </button>
-        </div>
+        <button className='submitButton fullWidth'
+          type="submit" disabled={this.props.submitting}>{this.state.submitLabel}
+        </button>
       </form>
     </div>
 

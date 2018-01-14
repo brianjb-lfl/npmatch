@@ -100,6 +100,7 @@ export class UserEditGeneralForm extends Component {
             name='bio'
             id='bio'
             component='textarea'
+            placeholder='tell us all about yourself!'
             type='text'
             className='inputField' />
         </div>
@@ -117,6 +118,7 @@ export class UserEditGeneralForm extends Component {
             name='availability'
             id='availability'
             component='input'
+            placeholder='your availability to help, e.g. "Mondays from 3-5pm"'
             type='text'
             className='inputField' />
         </div>
