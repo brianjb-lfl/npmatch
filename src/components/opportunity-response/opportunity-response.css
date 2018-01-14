@@ -7,19 +7,6 @@
 .responseNotes {
   margin-bottom: 10px;
 }
-.responseNotesInput {
-  border: 1px solid lightgrey;
-  border-radius: 12px;
-  padding: 5px 10px;
-  width: calc(80% - 20px);
-  min-width: 280px;
-  min-height: 12px;
-  display: block;
-  margin: auto;
-}
-.responseNotesInput:focus {
-  outline: none;
-}
 .responseButtonContainer, 
 .responseSubmitButtonContainer {
   display: flex;

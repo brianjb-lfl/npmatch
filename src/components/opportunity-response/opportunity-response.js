@@ -131,7 +131,7 @@ export class OpportunityResponse extends Component {
         component='textarea'
         type='text'
         placeholder='...send a note to the host'
-        className='responseNotesInput inputField' />
+        className='inputField' />
       <label
         className='inputLabel'
         htmlFor={'notes'}>{this.state.noteLabel}

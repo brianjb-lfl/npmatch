@@ -128,7 +128,7 @@ export class OpportunityCreate extends Component {
               <Field
                 name='narrative'
                 id='narrative'
-                component='input'
+                component='textarea'
                 type='text'
                 className='inputField'
                 placeholder='tell us all about your opportunity'
@@ -170,14 +170,14 @@ export class OpportunityCreate extends Component {
 
             <StartEndFields />
 
-            <div className='labelInputPair'>
+            <div className='previewBottomBar'>
+              <button className='clearFormButton'
+                type="button" disabled={this.props.pristine || this.props.submitting}
+                onClick={this.props.reset}>Reset
+              </button>
               <button className='submitButton'
                 type="submit" disabled={this.props.pristine || this.props.submitting}>{submitLabel}
               </button>
-              <button className='clearButton'
-                type="button" disabled={this.props.pristine || this.props.submitting}
-                onClick={this.props.reset}>Reset
-            </button>
             </div>
 
           </form>

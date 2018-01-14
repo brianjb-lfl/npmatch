@@ -1,6 +1,5 @@
 .previewCard { /*outer div, NOT activated with link*/
   width: 100%;
-  /* max-width: 600px; */
   min-height: 100px;
   max-height: 100vh;
   border-radius: 3px;
@@ -75,6 +74,7 @@
 }
 .causeIcon, .skillIcon {
   list-style: none;
+  font-size: 12px;
   display: flex;
   padding: 5px 7px;
   border-radius: 5px;

@@ -1,24 +1,23 @@
-.inputField {
-  width: 150px;
+.inputField, .rw-widget-container {
   font-size: 12px;
   font-weight: 400;
-  padding: 3px;
-  padding-left: 8px;
   border-radius: 3px;
-  border: 1px solid #082E41;
+  border: 1px solid rgb(70, 86, 94);
+}
+.inputField { /* padding done to get to align with .rw-widgets... */
+  padding-top: 4.5px;
+  padding-bottom: 6.5px;
+  padding-right: 3px;
+  padding-left: 8px;
 }
 .inputField:focus {
   outline: none;
+  border-color: rgb(99, 172, 241);
+  box-shadow: 0 0 2px rgb(99, 172, 241);
 }
 .rw-widget {
-  /* margin: auto;
-  width: 150px; */
   font-size: 12px;
 }
-/* .rw-multiselect {
-  min-width: 200px;
-  max-width: 400px;
-} */
 .labelInputPair {
   display: flex;
   flex-direction: row;
@@ -39,4 +38,20 @@
 }
 .spacedForm .labelInputPair {
   margin-bottom: 10px;
+}
+.spacedForm .previewBottomBar {
+  margin-top: 20px;
+}
+.formGroupSubHeader {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+.linksContainer {
+  align-items: flex-end;
+}
+.editLinkButton {
+  margin-left: 10px;
+  padding-bottom: 15px;
 }

@@ -40,7 +40,7 @@ export class RegisterPage extends Component {
     return (
       <main>
         <h2 className='sectionTitle'>Register</h2>
-        <form className='previewCard registerForm'
+        <form className='previewCard registerForm spacedForm'
           onSubmit={this.props.handleSubmit((values) => this.handleSubmitButton(values))} >
           <div className='selectOptionButtonContainer'>
             <label className={indivButtonClassName}
@@ -59,7 +59,7 @@ export class RegisterPage extends Component {
 
           <UandPwFields confirm={true} />
           <div className='submitButtonContainer'>
-            <button className='submitButton' type='submit'>Sign Up</button>
+            <button className='submitButton fullWidth' type='submit'>Sign Up</button>
           </div>
         </form>
       </main>

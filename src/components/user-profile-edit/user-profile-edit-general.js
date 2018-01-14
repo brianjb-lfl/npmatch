@@ -76,9 +76,9 @@ export class UserEditGeneralForm extends Component {
     let myLinks;
       if (this.state.links.length >0) {
         myLinks = this.state.links.map((link,index)=>{
-          return <div key={index} >
+          return <div className='labelInputPair linksContainer' key={index} >
             <LinkFields initialValues={link} index={index}/>
-            <button type='button' onClick={()=>this.removeLink(index)}>remove</button>
+            <i className="fa fa-minus editLinkButton" aria-hidden="true" onClick={()=>this.removeLink(index)}></i>
           </div>
         })
       } else {
@@ -99,7 +99,7 @@ export class UserEditGeneralForm extends Component {
           <Field
             name='bio'
             id='bio'
-            component='input'
+            component='textarea'
             type='text'
             className='inputField' />
         </div>
@@ -134,9 +134,12 @@ export class UserEditGeneralForm extends Component {
             className='inputField' />
         </div>
 
-        <h6>My Links</h6>
+        <div className='addLinkContainerWithHeader'>
+          <h6 className='formGroupSubHeader'>My Links</h6>
+          <i className="fa fa-plus editLinkButton absolutePosPlus" aria-hidden="true" onClick={()=>this.addLink()}></i>
+        </div>
         {myLinks}
-        <button type='button' onClick={()=>this.addLink()}>add link</button>
+
 
         <div className='previewBottomBar'>
           <button className='submitButton'

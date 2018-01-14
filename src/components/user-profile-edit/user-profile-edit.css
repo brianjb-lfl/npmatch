@@ -1,7 +1,13 @@
-.editSection ul {
-  padding: 0;
-  list-style: none;
+.addLinkContainerWithHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
 }
-#linkUrl0 {
-  margin-top: 5px;
+.absolutePosPlus {
+  position: absolute;
+  top: 15px;
+  right: 0;
 }

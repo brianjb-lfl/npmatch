@@ -175,10 +175,12 @@ export class UserProfile extends Component {
       return <li key={index} className='skillIcon'>{skill}</li>
     }) : '' ;
 
+    const logo = user.logo ? user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
+
     const userProfile = user.id ? 
       <div className='previewCard'>
         <div className='userProfileHeaderContainer'>
-          <img className='userProfileLogo' src={user.logo} alt={`${displayName}`}></img>
+          <img className='userProfileLogo' src={logo} alt={`${displayName}`}></img>
           <h3 className='userProfileName'>{displayName}</h3>
         </div>
         <div className='userProfileInner'>
