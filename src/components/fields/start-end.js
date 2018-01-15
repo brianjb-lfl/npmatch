@@ -7,7 +7,35 @@ import { connect } from 'react-redux';
 import * as helpers from '../../actions/helpers';
 
 export class StartEndFields extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      start: this.props.timestampStart,
+      end: this.props.timestampEnd,
+    }
+  }
 
+  componentDidUpdate(){
+    console.log('~~~~~');
+    console.log('updating');
+    console.log('dates to compare: prior', this.state.start, 'current', this.props.timestampStart);
+    const startChanged = !helpers.datesAreEqual(this.state.start, this.props.timestampStart) ;
+    const whichChanged = startChanged ? 'start' : 'end' ;
+    console.log('%%%');
+    console.log('startChanged',startChanged)
+    console.log('whichChanged',whichChanged)
+    console.log('prior start', this.state.start)
+    console.log('current Start', this.props.timestampStart)
+    console.log('prior start', this.state.end)
+    console.log('current Start', this.props.timestampEnd)
+    const prior = whichChanged === 'start' ? this.state.start : this.state.end ;
+    const current = whichChanged === 'start' ? this.props.timestampStart : this.props.timestampEnd ;
+    const conformedDate = helpers.resolveDateTimeConflicts(prior, current);
+    console.log('conformedDate',conformedDate);
+    // this.setState({[whichChanged]: conformedDate})
+    console.log('~~~~~');
+
+  }
   render() {
     console.log(this.props);
     console.log(this.state);
@@ -35,7 +63,7 @@ export class StartEndFields extends Component {
             component={renderDateTimePicker}
             className='inputField' />
           <div className='formattedDate'>
-            {helpers.printDateAsString(this.props.timestampStart)}
+            {helpers.printDateAsString(this.state.start)}
           </div>
         </div>
 
@@ -50,7 +78,7 @@ export class StartEndFields extends Component {
             component={renderDateTimePicker}
             className='inputField' />
           <div className='formattedDate'>
-            {helpers.printDateAsString(this.props.timestampEnd)}
+            {helpers.printDateAsString(this.state.end)}
           </div>
         </div>
 

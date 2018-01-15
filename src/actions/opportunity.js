@@ -41,7 +41,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
   else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, body) }
 
-  if (init.method === 'PUT') console.log('timestamp',typeof body.timestampEnd, body.timestampEnd, typeof body.timestampStart, body.timestampStart)
+  if (init.method === 'PUT') console.log('timestamp to send: start',typeof body.timestampStart, body.timestampStart, 'end:',typeof body.timestampEnd, body.timestampEnd)
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
@@ -51,20 +51,20 @@ export const oppAPICall = (url, init, body) => dispatch => {
     return opp.json();
   }) 
   .then(opportunity=>{
-    console.log('opp returned', typeof opportunity.timestampEnd, opportunity.timestampEnd, typeof opportunity.timestampStart, opportunity.timestampStart)
+    console.log('opp returned: start:', typeof opportunity.timestampStart, opportunity.timestampStart, 'end:',typeof opportunity.timestampEnd, opportunity.timestampEnd)
+    
     console.log('~~~');
-    console.log(helpers.convertStringToTimeStamp(opportunity.timestampEnd))
-    console.log('~~~');
-
-    const timestampEnd = opportunity.timestampEnd ? helpers.convertStringToTimeStamp(opportunity.timestampEnd) : {} ;
     const timestampStart = opportunity.timestampStart ? helpers.convertStringToTimeStamp(opportunity.timestampStart) : {} ;
+    const timestampEnd = opportunity.timestampEnd ? helpers.convertStringToTimeStamp(opportunity.timestampEnd) : {} ;
     const responses = Array.isArray(opportunity.responses) ? helpers.arrayToObject(opportunity.responses, 'id') : [] ;
+    console.log('~~~');    
 
     if (init.method === 'GET') { ck.compareObjects(ck.getOpportunitiesIdRes, opportunity) } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunitiesRes, opportunity) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesIdRes, opportunity) }
     
-    const updatedOpportunity = {...opportunity, timestampEnd, timestampStart, responses};
+    const updatedOpportunity = {...opportunity, timestampStart, timestampEnd, responses};
+    console.log('updatedOpportunity to save: start:', typeof updatedOpportunity.timestampStart, updatedOpportunity.timestampStart, 'end:',typeof updatedOpportunity.timestampEnd, updatedOpportunity.timestampEnd)
 
     if (init.method === 'POST') {
       dispatch(actionsOpportunitiesList.prependOpportunitiesList(updatedOpportunity));  

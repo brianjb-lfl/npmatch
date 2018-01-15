@@ -127,61 +127,52 @@ export const formatTimeframe = object => {
 }
 
 export const convertTimeStampToString = timestamp => {
-  console.log('timestamp in helper', typeof timestamp, timestamp)
   // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
   // is desired format "2017-12-21T16:26:48-05:00"
   if (timestamp instanceof Date) {
-    const year = timestamp.getFullYear();
-    const month = timestamp.getMonth() + 1; // months are 0-index in date objects, but not in string
-    const date = timestamp.getDate();
+    const year = timestamp.getUTCFullYear();
+    const month = timestamp.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+    const date = timestamp.getUTCDate();
     const timeSymbol = 'T';
-    const hours = timestamp.getHours();
-    const minutes = timestamp.getMinutes();
-    const seconds = timestamp.getSeconds();
+    const hours = timestamp.getUTCHours();
+    const minutes = timestamp.getUTCMinutes();
+    const seconds = timestamp.getUTCSeconds();
     const offset = '05:00';
-    const theString = `${year}-${month}-${date}${timeSymbol}${hours}:${minutes}:${seconds}-${offset}`;
-    console.log(theString)
-    return theString;
+    return `${year}-${month}-${date}${timeSymbol}${hours}:${minutes}:${seconds}-${offset}`;
   }
   return '' ;
 }
 
 export const convertStringToTimeStamp = (theString, offset = -5) => {
-  console.log('string in helper', typeof theString, theString)
+  console.log('theString to convert', theString)
   // expected input: 2018-01-19T15:24:45.000Z
- 
   if (typeof theString === 'string') {
-
     const milliSecondsPerHour = 60 * 60 * 1000 ;
 
     const dateTimeArray = theString.split('T');
-    console.log('dateTimeArray',dateTimeArray)
     const dateArray = dateTimeArray[0].split('-');
-    console.log('dateArray',dateArray);
     const dateArrayIntegers = dateArray.map(date=>parseInt(date,10));
-    console.log('dateArrayIntegers',dateArrayIntegers);
     const timeArraywithZone = dateTimeArray[1].split('.');
-    console.log('timeArraywithZone',timeArraywithZone);
     const timeArray =  timeArraywithZone[0].split(':');
-    console.log('timeArray',timeArray);
     const timeArrayIntegers = timeArray.map(time=>parseInt(time,10));
-    console.log('timeArrayIntegers',timeArrayIntegers);
 
     const timestamp = new Date();
-    console.log('timestamp today',timestamp);
 
-    timestamp.setFullYear(dateArray[0]);
-    timestamp.setMonth(dateArray[1] - 1); // months are 0-index in date objects
-    timestamp.setDate(dateArray[2]);
-    timestamp.setHours(timeArrayIntegers[0]);
-    timestamp.setMinutes(timeArrayIntegers[1]);
-    timestamp.setSeconds(timeArrayIntegers[2]);
-    console.log('timestamp populated',timestamp);
+    timestamp.setUTCFullYear(dateArrayIntegers[0]);
+    timestamp.setUTCMonth(dateArrayIntegers[1] - 1); // months are 0-index in date objects
+    timestamp.setUTCDate(dateArrayIntegers[2]);
+    timestamp.setUTCHours(timeArrayIntegers[0]);
+    timestamp.setUTCMinutes(timeArrayIntegers[1]);
+    timestamp.setUTCSeconds(timeArrayIntegers[2]);
 
+    console.log('timestamp before offset', timestamp); // this will be GMT, we need to offset it 2x
+    console.log('neg offset', offset < 0 );
+    console.log('neg',new Date(timestamp - (offset * milliSecondsPerHour)));
+    console.log('dbl neg',new Date(timestamp - (-offset * milliSecondsPerHour)));
+    console.log(offset * milliSecondsPerHour);
     const adjustedTimestamp = offset < 0 ?
-      new Date(timestamp - (offset * milliSecondsPerHour)) :
-      new Date(timestamp - (-offset * milliSecondsPerHour)) ;
-
+      new Date(timestamp - (-offset * milliSecondsPerHour)) : // - is earlier
+      new Date(timestamp - (offset * milliSecondsPerHour)) ; // -- is later
     console.log('adjustedTimestamp',adjustedTimestamp)
     return adjustedTimestamp;
   }
@@ -190,7 +181,7 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
 
 export const printDateAsString = (date, offset = -5) => {
   console.log('date received',date);
-  const milliSecondsPerHour = 60 * 60 * 1000 ;
+  // const milliSecondsPerHour = 60 * 60 * 1000 ;
 
   const dateOptions = {
   weekday: 'long', 
@@ -201,12 +192,109 @@ export const printDateAsString = (date, offset = -5) => {
   minute: 'numeric'
   };
   if (date instanceof Date) {
-    const newDate = offset < 0 ?
-      new Date(date - (offset * milliSecondsPerHour)) :
-      new Date(date - (-offset * milliSecondsPerHour)) ;
-    const dateString = newDate.toLocaleDateString('en',dateOptions)
+    // const newDate = offset < 0 ?
+    //   new Date(date - (-offset * milliSecondsPerHour)) :
+    //   new Date(date - (offset * milliSecondsPerHour)) ;
+    const dateString = date.toLocaleDateString('en',dateOptions)
     console.log(dateString);
     return dateString;
   }
   return '';
+}
+
+export const resolveDateTimeConflicts = (prior, current) => {
+  // this is to fix this behavior in datetimepicker:
+  // changing date works, but changes time to current time.
+  // changing time works, but changes date to current date.
+  // input: prior accurate datetime, current selection that is partially accurae
+  // output: merged datetime using date from one, time from the other, making correct selections
+  
+  // get the date and time right now to see if the selected date and time picked right now
+  const dateTimeRightNow = new Date();
+  const yearNow = dateTimeRightNow.getUTCFullYear();
+  const monthNow = dateTimeRightNow.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const dateNow = dateTimeRightNow.getUTCDate();
+  const hoursNow = dateTimeRightNow.getUTCHours();
+  const minutesNow = dateTimeRightNow.getUTCMinutes();
+  const secondsNow = dateTimeRightNow.getUTCSeconds();
+  console.log('now',yearNow, monthNow, dateNow, hoursNow, minutesNow, secondsNow)
+
+  const yearPrior = prior.getUTCFullYear();
+  const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const datePrior = prior.getUTCDate();
+  const hoursPrior = prior.getUTCHours();
+  const minutesPrior = prior.getUTCMinutes();
+  const secondsPrior = prior.getUTCSeconds();
+  console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
+
+  const yearCurrent = current.getUTCFullYear();
+  const monthCurrent = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const dateCurrent = current.getUTCDate();
+  const hoursCurrent = current.getUTCHours();
+  const minutesCurrent = current.getUTCMinutes();
+  const secondsCurrent = current.getUTCSeconds();
+  console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
+
+    let correct = 'time'; // which of current is correct? date or time?
+  if (secondsCurrent && secondsCurrent !== 0) {
+    console.log('seconds are non-zero', secondsCurrent)
+    correct = 'date';
+  }
+
+  let conformedDate;
+  if (correct === 'time') {
+    console.log('correct is time')
+    conformedDate = prior;
+    conformedDate.setUTCHours(hoursCurrent);
+    conformedDate.setUTCMinutes(minutesCurrent);
+    conformedDate.setUTCSeconds(secondsCurrent);
+  } else {
+    console.log('correct is time')
+    conformedDate = current;
+    conformedDate.setUTCHours(hoursPrior);
+    conformedDate.setUTCMinutes(minutesPrior);
+    conformedDate.setUTCSeconds(secondsPrior);
+  }
+  console.log('conformedDate',conformedDate)
+  return conformedDate;
+}
+
+export const datesAreEqual = (prior, current) => {
+  console.log('%%%');
+  const yearPrior = prior.getUTCFullYear();
+  const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const datePrior = prior.getUTCDate();
+  const hoursPrior = prior.getUTCHours();
+  const minutesPrior = prior.getUTCMinutes();
+  const secondsPrior = prior.getUTCSeconds();
+  console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
+
+  const yearCurrent = current.getUTCFullYear();
+  const monthCurrent = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const dateCurrent = current.getUTCDate();
+  const hoursCurrent = current.getUTCHours();
+  const minutesCurrent = current.getUTCMinutes();
+  const secondsCurrent = current.getUTCSeconds();
+  console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
+
+  if (yearPrior !== yearCurrent) {
+    console.log('year')
+    return false;
+  } else if (monthPrior !== monthCurrent) {
+    console.log('month')
+    return false;
+  } else if (datePrior !== dateCurrent) {
+    console.log('date')
+    return false;  
+  } else if (hoursPrior !== hoursCurrent) {
+    console.log('hours')
+    return false;  
+  } else if (minutesPrior !== minutesCurrent) {
+    console.log('minutes')
+    return false;  
+  } else if (secondsPrior !== secondsCurrent) {
+    console.log('seconds')
+    return false;
+  }
+  return true;
 }
