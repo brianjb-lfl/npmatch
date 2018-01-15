@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
+import * as helpers from '../../actions/helpers';
 
 export class RolePreview extends Component {
 
@@ -97,9 +98,10 @@ export class RolePreview extends Component {
       data={data}
       onChange={input.onChange} />
 
-    const location = <p className='previewCardText previewLocation hoverBlack'>{[this.props.role.locationCity, this.props.role.locationState].join(', ')}</p> ;
+    const formattedLocation = helpers.formattedLocation(this.props.role);
+    const location = formattedLocation ? <p className='previewCardText previewLocation hoverBlack'>{formattedLocation}</p> : null ;
     
-    const displayName = this.props.role.organization ? this.props.role.organization : `${this.props.role.firstName} ${this.props.role.lastName}`;
+    const displayName = helpers.formatUserName(this.props.role);;
 
     let selector;
     
@@ -131,8 +133,9 @@ export class RolePreview extends Component {
     if (this.state.capabilities.includes('admin') && this.state.adminButtonLabel === 'edit') {
       adminSelector = <i
         onClick={() => this.selectRole(this.state.idRole, this.state.role.idUserReceiving)}
-        className="fa fa-pencil editPencil" 
+        className='fa fa-pencil editPencil' 
         aria-hidden="true">
+        <div className='popover'>edit</div>
       </i>;
     } else if (this.state.capabilities.includes('admin')) {
       adminSelector = <button 

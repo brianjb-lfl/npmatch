@@ -8,6 +8,7 @@ import UserFollow from '../user-follow/user-follow';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
 import * as actionsUser from '../../actions/user';
+import * as helpers from '../../actions/helpers';
 
 export class UserProfile extends Component {
 
@@ -44,9 +45,12 @@ export class UserProfile extends Component {
       userFollow = this.props.user.id ? <UserFollow id={user.id} /> : '' ;
     }
 
-    const displayName = user.userType === 'organization' ? user.organization : `${user.firstName} ${user.lastName}`;
+    const displayName = helpers.formatUserName(user);
 
-    let editProfileButton = self ? <i onClick={()=>this.editProfile()} className="fa fa-pencil editPencil" aria-hidden="true"></i> : null ;
+    let editProfileButton = self ?
+      <i onClick={()=>this.editProfile()} className='fa fa-pencil editPencil' aria-hidden="true">
+        <div className='popover'>edit</div>
+      </i> : null ;
 
     let opportunityPreviews = [];
     if (typeof user.opportunities === 'object') {
@@ -118,7 +122,7 @@ export class UserProfile extends Component {
     <div className='previewCardListContainer'>
       <h3 className='profileSectionHeaders'>{followingHeader}</h3>
       {followingPreviews}
-    </div> : '' ;
+    </div> : null ;
 
 
     let adminPreviews = [];
@@ -162,18 +166,11 @@ export class UserProfile extends Component {
       {userSearchPreviews}
     </div> : '' ;
 
-    const links = user.links.map((link, index) => {
-      return <a className='linkIcon' href={link.linkUrl} key={index} target={'_blank'}>
-        <i className="fa fa-globe" aria-hidden="true"></i>
-      </a>
-    })
-    const linksList = <div className='linksList'>{links}</div>
-    const causes = Array.isArray(user.causes) ? user.causes.map((cause, index)=>{
-      return <li key={index} className='causeIcon'>{cause}</li>
-    }) : '' ;
-    const skills = Array.isArray(user.skills) ? user.skills.map((skill, index)=>{
-      return <li key={index} className='skillIcon'>{skill}</li>
-    }) : '' ;
+    const links = helpers.formatLinksIcon(user.links);
+    console.log(links);
+    const linksList = links ? <div className='linksList'>{links}</div> : null ;
+    const causes = helpers.formatCausesIcon(user.causes, user);
+    const skills = helpers.formatSkillsIcon(user.skills, user);
 
     const logo = user.logo ? user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
 
@@ -185,7 +182,7 @@ export class UserProfile extends Component {
         </div>
         <div className='userProfileInner'>
           {editProfileButton}
-          <h4 className='previewCardText'>{actionsUser.formattedLocation(user.locationCity, user.locationState)}</h4>
+          <h4 className='previewCardText'>{helpers.formattedLocation(user)}</h4>
           <p className='previewCardText'>{user.bio}</p>
           <p className='previewCardText'>Availability: {user.availability}</p>
         </div>

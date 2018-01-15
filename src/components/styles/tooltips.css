@@ -2,10 +2,13 @@
  * add the tooltip class to any element to receive a tooltip
  * add a popover div as a child to any element to receive a tooltip 
  * add popoverWide1 or popoverWide2 (in addition to popover) if needed
+ * unique to this project: editPencil is absolute, vs relative, so it is repeated here;
+ * do NOT add 'tooltip' to editPencil elements
  */
 .tooltip {
   position: relative;
 }
+.editPencil .popover,
 .tooltip .popover {
   display: none;
   padding: 5px;
@@ -26,6 +29,9 @@
   font-size: 12px;
   text-align: left; 
 }
+.linkIcon .popover {
+  width: auto;
+}
 .tooltip .popoverWide1 {
   width: 90px;
   margin-left: -45px; 
@@ -34,6 +40,17 @@
   width: 120px;
   margin-left: -60px; 
 }
+.tooltip .popoverWide3 {
+  width: 150px;
+  margin-left: -75px; 
+}
+.popover p {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+.editPencil:hover .popover,
 .tooltip:hover .popover {
   display: flex;
   flex-direction: column;

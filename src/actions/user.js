@@ -4,6 +4,7 @@ import { REACT_APP_BASE_URL } from '../config'
 import * as actionsDisplay from './display';
 import * as actionsUserViewed from './user-viewed';
 import * as actionsOpportunity from './opportunity';
+import * as helpers from './helpers';
 import * as ck from './api-response-checks';
 
 // this is all detail for 1 user (individual OR organization); we should only need one at a time;
@@ -83,58 +84,6 @@ export const loadFollowing = following => ({
   following,
 });
 
-// @@@@@@@@@@@@@@@ HELPERS @@@@@@@@@@@@@@@@@
-
-export const stringArrayOfObjects=(array,key)=>{
-  // input: [ {}, {} ]      output ['','']
-  if (Array.isArray(array)) {
-    return array.map(item=>item[key])
-  }
-  return [];
-}
-
-export const arrayToObject=(array,key='id')=>{
-  // input: [ {id:0}, {id:1} ]      output {0:{},1:{}}
-  const newObject = {};
-  if (Array.isArray(array)) {
-    array.forEach(item=>newObject[item[key]] = item);
-    return newObject;
-  }
-  return {};
-}
-
-export const objectToArray=(object)=>{
-  // input {0:{},1:{}}         output: [ {}, {} ]      
-  const newArray = [];
-  if (typeof object === 'object' && !Array.isArray(object)) {
-    for (let prop in object) {
-      newArray.push(object[prop]);
-    }
-    return newArray;
-  }
-  return [];
-}
-
-export const formattedLocation = (city, state, country) => {
-  let cityState;
-  if (city && state) {
-    cityState = `${city}, ${state}`;
-  } else if (city) {
-    cityState = city;
-  } else if (state) {
-    cityState = state;
-  }
-  let cityStateCountry;
-  if (cityState && country) {
-    cityStateCountry = `${cityState}, ${country}`;
-  } else if (cityState) {
-    cityStateCountry = cityState;
-  } else if (country) {
-    cityStateCountry = country;
-  }
-  return cityStateCountry;
-}
-
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 
 export const userAPICall = (url, init, body, callback) => dispatch => {
@@ -165,11 +114,11 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
       dispatch(actionsDisplay.setUser(user.id));   
       dispatch(actionsUserViewed.loadUserViewed(user));   
     } else if (callback.loadTo === 'loadUser') {
-      const following     = arrayToObject(user.following,     'idUserReceiving'); // id of org being followed
-      const admins        = arrayToObject(user.admins,        'idUserReceiving'); // id of user who is admin
-      const adminOf       = arrayToObject(user.adminOf,       'idUserAdding');    // id of org user is admin of
-      const opportunities = arrayToObject(user.opportunities, 'id');
-      const responses     = arrayToObject(user.responses,     'idOpportunity');
+      const following     = helpers.arrayToObject(user.following,     'idUserReceiving'); // id of org being followed
+      const admins        = helpers.arrayToObject(user.admins,        'idUserReceiving'); // id of user who is admin
+      const adminOf       = helpers.arrayToObject(user.adminOf,       'idUserAdding');    // id of org user is admin of
+      const opportunities = helpers.arrayToObject(user.opportunities, 'id');
+      const responses     = helpers.arrayToObject(user.responses,     'idOpportunity');
       
       const formattedUser = {...user, following, admins, adminOf, opportunities, responses}
       dispatch(actionsDisplay.setUser(formattedUser.id))

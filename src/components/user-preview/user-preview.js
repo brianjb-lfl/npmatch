@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
+import * as helpers from '../../actions/helpers';
 import UserFollow from '../user-follow/user-follow';
+import { formattedLocation } from '../../actions/helpers';
 
 export class UserPreview extends Component {
   handleClick(id) {
@@ -21,24 +23,26 @@ export class UserPreview extends Component {
 
   render() {
 
-    const displayName = this.props.user.organization ? this.props.user.organization : `${this.props.user.firstName} ${this.props.user.lastName}`;
+    const displayName = helpers.formatUserName(this.props.user);
 
     const bio = this.props.showDetail ? <p className='previewCardText previewBio hoverBlack'>{this.props.user.bio}</p> : null ;
-    const location = this.props.showDetail ? <p className='previewCardText previewLocation hoverBlack'>{[this.props.user.locationCity, this.props.user.locationState].join(', ')}</p> : null ;
+    
+    const formattedLocation = helpers.formattedLocation(this.props.user);
+    const location = this.props.showDetail ? <p className='previewCardText previewLocation hoverBlack'>{formattedLocation}</p> : null ;
 
     const userFollow = (this.props.userInState.id && this.props.userInState.id !== this.props.user.id) ?
        <UserFollow id={this.props.user.id} /> : '' ;
 
-    const causes = Array.isArray(this.props.user.causes) ? this.props.user.causes.map((cause, index)=>{
-      return <li key={index} className='causeIcon'>{cause}</li>
-    }) : '' ;
+    const causes = helpers.formatCausesIcon(this.props.user.causes, this.props.user);
     const causesList = this.props.showDetail ? <ul className='causesList'>{causes}</ul> : <div></div> ;
 
     const logo = this.props.user.logo ? this.props.user.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
     
+    const overflowClass = 'overflowHidden'; // future potential to focus previews
+
     return (
       <div className='previewCard' >
-        <div className='previewCardInner'onClick={() => this.handleClick(this.props.user.id)}>
+        <div className={`previewCardInner ${overflowClass}`}onClick={() => this.handleClick(this.props.user.id)}>
           <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
           <div className='previewCardTextContainer'>
             <h3 className='previewCardTitle hoverBlack'>{displayName}</h3>

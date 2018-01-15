@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router-dom';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
+import * as helpers from '../../actions/helpers';
 import OpportunityResponse from '../opportunity-response/opportunity-response';
-import { type } from 'os';
-import { link } from 'fs';
+// import { type } from 'os';
+// import { link } from 'fs';
 
 export class OpportunityPreview extends Component {
   // props from parent: self(boolean for in context of user viewing own opportunities), response, opportunity, history
@@ -24,16 +24,14 @@ export class OpportunityPreview extends Component {
 
   render() {
     const opportunity = this.props.opportunity;
-    const displayName = this.props.opportunity.organization ? this.props.opportunity.organization : `${this.props.opportunity.firstName} ${this.props.opportunity.lastName}`;
     const logo = opportunity.logo ? opportunity.logo : 'https://mave.me/img/projects/full_placeholder.png' ;
 
-    const causes = Array.isArray(opportunity.causes) ? opportunity.causes.map((cause, index)=>{
-      return <li key={index} className='causeIcon'>{cause}</li>
-    }) : '' ;
+    const causes = helpers.formatCausesIcon(opportunity.causes, opportunity);
+
     const isInFocus = this.props.display.idOpportunity === opportunity.id ? true : false ;
     const isMyOpportunity = (opportunity.userId === this.props.user.id || this.props.self) ? true : false;
     
-    const displayNameTitle = isMyOpportunity ? <h3 className='previewCardTitle'>This is my event!</h3> : <h3 className='previewCardTitle'>{displayName}</h3>
+    const displayNameTitle = isMyOpportunity ? <h3 className='previewCardTitle'>This is my event!</h3> : <h3 className='previewCardTitle'>{this.props.opportunity.organization}</h3>
     
     let narrative = null;
     if (isInFocus && opportunity.narrative) {
@@ -47,25 +45,34 @@ export class OpportunityPreview extends Component {
     }
     const requiredSkills = (isInFocus && opportunity.requiredSkills) ? <h4 className='previewCardText oppRequiredSkills'>{opportunity.requiredSkills}</h4> : null ;
     
-    const timeframe = (isInFocus && (opportunity.timestampStart || opportunity.timestampEnd) ) ?
-      <p className='previewCardText oppTimeframe'>{opportunity.timestampStart} to {opportunity.timestampEnd}</p> : null ;
+    const formattedTimeframe = isInFocus ? helpers.formatTimeframe(opportunity) : null ;
+    const timeframe = formattedTimeframe ? <p className='previewCardText oppTimeframe'>{formattedTimeframe}</p> : null ;
     
-    const location = (isInFocus && (opportunity.locationCity || opportunity.locationState || opportunity.locationCountry) ) ?
-      <p className='previewCardText oppLocation'>{opportunity.locationCity} {opportunity.locationState} {opportunity.locationCountry}</p> : null ;
-  
+    const formattedLocation = helpers.formattedLocation(opportunity);
+    const location = (isInFocus && formattedLocation ) ?
+      <div className='previewCardText oppLocation'>{formattedLocation}</div> : null ;
+    const link = isInFocus ? helpers.formatLinksIcon(opportunity.link) : null ;
+    let locationAndLink = null;
+    if (location && link) {
+      locationAndLink = <div className='locationAndLink'>{location}{link}</div>
+    } else if (location) {
+      locationAndLink = location;
+    } else if (link) {
+      locationAndLink = <div className='locationAndLink'><div></div>{link}</div> ;
+    }
+
     const offerLabel = opportunity.offer ? 'offer to contribute' : 'request for volunteers' ; 
     const opportunityType = isInFocus ? <p className='previewCardText oppType'>Opportunity Type: {offerLabel} / {opportunity.type}</p> : null ;
     
-    const link = (isInFocus && opportunity.link) ? <a className='linkIcon' href={opportunity.link} target={'_blank'}>
-        <i className="fa fa-globe" aria-hidden="true"></i>
-      </a> : null;
-
 
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
     if(this.props.response){
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
     } else if (isMyOpportunity) {
-      editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} className="fa fa-pencil editPencil" aria-hidden="true"></i>;
+      editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} 
+        className='fa fa-pencil editPencil' aria-hidden='true'>
+          <div className='popover'>edit</div>
+        </i>;
     } else if (this.props.user.id) {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
       editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
@@ -74,7 +81,7 @@ export class OpportunityPreview extends Component {
     if(this.props.self && Array.isArray(opportunity.responses)) {
       listOfResponses = opportunity.responses.map((response, index)=>{
         return  <p>{response.id} {response.idOpportunity} {response.userId} {response.notes} {response.responseStatus}
-       {response.timestampStatusChange}
+        {response.timestampStatusChange}
         {response.timestampCreated}
         {response.organization}
         {response.firstName}
@@ -84,18 +91,23 @@ export class OpportunityPreview extends Component {
     }
     const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
+    const overflowClass = isInFocus ? '' : 'overflowHidden';
+
     return (
       <div className='previewCard'>
-        <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
-        <img className='previewCardLogo' src={logo} alt={`${displayName} logo`}></img>        
+        <div className={`previewCardInner ${overflowClass}`} onClick={()=>this.focusOpportunity(opportunity.id)}>
+        <img className='previewCardLogo' src={logo} alt={`${this.props.opportunity.organization} logo`}></img>        
           <div className='previewCardTextContainer hoverBlack'>
             <h3 className='previewCardTitle'>{opportunity.title}</h3>
             {displayNameTitle}
             {narrative}
-            {location}
+          </div>
+        </div>
+        <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
+          <div className='previewCardTextContainer hoverBlack'>
+            {locationAndLink}
             {timeframe}
             {opportunityType}
-            {link}
             {requiredSkills}
           </div>
         </div>

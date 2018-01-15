@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
 import  * as actionsDisplay from './display';
-import { arrayToObject } from './user';
+import * as helpers from './helpers';
 import * as ck from './api-response-checks';
 import * as actionsOpportunitiesList from './opportunities-list';
 import * as actionsUser from './user';
@@ -57,7 +57,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
     else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesIdRes, opportunity) }
     
     if (Array.isArray(opportunity.responses)) {
-      opportunity.responses = arrayToObject(opportunity.responses, 'id');
+      opportunity.responses = helpers.arrayToObject(opportunity.responses, 'id');
     }
     if (init.method === 'POST') {
       dispatch(actionsOpportunitiesList.prependOpportunitiesList(opportunity));  

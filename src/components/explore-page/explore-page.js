@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import UserPreview from '../user-preview/user-preview';
 
 export class ExplorePage extends Component {
