@@ -49,7 +49,9 @@ export class NavBarTop extends Component {
           name="title"
         />
         <button type="submit" className="searchBarSubmitButton">
-          <i className="fa fa-search" aria-hidden="true"></i>
+          <i className="fa fa-search tooltip" aria-hidden="true">
+            <div className='popover popoverWide1'>search for users by name</div>
+          </i>
         </button>
       </form>
     </li>
@@ -58,22 +60,32 @@ export class NavBarTop extends Component {
       topNavButtons =
         <ul className='topNavUl navUl'>
           <li className='inboxButton navBarButton'>
-            <i className="fa fa-envelope-o" aria-hidden="true"></i>
+            <i className="fa fa-envelope-o tooltip" aria-hidden="true">
+              <div className='popover'>messages</div>
+            </i>
           </li>
           <li className='opportunitiesButton navBarButton'>
-            <i className="fa fa-briefcase" aria-hidden="true"
-              onClick={() => this.listOpportunities({ userId: this.props.user.id })}></i>
+            <i className="fa fa-briefcase tooltip" aria-hidden="true"
+              onClick={() => this.listOpportunities({ userId: this.props.user.id })}>
+              <div className='popover popoverWide1'>view all current opportunities</div>
+            </i>
           </li>
           {searchBarForm}
           <li className='editProfileButton navBarButton'>
-            <i className="fa fa-user-circle-o" aria-hidden="true"
-              onClick={() => this.goToProfile()}></i>
+            <i className="fa fa-user-circle-o tooltip" aria-hidden="true"
+              onClick={() => this.goToProfile()}>
+              <div className='popover popoverWide1'>go to my profile</div>
+            </i>
           </li>
           <li className='settingsButton bars navBarButton'>
-            <i className="fa fa-bars" aria-hidden="true"></i>
+            <i className="fa fa-bars tooltip" aria-hidden="true">
+              <div className='popover'>settings</div>
+            </i>
           </li>
           <li className='settingsButton cog navBarButton'>
-            <i className="fa fa-cog" aria-hidden="true"></i>
+            <i className="fa fa-cog" aria-hidden="true">
+              <div className='popover popoverWide1'>settings</div>
+            </i>
           </li>
         </ul>
     }
