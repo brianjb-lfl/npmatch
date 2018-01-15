@@ -125,3 +125,88 @@ export const formatLinksIcon = links => {
 export const formatTimeframe = object => {
   return `${object.timestampStart} to ${object.timestampEnd}`;
 }
+
+export const convertTimeStampToString = timestamp => {
+  console.log('timestamp in helper', typeof timestamp, timestamp)
+  // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
+  // is desired format "2017-12-21T16:26:48-05:00"
+  if (timestamp instanceof Date) {
+    const year = timestamp.getFullYear();
+    const month = timestamp.getMonth() + 1; // months are 0-index in date objects, but not in string
+    const date = timestamp.getDate();
+    const timeSymbol = 'T';
+    const hours = timestamp.getHours();
+    const minutes = timestamp.getMinutes();
+    const seconds = timestamp.getSeconds();
+    const offset = '05:00';
+    const theString = `${year}-${month}-${date}${timeSymbol}${hours}:${minutes}:${seconds}-${offset}`;
+    console.log(theString)
+    return theString;
+  }
+  return '' ;
+}
+
+export const convertStringToTimeStamp = (theString, offset = -5) => {
+  console.log('string in helper', typeof theString, theString)
+  // expected input: 2018-01-19T15:24:45.000Z
+ 
+  if (typeof theString === 'string') {
+
+    const milliSecondsPerHour = 60 * 60 * 1000 ;
+
+    const dateTimeArray = theString.split('T');
+    console.log('dateTimeArray',dateTimeArray)
+    const dateArray = dateTimeArray[0].split('-');
+    console.log('dateArray',dateArray);
+    const dateArrayIntegers = dateArray.map(date=>parseInt(date,10));
+    console.log('dateArrayIntegers',dateArrayIntegers);
+    const timeArraywithZone = dateTimeArray[1].split('.');
+    console.log('timeArraywithZone',timeArraywithZone);
+    const timeArray =  timeArraywithZone[0].split(':');
+    console.log('timeArray',timeArray);
+    const timeArrayIntegers = timeArray.map(time=>parseInt(time,10));
+    console.log('timeArrayIntegers',timeArrayIntegers);
+
+    const timestamp = new Date();
+    console.log('timestamp today',timestamp);
+
+    timestamp.setFullYear(dateArray[0]);
+    timestamp.setMonth(dateArray[1] - 1); // months are 0-index in date objects
+    timestamp.setDate(dateArray[2]);
+    timestamp.setHours(timeArrayIntegers[0]);
+    timestamp.setMinutes(timeArrayIntegers[1]);
+    timestamp.setSeconds(timeArrayIntegers[2]);
+    console.log('timestamp populated',timestamp);
+
+    const adjustedTimestamp = offset < 0 ?
+      new Date(timestamp - (offset * milliSecondsPerHour)) :
+      new Date(timestamp - (-offset * milliSecondsPerHour)) ;
+
+    console.log('adjustedTimestamp',adjustedTimestamp)
+    return adjustedTimestamp;
+  }
+  return {} ;
+}
+
+export const printDateAsString = (date, offset = -5) => {
+  console.log('date received',date);
+  const milliSecondsPerHour = 60 * 60 * 1000 ;
+
+  const dateOptions = {
+  weekday: 'long', 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric', 
+  hour: 'numeric', 
+  minute: 'numeric'
+  };
+  if (date instanceof Date) {
+    const newDate = offset < 0 ?
+      new Date(date - (offset * milliSecondsPerHour)) :
+      new Date(date - (-offset * milliSecondsPerHour)) ;
+    const dateString = newDate.toLocaleDateString('en',dateOptions)
+    console.log(dateString);
+    return dateString;
+  }
+  return '';
+}

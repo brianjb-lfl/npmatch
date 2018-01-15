@@ -4,7 +4,6 @@ import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
 import * as helpers from '../../actions/helpers';
 import UserFollow from '../user-follow/user-follow';
-import { formattedLocation } from '../../actions/helpers';
 
 export class UserPreview extends Component {
   handleClick(id) {

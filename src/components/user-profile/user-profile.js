@@ -7,7 +7,6 @@ import AdminAdd from '../admin-add/admin-add';
 import UserFollow from '../user-follow/user-follow';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
-import * as actionsUser from '../../actions/user';
 import * as helpers from '../../actions/helpers';
 
 export class UserProfile extends Component {

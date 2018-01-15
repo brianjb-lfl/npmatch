@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsOpportunity from '../../actions/opportunity';
+import * as helpers from '../../actions/helpers';
 import * as actionsDisplay from '../../actions/display';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
@@ -24,19 +25,10 @@ export class OpportunityCreate extends Component {
     })
   }
 
-  convertToTimeStamp(timeStamp) {
-    // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
-    // is desired format "2017-12-21T16:26:48-05:00"
-    if (timeStamp instanceof Date) {
-      return `${timeStamp.getFullYear()}-${timeStamp.getMonth()}-${timeStamp.getDate()}T${timeStamp.getHours()}:${timeStamp.getMinutes()}:${timeStamp.getSeconds()}-05:00`;
-    }
-    return '';
-  }
-
   handleSubmitButton(input, isNew) {
     const opp = { ...input };
-    opp.timestampStart = this.convertToTimeStamp(opp.timestampStart);
-    opp.timestampEnd = this.convertToTimeStamp(opp.timestampEnd);
+    opp.timestampStart = helpers.convertTimeStampToString(opp.timestampStart);
+    opp.timestampEnd = helpers.convertTimeStampToString(opp.timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
@@ -170,7 +162,10 @@ export class OpportunityCreate extends Component {
                 className='inputField' />
             </div>
 
-            <StartEndFields />
+            <StartEndFields 
+              // timestampStart={this.props.timestampStart} 
+              // timestampEnd={this.props.timestampEnd} 
+              formName='opportunityCreate'/>
 
             <div className='previewBottomBar'>
               <button className='clearFormButton'
@@ -188,7 +183,10 @@ export class OpportunityCreate extends Component {
   }
 }
 
+
 export const mapStateToProps = state => {
+
+  const selector = formValueSelector('opportunityCreate')
 
   const initialForm = { ...state.opportunity }
   delete initialForm.responses;
@@ -201,7 +199,9 @@ export const mapStateToProps = state => {
     user: state.user,
     opportunity: state.opportunity,
     display: state.display,
-    initialValues: initialForm
+    initialValues: initialForm,
+    timestampStart: selector(state, 'timestampStart'),
+    timestampEnd: selector(state, 'timestampEnd'),
   }
 };
 

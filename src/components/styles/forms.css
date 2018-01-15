@@ -56,8 +56,30 @@
 .spacedForm .linkFieldContainer {
   margin-bottom: 0px;
 }
-
 .editLinkButton {
   margin-left: 10px;
   padding-bottom: 8px;
+}
+.rw-calendar-popup {
+  width: 28em;
+}
+.rw-calendar-header,
+.rw-calendar-footer {
+  width: 6em;
+}
+.rw-calendar-transition-group {
+  width: 16em;
+}
+.rw-datetime-picker #rw_5_input, 
+.rw-datetime-picker #rw_6_input, 
+.rw-datetime-picker #rw_8_input,
+.rw-datetime-picker #rw_9_input,
+.rw-datetime-picker .rw-widget-input {
+  display: none;
+}
+.rw-datetime-picker .rw-btn:not(.rw-btn-primary) {
+  width: 50%;
+}
+.rw-datetime-picker .rw-widget-picker {
+  width: 60px;
 }
