@@ -98,16 +98,18 @@ export const formatCausesIcon = (causes, user) => {
 
 export const formatLinksIcon = links => {
   let linksArray = null;
-  if (Array.isArray(links)) {
-    if (links[0].linkUrl) {
-      linksArray = links.map((link, index) => {
-        return <div className='linkIcon tooltip'>
-          <a href={link.linkUrl} key={index} target={'_blank'}>
-            <i className="fa fa-globe" aria-hidden="true"></i>
-          </a>
-          <div className='popover popoverWide3'><p>{link.linkUrl}</p></div>
-        </div>
-      });
+  if (Array.isArray(links)) { // nested ifs to avoid breaking at each of 3 levels of the object (otherwise fails if not array, or if empty array)
+    if (links[0]) {
+      if (links[0].linkUrl) {
+        linksArray = links.map((link, index) => {
+          return <div key={index} className='linkIcon tooltip'>
+            <a href={link.linkUrl} target={'_blank'}>
+              <i className="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <div className='popover popoverWide3'><p>{link.linkUrl}</p></div>
+          </div>
+        });
+      }
     }
   } else if (typeof links === 'string' && links.length > 0) {
     linksArray = <div className='linkIcon tooltip'>

@@ -167,7 +167,6 @@ export class UserProfile extends Component {
     </div> : '' ;
 
     const links = helpers.formatLinksIcon(user.links);
-    console.log(links);
     const linksList = links ? <div className='linksList'>{links}</div> : null ;
     const causes = helpers.formatCausesIcon(user.causes, user);
     const skills = helpers.formatSkillsIcon(user.skills, user);

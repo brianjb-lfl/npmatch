@@ -80,7 +80,7 @@ export class OpportunityPreview extends Component {
     let listOfResponses = '';
     if(this.props.self && Array.isArray(opportunity.responses)) {
       listOfResponses = opportunity.responses.map((response, index)=>{
-        return  <p>{response.id} {response.idOpportunity} {response.userId} {response.notes} {response.responseStatus}
+        return  <p className='responseConfirmationContainer' key={index}>{response.id} {response.idOpportunity} {response.userId} {response.notes} {response.responseStatus}
         {response.timestampStatusChange}
         {response.timestampCreated}
         {response.organization}
