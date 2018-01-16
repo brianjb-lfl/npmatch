@@ -31,5 +31,13 @@ export const reducer = (state = initialState, action) => {
     return {...state, responses: newResponses };
   }
 
+  if (action.type === actions.UPDATE_START_DATE) {
+    return {...state, newTimestampStart: action.newTimestampStart };
+  }
+
+  if (action.type === actions.UPDATE_END_DATE) {
+    return {...state, newTimestampEnd: action.newTimestampEnd };
+  }
+
   return state;
 }

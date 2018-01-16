@@ -5,6 +5,7 @@ import * as helpers from './helpers';
 import * as ck from './api-response-checks';
 import * as actionsOpportunitiesList from './opportunities-list';
 import * as actionsUser from './user';
+import { store } from '../store';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -33,6 +34,47 @@ export const loadOppResponse = response => ({
   type: LOAD_OPP_RESPONSE,
   response,
 });
+
+export const UPDATE_START_DATE = 'UPDATE_START_DATE';
+export const updateStartDate = newTimestampStart => ({
+  type: UPDATE_START_DATE,
+  newTimestampStart,
+});
+
+export const UPDATE_END_DATE = 'UPDATE_END_DATE';
+export const updateEndDate = newTimestampEnd => ({
+  type: UPDATE_END_DATE,
+  newTimestampEnd,
+});
+
+// @@@@@@@@@@@@@@@ INTERMEDIARY @@@@@@@@@@@@@@@@@
+
+export const handleDateChanges = (dateType, timestamp) => dispatch => {
+  // input: dateType = 'start' or 'end'; timestamp is recently changed timestamp in form 
+  // Problem: Redux datetimepicker changes BOTH date and time, when user intends to change ONLY date or time.
+  // Solution: this function formats an action to update correctly.
+  // 1. decides which action to call (start or end) per parameter;
+  // 2. grabs prior date from Redux store. Bad practice for actions, but this is to prevent an infinite loop in the component;
+  // 3. calls helper function resolveDateTimeConflicts (read more there);
+  // 4. dispatches action.
+  
+  console.log('~~~~~ start handleDateChanges');
+  const opportunity = {...store.getState().opportunity};
+
+  let priorDate, updateFunction;
+  if (dateType === 'start') {
+    priorDate = opportunity.newTimestampStart ? new Date(opportunity.newTimestampStart) : new Date(opportunity.timestampStart);
+    updateFunction = updateStartDate;
+  } else {
+    priorDate = opportunity.newTimestampEnd ? new Date(opportunity.newTimestampEnd) : new Date(opportunity.timestampEnd);
+    updateFunction = updateEndDate;
+  }
+  console.log('priorDate',priorDate);
+  const conformedDate = helpers.resolveDateTimeConflicts(priorDate, timestamp);
+  console.log(`conformed ${dateType} date`,conformedDate);
+  dispatch(updateFunction(conformedDate))
+  console.log('~~~~~ end handleDateChanges');
+}
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 export const oppAPICall = (url, init, body) => dispatch => {

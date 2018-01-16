@@ -83,7 +83,7 @@ export class NavBarTop extends Component {
             </i>
           </li>
           <li className='settingsButton cog navBarButton'>
-            <i className="fa fa-cog" aria-hidden="true">
+            <i className="fa fa-cog tooltip" aria-hidden="true">
               <div className='popover popoverWide1'>settings</div>
             </i>
           </li>

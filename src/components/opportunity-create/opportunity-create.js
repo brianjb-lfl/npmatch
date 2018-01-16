@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector, change } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as helpers from '../../actions/helpers';
 import * as actionsDisplay from '../../actions/display';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
-import StartEndFields from '../fields/start-end';
+import DateTime from '../fields/datetime';
 
 export class OpportunityCreate extends Component {
   constructor(props) {
@@ -27,8 +27,11 @@ export class OpportunityCreate extends Component {
 
   handleSubmitButton(input, isNew) {
     const opp = { ...input };
-    opp.timestampStart = helpers.convertTimeStampToString(opp.timestampStart);
-    opp.timestampEnd = helpers.convertTimeStampToString(opp.timestampEnd);
+    const timestampStart = this.props.opportunity.newTimestampStart || opp.timestampStart;
+    const timestampEnd = this.props.opportunity.newTimestampEnd || opp.timestampEnd;
+    opp.timestampStart = helpers.convertTimeStampToString(timestampStart);
+    opp.timestampEnd = helpers.convertTimeStampToString(timestampEnd);
+    console.log('before',input.timestampStart, 'after', opp.timestampStart)
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
@@ -55,6 +58,22 @@ export class OpportunityCreate extends Component {
 
     const offerButtonClassName = this.state.offer ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
     const requestButtonClassName = this.state.offer ? 'deSelectedOptionLabel' : 'selectedOptionLabel' ;
+
+    let start, end;
+    if (this.props.opportunity.newTimestampStart) {
+      start = helpers.printDateAsString(this.props.opportunity.newTimestampStart);
+    } else if (this.props.opportunity.timestampStart) {
+      start = helpers.printDateAsString(this.props.opportunity.timestampStart);
+    } else {
+      start = 'no start date selected';
+    }
+    if (this.props.opportunity.newTimestampEnd) {
+      end = helpers.printDateAsString(this.props.opportunity.newTimestampEnd);
+    } else if (this.props.opportunity.timestampEnd) {
+      end = helpers.printDateAsString(this.props.opportunity.timestampEnd);
+    } else {
+      end = 'no end date selected';
+    }
 
     return (
       <main>
@@ -162,10 +181,19 @@ export class OpportunityCreate extends Component {
                 className='inputField' />
             </div>
 
-            <StartEndFields 
-              // timestampStart={this.props.timestampStart} 
-              // timestampEnd={this.props.timestampEnd} 
-              formName='opportunityCreate'/>
+            <div className='datetimepickerRow'>
+              <DateTime type='start' />
+              <div className='datetimeDisplayContainer'>
+                <p className='datetimeDisplay'>{start}</p>
+              </div>
+            </div>
+
+            <div className='datetimepickerRow'>
+              <DateTime type='end' />
+              <div className='datetimeDisplayContainer'>
+                <p className='datetimeDisplay'>{end}</p>
+              </div>
+            </div>
 
             <div className='previewBottomBar'>
               <button className='clearFormButton'
@@ -178,6 +206,14 @@ export class OpportunityCreate extends Component {
             </div>
 
           </form>
+          <div>
+            <p>new start {helpers.printDateAsString(this.props.opportunity.newTimestampStart)}</p>
+            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampStart)}</p>
+            <p>new end {helpers.printDateAsString(this.props.opportunity.newTimestampEnd)}</p>
+            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampEnd)}</p>
+            <p>start {helpers.printDateAsString(this.props.opportunity.timestampStart)}</p>
+            <p>end {helpers.printDateAsString(this.props.opportunity.timestampEnd)}</p>
+          </div>
       </main>
     );
   }

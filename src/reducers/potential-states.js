@@ -101,6 +101,8 @@ export const opportunity = {
   offer: '',
   title: '',
   narrative: '',
+  newTimestampStart: '',
+  newTimestampEnd: '',
   timestampStart: '',
   timestampEnd: '',
   locationCity: '',
