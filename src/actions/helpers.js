@@ -180,7 +180,7 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
 }
 
 export const printDateAsString = (date, offset = -5) => {
-  console.log('date received',date);
+  console.log('printDateAsString date received',date);
   // const milliSecondsPerHour = 60 * 60 * 1000 ;
 
   const dateOptions = {
@@ -196,13 +196,14 @@ export const printDateAsString = (date, offset = -5) => {
     //   new Date(date - (-offset * milliSecondsPerHour)) :
     //   new Date(date - (offset * milliSecondsPerHour)) ;
     const dateString = date.toLocaleDateString('en',dateOptions)
-    console.log(dateString);
+    console.log('printDateAsString final dateString',dateString);
     return dateString;
   }
   return '';
 }
 
 export const resolveDateTimeConflicts = (prior, current) => {
+  const offset = 5;
   // this is to fix this behavior in datetimepicker:
   // changing date works, but changes time to current time.
   // changing time works, but changes date to current date.
@@ -210,91 +211,112 @@ export const resolveDateTimeConflicts = (prior, current) => {
   // output: merged datetime using date from one, time from the other, making correct selections
   
   // get the date and time right now to see if the selected date and time picked right now
-  const dateTimeRightNow = new Date();
-  const yearNow = dateTimeRightNow.getUTCFullYear();
-  const monthNow = dateTimeRightNow.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const dateNow = dateTimeRightNow.getUTCDate();
-  const hoursNow = dateTimeRightNow.getUTCHours();
-  const minutesNow = dateTimeRightNow.getUTCMinutes();
-  const secondsNow = dateTimeRightNow.getUTCSeconds();
-  console.log('now',yearNow, monthNow, dateNow, hoursNow, minutesNow, secondsNow)
+  // const dateTimeRightNow = new Date();
+  // const yearNow = dateTimeRightNow.getUTCFullYear();
+  // const monthNow = dateTimeRightNow.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  // const dateNow = dateTimeRightNow.getUTCDate();
+  // const hoursNow = dateTimeRightNow.getUTCHours();
+  // const minutesNow = dateTimeRightNow.getUTCMinutes();
+  // const secondsNow = dateTimeRightNow.getUTCSeconds();
+  // console.log('now',yearNow, monthNow, dateNow, hoursNow, minutesNow, secondsNow)
 
-  const yearPrior = prior.getUTCFullYear();
-  const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const datePrior = prior.getUTCDate();
-  const hoursPrior = prior.getUTCHours();
-  const minutesPrior = prior.getUTCMinutes();
-  const secondsPrior = prior.getUTCSeconds();
+  const yearPrior = prior.getFullYear();
+  const monthPrior = prior.getMonth() + 1; // months are 0-index in date objects, but not in string
+  const datePrior = prior.getDate();
+  const hoursPrior = prior.getHours();
+  const minutesPrior = prior.getMinutes();
+  const secondsPrior = prior.getSeconds();
   console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
 
-  const yearCurrent = current.getUTCFullYear();
-  const monthCurrent = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const dateCurrent = current.getUTCDate();
-  const hoursCurrent = current.getUTCHours();
-  const minutesCurrent = current.getUTCMinutes();
-  const secondsCurrent = current.getUTCSeconds();
+  const yearPrior2 = prior.getUTCFullYear();
+  const monthPrior2 = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const datePrior2 = prior.getUTCDate();
+  const hoursPrior2 = prior.getUTCHours();
+  const minutesPrior2 = prior.getUTCMinutes();
+  const secondsPrior2 = prior.getUTCSeconds();
+  console.log('UTC prior value',yearPrior2, monthPrior2, datePrior2, hoursPrior2, minutesPrior2, secondsPrior2)
+
+  const yearCurrent = current.getFullYear();
+  const monthCurrent = current.getMonth() + 1; // months are 0-index in date objects, but not in string
+  const dateCurrent = current.getDate();
+  const hoursCurrent = current.getHours();
+  const minutesCurrent = current.getMinutes();
+  const secondsCurrent = current.getSeconds();
   console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
 
-    let correct = 'time'; // which of current is correct? date or time?
+  // const yearCurrent2 = current.getUTCFullYear();
+  // const monthCurrent2 = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  // const dateCurrent2 = current.getUTCDate();
+  // const hoursCurrent2 = current.getUTCHours();
+  // const minutesCurrent2 = current.getUTCMinutes();
+  // const secondsCurrent2 = current.getUTCSeconds();
+  // console.log('UTC current choice',yearCurrent2, monthCurrent2, dateCurrent2, hoursCurrent2, minutesCurrent2, secondsCurrent2)
+
+  let correct = 'time'; // which of current is correct? date or time?
   if (secondsCurrent && secondsCurrent !== 0) {
     console.log('seconds are non-zero', secondsCurrent)
     correct = 'date';
+  } else if (minutesCurrent && (minutesCurrent !== 0 || minutesCurrent !== 30)) {
+    console.log('minutes are non-zero, non-3-', minutesCurrent)
+    correct = 'date';
   }
 
+  // const dateAdjuster = hoursPrior < offset ? 1 : 0 ;
+  // const dateAdjuster2 = hoursPrior2 < offset ? 1 : 0 ;
+  // console.log('dateAdjuster', dateAdjuster, 'UTC', dateAdjuster2);
   let conformedDate;
   if (correct === 'time') {
-    console.log('correct is time')
+    console.log('time is correct')
     conformedDate = prior;
-    conformedDate.setUTCHours(hoursCurrent);
-    conformedDate.setUTCMinutes(minutesCurrent);
-    conformedDate.setUTCSeconds(secondsCurrent);
+    conformedDate.setHours(hoursCurrent);
+    conformedDate.setMinutes(minutesCurrent);
+    conformedDate.setSeconds(secondsCurrent);
   } else {
-    console.log('correct is time')
+    console.log('date is correct')
     conformedDate = current;
-    conformedDate.setUTCHours(hoursPrior);
-    conformedDate.setUTCMinutes(minutesPrior);
-    conformedDate.setUTCSeconds(secondsPrior);
+    conformedDate.setHours(hoursPrior);
+    conformedDate.setMinutes(minutesPrior);
+    conformedDate.setSeconds(secondsPrior);
   }
   console.log('conformedDate',conformedDate)
   return conformedDate;
 }
 
-export const datesAreEqual = (prior, current) => {
-  console.log('%%%');
-  const yearPrior = prior.getUTCFullYear();
-  const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const datePrior = prior.getUTCDate();
-  const hoursPrior = prior.getUTCHours();
-  const minutesPrior = prior.getUTCMinutes();
-  const secondsPrior = prior.getUTCSeconds();
-  console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
+// export const datesAreEqual = (prior, current) => {
+//   const yearPrior = prior.getUTCFullYear();
+//   const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+//   const datePrior = prior.getUTCDate();
+//   const hoursPrior = prior.getUTCHours();
+//   const minutesPrior = prior.getUTCMinutes();
+//   const secondsPrior = prior.getUTCSeconds();
+//   console.log('equality: prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
 
-  const yearCurrent = current.getUTCFullYear();
-  const monthCurrent = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const dateCurrent = current.getUTCDate();
-  const hoursCurrent = current.getUTCHours();
-  const minutesCurrent = current.getUTCMinutes();
-  const secondsCurrent = current.getUTCSeconds();
-  console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
+//   const yearCurrent = current.getFullYear();
+//   const monthCurrent = current.getMonth() + 1; // months are 0-index in date objects, but not in string
+//   const dateCurrent = current.getDate();
+//   const hoursCurrent = current.getHours();
+//   const minutesCurrent = current.getMinutes();
+//   const secondsCurrent = current.getSeconds();
+//   console.log('equality: current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
 
-  if (yearPrior !== yearCurrent) {
-    console.log('year')
-    return false;
-  } else if (monthPrior !== monthCurrent) {
-    console.log('month')
-    return false;
-  } else if (datePrior !== dateCurrent) {
-    console.log('date')
-    return false;  
-  } else if (hoursPrior !== hoursCurrent) {
-    console.log('hours')
-    return false;  
-  } else if (minutesPrior !== minutesCurrent) {
-    console.log('minutes')
-    return false;  
-  } else if (secondsPrior !== secondsCurrent) {
-    console.log('seconds')
-    return false;
-  }
-  return true;
-}
+//   if (yearPrior !== yearCurrent) {
+//     console.log('inequality year')
+//     return false;
+//   } else if (monthPrior !== monthCurrent) {
+//     console.log('inequality month')
+//     return false;
+//   } else if (datePrior !== dateCurrent) {
+//     console.log('inequality date')
+//     return false;  
+//   } else if (hoursPrior !== hoursCurrent) {
+//     console.log('inequality hours')
+//     return false;  
+//   } else if (minutesPrior !== minutesCurrent) {
+//     console.log('inequality minutes')
+//     return false;  
+//   } else if (secondsPrior !== secondsCurrent) {
+//     console.log('inequality seconds')
+//     return false;
+//   }
+//   return true;
+// }

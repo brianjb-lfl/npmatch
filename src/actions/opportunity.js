@@ -5,6 +5,7 @@ import * as helpers from './helpers';
 import * as ck from './api-response-checks';
 import * as actionsOpportunitiesList from './opportunities-list';
 import * as actionsUser from './user';
+import { store } from '../store';
 
 // this is all detail for 1 opportunity; we should only need one at a time;
 // this would be used when creating, editing, or viewing all detail of a single opportunity, like an event profile page
@@ -33,6 +34,48 @@ export const loadOppResponse = response => ({
   type: LOAD_OPP_RESPONSE,
   response,
 });
+
+export const UPDATE_START_DATE = 'UPDATE_START_DATE';
+export const updateStartDate = newTimestampStart => ({
+  type: UPDATE_START_DATE,
+  newTimestampStart,
+});
+
+export const UPDATE_END_DATE = 'UPDATE_END_DATE';
+export const updateEndDate = newTimestampEnd => ({
+  type: UPDATE_END_DATE,
+  newTimestampEnd,
+});
+
+// @@@@@@@@@@@@@@@ INTERMEDIARY @@@@@@@@@@@@@@@@@
+
+export const handleDateChanges = (dateType, timestamp) => dispatch => {
+  console.log('~~~~~ start handleDateChanges');
+  const opportunity = {...store.getState().opportunity};
+
+  let priorDate, updateFunction;
+  if (dateType === 'start') {
+    priorDate = opportunity.newTimestampStart ? new Date(opportunity.newTimestampStart) : new Date(opportunity.timestampStart);
+    updateFunction = updateStartDate;
+  } else {
+    priorDate = opportunity.newTimestampEnd ? new Date(opportunity.newTimestampEnd) : new Date(opportunity.timestampEnd);
+    updateFunction = updateEndDate;
+  }
+  console.log('priorDate',priorDate);
+  // console.log('%%% compare start equality');
+  // console.log('start dates to compare: prior', priorStart, 'current', timestampStart);
+  // const startChanged = !helpers.datesAreEqual(priorStart,timestampStart) ;
+  // console.log('%%% compare end equality');
+  // console.log('end dates to compare: prior', priorEnd, 'current', timestampEnd);
+  // const endChanged = !helpers.datesAreEqual(priorEnd,timestampEnd) ;
+  // console.log('%%% end equality');
+  // console.log('start changed', startChanged, 'end changed', endChanged);
+
+  const conformedDate = helpers.resolveDateTimeConflicts(priorDate, timestamp);
+  console.log(`conformed ${dateType} date`,conformedDate);
+  dispatch(updateFunction(conformedDate))
+  console.log('~~~~~ end handleDateChanges');
+}
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
 export const oppAPICall = (url, init, body) => dispatch => {

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector, change } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as helpers from '../../actions/helpers';
 import * as actionsDisplay from '../../actions/display';
 import LocationFields from '../fields/location';
 import CausesFields from '../fields/causes';
-import StartEndFields from '../fields/start-end';
+import DateTime from '../fields/datetime';
 
 export class OpportunityCreate extends Component {
   constructor(props) {
@@ -162,10 +162,8 @@ export class OpportunityCreate extends Component {
                 className='inputField' />
             </div>
 
-            <StartEndFields 
-              // timestampStart={this.props.timestampStart} 
-              // timestampEnd={this.props.timestampEnd} 
-              formName='opportunityCreate'/>
+            <DateTime type='start' />
+            <DateTime type='end' />
 
             <div className='previewBottomBar'>
               <button className='clearFormButton'
@@ -178,6 +176,12 @@ export class OpportunityCreate extends Component {
             </div>
 
           </form>
+          <div>
+            <p>start {helpers.printDateAsString(this.props.opportunity.timestampStart)}</p>
+            <p>new {helpers.printDateAsString(this.props.opportunity.newTimestampStart)}</p>
+            <p>end {helpers.printDateAsString(this.props.opportunity.timestampEnd)}</p>
+            <p>new {helpers.printDateAsString(this.props.opportunity.newTimestampEnd)}</p>
+          </div>
       </main>
     );
   }

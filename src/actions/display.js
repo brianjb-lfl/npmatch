@@ -53,4 +53,3 @@ export const saveLatestRole = id => ({
   type: SAVE_LATEST_ROLE,
   latestRole: id
 });
-
