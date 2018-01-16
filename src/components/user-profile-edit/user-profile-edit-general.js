@@ -78,7 +78,13 @@ export class UserEditGeneralForm extends Component {
         myLinks = this.state.links.map((link,index)=>{
           return <div className='labelInputPair linksContainer' key={index} >
             <LinkFields initialValues={link} index={index}/>
-            <i className="fa fa-minus editLinkButton" aria-hidden="true" onClick={()=>this.removeLink(index)}></i>
+            <i className="fa fa-minus editLinkButton tooltip"
+            aria-hidden="true"
+            onClick={()=>this.removeLink(index)}>
+            <div className='popover'>
+              delete this link
+            </div>
+          </i>
           </div>
         })
       } else {
@@ -138,7 +144,12 @@ export class UserEditGeneralForm extends Component {
 
         <div className='addLinkContainerWithHeader'>
           <h6 className='formGroupSubHeader'>My Links</h6>
-          <i className="fa fa-plus editLinkButton absolutePosPlus" aria-hidden="true" onClick={()=>this.addLink()}></i>
+          <i className="fa fa-plus editLinkButton absolutePosPlus tooltip"
+            aria-hidden="true" onClick={()=>this.addLink()}>
+            <div className='popover'>
+              add a link
+            </div>
+          </i>
         </div>
         {myLinks}
 

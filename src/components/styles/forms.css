@@ -10,6 +10,10 @@
   padding-right: 3px;
   padding-left: 8px;
 }
+.locationCity { /* padding done to get to align with .rw-widgets... */
+  padding-top: 5px;
+  padding-bottom: 7.5px;
+}
 .inputField:focus {
   outline: none;
   border-color: rgb(99, 172, 241);

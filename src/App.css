@@ -62,3 +62,6 @@ a {
 .overflowHidden {
   overflow: hidden;
 }
+.hidden {
+  display: none;
+}

@@ -19,19 +19,17 @@ export class LocationFields extends Component {
         <div className='labelInputPair'>
           <label
             className='inputLabel'
-            htmlFor={'locationCity'}>City
+            htmlFor={'locationCity'}>Location
           </label>
           <Field
             name='locationCity'
             id='locationCity'
             component='input'
+            placeholder='city'
             type='text'
-            className='inputField' />
-        </div>
-
-        <div className='labelInputPair'>
+            className='inputField locationCity' />
           <label
-            className='inputLabel'
+            className='hidden'
             htmlFor={'locationState'}>State
           </label>
           <Field
@@ -40,11 +38,8 @@ export class LocationFields extends Component {
             component={renderDropdownList}
             data={this.props.general.states}
             className='inputField' />
-        </div>
-
-        <div className='labelInputPair'>
           <label
-            className='inputLabel'
+            className='hidden'
             htmlFor={'locationCountry'}>Country
           </label>
           <Field
