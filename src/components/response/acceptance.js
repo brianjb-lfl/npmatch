@@ -15,8 +15,6 @@ export class Acceptance extends Component {
     const displayName = helpers.formatUserName(response);
 
     const other = <div>
-        last change {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampStatusChange))}
-        responded {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampCreated))}
         {response.id} 
         {response.idOpportunity} 
         {response.userId}
@@ -25,7 +23,14 @@ export class Acceptance extends Component {
     return ( <tr>
       <td>{displayName}</td>
       <td>{response.notes}</td>
-      <td>{response.responseStatus}</td>
+      <td className='tooltip'>{response.responseStatus}
+        <div className='popover popoverWide3'>
+          <p>{displayName} responded on {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampCreated))}</p>
+          <br/>
+          <p>last changed on {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampStatusChange))}</p>
+        </div>
+      </td>
+      <td>...action</td>
     </tr> );
   }
 }

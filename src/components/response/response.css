@@ -26,3 +26,14 @@
 .opportunityResponse .selectOptionButtonContainer div:first-of-type {
   margin-right: 10px;
 }
+.acceptanceTable {
+  width: 100%;
+  border: 1px solid #adbace;
+  border-collapse: collapse;
+}
+.acceptanceTable td {
+  border: 1px solid #adbace;
+}
+.acceptanceTable tr:hover {
+  background-color: #eee;
+}

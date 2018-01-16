@@ -82,12 +82,27 @@ export class OpportunityPreview extends Component {
         listOfResponses = opportunity.responses.map((response, index)=> <Acceptance key={index} response={response}/>);
       }
     }
-    const responses = (isInFocus && this.props.self) ? <div className='acceptanceContainer'>
-      <h6>Responses</h6>
-      <table className='acceptanceTable'>
-        <tbody>{listOfResponses}</tbody>
-      </table>
-    </div> : <p>No-one has responded yet</p> ;
+    let responses = null;
+    if (isInFocus && this.props.self) {
+      if (listOfResponses) {
+        responses = <div className='acceptanceContainer'>
+        <h6>Responses</h6>
+        <table className='acceptanceTable'>
+          <tbody>
+            <tr>
+              <th>Volunteer</th>
+              <th>Notes</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            {listOfResponses}
+          </tbody>
+        </table>
+      </div>
+      } else {
+        responses = <p>No-one has responded yet</p>
+      }
+    }
 
     const overflowClass = isInFocus ? '' : 'overflowHidden';
 
