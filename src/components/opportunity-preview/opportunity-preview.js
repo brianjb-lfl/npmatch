@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import * as actionsOpportunity from '../../actions/opportunity';
 import * as actionsDisplay from '../../actions/display';
 import * as helpers from '../../actions/helpers';
-import OpportunityResponse from '../opportunity-response/opportunity-response';
-// import { type } from 'os';
-// import { link } from 'fs';
+import Response from '../response/response';
+import Acceptance from '../response/acceptance';
 
 export class OpportunityPreview extends Component {
   // props from parent: self(boolean for in context of user viewing own opportunities), response, opportunity, history
@@ -67,7 +66,7 @@ export class OpportunityPreview extends Component {
 
     let editOrRespond = <p>Sign in to sign up!</p>; // default if user not logged in
     if(this.props.response){
-      editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
+      editOrRespond = <Response response={this.props.response} opportunity={opportunity}/> ;
     } else if (isMyOpportunity) {
       editOrRespond = <i onClick={()=>this.editOpportunity(opportunity.id)} 
         className='fa fa-pencil editPencil' aria-hidden='true'>
@@ -75,20 +74,11 @@ export class OpportunityPreview extends Component {
         </i>;
     } else if (this.props.user.id) {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
-      editOrRespond = <OpportunityResponse response={this.props.response} opportunity={opportunity}/> ;
+      editOrRespond = <Response response={this.props.response} opportunity={opportunity}/> ;
     }
-    let listOfResponses = '';
-    if(this.props.self && Array.isArray(opportunity.responses)) {
-      listOfResponses = opportunity.responses.map((response, index)=>{
-        return  <p className='responseConfirmationContainer' key={index}>{response.id} {response.idOpportunity} {response.userId} {response.notes} {response.responseStatus}
-        {response.timestampStatusChange}
-        {response.timestampCreated}
-        {response.organization}
-        {response.firstName}
-        {response.lastName}
-        {response.title}</p>
-      });
-    }
+    const listOfResponses = (this.props.self && Array.isArray(opportunity.responses)) ?
+       opportunity.responses.map((response, index)=> <Acceptance key={index} response={response}/>)
+        : <p>No-one has responded yet</p> ;
     const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
 
     const overflowClass = isInFocus ? '' : 'overflowHidden';

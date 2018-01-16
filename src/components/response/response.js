@@ -3,11 +3,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import './opportunity-response.css';
+import './response.css';
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
 
-export class OpportunityResponse extends Component {
+export class Response extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -232,4 +232,4 @@ export const mapStateToProps = state => {
 export default compose(
   connect(mapStateToProps),
   reduxForm({ form: 'response' })
-)(OpportunityResponse);
+)(Response);

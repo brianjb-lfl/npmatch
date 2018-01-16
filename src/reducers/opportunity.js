@@ -40,7 +40,6 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === actions.INITIALIZE_START_DATE) {
-    console.log('initialize',action)
     return {...state, timestampStart: action.timestampStart };
   }
 

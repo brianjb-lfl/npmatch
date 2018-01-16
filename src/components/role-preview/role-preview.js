@@ -48,7 +48,6 @@ export class RolePreview extends Component {
   }
 
   goToUser() {
-    console.log('id clicked',this.state.role.idUserReceiving)
     this.props.dispatch(actionsUser.fetchUser(
       this.state.role.idUserReceiving,
       this.props.userInState.authToken,
@@ -62,7 +61,6 @@ export class RolePreview extends Component {
   }
 
   setRole(formValues) {
-    // console.log('formValues',formValues);
     const role = {
       id: this.state.role.id,
       idUserAdding: this.props.userInState.id,
