@@ -158,12 +158,12 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
 
     const timestamp = new Date();
 
-    timestamp.setUTCFullYear(dateArrayIntegers[0]);
-    timestamp.setUTCMonth(dateArrayIntegers[1] - 1); // months are 0-index in date objects
-    timestamp.setUTCDate(dateArrayIntegers[2]);
-    timestamp.setUTCHours(timeArrayIntegers[0]);
-    timestamp.setUTCMinutes(timeArrayIntegers[1]);
-    timestamp.setUTCSeconds(timeArrayIntegers[2]);
+    timestamp.setFullYear(dateArrayIntegers[0]);
+    timestamp.setMonth(dateArrayIntegers[1] - 1); // months are 0-index in date objects
+    timestamp.setDate(dateArrayIntegers[2]);
+    timestamp.setHours(timeArrayIntegers[0]);
+    timestamp.setMinutes(timeArrayIntegers[1]);
+    timestamp.setSeconds(timeArrayIntegers[2]);
 
     console.log('timestamp before offset', timestamp); // this will be GMT, we need to offset it 2x
     console.log('neg offset', offset < 0 );
@@ -179,22 +179,17 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
   return {} ;
 }
 
-export const printDateAsString = (date, offset = -5) => {
+export const printDateAsString = date => {
   console.log('printDateAsString date received',date);
-  // const milliSecondsPerHour = 60 * 60 * 1000 ;
-
   const dateOptions = {
-  weekday: 'long', 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric', 
-  hour: 'numeric', 
-  minute: 'numeric'
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric', 
+    hour: 'numeric', 
+    minute: 'numeric'
   };
   if (date instanceof Date) {
-    // const newDate = offset < 0 ?
-    //   new Date(date - (-offset * milliSecondsPerHour)) :
-    //   new Date(date - (offset * milliSecondsPerHour)) ;
     const dateString = date.toLocaleDateString('en',dateOptions)
     console.log('printDateAsString final dateString',dateString);
     return dateString;
@@ -210,16 +205,6 @@ export const resolveDateTimeConflicts = (prior, current) => {
   // input: prior accurate datetime, current selection that is partially accurae
   // output: merged datetime using date from one, time from the other, making correct selections
   
-  // get the date and time right now to see if the selected date and time picked right now
-  // const dateTimeRightNow = new Date();
-  // const yearNow = dateTimeRightNow.getUTCFullYear();
-  // const monthNow = dateTimeRightNow.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  // const dateNow = dateTimeRightNow.getUTCDate();
-  // const hoursNow = dateTimeRightNow.getUTCHours();
-  // const minutesNow = dateTimeRightNow.getUTCMinutes();
-  // const secondsNow = dateTimeRightNow.getUTCSeconds();
-  // console.log('now',yearNow, monthNow, dateNow, hoursNow, minutesNow, secondsNow)
-
   const yearPrior = prior.getFullYear();
   const monthPrior = prior.getMonth() + 1; // months are 0-index in date objects, but not in string
   const datePrior = prior.getDate();

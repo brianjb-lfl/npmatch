@@ -27,8 +27,10 @@ export class OpportunityCreate extends Component {
 
   handleSubmitButton(input, isNew) {
     const opp = { ...input };
-    opp.timestampStart = helpers.convertTimeStampToString(opp.timestampStart);
-    opp.timestampEnd = helpers.convertTimeStampToString(opp.timestampEnd);
+    const timestampStart = this.props.opportunity.newTimestampStart || opp.timestampStart;
+    const timestampEnd = this.props.opportunity.newTimestampEnd || opp.timestampEnd;
+    opp.timestampStart = helpers.convertTimeStampToString(timestampStart);
+    opp.timestampEnd = helpers.convertTimeStampToString(timestampEnd);
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
@@ -177,10 +179,12 @@ export class OpportunityCreate extends Component {
 
           </form>
           <div>
+            <p>new start {helpers.printDateAsString(this.props.opportunity.newTimestampStart)}</p>
+            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampStart)}</p>
+            <p>new end {helpers.printDateAsString(this.props.opportunity.newTimestampEnd)}</p>
+            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampEnd)}</p>
             <p>start {helpers.printDateAsString(this.props.opportunity.timestampStart)}</p>
-            <p>new {helpers.printDateAsString(this.props.opportunity.newTimestampStart)}</p>
             <p>end {helpers.printDateAsString(this.props.opportunity.timestampEnd)}</p>
-            <p>new {helpers.printDateAsString(this.props.opportunity.newTimestampEnd)}</p>
           </div>
       </main>
     );
