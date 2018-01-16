@@ -5,30 +5,28 @@ import { Field, reduxForm } from 'redux-form';
 import './response.css';
 import * as actionsUser from '../../actions/user';
 import * as actionsDisplay from '../../actions/display';
+import * as helpers from '../../actions/helpers';
 
 export class Acceptance extends Component {
 
   render() {
 
     const response = this.props.response;
-    const acceptanceBody = <p className='acceptanceBody'>
+    const displayName = helpers.formatUserName(response);
+
+    const other = <div>
+        last change {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampStatusChange))}
+        responded {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampCreated))}
         {response.id} 
         {response.idOpportunity} 
-        {response.userId} 
-        {response.notes} 
-        {response.responseStatus}
-        {response.timestampStatusChange}
-        {response.timestampCreated}
-        {response.organization}
-        {response.firstName}
-        {response.lastName}
-        {response.title}</p>;
+        {response.userId}
+      </div>;
 
-    return (
-      <div className='acceptanceContainer'>
-        {acceptanceBody}
-      </div>
-    );
+    return ( <tr>
+      <td>{displayName}</td>
+      <td>{response.notes}</td>
+      <td>{response.responseStatus}</td>
+    </tr> );
   }
 }
 

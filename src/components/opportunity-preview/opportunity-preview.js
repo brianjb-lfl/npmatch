@@ -76,10 +76,18 @@ export class OpportunityPreview extends Component {
       // this.props.response is passed down from the user profile. in other cases, it is undefined.
       editOrRespond = <Response response={this.props.response} opportunity={opportunity}/> ;
     }
-    const listOfResponses = (this.props.self && Array.isArray(opportunity.responses)) ?
-       opportunity.responses.map((response, index)=> <Acceptance key={index} response={response}/>)
-        : <p>No-one has responded yet</p> ;
-    const responses = (isInFocus && this.props.self) ? <div><h6>Responses</h6>{listOfResponses}</div> : '' ;
+    let listOfResponses;
+    if (this.props.self && Array.isArray(opportunity.responses)) {
+      if (opportunity.responses.length > 0) {
+        listOfResponses = opportunity.responses.map((response, index)=> <Acceptance key={index} response={response}/>);
+      }
+    }
+    const responses = (isInFocus && this.props.self) ? <div className='acceptanceContainer'>
+      <h6>Responses</h6>
+      <table className='acceptanceTable'>
+        <tbody>{listOfResponses}</tbody>
+      </table>
+    </div> : <p>No-one has responded yet</p> ;
 
     const overflowClass = isInFocus ? '' : 'overflowHidden';
 
