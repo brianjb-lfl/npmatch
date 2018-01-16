@@ -19,9 +19,14 @@ export class OpportunitiesPage extends Component {
     const redirect = this.props.user.id ? '' :
     <Switch><Redirect from='*' to='/' /></Switch>
 
-    const listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
-      return <OpportunityPreview response={this.props.user.responses[opp.id]} key={index} opportunity={opp} history={this.props.history} index={index}/>
-    });
+    let listOfOpps = <p>Sorry, we can't find the list of opportunites. Please try back.</p>;
+    if (this.props.opportunitiesList) {
+      if (Array.isArray(this.props.opportunitiesList.main)) {
+        listOfOpps = this.props.opportunitiesList.main.map((opp,index)=>{
+          return <OpportunityPreview response={this.props.user.responses[opp.id]} key={index} opportunity={opp} history={this.props.history} index={index}/>
+        });
+      }
+    }
 
     const createOppButton = this.props.user.id ? 
       <button className='addOpportunityButton' onClick={()=>this.createOpportunity()}>Add Opportunity</button> : '' ;

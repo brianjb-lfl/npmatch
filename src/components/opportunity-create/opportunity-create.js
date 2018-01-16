@@ -206,14 +206,6 @@ export class OpportunityCreate extends Component {
             </div>
 
           </form>
-          <div>
-            <p>new start {helpers.printDateAsString(this.props.opportunity.newTimestampStart)}</p>
-            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampStart)}</p>
-            <p>new end {helpers.printDateAsString(this.props.opportunity.newTimestampEnd)}</p>
-            <p>{helpers.convertTimeStampToString(this.props.opportunity.timestampEnd)}</p>
-            <p>start {helpers.printDateAsString(this.props.opportunity.timestampStart)}</p>
-            <p>end {helpers.printDateAsString(this.props.opportunity.timestampEnd)}</p>
-          </div>
       </main>
     );
   }

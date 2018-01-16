@@ -239,9 +239,9 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   const newResponse = {id, idOpportunity, userId, notes, responseStatus};
   if (isNew) delete response.id;
 
-  console.log('orig', origResponse)
-  console.log('response', response)
-  console.log('newResponse', newResponse)
+  // console.log('orig', origResponse)
+  // console.log('response', response)
+  // console.log('newResponse', newResponse)
   
   const url = `${REACT_APP_BASE_URL}/api/responses/${params}`;
   const headers = { 
@@ -253,7 +253,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
     body: JSON.stringify(newResponse),
     headers
   };
-  console.log('init', init)
+  // console.log('init', init)
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postResponses, newResponse) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putResponsesId, newResponse) }
@@ -293,7 +293,7 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
 // @@@@@@@@@@@@@@@ ROLES @@@@@@@@@@@@@@@@@
 
 export const createOrEditRole = (role, roleType, authToken, roleNameFields) => dispatch => {
-  console.log('enter role', role, roleNameFields)
+  // console.log('enter role', role, roleNameFields)
 
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
 
@@ -319,7 +319,7 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
   if (init.method === 'GET') { } 
   else if (init.method === 'POST') { ck.compareObjects(ck.postRoles, role) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putRolesId, role) }
-  console.log('role before fetch', url, init)
+  // console.log('role before fetch', url, init)
 
   return fetch(url, init)
   .then(res=>{ 

@@ -19,6 +19,7 @@ import NavBarTop from './components/nav-bar-top/nav-bar-top';
 import NavBarBottom from './components/nav-bar-bottom/nav-bar-bottom';
 import RootPage from './components/root-page/root-page';
 import OpportunitiesPage from './components/opportunities-page/opportunities-page';
+import Modal from './components/modal/modal';
 
 export class App extends Component {
 
@@ -29,6 +30,8 @@ export class App extends Component {
   }
 
   render() {
+
+    const modal = this.props.display.modal ? <Modal/> : null ;
     // NOTE: individual components include a redirect if users are not signed in: ExplorePage, OpportunityCreae, OpportunitiesPage, UserProfileEdit
     return (
       <Router>
@@ -49,6 +52,7 @@ export class App extends Component {
           </Switch>
           <Route path='/*' component={NavBarTop}/>
           <Route path='/*' component={NavBarBottom} />
+          {modal}
         </div>
       </Router>
     );
@@ -56,6 +60,7 @@ export class App extends Component {
 }
 
 export const mapStateToProps = state => ({
+  display: state.display,
   general: state.general
 })
 export default connect(mapStateToProps)(App);

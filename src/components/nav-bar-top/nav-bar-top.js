@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
-
 import './nav-bar-top.css'
 import * as actionsOpportunitiesList from '../../actions/opportunities-list';
 import * as actionsDisplay from '../../actions/display';
@@ -66,7 +65,7 @@ export class NavBarTop extends Component {
           </li>
           <li className='opportunitiesButton navBarButton'>
             <i className="fa fa-briefcase tooltip" aria-hidden="true"
-              onClick={() => this.listOpportunities({ userId: this.props.user.id })}>
+              onClick={() => this.listOpportunities({})}>
               <div className='popover popoverWide1'>view all current opportunities</div>
             </i>
           </li>

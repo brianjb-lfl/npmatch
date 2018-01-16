@@ -214,8 +214,8 @@ export const getUsersIdRes = {
   "opportunities": [
     {
       "id": 0,
-      "userId": "string",
-      "organization": "string",
+      // "userId": "string",
+      // "organization": "string",
       "opportunityType": "string",
       "offer": true,
       "title": "string",

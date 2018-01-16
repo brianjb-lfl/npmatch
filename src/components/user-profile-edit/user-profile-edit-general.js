@@ -144,13 +144,14 @@ export class UserEditGeneralForm extends Component {
 
 
         <div className='previewBottomBar'>
-          <button className='submitButton'
-            type="submit" disabled={this.props.pristine || this.props.submitting}>Save
-          </button>
           <button className='clearFormButton'
             type="button" disabled={this.props.pristine || this.props.submitting}
             onClick={this.props.reset}>Reset Form
           </button>
+          <button className='submitButton'
+            type="submit" disabled={this.props.pristine || this.props.submitting}>Save
+          </button>
+
         </div>
 
       </form>
