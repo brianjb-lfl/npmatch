@@ -147,7 +147,6 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
   // input: string received from back end in UTC format; e.g. '2018-01-19T15:24:45.000Z'
   // calculation: create a date object, inputting values to match the UTC string, then adjust the date by the offset to compensate for UTC
   // output: Date object reflecting current time zone
-  console.log('theString to convert', theString)
   if (typeof theString === 'string') {
     const milliSecondsPerHour = 60 * 60 * 1000 ;
 
@@ -167,15 +166,9 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
     timestamp.setMinutes(timeArrayIntegers[1]);
     timestamp.setSeconds(timeArrayIntegers[2]);
 
-    console.log('timestamp before offset', timestamp); // this will be GMT, we need to offset it 2x
-    // console.log('neg offset', offset < 0 );
-    // console.log('neg',new Date(timestamp - (offset * milliSecondsPerHour)));
-    // console.log('dbl neg',new Date(timestamp - (-offset * milliSecondsPerHour)));
-    console.log(offset * milliSecondsPerHour);
     const adjustedTimestamp = offset < 0 ?
       new Date(timestamp - (-offset * milliSecondsPerHour)) : // - is earlier
       new Date(timestamp - (offset * milliSecondsPerHour)) ; // -- is later
-    console.log('adjustedTimestamp',adjustedTimestamp)
     return adjustedTimestamp;
   }
   return {} ;
@@ -198,7 +191,6 @@ export const printDateAsString = date => {
 }
 
 export const resolveDateTimeConflicts = (prior, current) => {
-  const offset = 5;
   // this is to fix this behavior in datetimepicker:
   // changing date works, but changes time to current time.
   // changing time works, but changes date to current date.
@@ -209,21 +201,13 @@ export const resolveDateTimeConflicts = (prior, current) => {
       // option 2: currently selected date and prior time
   // all dates and times are handled as the user sees them, not UTC.  UTC conversions are done only when transmitting to and from the back end.
   
-  const yearPrior = prior.getFullYear();
-  const monthPrior = prior.getMonth() + 1; // months are 0-index in date objects, but not in string
-  const datePrior = prior.getDate();
   const hoursPrior = prior.getHours();
   const minutesPrior = prior.getMinutes();
   const secondsPrior = prior.getSeconds();
-  console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
 
-  const yearCurrent = current.getFullYear();
-  const monthCurrent = current.getMonth() + 1; // months are 0-index in date objects, but not in string
-  const dateCurrent = current.getDate();
   const hoursCurrent = current.getHours();
   const minutesCurrent = current.getMinutes();
   const secondsCurrent = current.getSeconds();
-  console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
 
   let correct = 'time'; // which of current is correct? date or time?
   if (secondsCurrent && secondsCurrent !== 0) {
@@ -234,19 +218,16 @@ export const resolveDateTimeConflicts = (prior, current) => {
 
   let conformedDate;
   if (correct === 'time') {
-    console.log('time is correct')
     conformedDate = prior;
     conformedDate.setHours(hoursCurrent);
     conformedDate.setMinutes(minutesCurrent);
     conformedDate.setSeconds(secondsCurrent);
   } else {
-    console.log('date is correct')
     conformedDate = current;
     conformedDate.setHours(hoursPrior);
     conformedDate.setMinutes(minutesPrior);
     conformedDate.setSeconds(secondsPrior);
   }
-  console.log('conformedDate',conformedDate)
   return conformedDate;
 }
 

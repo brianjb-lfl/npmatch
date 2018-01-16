@@ -58,7 +58,6 @@ export const handleDateChanges = (dateType, timestamp) => dispatch => {
   // 3. calls helper function resolveDateTimeConflicts (read more there);
   // 4. dispatches action.
   
-  console.log('~~~~~ start handleDateChanges');
   const opportunity = {...store.getState().opportunity};
 
   let priorDate, updateFunction;
@@ -69,11 +68,8 @@ export const handleDateChanges = (dateType, timestamp) => dispatch => {
     priorDate = opportunity.newTimestampEnd ? new Date(opportunity.newTimestampEnd) : new Date(opportunity.timestampEnd);
     updateFunction = updateEndDate;
   }
-  console.log('priorDate',priorDate);
   const conformedDate = helpers.resolveDateTimeConflicts(priorDate, timestamp);
-  console.log(`conformed ${dateType} date`,conformedDate);
   dispatch(updateFunction(conformedDate))
-  console.log('~~~~~ end handleDateChanges');
 }
 
 // @@@@@@@@@@@@@@@ ASYNC @@@@@@@@@@@@@@@@@
@@ -83,7 +79,6 @@ export const oppAPICall = (url, init, body) => dispatch => {
   else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunities, body) } 
   else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesId, body) }
 
-  if (init.method === 'PUT') console.log('timestamp to send: start',typeof body.timestampStart, body.timestampStart, 'end:',typeof body.timestampEnd, body.timestampEnd)
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
@@ -93,20 +88,16 @@ export const oppAPICall = (url, init, body) => dispatch => {
     return opp.json();
   }) 
   .then(opportunity=>{
-    console.log('opp returned: start:', typeof opportunity.timestampStart, opportunity.timestampStart, 'end:',typeof opportunity.timestampEnd, opportunity.timestampEnd)
     
-    console.log('~~~');
     const timestampStart = opportunity.timestampStart ? helpers.convertStringToTimeStamp(opportunity.timestampStart) : {} ;
     const timestampEnd = opportunity.timestampEnd ? helpers.convertStringToTimeStamp(opportunity.timestampEnd) : {} ;
     const responses = Array.isArray(opportunity.responses) ? helpers.arrayToObject(opportunity.responses, 'id') : [] ;
-    console.log('~~~');    
 
     if (init.method === 'GET') { ck.compareObjects(ck.getOpportunitiesIdRes, opportunity) } 
     else if (init.method === 'POST') { ck.compareObjects(ck.postOpportunitiesRes, opportunity) } 
     else if (init.method === 'PUT') { ck.compareObjects(ck.putOpportunitiesIdRes, opportunity) }
     
     const updatedOpportunity = {...opportunity, timestampStart, timestampEnd, responses};
-    console.log('updatedOpportunity to save: start:', typeof updatedOpportunity.timestampStart, updatedOpportunity.timestampStart, 'end:',typeof updatedOpportunity.timestampEnd, updatedOpportunity.timestampEnd)
 
     if (init.method === 'POST') {
       dispatch(actionsOpportunitiesList.prependOpportunitiesList(updatedOpportunity));  
