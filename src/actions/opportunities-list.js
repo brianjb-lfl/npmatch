@@ -35,13 +35,11 @@ export const fetchOppsList = (query, authToken) => dispatch => {
   const headers = {
     'content-type': 'application/json',
     "Authorization": `Bearer ${authToken}`, 
-  }; 
-
+  };
   const init = { 
     method: 'GET',
     headers,
   };
-
   return fetch(url, init)    
     .then(res=>{
       return res.json();
@@ -52,7 +50,6 @@ export const fetchOppsList = (query, authToken) => dispatch => {
       return dispatch(loadOpportunitiesList(oppsList));
     })
     .catch(error => {
-      // console.log('error',error);
       dispatch(actionsDisplay.changeDisplayStatus('normal'));
       return dispatch(actionsDisplay.toggleModal(error));
     })

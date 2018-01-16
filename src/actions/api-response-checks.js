@@ -392,7 +392,7 @@ export const getOpportunitiesIdRes = {
       "organization": "SQL Join at response",
       "firstName": "SQL Join at response",
       "lastName": "SQL Join at response",
-      "title": "SQL Join at response"
+      // "title": "SQL Join at response"
     }
   ]
 };

@@ -96,6 +96,7 @@ export const userAPICall = (url, init, body, callback) => dispatch => {
   return fetch(url, init)   
   .then(user=>{ 
     if (!user.ok) { 
+      dispatch(actionsDisplay.toggleModal('Sorry, user not recognized'));
       return Promise.reject(user.statusText);
     }
     return user.json();
@@ -260,9 +261,8 @@ export const createOrEditResponse = (origResponse, authToken, isNew = true) => d
   
   return fetch(url, init)
   .then(res=>{ 
-
     if (!res.ok) { 
-      // console.log('not ok')
+      dispatch(actionsDisplay.toggleModal('Sorry, couldn\'t process that opportunity response'));
       return Promise.reject(res.statusText);
     }
     return res.json();
@@ -325,7 +325,7 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
   .then(res=>{ 
     // console.log('role res',res);
     if (!res.ok) { 
-      // console.log('not ok');
+      dispatch(actionsDisplay.toggleModal('Sorry, couldn\'t process that role'));
       return Promise.reject(res.statusText);
     }
     return res.json();
@@ -353,6 +353,6 @@ export const createOrEditRole = (role, roleType, authToken, roleNameFields) => d
   })
   .catch(error => {
     dispatch(actionsDisplay.changeDisplayStatus('normal'));
-    dispatch(actionsDisplay.toggleModal('error'));
+    dispatch(actionsDisplay.toggleModal(error));
   });
 }

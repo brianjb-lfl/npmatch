@@ -47,28 +47,50 @@ export const updateEndDate = newTimestampEnd => ({
   newTimestampEnd,
 });
 
+export const INITIALIZE_START_DATE = 'INITIALIZE_START_DATE';
+export const initializeStartDate = timestampStart => ({
+  type: UPDATE_START_DATE,
+  timestampStart,
+});
+
+export const INITIALIZE_END_DATE = 'INITIALIZE_END_DATE';
+export const initializeEndDate = timestampEnd => ({
+  type: INITIALIZE_END_DATE,
+  timestampEnd,
+});
+
 // @@@@@@@@@@@@@@@ INTERMEDIARY @@@@@@@@@@@@@@@@@
 
 export const handleDateChanges = (dateType, timestamp) => dispatch => {
   // input: dateType = 'start' or 'end'; timestamp is recently changed timestamp in form 
-  // Problem: Redux datetimepicker changes BOTH date and time, when user intends to change ONLY date or time.
-  // Solution: this function formats an action to update correctly.
-  // 1. decides which action to call (start or end) per parameter;
-  // 2. grabs prior date from Redux store. Bad practice for actions, but this is to prevent an infinite loop in the component;
-  // 3. calls helper function resolveDateTimeConflicts (read more there);
-  // 4. dispatches action.
-  
+    // Problem: Redux datetimepicker changes BOTH date and time, when user intends to change ONLY date or time.
+    // Solution: this function formats an action to update correctly.
+    // 1. decides which action to call (start or end) per parameter;
+    // 2. grabs prior date from Redux store. Bad practice for actions, but this is to prevent an infinite loop in the component;
+    // 3. calls helper function resolveDateTimeConflicts (read more there);
+    // 4. dispatches action.
+    
   const opportunity = {...store.getState().opportunity};
 
   let priorDate, updateFunction;
   if (dateType === 'start') {
-    priorDate = opportunity.newTimestampStart ? new Date(opportunity.newTimestampStart) : new Date(opportunity.timestampStart);
     updateFunction = updateStartDate;
-  } else {
-    priorDate = opportunity.newTimestampEnd ? new Date(opportunity.newTimestampEnd) : new Date(opportunity.timestampEnd);
+    if (opportunity.timestampStart instanceof Date || opportunity.newTimestampStart instanceof Date) {
+      // if there is a prior start date
+      priorDate = opportunity.newTimestampStart ? new Date(opportunity.newTimestampStart) : new Date(opportunity.timestampStart);
+    } else {
+      dispatch(initializeStartDate(timestamp))
+    }
+  } else if (dateType === 'end') {
     updateFunction = updateEndDate;
+    if (opportunity.timestampEnd instanceof Date || opportunity.newTimestampEnd instanceof Date) {
+      // if there is a prior end date
+      priorDate = opportunity.newTimestampEnd ? new Date(opportunity.newTimestampEnd) : new Date(opportunity.timestampEnd);
+    } else {
+      dispatch(initializeEndDate(timestamp))
+    }
   }
-  const conformedDate = helpers.resolveDateTimeConflicts(priorDate, timestamp);
+  const conformedDate = priorDate ? helpers.resolveDateTimeConflicts(priorDate, timestamp) : timestamp ;
   dispatch(updateFunction(conformedDate))
 }
 
@@ -82,7 +104,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
   return fetch(url, init)   
   .then(opp=>{
     if (!opp.ok) { 
-      console.log('!ok')
+      dispatch(actionsDisplay.toggleModal('Sorry, couldn\'t process that opportunity request'));
       return Promise.reject(opp.statusText);
     }
     return opp.json();
@@ -117,9 +139,7 @@ export const oppAPICall = (url, init, body) => dispatch => {
 }
 
 export const fetchOpp = (oppId, authToken) => dispatch => {
-  
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
-  
   const url = `${REACT_APP_BASE_URL}/api/opportunities/${oppId}`;
   const headers = {
     'content-type': 'application/json',
@@ -133,9 +153,7 @@ export const fetchOpp = (oppId, authToken) => dispatch => {
 }
 
 export const createOpportunity = (opportunity, authToken, isNew) => dispatch => {
-  
   dispatch(actionsDisplay.changeDisplayStatus('loading'));
-
   if (isNew) delete opportunity.id;
   // DELETE WHEN DB ACCEPTS LOGO
   delete opportunity.logo;

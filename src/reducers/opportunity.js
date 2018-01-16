@@ -39,5 +39,14 @@ export const reducer = (state = initialState, action) => {
     return {...state, newTimestampEnd: action.newTimestampEnd };
   }
 
+  if (action.type === actions.INITIALIZE_START_DATE) {
+    console.log('initialize',action)
+    return {...state, timestampStart: action.timestampStart };
+  }
+
+  if (action.type === actions.INITIALIZE_END_DATE) {
+    return {...state, timestampEnd: action.timestampEnd };
+  }
+
   return state;
 }

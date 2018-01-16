@@ -31,7 +31,6 @@ export class OpportunityCreate extends Component {
     const timestampEnd = this.props.opportunity.newTimestampEnd || opp.timestampEnd;
     opp.timestampStart = helpers.convertTimeStampToString(timestampStart);
     opp.timestampEnd = helpers.convertTimeStampToString(timestampEnd);
-    console.log('before',input.timestampStart, 'after', opp.timestampStart)
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {

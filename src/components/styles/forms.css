@@ -99,3 +99,7 @@
 .datetimeDisplay {
   margin: 0;
 }
+/* currently, 0:30 minutes aren't working, so hide them */
+.rw-list .rw-list-option:nth-child(even) {
+  display: none;
+}

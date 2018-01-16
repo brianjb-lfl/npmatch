@@ -7,7 +7,6 @@ import UserFollow from '../user-follow/user-follow';
 
 export class UserPreview extends Component {
   handleClick(id) {
-    console.log('id clicked',id)
     this.props.dispatch(actionsUser.fetchUser(
       id,
       this.props.userInState.authToken,
