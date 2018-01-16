@@ -31,6 +31,7 @@ export class OpportunityCreate extends Component {
     const timestampEnd = this.props.opportunity.newTimestampEnd || opp.timestampEnd;
     opp.timestampStart = helpers.convertTimeStampToString(timestampStart);
     opp.timestampEnd = helpers.convertTimeStampToString(timestampEnd);
+    console.log('before',input.timestampStart, 'after', opp.timestampStart)
     opp.userId = isNew ? this.props.user.id : opp.userId;
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
@@ -57,6 +58,22 @@ export class OpportunityCreate extends Component {
 
     const offerButtonClassName = this.state.offer ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
     const requestButtonClassName = this.state.offer ? 'deSelectedOptionLabel' : 'selectedOptionLabel' ;
+
+    let start, end;
+    if (this.props.opportunity.newTimestampStart) {
+      start = helpers.printDateAsString(this.props.opportunity.newTimestampStart);
+    } else if (this.props.opportunity.timestampStart) {
+      start = helpers.printDateAsString(this.props.opportunity.timestampStart);
+    } else {
+      start = 'no start date selected';
+    }
+    if (this.props.opportunity.newTimestampEnd) {
+      end = helpers.printDateAsString(this.props.opportunity.newTimestampEnd);
+    } else if (this.props.opportunity.timestampEnd) {
+      end = helpers.printDateAsString(this.props.opportunity.timestampEnd);
+    } else {
+      end = 'no end date selected';
+    }
 
     return (
       <main>
@@ -164,8 +181,19 @@ export class OpportunityCreate extends Component {
                 className='inputField' />
             </div>
 
-            <DateTime type='start' />
-            <DateTime type='end' />
+            <div className='datetimepickerRow'>
+              <DateTime type='start' />
+              <div className='datetimeDisplayContainer'>
+                <p className='datetimeDisplay'>{start}</p>
+              </div>
+            </div>
+
+            <div className='datetimepickerRow'>
+              <DateTime type='end' />
+              <div className='datetimeDisplayContainer'>
+                <p className='datetimeDisplay'>{end}</p>
+              </div>
+            </div>
 
             <div className='previewBottomBar'>
               <button className='clearFormButton'

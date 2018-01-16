@@ -50,6 +50,14 @@ export const updateEndDate = newTimestampEnd => ({
 // @@@@@@@@@@@@@@@ INTERMEDIARY @@@@@@@@@@@@@@@@@
 
 export const handleDateChanges = (dateType, timestamp) => dispatch => {
+  // input: dateType = 'start' or 'end'; timestamp is recently changed timestamp in form 
+  // Problem: Redux datetimepicker changes BOTH date and time, when user intends to change ONLY date or time.
+  // Solution: this function formats an action to update correctly.
+  // 1. decides which action to call (start or end) per parameter;
+  // 2. grabs prior date from Redux store. Bad practice for actions, but this is to prevent an infinite loop in the component;
+  // 3. calls helper function resolveDateTimeConflicts (read more there);
+  // 4. dispatches action.
+  
   console.log('~~~~~ start handleDateChanges');
   const opportunity = {...store.getState().opportunity};
 
@@ -62,15 +70,6 @@ export const handleDateChanges = (dateType, timestamp) => dispatch => {
     updateFunction = updateEndDate;
   }
   console.log('priorDate',priorDate);
-  // console.log('%%% compare start equality');
-  // console.log('start dates to compare: prior', priorStart, 'current', timestampStart);
-  // const startChanged = !helpers.datesAreEqual(priorStart,timestampStart) ;
-  // console.log('%%% compare end equality');
-  // console.log('end dates to compare: prior', priorEnd, 'current', timestampEnd);
-  // const endChanged = !helpers.datesAreEqual(priorEnd,timestampEnd) ;
-  // console.log('%%% end equality');
-  // console.log('start changed', startChanged, 'end changed', endChanged);
-
   const conformedDate = helpers.resolveDateTimeConflicts(priorDate, timestamp);
   console.log(`conformed ${dateType} date`,conformedDate);
   dispatch(updateFunction(conformedDate))

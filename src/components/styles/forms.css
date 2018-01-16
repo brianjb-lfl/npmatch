@@ -83,3 +83,19 @@
 .rw-datetime-picker .rw-widget-picker {
   width: 60px;
 }
+.datetimepickerRow {
+  position: relative;
+}
+.datetimeDisplayContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.datetimeDisplay {
+  margin: 0;
+}

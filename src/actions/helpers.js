@@ -127,16 +127,16 @@ export const formatTimeframe = object => {
 }
 
 export const convertTimeStampToString = timestamp => {
-  // is GMT string (but we are working with raw date below) Thu, 30 Nov 2017 21:23:45 GMT
-  // is desired format "2017-12-21T16:26:48-05:00"
+  // input: Date object (i.e. timestamp) in local time zone
+  // output: string in format '2017-12-21T16:26:48-05:00' to send to back end
   if (timestamp instanceof Date) {
-    const year = timestamp.getUTCFullYear();
-    const month = timestamp.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-    const date = timestamp.getUTCDate();
+    const year = timestamp.getFullYear();
+    const month = timestamp.getMonth() + 1; // months are 0-index in date objects, but not in string
+    const date = timestamp.getDate();
     const timeSymbol = 'T';
-    const hours = timestamp.getUTCHours();
-    const minutes = timestamp.getUTCMinutes();
-    const seconds = timestamp.getUTCSeconds();
+    const hours = timestamp.getHours();
+    const minutes = timestamp.getMinutes();
+    const seconds = timestamp.getSeconds();
     const offset = '05:00';
     return `${year}-${month}-${date}${timeSymbol}${hours}:${minutes}:${seconds}-${offset}`;
   }
@@ -144,8 +144,10 @@ export const convertTimeStampToString = timestamp => {
 }
 
 export const convertStringToTimeStamp = (theString, offset = -5) => {
+  // input: string received from back end in UTC format; e.g. '2018-01-19T15:24:45.000Z'
+  // calculation: create a date object, inputting values to match the UTC string, then adjust the date by the offset to compensate for UTC
+  // output: Date object reflecting current time zone
   console.log('theString to convert', theString)
-  // expected input: 2018-01-19T15:24:45.000Z
   if (typeof theString === 'string') {
     const milliSecondsPerHour = 60 * 60 * 1000 ;
 
@@ -166,9 +168,9 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
     timestamp.setSeconds(timeArrayIntegers[2]);
 
     console.log('timestamp before offset', timestamp); // this will be GMT, we need to offset it 2x
-    console.log('neg offset', offset < 0 );
-    console.log('neg',new Date(timestamp - (offset * milliSecondsPerHour)));
-    console.log('dbl neg',new Date(timestamp - (-offset * milliSecondsPerHour)));
+    // console.log('neg offset', offset < 0 );
+    // console.log('neg',new Date(timestamp - (offset * milliSecondsPerHour)));
+    // console.log('dbl neg',new Date(timestamp - (-offset * milliSecondsPerHour)));
     console.log(offset * milliSecondsPerHour);
     const adjustedTimestamp = offset < 0 ?
       new Date(timestamp - (-offset * milliSecondsPerHour)) : // - is earlier
@@ -180,7 +182,7 @@ export const convertStringToTimeStamp = (theString, offset = -5) => {
 }
 
 export const printDateAsString = date => {
-  console.log('printDateAsString date received',date);
+  // display date as string to user; NOT formatting for data handling
   const dateOptions = {
     weekday: 'long', 
     year: 'numeric', 
@@ -190,9 +192,7 @@ export const printDateAsString = date => {
     minute: 'numeric'
   };
   if (date instanceof Date) {
-    const dateString = date.toLocaleDateString('en',dateOptions)
-    console.log('printDateAsString final dateString',dateString);
-    return dateString;
+    return date.toLocaleDateString('en',dateOptions)
   }
   return '';
 }
@@ -202,8 +202,12 @@ export const resolveDateTimeConflicts = (prior, current) => {
   // this is to fix this behavior in datetimepicker:
   // changing date works, but changes time to current time.
   // changing time works, but changes date to current date.
-  // input: prior accurate datetime, current selection that is partially accurae
-  // output: merged datetime using date from one, time from the other, making correct selections
+  // input: prior = accurate datetime; current = selection that is partially accurate.
+  // calculation: determine whether user intended to change date or time. If the user changes the date, the time enters as the current time, which has a 99.94% chance of having either the minutes or seconds be non-zero (or non-30 for minutes). So there is a 0.06% edge case where this fails.  If the current selection has incorrect minutes or seconds, we assume the date changed; if the current selection has 0 or 30 minutes, AND 0 seconds, we assume the time changed. 
+  // output: merged datetime:
+      // option 1: prior date and currently selected time
+      // option 2: currently selected date and prior time
+  // all dates and times are handled as the user sees them, not UTC.  UTC conversions are done only when transmitting to and from the back end.
   
   const yearPrior = prior.getFullYear();
   const monthPrior = prior.getMonth() + 1; // months are 0-index in date objects, but not in string
@@ -213,14 +217,6 @@ export const resolveDateTimeConflicts = (prior, current) => {
   const secondsPrior = prior.getSeconds();
   console.log('prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
 
-  const yearPrior2 = prior.getUTCFullYear();
-  const monthPrior2 = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  const datePrior2 = prior.getUTCDate();
-  const hoursPrior2 = prior.getUTCHours();
-  const minutesPrior2 = prior.getUTCMinutes();
-  const secondsPrior2 = prior.getUTCSeconds();
-  console.log('UTC prior value',yearPrior2, monthPrior2, datePrior2, hoursPrior2, minutesPrior2, secondsPrior2)
-
   const yearCurrent = current.getFullYear();
   const monthCurrent = current.getMonth() + 1; // months are 0-index in date objects, but not in string
   const dateCurrent = current.getDate();
@@ -229,26 +225,13 @@ export const resolveDateTimeConflicts = (prior, current) => {
   const secondsCurrent = current.getSeconds();
   console.log('current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
 
-  // const yearCurrent2 = current.getUTCFullYear();
-  // const monthCurrent2 = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-  // const dateCurrent2 = current.getUTCDate();
-  // const hoursCurrent2 = current.getUTCHours();
-  // const minutesCurrent2 = current.getUTCMinutes();
-  // const secondsCurrent2 = current.getUTCSeconds();
-  // console.log('UTC current choice',yearCurrent2, monthCurrent2, dateCurrent2, hoursCurrent2, minutesCurrent2, secondsCurrent2)
-
   let correct = 'time'; // which of current is correct? date or time?
   if (secondsCurrent && secondsCurrent !== 0) {
-    console.log('seconds are non-zero', secondsCurrent)
     correct = 'date';
   } else if (minutesCurrent && (minutesCurrent !== 0 || minutesCurrent !== 30)) {
-    console.log('minutes are non-zero, non-3-', minutesCurrent)
     correct = 'date';
   }
 
-  // const dateAdjuster = hoursPrior < offset ? 1 : 0 ;
-  // const dateAdjuster2 = hoursPrior2 < offset ? 1 : 0 ;
-  // console.log('dateAdjuster', dateAdjuster, 'UTC', dateAdjuster2);
   let conformedDate;
   if (correct === 'time') {
     console.log('time is correct')
@@ -267,41 +250,34 @@ export const resolveDateTimeConflicts = (prior, current) => {
   return conformedDate;
 }
 
-// export const datesAreEqual = (prior, current) => {
-//   const yearPrior = prior.getUTCFullYear();
-//   const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
-//   const datePrior = prior.getUTCDate();
-//   const hoursPrior = prior.getUTCHours();
-//   const minutesPrior = prior.getUTCMinutes();
-//   const secondsPrior = prior.getUTCSeconds();
-//   console.log('equality: prior value',yearPrior, monthPrior, datePrior, hoursPrior, minutesPrior, secondsPrior)
+export const datesAreEqual = (prior, current) => {
+  // NOT CURRENTLY USED
+  const yearPrior = prior.getUTCFullYear();
+  const monthPrior = prior.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const datePrior = prior.getUTCDate();
+  const hoursPrior = prior.getUTCHours();
+  const minutesPrior = prior.getUTCMinutes();
+  const secondsPrior = prior.getUTCSeconds();
 
-//   const yearCurrent = current.getFullYear();
-//   const monthCurrent = current.getMonth() + 1; // months are 0-index in date objects, but not in string
-//   const dateCurrent = current.getDate();
-//   const hoursCurrent = current.getHours();
-//   const minutesCurrent = current.getMinutes();
-//   const secondsCurrent = current.getSeconds();
-//   console.log('equality: current choice',yearCurrent, monthCurrent, dateCurrent, hoursCurrent, minutesCurrent, secondsCurrent)
+  const yearCurrent = current.getUTCFullYear();
+  const monthCurrent = current.getUTCMonth() + 1; // months are 0-index in date objects, but not in string
+  const dateCurrent = current.getUTCDate();
+  const hoursCurrent = current.getUTCHours();
+  const minutesCurrent = current.getUTCMinutes();
+  const secondsCurrent = current.getUTCSeconds();
 
-//   if (yearPrior !== yearCurrent) {
-//     console.log('inequality year')
-//     return false;
-//   } else if (monthPrior !== monthCurrent) {
-//     console.log('inequality month')
-//     return false;
-//   } else if (datePrior !== dateCurrent) {
-//     console.log('inequality date')
-//     return false;  
-//   } else if (hoursPrior !== hoursCurrent) {
-//     console.log('inequality hours')
-//     return false;  
-//   } else if (minutesPrior !== minutesCurrent) {
-//     console.log('inequality minutes')
-//     return false;  
-//   } else if (secondsPrior !== secondsCurrent) {
-//     console.log('inequality seconds')
-//     return false;
-//   }
-//   return true;
-// }
+  if (yearPrior !== yearCurrent) {
+    return false;
+  } else if (monthPrior !== monthCurrent) {
+    return false;
+  } else if (datePrior !== dateCurrent) {
+    return false;  
+  } else if (hoursPrior !== hoursCurrent) {
+    return false;  
+  } else if (minutesPrior !== minutesCurrent) {
+    return false;  
+  } else if (secondsPrior !== secondsCurrent) {
+    return false;
+  }
+  return true;
+}
