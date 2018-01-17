@@ -123,7 +123,17 @@ export const formatLinksIcon = links => {
 }
 
 export const formatTimeframe = object => {
-  return `${object.timestampStart} to ${object.timestampEnd}`;
+  let start, end;
+
+  if (typeof object.timestampStart === 'string' && typeof object.timestampEnd === 'string') {
+    start = convertStringToTimeStamp(object.timestampStart);
+    end = convertStringToTimeStamp(object.timestampEnd);
+  } else if (object.timestampStart instanceof Date && object.timestampEnd instanceof Date) {
+    start = object.timestampStart;
+    end = object.timestampEnd;
+  }
+  const startEndArray = [printDateAsString(start),printDateAsString(end)]
+  return startEndArray.join(' to ');
 }
 
 export const convertTimeStampToString = timestamp => {

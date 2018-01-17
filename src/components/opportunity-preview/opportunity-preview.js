@@ -35,28 +35,29 @@ export class OpportunityPreview extends Component {
     let narrative = null;
     if (isInFocus && opportunity.narrative) {
       narrative = <p className='previewCardText oppNarrative'>{opportunity.narrative}</p>;
-    } else if (opportunity.narrative) {
-      if (opportunity.narrative.length > 100) {
-        narrative = <p className='previewCardText oppNarrative'>{opportunity.narrative.substring(0,90)}...</p>;
-      } else {
-      narrative = <p className='previewCardText oppNarrative'>{opportunity.narrative}</p>;
-      }
-    }
+    } 
+    // else if (opportunity.narrative) {
+    //   if (opportunity.narrative.length > 100) {
+    //     narrative = <p className='previewCardText oppNarrative'>{opportunity.narrative.substring(0,90)}...</p>;
+    //   } else {
+    //   narrative = <p className='previewCardText oppNarrative'>{opportunity.narrative}</p>;
+    //   }
+    // }
     const requiredSkills = (isInFocus && opportunity.requiredSkills) ? <h4 className='previewCardText oppRequiredSkills'>{opportunity.requiredSkills}</h4> : null ;
     
-    const formattedTimeframe = isInFocus ? helpers.formatTimeframe(opportunity) : null ;
+    const formattedTimeframe = helpers.formatTimeframe(opportunity);
     const timeframe = formattedTimeframe ? <p className='previewCardText oppTimeframe'>{formattedTimeframe}</p> : null ;
     
     const formattedLocation = helpers.formattedLocation(opportunity);
-    const location = (isInFocus && formattedLocation ) ?
+    const location = formattedLocation ?
       <div className='previewCardText oppLocation'>{formattedLocation}</div> : null ;
     const link = isInFocus ? helpers.formatLinksIcon(opportunity.link) : null ;
     let locationAndLink = null;
-    if (location && link) {
+    if (isInFocus && location && link) {
       locationAndLink = <div className='locationAndLink'>{location}{link}</div>
-    } else if (location) {
+    } else if (isInFocus &&  location) {
       locationAndLink = location;
-    } else if (link) {
+    } else if (isInFocus && link) {
       locationAndLink = <div className='locationAndLink'><div></div>{link}</div> ;
     }
 
@@ -106,6 +107,15 @@ export class OpportunityPreview extends Component {
 
     const overflowClass = isInFocus ? '' : 'overflowHidden';
 
+    const previewCardInner2 = isInFocus ? <div className='previewCardInner previewCardInner2' onClick={()=>this.focusOpportunity(opportunity.id)}>
+      <div className='previewCardTextContainer hoverBlack'>
+        {narrative}
+        {locationAndLink}
+        {opportunityType}
+        {requiredSkills}
+      </div>
+    </div> : null ;
+
     return (
       <div className='previewCard'>
         <div className={`previewCardInner ${overflowClass}`} onClick={()=>this.focusOpportunity(opportunity.id)}>
@@ -113,17 +123,10 @@ export class OpportunityPreview extends Component {
           <div className='previewCardTextContainer hoverBlack'>
             <h3 className='previewCardTitle'>{opportunity.title}</h3>
             {displayNameTitle}
-            {narrative}
-          </div>
-        </div>
-        <div className='previewCardInner' onClick={()=>this.focusOpportunity(opportunity.id)}>
-          <div className='previewCardTextContainer hoverBlack'>
-            {locationAndLink}
             {timeframe}
-            {opportunityType}
-            {requiredSkills}
           </div>
         </div>
+        {previewCardInner2}
         <div className='previewBottomBar'>
           <ul className='causesList'>{causes}</ul>
           {editOrRespond}

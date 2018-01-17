@@ -18,6 +18,9 @@
   align-items: flex-start;
   cursor: pointer;
 }
+.previewCardInner .previewCardTextContainer {
+  margin-left: 0;
+}
 .previewCardTextContainer {
   display: flex;
   flex-direction: column;
@@ -43,6 +46,9 @@
   color: #222;
   margin-top: 5px;
   font-size: 14px;
+}
+.oppTimeframe {
+  margin-bottom: 0;
 }
 .hoverBlack:hover {
   color: #777;
