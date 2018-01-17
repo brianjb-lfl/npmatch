@@ -5,10 +5,24 @@ import * as actionsDisplay from '../../actions/display';
 import * as helpers from '../../actions/helpers';
 
 export class Acceptance extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      accepted: ( props.response.status === 'deleted' || props.response.status === 'denied' ) ? false : true
+    }
+  }
 
   toggleFocus(id) {
-    console.log(id)
     this.props.dispatch(actionsDisplay.toggleResponse(id))
+  }
+
+  setAccepted(value) {
+    this.setState({accepted: value});
+  }
+
+  handleSubmit(values){
+    console.log('submitting');
+    this.props.dispatch(actionsDisplay.toggleResponse(values))
   }
 
   render() {
@@ -16,6 +30,9 @@ export class Acceptance extends Component {
     const response = this.props.response;
     const isInFocus = this.props.display.idResponse == response.id ? true : false ;
     const displayName = helpers.formatUserName(response);
+
+    const positiveButtonClassName = this.state.accepted ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;
+    const negativeButtonClassName = this.state.accepted ? 'deSelectedOptionLabel' : 'selectedOptionLabel' ;
 
     const hoverPopover = isInFocus ? null :
       <div className='popover popoverWide3'>
@@ -28,7 +45,18 @@ export class Acceptance extends Component {
 
     const acceptancePopover = isInFocus ? 
       <div className='acceptanceForm'>
-        <p>acceptanceForm</p>
+        <p>{displayName}</p>
+        <p>{response.notes}</p>
+        <div className='selectOptionButtonContainer'>
+          <button className={positiveButtonClassName}
+            onClick={()=>this.setAccepted(true)}
+            >accept</button>
+          <button className={negativeButtonClassName}
+            onClick={()=>this.setAccepted(false)}
+            >deny</button>
+        </div>
+        <button className='submitButton'
+        onClick={()=>this.handleSubmit()}>Submit</button>
         <i className="fa fa-times-circle modalExitButton" aria-hidden="true"
             onClick={()=>this.toggleFocus(response.id)}></i>
       </div> : null ;
