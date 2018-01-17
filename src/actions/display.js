@@ -26,13 +26,15 @@ export const setUser = userId => ({
 export const TOGGLE_OPPORTUNITY = 'TOGGLE_OPPORTUNITY';
 export const toggleOpportunity = idOpportunity => ({
   type: TOGGLE_OPPORTUNITY,
-  idOpportunity
+  idOpportunity, 
+  idResponse: null,
 });
 
 export const SET_OPPORTUNITY = 'SET_OPPORTUNITY';
 export const setOpportunity = idOpportunity => ({
   type: SET_OPPORTUNITY,
-  idOpportunity
+  idOpportunity,
+  idResponse: null,
 });
 
 export const TOGGLE_ROLE = 'TOGGLE_ROLE';

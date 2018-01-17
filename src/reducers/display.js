@@ -24,12 +24,12 @@ export const reducer = (state = initialState, action) => {
 
   if (action.type === actions.TOGGLE_OPPORTUNITY) {
     const idOpportunity = state.idOpportunity === action.idOpportunity ? null : action.idOpportunity ;
-    return {...state, idOpportunity };
+    return {...state, idOpportunity, idResponse: action.idResponse };
   }
   
   if (action.type === actions.SET_OPPORTUNITY) {
     const idOpportunity = action.idOpportunity ;
-    return {...state, idOpportunity };
+    return {...state, idOpportunity, idResponse: action.idResponse };
   }
   
   if (action.type === actions.TOGGLE_ROLE) {
