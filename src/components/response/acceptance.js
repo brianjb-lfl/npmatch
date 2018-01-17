@@ -28,7 +28,7 @@ export class Acceptance extends Component {
   render() {
 
     const response = this.props.response;
-    const isInFocus = this.props.display.idResponse == response.id ? true : false ;
+    const isInFocus = this.props.display.idResponse === response.id ? true : false ;
     const displayName = helpers.formatUserName(response);
 
     const positiveButtonClassName = this.state.accepted ? 'selectedOptionLabel' : 'deSelectedOptionLabel' ;

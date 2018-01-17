@@ -1,6 +1,5 @@
 import 'whatwg-fetch';
 import { REACT_APP_BASE_URL } from '../config'
-// import {SubmissionError} from 'redux-form';
 import * as actionsDisplay from './display';
 import * as actionsUserViewed from './user-viewed';
 import * as actionsOpportunity from './opportunity';
