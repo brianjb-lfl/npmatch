@@ -30,6 +30,7 @@ main { /* set width here!*/
 @media (min-width: 900px) {
   main {
     width: 60%;
+    max-width: 700px;
   }
 }
 .mainColumn { /* div just inside main */

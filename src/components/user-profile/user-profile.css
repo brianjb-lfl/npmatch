@@ -1,8 +1,14 @@
+.userProfile {
+    width: 100%;
+    max-width: 700px;
+  }
+
 .userProfileHeaderContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 .userProfileLogo {
   max-height: 100px;
