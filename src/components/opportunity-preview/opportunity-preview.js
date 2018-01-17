@@ -87,14 +87,13 @@ export class OpportunityPreview extends Component {
     if (isInFocus && this.props.self) {
       if (listOfResponses) {
         responses = <div className='acceptanceContainer'>
-        <h6>Responses</h6>
+        <h3 className='acceptanceContainerHeader'>{listOfResponses.length} Responses</h3>
         <table className='acceptanceTable'>
           <tbody>
             <tr>
               <th>Volunteer</th>
               <th>Notes</th>
               <th>Status</th>
-              <th>Action</th>
             </tr>
             {listOfResponses}
           </tbody>

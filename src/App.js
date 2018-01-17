@@ -20,6 +20,7 @@ import NavBarBottom from './components/nav-bar-bottom/nav-bar-bottom';
 import RootPage from './components/root-page/root-page';
 import OpportunitiesPage from './components/opportunities-page/opportunities-page';
 import Modal from './components/modal/modal';
+import Loading from './components/modal/loading';
 
 export class App extends Component {
 
@@ -32,6 +33,7 @@ export class App extends Component {
   render() {
 
     const modal = this.props.display.modal ? <Modal/> : null ;
+    const loading = this.props.display.status === 'loading' ? <Loading/> : null ;
     // NOTE: individual components include a redirect if users are not signed in: ExplorePage, OpportunityCreae, OpportunitiesPage, UserProfileEdit
     return (
       <Router>
@@ -53,6 +55,7 @@ export class App extends Component {
           <Route path='/*' component={NavBarTop}/>
           <Route path='/*' component={NavBarBottom} />
           {modal}
+          {loading}
         </div>
       </Router>
     );
