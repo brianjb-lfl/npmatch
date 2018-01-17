@@ -5,29 +5,19 @@ import * as actionsDisplay from '../../actions/display';
 import * as helpers from '../../actions/helpers';
 
 export class Acceptance extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      focus: false
-    }
-  }
 
-  toggleFocus() {
-    this.setState({focus: !this.state.focus})
+  toggleFocus(id) {
+    console.log(id)
+    this.props.dispatch(actionsDisplay.toggleResponse(id))
   }
 
   render() {
 
     const response = this.props.response;
+    const isInFocus = this.props.display.idResponse == response.id ? true : false ;
     const displayName = helpers.formatUserName(response);
 
-    const other = <div>
-        {response.id} 
-        {response.idOpportunity} 
-        {response.userId}
-      </div>;
-
-    const hoverPopover = this.state.focus ? null :
+    const hoverPopover = isInFocus ? null :
       <div className='popover popoverWide3'>
         <p>Click to edit.</p>
         <br/>
@@ -36,18 +26,21 @@ export class Acceptance extends Component {
         <p>last changed on {helpers.printDateAsString(helpers.convertStringToTimeStamp(response.timestampStatusChange))}</p>
       </div>
 
-    const acceptancePopover = this.state.focus ? 
+    const acceptancePopover = isInFocus ? 
       <div className='acceptanceForm'>
         <p>acceptanceForm</p>
         <i className="fa fa-times-circle modalExitButton" aria-hidden="true"
-            onClick={()=>this.toggleFocus()}></i>
+            onClick={()=>this.toggleFocus(response.id)}></i>
       </div> : null ;
 
     return ( <tr>
       <td>{displayName}</td>
       <td>{response.notes}</td>
-      <td className='tooltip' onClick={()=>this.toggleFocus()}>{response.responseStatus}
-        {hoverPopover}
+      <td className='tooltip'>
+        <div className='responseStatusTableCell tooltip' onClick={()=>this.toggleFocus(response.id)}>
+          {response.responseStatus}
+          {hoverPopover}
+        </div>
         {acceptancePopover}
       </td>
     </tr> );

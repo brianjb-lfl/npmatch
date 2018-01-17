@@ -35,7 +35,7 @@ export class OpportunityCreate extends Component {
     this.props.dispatch(actionsOpportunity.createOpportunity(opp, this.props.user.authToken, isNew))
       .then(() => {
         this.props.dispatch(actionsDisplay.setOpportunity(null));
-        this.props.history.push('/myopportunities');
+        this.props.history.push('/opportunities');
         window.scrollTo(0, 0);
       });
   }

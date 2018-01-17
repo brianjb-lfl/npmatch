@@ -26,24 +26,29 @@ export const reducer = (state = initialState, action) => {
     const idOpportunity = state.idOpportunity === action.idOpportunity ? null : action.idOpportunity ;
     return {...state, idOpportunity };
   }
-
+  
   if (action.type === actions.SET_OPPORTUNITY) {
     const idOpportunity = action.idOpportunity ;
     return {...state, idOpportunity };
   }
-
+  
   if (action.type === actions.TOGGLE_ROLE) {
     const idRole = state.idRole === action.idRole ? null : action.idRole ;
     const roleUserId = state.roleUserId === action.roleUserId ? null : action.roleUserId ;
     return {...state, idRole, roleUserId };
   }
 
-  if (action.type === actions.SAVE_LATEST_RESPONSE) {
-    return {...state, latestResponse: action.latestResponse };
-  }
-
   if (action.type === actions.SAVE_LATEST_ROLE) {
     return {...state, latestRole: action.latestRole };
+  }
+
+  if (action.type === actions.TOGGLE_RESPONSE) {
+    const idResponse = action.idResponse === state.idResponse ? null : action.idResponse;
+    return {...state, idResponse };
+  }
+
+  if (action.type === actions.SAVE_LATEST_RESPONSE) {
+    return {...state, latestResponse: action.latestResponse };
   }
 
   return state;

@@ -12,7 +12,7 @@ export class NavBarTop extends Component {
     // console.log('list opps query', query)
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
       .then(() => {
-        this.props.history.push('/myopportunities');
+        this.props.history.push('/opportunities');
         window.scrollTo(0,0);
       })
   }
@@ -20,7 +20,7 @@ export class NavBarTop extends Component {
   queryOpportunities(query) {
     this.props.dispatch(actionsOpportunitiesList.fetchOppsList(query, this.props.user.authToken))
       .then(() => {
-        this.props.history.push('/myopportunities');
+        this.props.history.push('/opportunities');
         this.props.reset();
         window.scrollTo(0,0);
       })

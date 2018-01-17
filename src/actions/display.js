@@ -17,6 +17,12 @@ export const toggleModal = message => ({
   modalMessage: message
 });
 
+export const SET_USER = 'SET_USER';
+export const setUser = userId => ({
+  type: SET_USER,
+  userId
+});
+
 export const TOGGLE_OPPORTUNITY = 'TOGGLE_OPPORTUNITY';
 export const toggleOpportunity = idOpportunity => ({
   type: TOGGLE_OPPORTUNITY,
@@ -36,20 +42,20 @@ export const toggleRole = (idRole, roleUserId) => ({
   roleUserId,
 });
 
-export const SET_USER = 'SET_USER';
-export const setUser = userId => ({
-  type: SET_USER,
-  userId
+export const SAVE_LATEST_ROLE = 'SAVE_LATEST_ROLE';
+export const saveLatestRole = id => ({
+  type: SAVE_LATEST_ROLE,
+  latestRole: id
+});
+
+export const TOGGLE_RESPONSE = 'TOGGLE_RESPONSE';
+export const toggleResponse = idResponse => ({
+  type: TOGGLE_RESPONSE ,
+  idResponse,
 });
 
 export const SAVE_LATEST_RESPONSE = 'SAVE_LATEST_RESPONSE';
 export const saveLatestResponse = id => ({
   type: SAVE_LATEST_RESPONSE,
   latestResponse: id
-});
-
-export const SAVE_LATEST_ROLE = 'SAVE_LATEST_ROLE';
-export const saveLatestRole = id => ({
-  type: SAVE_LATEST_ROLE,
-  latestRole: id
 });

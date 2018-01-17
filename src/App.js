@@ -47,7 +47,7 @@ export class App extends Component {
             <Route exact path="/organizations" component={ExplorePage} />
             <Route exact path="/contributors" component={ExplorePage} />
             <Route exact path="/opportunities/create" component={OpportunityCreate} />
-            <Route exact path="/myopportunities" component={OpportunitiesPage} />
+            <Route exact path="/opportunities" component={OpportunitiesPage} />
             {/* <Route path="/inbox" component={InboxPage} />
             <Route path="/settings" component={SettingsPage} /> */}
             <Redirect from='*' to='/' />
