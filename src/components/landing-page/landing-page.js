@@ -39,18 +39,19 @@ export class LandingPage extends Component {
           <ul className='testAccount'>
               <li>Username: johnsmith@test.com</li>
               <li>Password: password123</li>
-            </p>
+            </ul>
+          </p>
         </div>
-          <div className='previewCardListContainer'>
-            {previews}
-          </div>
+        <div className='previewCardListContainer'>
+          {previews}
         </div>
-        )
+      </div>
+    )
   }
 }
 
 export const mapStateToProps = state => ({
-          usersList: state.usersList.main,
+  usersList: state.usersList.main,
   display: state.display.view
 })
 export default connect(mapStateToProps)(LandingPage)
