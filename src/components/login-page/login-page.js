@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import * as userActions from '../../actions/user';
+import * as actionsUser from '../../actions/user';
 import UandPFields from '../fields/u-and-pw';
 
 import './login-page.css';
 
 export class LoginPage extends Component {
   handleSubmitButton(input) {
-    this.props.dispatch(userActions.login(input))
+    this.props.dispatch(actionsUser.login(input))
       .then(() => {
         this.props.reset();        
         this.props.history.push('/');
