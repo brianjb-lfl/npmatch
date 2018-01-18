@@ -15,7 +15,7 @@ export class LandingPage extends Component {
     let previews = Array.isArray(this.props.usersList) ?
       this.props.usersList.map((user, key) => {
         if (user.userType === 'organization') {
-          return <UserPreview user={user} key={key} history={this.props.history} showDetail={false}/>
+          return <UserPreview user={user} key={key} history={this.props.history} showDetail={false} />
         } else {
           return null;
         }
@@ -23,7 +23,7 @@ export class LandingPage extends Component {
 
     return (
       <div className='landingPage mainColumn'>
-        <h2 className='sectionTitle'>Causeway</h2>
+        <h2 className='sectionTitle'>CauseWay</h2>
         <div className='descriptionContainer'>
           <p>
             Welcome to CauseWay!
@@ -34,18 +34,23 @@ export class LandingPage extends Component {
           upcoming projects that they're looking for support on. Individuals who sign up, listed
           as "contributors" can post their own skills and apply to or volunteer for the projects
           that organizations are posting.
-        </p>
+          </p>
+          <p>Feel free to test out the app by signing in with the following:
+          <ul className='testAccount'>
+              <li>Username: johnsmith@test.com</li>
+              <li>Password: password123</li>
+            </p>
         </div>
-        <div className='previewCardListContainer'>
-          {previews}
+          <div className='previewCardListContainer'>
+            {previews}
+          </div>
         </div>
-      </div>
-    )
+        )
   }
 }
 
 export const mapStateToProps = state => ({
-  usersList: state.usersList.main,
+          usersList: state.usersList.main,
   display: state.display.view
 })
 export default connect(mapStateToProps)(LandingPage)

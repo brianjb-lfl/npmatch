@@ -8,7 +8,7 @@ export default class IndivNameFields extends Component {
     return (
       <div className='nameInputContainer'>
         <div className='labelInputPair'>
-          <label className='inputLabel' htmlFor={'firstName'}>FirstName</label>
+          <label className='inputLabel' htmlFor={'firstName'}>First Name</label>
           <Field className='inputField' name='firstName' id='firstName'
             component='input' type='text' placeholder='First Name' required
           />
