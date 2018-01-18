@@ -61,3 +61,8 @@ button:hover {
   background-color: rgba(8, 46, 65, 0.1);
   color: #082E41;
 }
+
+.deSelectedOptionLabel:hover {
+  background-color: rgba(8, 46, 65, 0.2);
+  color: #082E41;
+}

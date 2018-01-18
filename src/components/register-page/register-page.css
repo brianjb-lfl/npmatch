@@ -3,8 +3,17 @@
 }
 @media (min-width: 450px) {
   .registerForm {
-    padding: 10% 20%;
+    padding: 5%;
+    width: 400px;
   }
+
+}
+@media (min-width: 700px) {
+  .registerForm {
+    padding: 5%;
+    width: 500px;
+  }
+
 }
 .registerForm .selectOptionButtonContainer {
   margin-bottom: 20px;
