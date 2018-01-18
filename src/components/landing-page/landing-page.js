@@ -36,7 +36,7 @@ export class LandingPage extends Component {
           that organizations are posting.
           </p>
           <p>Feel free to test out the app by signing in with the following:
-          <ul className='testAccount'>
+            <ul className='testAccount'>
               <li>Username: johnsmith@test.com</li>
               <li>Password: password123</li>
             </ul>
